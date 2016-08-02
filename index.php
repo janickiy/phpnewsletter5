@@ -1,12 +1,5 @@
 <?php
 
-/********************************************
-* PHP Newsletter 4.0.15
-* Copyright (c) 2006-2015 Alexander Yanitsky
-* Website: http://janicky.com
-* E-mail: janickiy@mail.ru
-* Skype: janickiy
-********************************************/
 define('LETTER', TRUE);
 define('SYS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
