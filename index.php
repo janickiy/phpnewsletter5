@@ -1,6 +1,6 @@
 <?php
 
-define('LETTER', TRUE);
+defined('LETTER') || exit('NewsLetter: access denied.');
 define('SYS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
 require_once SYS_ROOT."bootstrap.php";
