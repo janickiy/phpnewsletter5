@@ -2,13 +2,15 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
+session_start();
+
 // authorization
 Auth::authorization();
 
-unset($_SESSION['sess_admin']);
+Auth::logOut();
     
 $redirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : '/';
 	
-header("Location: ".$redirect."");
+header("Location: " . $redirect . "");
 
 exit();

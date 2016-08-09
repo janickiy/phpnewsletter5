@@ -1,6 +1,7 @@
 <?php
 defined('LETTER') || exit('NewsLetter: access denied.');
 
+session_start();
 
 // authorization
 Auth::authorization();

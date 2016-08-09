@@ -1,6 +1,6 @@
 <?php
 $ConfigDB["host"] = "localhost";
-$ConfigDB["name"] = "phpnewsletter";
+$ConfigDB["name"] = "phpnewsletter5";
 $ConfigDB["user"] = "root"; // login
 $ConfigDB["passwd"] = ""; // password
 $ConfigDB["prefix"] = "pnl_"; // prefix

@@ -124,10 +124,10 @@
     ><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a>
     </li>
     <li
-    <!-- IF '${ACTIVE_MENU}' == 'security' -->
+    <!-- IF '${ACTIVE_MENU}' == 'accounts' -->
     class="active"
     <!-- END IF -->
-    ><a href="./?t=security" title="${MENU_SECURITY_TITLE}"><i class="fa fa-key"></i> ${MENU_SECURITY}</a>
+    ><a href="./?t=accounts" title="${MENU_SECURITY_TITLE}"><i class="fa fa-key"></i> ${MENU_SECURITY}</a>
     </li>
     <li
     <!-- IF '${ACTIVE_MENU}' == 'update' -->

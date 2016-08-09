@@ -8,10 +8,8 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Auth
 {
 
-    static function authorization()
+    public static function authorization()
     {
-        session_start();
-
         if (!isset($_SESSION['sess_admin'])) $_SESSION['sess_admin'] = '';
 
         $query = "SELECT * FROM " . core::database()->getTableName('aut') . "";
@@ -22,9 +20,12 @@ class Auth
             if ($_SESSION['sess_admin'] != "ok")
                 $sess_pass = md5(trim(Core_Array::getRequest('password')));
             
-            if ($sess_pass === $row['passw']) {
+            if ($sess_pass === $row['password']) {
                 $_SESSION['sess_admin'] = "ok";
             } else {
+
+                self::logOut();
+
                 echo '<!DOCTYPE html>
 				<html>
 				<head>
@@ -48,11 +49,11 @@ class Auth
 				core::requireEx('libs', "html_template/SeparateTemplate.php");
 
 				$tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . "authorization.tpl");
-				$tpl->assign('TITLE',   core::getLanguage('title', 'authorization'));
-				$tpl->assign('STR_ADMIN_AREA',   core::getLanguage('str', 'admin_area'));
-				$tpl->assign('SCRIPT_NAME',   core::getLanguage('script', 'name'));
-				$tpl->assign('STR_SIGN_IN',   core::getLanguage('str', 'sign_in'));
-				$tpl->assign('STR_PASSWORD',   core::getLanguage('str', 'password'));			
+				$tpl->assign('TITLE', core::getLanguage('title', 'authorization'));
+				$tpl->assign('STR_ADMIN_AREA', core::getLanguage('str', 'admin_area'));
+				$tpl->assign('SCRIPT_NAME', core::getLanguage('script', 'name'));
+				$tpl->assign('STR_SIGN_IN', core::getLanguage('str', 'sign_in'));
+				$tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 				
 				// display content
 				$tpl->display();				
@@ -62,13 +63,30 @@ class Auth
         }
     }
 
-    static function getCurrentHash()
+    public static function getCurrentHash($id)
     {
-        $query = "SELECT * FROM " . core::database()->getTableName('aut') . "";
-        $result = core::database()->querySQL($query);
-        $row = core::database()->getRow($result);
-        
-        return $row['passw'];
+        if (is_numeric($id)) {
+            $query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE id=" . $id;
+            $result = core::database()->querySQL($query);
+            $row = core::database()->getRow($result);
+
+            return $row['password'];
+        }
+    }
+
+    public static function logOut()
+    {
+        if (isset($_SESSION['sess_admin'])) unset($_SESSION['sess_admin']);
+        if (isset($_SESSION['id'])) unset($_SESSION['id']);
+    }
+
+    public static function getAutInfo($id)
+    {
+        if (is_numeric($id)){
+            $query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE id=" . $id;
+            $result = core::database()->querySQL($query);
+            return core::database()->getRow($result);
+        }
     }
 }
 
