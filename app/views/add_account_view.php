@@ -7,6 +7,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+$autInfo = Auth::getAutInfo($_SESSION['id']);
+
 if($_SESSION['role'] != 'admin') exit();
 
 // require temlate class

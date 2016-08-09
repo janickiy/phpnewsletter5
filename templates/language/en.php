@@ -298,6 +298,12 @@ $language["str"]["ksc56011987"] = "Korean";
 $language["str"]["euckr"]       = "Korean (EUC)";
 $language["str"]["windows874"]  = "Thai (Windows)";
 $language["str"]["send_to_all"] = "Send to all";
+$language["str"]["admin"] = "Administrator";
+$language["str"]["moderator"] = "Moderator";
+$language["str"]["editor"] = "Editor";
+$language["str"]["login"] = "Login";
+$language["str"]["role"] = "Role";
+$language["str"]["action"] = "Action";
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";

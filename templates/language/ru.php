@@ -300,6 +300,20 @@ $language["str"]["euckr"]       = "Корейская (EUC)";
 $language["str"]["windows874"]  = "Тайская (Windows)";
 $language["str"]["script_name"] = "PHP Newsletter";
 $language["str"]["send_to_all"] = "Отправлять всем";
+$language["str"]["admin"] = "Администратор";
+$language["str"]["moderator"] = "Модератор";
+$language["str"]["editor"] = "Редактор";
+
+
+$language["str"]["login"] = "Логин";
+$language["str"]["role"] = "Роль";
+$language["str"]["action"] = "Действие";
+
+
+
+
+
+
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";

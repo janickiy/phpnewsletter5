@@ -6,6 +6,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+$autInfo = Auth::getAutInfo($_SESSION['id']);
+
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
@@ -103,7 +105,7 @@ foreach ($data->getAccountList() as $row){
 
 	$rowBlock->assign('ROLE', $role);
 
-	if ($row['login'] != $_SESSION['login']) $rowBlock->assign('ALLOW_EDIT', 'yes');
+	if ($row['login'] != $autInfo['login']) $rowBlock->assign('ALLOW_EDIT', 'yes');
 
 	$rowBlock->assign('STR_EDIT', core::getLanguage('str', 'edit'));
 	$rowBlock->assign('STR_REMOVE', core::getLanguage('str', 'remove'));

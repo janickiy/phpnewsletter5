@@ -1,5 +1,7 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 class Model_edit_account extends Model
 {
 	public function getAccountInfo($id)

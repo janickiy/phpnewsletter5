@@ -7,6 +7,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+$autInfo = Auth::getAutInfo($_SESSION['id']);
+
 session_write_close();
 
 switch (Core_Array::getGet('action'))

@@ -1,16 +1,16 @@
 <?php
 
-
-
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 
 class Auth
 {
-
     public static function authorization()
     {
-        if (!isset($_SESSION['sess_admin'])) $_SESSION['sess_admin'] = '';
+        if (!isset($_SESSION['sess_admin']) || !isset($_SESSION['id'])) {
+            $_SESSION['id'] = '';
+            $_SESSION['sess_admin'] = '';
+        }
 
         $query = "SELECT * FROM " . core::database()->getTableName('aut') . "";
         $result = core::database()->querySQL($query);
@@ -22,8 +22,8 @@ class Auth
             
             if ($sess_pass === $row['password']) {
                 $_SESSION['sess_admin'] = "ok";
+                $_SESSION['id'] = $row['id'];
             } else {
-
                 self::logOut();
 
                 echo '<!DOCTYPE html>
@@ -89,5 +89,3 @@ class Auth
         }
     }
 }
-
-?>

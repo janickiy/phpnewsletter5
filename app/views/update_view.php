@@ -7,6 +7,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+$autInfo = Auth::getAutInfo($_SESSION['id']);
+
 $update = new Update(core::getSetting('language'));
 $newversion = $update->getVersion();
 $currentversion = VERSION;

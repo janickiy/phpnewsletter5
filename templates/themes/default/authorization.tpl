@@ -21,6 +21,7 @@
 </div>
 <form class="form-signin" method="post">
 <h4 class="form-signin-heading">${STR_SIGN_IN}</h4>
+<input class="input-block-level" type="text" name="login" value="${LOGIN}" placeholder="${STR_LOGIN}">
 <input class="input-block-level" type="password" name="password" placeholder="${STR_PASSWORD}">
 <input type="submit" class="btn btn-primary" name="admin" value=" OK ">
 </form>

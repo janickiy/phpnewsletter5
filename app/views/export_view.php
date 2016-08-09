@@ -6,6 +6,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+$autInfo = Auth::getAutInfo($_SESSION['id']);
+
 if (Core_Array::getRequest('action') ){
 	$arr = $data->getUserList();	
 	

@@ -1,5 +1,7 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 class Model_logstatxls extends Model
 {
 	public function getTimelog($id_log)

@@ -1,5 +1,7 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 class Controller_update extends Controller
 {
 	function __construct()

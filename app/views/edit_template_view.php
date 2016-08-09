@@ -1,9 +1,13 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 session_start();
 
 // authorization
 Auth::authorization();
+
+$autInfo = Auth::getAutInfo($_SESSION['id']);
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");

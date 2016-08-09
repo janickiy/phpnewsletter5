@@ -1,5 +1,7 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 class Controller_logstatxls extends Controller
 {
 	function __construct()

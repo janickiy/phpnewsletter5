@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июл 28 2016 г., 17:47
+-- Время создания: Авг 10 2016 г., 01:13
 -- Версия сервера: 10.1.13-MariaDB
 -- Версия PHP: 5.6.23
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `phpnewsletter`
+-- База данных: `phpnewsletter5`
 --
 
 -- --------------------------------------------------------
@@ -41,10 +41,17 @@ CREATE TABLE `pnl_attach` (
 
 CREATE TABLE `pnl_aut` (
   `id` int(5) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','moderator','editor') NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `pnl_aut`
+--
+
+INSERT INTO `pnl_aut` (`id`, `login`, `password`, `role`) VALUES
+(1, 'admin', 'b59c67bf196a4758191e42f76670ceba', 'admin');
 
 -- --------------------------------------------------------
 
@@ -22903,7 +22910,7 @@ ALTER TABLE `pnl_attach`
 -- AUTO_INCREMENT для таблицы `pnl_aut`
 --
 ALTER TABLE `pnl_aut`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `pnl_category`
 --
