@@ -12,51 +12,22 @@ $autInfo = Auth::getAutInfo($_SESSION['id']);
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$error = array();
+if (Core_Array::getRequest('action') == 'remove'){
 
-if (Core_Array::getRequest('action')){
-	$current_password = trim(Core_Array::getRequest('current_password'));
-	$password = trim(Core_Array::getRequest('password'));
-	$password_again = trim(Core_Array::getRequest('password_again'));
+	$accountInfo = Auth::getAutInfo(Core_Array::getGet('id'));
 
-	if (empty($current_password)){
-		$error[] = core::getLanguage('error', 'enter_current_passwd');
-	}
-
-	if (empty($password)){
-		$error[] = core::getLanguage('error', 'password_isnt_entered');
-	}
-
-	if (empty($password_again)){
-		$error[] = core::getLanguage('error', 're_enter_password');
-	}
-	
-	if ($password && $password_again && $password != $password_again){
-		$error[] = core::getLanguage('error', 'passwords_dont_match');
-	}
-	
-	if ($current_password){
-		$current_password = md5($current_password);
-
-		if (Auth::getCurrentHash() != $current_password){
-			$error[] = core::getLanguage('error', 'current_password_incorrect');
+	if ($accountInfo['login'] != $autInfo['login']){
+		if ($data->removeAccount((int)Core_Array::getGet('id'))){
+			$success = core::getLanguage('msg', 'account_removed');
 		}
-	}
-
-	if(!$error) {
-		$result = $data->changePassword($password);
-		
-		if($result){
-			$success = core::getLanguage('msg', 'password_has_been_changed');
-		}	
 		else{
-			$error_passw_change = core::getLanguage('error', 'change_password');
-		}		
+			$error = core::getLanguage('error', 'web_apps_error');
+		}
 	}
 }
 
-$tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'security'));
-$tpl->assign('TITLE', core::getLanguage('title', 'security'));
+$tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'accounts'));
+$tpl->assign('TITLE', core::getLanguage('title', 'accounts'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'security'));
 
 include_once core::pathTo('extra', 'top.php');
@@ -65,24 +36,11 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 	
 //alert
-if (isset($error_passw_change)) {
+if (isset($error)) {
 	$tpl->assign('STR_ERROR', core::getLanguage('str', 'error'));
-	$tpl->assign('ERROR_ALERT', $error_passw_change);
+	$tpl->assign('ERROR_ALERT', $error);
 }
 	
-if (isset($error) && count($error) > 0){
-	$errorBlock = $tpl->fetch('show_errors');
-	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
-			
-	foreach($error as $row){
-		$rowBlock = $errorBlock->fetch('row');
-		$rowBlock->assign('ERROR', $row);
-		$errorBlock->assign('row', $rowBlock);
-	}
-		
-	$tpl->assign('show_errors', $errorBlock);
-}
-
 if (isset($success)){
 	$tpl->assign('MSG_ALERT', $success);
 }
@@ -114,7 +72,7 @@ foreach ($data->getAccountList() as $row){
 
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
-$tpl->assign('BUTTON_ADD', core::getLanguage('button', 'add'));
+$tpl->assign('BUTTON_ADD', core::getLanguage('button', 'add_account'));
 
 //footer
 include_once core::pathTo('extra', 'footer.php');

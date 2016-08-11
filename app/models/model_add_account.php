@@ -8,7 +8,7 @@ class Model_add_account extends Model
 	{
 		$login = core::database()->escape($login);
 		$query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE login LIKE '" . $login . "'";
-		$result = $this->data->querySQL($query);
+		$result = core::database()->querySQL($query);
 				
 		if (core::database()->getRecordCount($result) == 0)
 			return false;

@@ -9,13 +9,13 @@ Auth::authorization();
 
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
-if($autInfo['role'] != 'admin') exit();
+if ($autInfo['role'] != 'admin') exit();
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$error = array();
+$errors = array();
 
 if (Core_Array::getPost('action')){
 	$current_password = trim(Core_Array::getPost('current_password'));
@@ -23,30 +23,30 @@ if (Core_Array::getPost('action')){
 	$password_again = trim(Core_Array::getPost('password_again'));
 
 	if (!$current_password){
-		$error[] = core::getLanguage('error', 'enter_current_passwd');
+		$errors[] = core::getLanguage('error', 'enter_current_passwd');
 	}
 
 	if (!$password){
-		$error[] = core::getLanguage('error', 'password_isnt_entered');
+		$errors[] = core::getLanguage('error', 'password_isnt_entered');
 	}
 
 	if (!$password_again){
-		$error[] = core::getLanguage('error', 're_enter_password');
+		$errors[] = core::getLanguage('error', 're_enter_password');
 	}
 	
 	if($password && $password_again && $password != $password_again){
-		$error[] = core::getLanguage('error', 'passwords_dont_match');
+		$errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 	
-	if($_POST["current_password"]){
+	if ($current_password){
 		$current_password = md5($_POST["current_password"]);
 		
-		if(Auth::getCurrentHash() != $current_password){
+		if(Auth::getCurrentHash($autInfo['id']) != $current_password){
 			$error[] = core::getLanguage('error', 'current_password_incorrect');
 		}
 	}
 
-	if (!$error) {
+	if (!$errors) {
 		if ($data->changePassword($password, $autInfo['id'])){
 			$success = core::getLanguage('msg', 'password_has_been_changed');
 		}	
@@ -70,11 +70,11 @@ if (isset($error_passw_change)) {
 	$tpl->assign('ERROR_ALERT', $error_passw_change);
 }
 	
-if (count($error) > 0){
+if (count($errors) > 0){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($error as $row){
+	foreach($errors as $row){
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);

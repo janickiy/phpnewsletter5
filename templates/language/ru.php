@@ -79,6 +79,14 @@ $language["title"]["page404"] = 'Страница не найдена 404';
 $language["title_page"]["page500"] = 'Ошибка сервера 500';
 $language["title"]["page500"] = 'Ошибка сервера 500';
 
+$language["title_page"]["change_password"] = 'Смена пароля';
+$language["title"]["change_password"] = 'Смена пароля';
+$language["info"]["change_password"] = "";
+
+$language["title_page"]["add_account"] = 'Добавление учетной записи';
+$language["title"]["add_account"] = 'Добавление учетной записи';
+$language["info"]["add_account"] = "";
+
 $language["str"]["action"] = "Действия";
 $language["str"]["activity"] = "Активность";
 $language["str"]["category"] = "Категория";
@@ -303,16 +311,10 @@ $language["str"]["send_to_all"] = "Отправлять всем";
 $language["str"]["admin"] = "Администратор";
 $language["str"]["moderator"] = "Модератор";
 $language["str"]["editor"] = "Редактор";
-
-
 $language["str"]["login"] = "Логин";
 $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
-
-
-
-
-
+$language["str"]['required_fields'] = "обязательные поля";
 
 
 $language["button"]["apply"]        = "Применить";
@@ -326,6 +328,7 @@ $language["button"]["save"]   = "Сохранить";
 $language["button"]["subscribe"]   = "Подписаться";
 $language["button"]["send"] = "Отправить";
 $language["button"]["update"] = "Обновить до %SCRIPT_NAME% %NEW_VERSION%";
+$language["button"]["add_account"] = "Добавить учетную запись";
 
 $language["alert"]["clear_all"]      = "Вы действительно хотите удалить все адреса?";
 $language["alert"]["select_action"]  = "Выберите действие!";
@@ -361,6 +364,7 @@ $language["msg"]["cannot_read_zip_archive"] = "Ошибка: Невозможн�
 $language["msg"]["error_unzipping_file"] = "Ошибка распаковки архива";
 $language["msg"]["update_not_available"] = "Обновление недоступно.";
 $language["msg"]["update_completed"] = "Обновление завершено.";
+$language["msg"]["account_removed"] = "Аккаунт удален";
 
 $language["subject"]["notification_newuser"] = 'Зарегистрирован новый подписчик';
 $language["subject"]["subscription"] = "Подписка на рассылку";
@@ -398,6 +402,8 @@ $language["error"]["web_apps_error"] = 'Ошибка веб приложения
 $language["error"]["failed_to_update"] = 'Ошибка: Не удалось выполнить обновление!';
 $language["error"]["trial_license_has_expired"] = 'Срок действия пробной лицензии истек. Чтобы продолжать использовать это приложение необходимо приобрести лицензионный ключ. <a href="%BUY_LICENSE_LINK%" target="_blank">Купить лицензионный ключ</a>';
 $language["error"]["invalid_license"] = 'Лицензионный ключ недействительный. Чтобы продолжать использовать это приложение необходимо приобрести лицензионный ключ. <a href="%BUY_LICENSE_LINK%" target="_blank">Купить лицензионный ключ</a>';
+$language["error"]['login_isnt_entered'] = "Введите логин!";
+$language["error"]['login_already_exists'] = "Логин уже существует! Введите другой логин";
 
 //menu
 $language["menu"]["templates_title"] = "Email Шаблоны";
@@ -420,8 +426,8 @@ $language["menu"]["interface_settings_title"] = "Настройки интерф
 $language["menu"]["interface_settings"]       = "Настройки интерфейса";
 $language["menu"]["smtp_title"]        = "Настройки SMTP сервера";
 $language["menu"]["smtp"]              = "Настройки SMTP";
-$language["menu"]["security_title"]    = "Изменить пароль";
-$language["menu"]["security"]          = "Пароль";
+$language["menu"]["accounts_title"]    = "Учётные записи";
+$language["menu"]["accounts"]          = "Учётные записи";
 $language["menu"]["update_title"] = "Обновление";
 $language["menu"]["update"]       = "Обновление";
 $language["menu"]["mailing_options_title"]    = "Параметры рассылки";

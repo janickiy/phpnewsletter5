@@ -46,8 +46,12 @@
     <tr>
       <td>${LOGIN}</td>
       <td>${ROLE}</td>
-      <td class="td-middle"><!-- IF '${ALLOW_EDIT}' == 'yes' --> <i class="icon-pencil"></i>  <a title="${STR_EDIT}" href="./?t=edit_account&id=${ID}">${STR_EDIT}</a><!-- END IF --></td>
-      <td class="td-middle"><!-- IF '${ALLOW_EDIT}' == 'yes' --> <i class="icon-trash"></i> <a title="${STR_REMOVE}' href="./?t=accounts&action=remove&id=${ID}">${STR_REMOVE}<!-- END IF --></a></td>
+      <td class="td-middle">
+        <!-- IF '${ALLOW_EDIT}' == 'yes' -->
+         <a class="btn" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="icon-pencil"></i> ${STR_EDIT}</a>
+         <a class="btn" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="icon-trash"></i> ${STR_REMOVE}</a>
+        <!-- END IF -->
+      </td>
     </tr>
     <!-- END row -->
 

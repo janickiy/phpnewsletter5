@@ -80,6 +80,15 @@ $language["title"]["error_authorization"] = "Invalid authorization data!";
 $language["title"]["authorization"] = "Authorization";
 $language["title"]["subscribe"] = "Subscribe";
 
+$language["title_page"]["change_password"] = 'Сhanging_password';
+$language["title"]["change_password"] = 'Сhanging_password';
+$language["info"]["change_password"] = "";
+
+$language["title_page"]["add_account"] = 'Adding account';
+$language["title"]["add_account"] = 'Adding account';
+$language["info"]["add_account"] = "";
+
+
 $language["str"]["action"] = "Action";
 $language["str"]["activity"] = "Activity";
 $language["str"]["category"] = "Category";
@@ -304,6 +313,8 @@ $language["str"]["editor"] = "Editor";
 $language["str"]["login"] = "Login";
 $language["str"]["role"] = "Role";
 $language["str"]["action"] = "Action";
+$language["str"]['required_fields'] = "Required fields";
+
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";
@@ -316,6 +327,7 @@ $language["button"]["save"]   = "save";
 $language["button"]["subscribe"]   = "subscribe";
 $language["button"]["send"] = "send";
 $language["button"]["update"] = "Update to %SCRIPT_NAME% %NEW_VERSION%";
+$language["button"]["add_account"] = "Add account";
 
 $language["alert"]["clear_all"]      = "Do you really want to remove all emails?";
 $language["alert"]["select_action"]  = "Please, choose action!";
@@ -351,6 +363,7 @@ $language["msg"]["cannot_read_zip_archive"] = "Error: Cannot read .zip archive";
 $language["msg"]["error_unzipping_file"] = "Error unzipping file";
 $language["msg"]["update_not_available"] = "Update is not available";
 $language["msg"]["update_completed"] = "Update is completed.";
+$language["msg"]["account_removed"] = "Account has been removed";
 
 $language["subject"]["notification_newuser"] = 'Registered new subscriber';
 $language["subject"]["subscription"] = "Subscribe to Newsletter";
@@ -388,6 +401,8 @@ $language["error"]["web_apps_error"] = 'Web application error! Actions were not 
 $language["error"]["failed_to_update"] = 'ERROR: Failed to update!';
 $language["error"]["trial_license_has_expired"] = 'Trial license has expired. To continue to use this application you must buy a license key. <a href="%BUY_LICENSE_LINK%" target="_blank">Buy a license key</a>';
 $language["error"]["invalid_license"] = 'The license key is invalid. To continue to use this application you must buy a license key. <a href="%BUY_LICENSE_LINK%" target="_blank">Buy a license key</a>';
+$language["error"]['login_isnt_entered'] = "Login is not entered!";
+$language["error"]['login_already_exists'] = "This login already exists! Please enter another login";
 
 //menu
 $language["menu"]["templates_title"] = "Email Templates";
@@ -412,6 +427,8 @@ $language["menu"]["smtp_title"]        = "SMTP server settings";
 $language["menu"]["smtp"]              = "SMTP settings";
 $language["menu"]["security_title"]    = "Change Password";
 $language["menu"]["security"]          = "Password";
+$language["menu"]["accounts_title"]    = "Accounts";
+$language["menu"]["accounts"]          = "Accounts";
 $language["menu"]["update_title"] = "Update";
 $language["menu"]["update"]       = "Update";
 $language["menu"]["mailing_options_title"]    = "Mailing options";

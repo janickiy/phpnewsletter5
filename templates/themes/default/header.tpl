@@ -88,59 +88,15 @@
     <!-- END IF -->
   </div>
   <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-    <li
-    <!-- IF '${ACTIVE_MENU}' == '' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'create_template' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span>
-    </li>
-    <li <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'category' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'log' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'settings' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'accounts' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=accounts" title="${MENU_SECURITY_TITLE}"><i class="fa fa-key"></i> ${MENU_SECURITY}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'update' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a>
-    </li>
-    <li
-    <!-- IF '${ACTIVE_MENU}' == 'faq' -->
-    class="active"
-    <!-- END IF -->
-    ><a href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a>
-    </li>
+    <li <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF -->><a href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'create_template' -->class="active"<!-- END IF -->><a href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->class="active"<!-- END IF -->><a href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF -->><a href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->><a href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF -->><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'accounts' -->class="active"<!-- END IF -->><a href="./?t=accounts" title="${MENU_ACCOUNTS_TITLE}"><i class="fa fa-key"></i> ${MENU_ACCOUNTS}</a></li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'update' -->class="active"<!-- END IF -->><a href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a> </li>
+    <li <!-- IF '${ACTIVE_MENU}' == 'faq' -->class="active"<!-- END IF -->><a href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a></li>
   </ul>
 </div>
 <div class="span9" id="content">

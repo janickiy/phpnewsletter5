@@ -10,7 +10,7 @@ class Model_edit_account extends Model
 			$query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE id=" . $id;
 			$result = core::database()->querySQL($query);
 			return core::database()->getRow($result);
-		}	
+		}
 	}
 
 	public function editAccount($fields, $id)

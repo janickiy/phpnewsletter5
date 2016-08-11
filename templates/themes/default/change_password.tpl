@@ -30,7 +30,7 @@ ${ERROR_ALERT}
 ${MSG_ALERT}
 </div>
 <!-- END IF -->
-<a href="./?task=security">Учетные записи</a><br>
+<a href="./?t=accounts">Учетные записи</a><br>
 <form class="form-horizontal" action="${ACTION}" method="post">
   <div class="control-group">
     <label for="current_password" class="control-label">${STR_CURRENT_PASSWORD}:</label>

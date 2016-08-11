@@ -51,8 +51,9 @@ class Auth
 				$tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . "authorization.tpl");
 				$tpl->assign('TITLE', core::getLanguage('title', 'authorization'));
 				$tpl->assign('STR_ADMIN_AREA', core::getLanguage('str', 'admin_area'));
-				$tpl->assign('SCRIPT_NAME', core::getLanguage('script', 'name'));
+				$tpl->assign('SCRIPT_NAME', core::getLanguage('str', 'script_name'));
 				$tpl->assign('STR_SIGN_IN', core::getLanguage('str', 'sign_in'));
+                $tpl->assign('STR_LOGIN', core::getLanguage('str', 'login'));
 				$tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 				
 				// display content
