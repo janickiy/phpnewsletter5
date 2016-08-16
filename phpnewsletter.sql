@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Авг 16 2016 г., 17:51
+-- Время создания: Авг 16 2016 г., 21:26
 -- Версия сервера: 10.1.13-MariaDB
 -- Версия PHP: 5.6.23
 
@@ -51,7 +51,8 @@ CREATE TABLE `pnl_aut` (
 --
 
 INSERT INTO `pnl_aut` (`id`, `login`, `password`, `role`) VALUES
-(1, 'admin', '934b535800b1cba8f96a5d72f72f1611', 'admin');
+(1, 'admin', '934b535800b1cba8f96a5d72f72f1611', 'admin'),
+(2, 'moder', 'b59c67bf196a4758191e42f76670ceba', 'moderator');
 
 -- --------------------------------------------------------
 
@@ -420,8 +421,9 @@ INSERT INTO `pnl_ready_send` (`id_ready_send`, `id_user`, `id_template`, `succes
 
 CREATE TABLE `pnl_settings` (
   `language` varchar(10) DEFAULT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  `email_name` varchar(200) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `list_owner` varchar(255) DEFAULT NULL,
+  `email_name` varchar(255) DEFAULT NULL,
   `show_email` enum('no','yes') DEFAULT 'yes',
   `organization` varchar(200) DEFAULT NULL,
   `smtp_host` varchar(200) DEFAULT NULL,
@@ -451,6 +453,7 @@ CREATE TABLE `pnl_settings` (
   `interval_number` int(9) DEFAULT NULL,
   `limit_number` int(6) DEFAULT NULL,
   `precedence` enum('no','bulk','junk','list') DEFAULT 'bulk',
+  `return_path` varchar(255) DEFAULT NULL,
   `sleep` int(6) DEFAULT NULL,
   `random` enum('no','yes') DEFAULT 'no',
   `add_dkim` enum('no','yes') DEFAULT 'no',
@@ -465,8 +468,8 @@ CREATE TABLE `pnl_settings` (
 -- Дамп данных таблицы `pnl_settings`
 --
 
-INSERT INTO `pnl_settings` (`language`, `email`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`) VALUES
-('ru', 'vasya-pupkin@my-domain.com', 'my-domain.com', 'yes', '', 'smtp.gmail.com', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'no', 'no', 'no', 'no', 'no', 'yes', 'Subscription to mailing', 'Hello, %NAME%\r\n\r\nGetting mail is possible after the completion of activation. To activate your subscription, click on the link below: %CONFIRM%\r\n\r\nIf you are not subscribing to this address, simply ignore the letter or go to: %UNSUB%\r\n\r\nSincerely, \r\nthe site administrator %SERVER_NAME%', 'yes', 'Unsubscribe from mailing: <a href=%UNSUB%>%UNSUB%</a>', 'no', 1, 100, 'junk', 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '');
+INSERT INTO `pnl_settings` (`language`, `email`, `list_owner`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `return_path`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`) VALUES
+('ru', 'vasya-pupkin@my-domain.com', NULL, 'my-domain.com', 'yes', '', 'smtp.gmail.com', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'no', 'no', 'no', 'no', 'no', 'yes', 'Subscription to mailing', 'Hello, %NAME%\r\n\r\nGetting mail is possible after the completion of activation. To activate your subscription, click on the link below: %CONFIRM%\r\n\r\nIf you are not subscribing to this address, simply ignore the letter or go to: %UNSUB%\r\n\r\nSincerely, \r\nthe site administrator %SERVER_NAME%', 'yes', 'Unsubscribe from mailing: <a href=%UNSUB%>%UNSUB%</a>', 'no', 1, 100, 'junk', NULL, 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '');
 
 -- --------------------------------------------------------
 
@@ -22909,7 +22912,7 @@ ALTER TABLE `pnl_attach`
 -- AUTO_INCREMENT для таблицы `pnl_aut`
 --
 ALTER TABLE `pnl_aut`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `pnl_category`
 --

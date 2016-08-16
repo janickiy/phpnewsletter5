@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="./templates/themes/default/styles/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/styles.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/DT_bootstrap.css" rel="stylesheet" media="screen">
-<link type="text/css" href="./templates/themes/default/styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-<link href="./templates/themes/default/styles/css/font-awesome.min.css" rel="stylesheet">
+<link href="./templates/assets/styles/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/styles.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/DT_bootstrap.css" rel="stylesheet" media="screen">
+<link type="text/css" href="./templates/assets/styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link href="./templates/assets/styles/css/font-awesome.min.css" rel="stylesheet">
 <title>PHP Newsletter | ${TITLE_PAGE}</title>
 <script type="text/javascript" src="./templates/js/jquery.min.js"></script>
 <script type="text/javascript" src="./templates/js/jquery.hide_alertblock.js"></script>
@@ -100,7 +100,7 @@
   </ul>
 </div>
 <div class="span9" id="content">
-<div class="row"><p class="text-right"><a href="./?t=logout">${STR_LOGOUT}</a></p></div>
+<div class="row"><p class="text-right">${ACCOUNT_LOGIN} <a href="./?t=logout">${STR_LOGOUT}</a></p></div>
 <div class="row-fluid">
   <div class="alert alert-error alert-block" id="alert_error_block" style="display:none; position: relative; z-index: 1000;"> <a class="close" href="#" data-dismiss="alert">×</a>
     <h4 class="alert-heading">${STR_ERROR}!</h4>

@@ -58,20 +58,26 @@ ${INFO_ALERT}
         </div>
       </div>
       <div class="control-group">
+        <label class="control-label-large" for="return_path">${SET_RETURN_PATH}:</label>
+        <div class="controls-large">
+          <input type="text" class="span4 focused" value="${RETURN_PATH}" name="return_path">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label-large" for="return_path">${SET_LIST_OWNER}:</label>
+        <div class="controls-large">
+          <input type="text" class="span4 focused" value="${LIST_OWNER}" name="list_owner">
+        </div>
+      </div>
+      <div class="control-group">
         <label class="control-label-large" for="show_email">${SET_SHOW_EMAIL}:</label>
-        <div class="controls-large"> <input type=checkbox name="show_email"
-          <!-- IF '${SHOW_EMAIL}' == 'yes' -->
-          checked="checked"
-          <!-- END IF -->
-          > </div>
+        <div class="controls-large">
+          <input type=checkbox name="show_email" <!-- IF '${SHOW_EMAIL}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="newsubscribernotify">${SET_SUBSCRIBER_NOTIFY}:</label>
-        <div class="controls-large"> <input type=checkbox name="newsubscribernotify"
-          <!-- IF '${SUBSCRIBER_NOTIFY}' == 'yes' -->
-          checked="checked"
-          <!-- END IF -->
-          > </div>
+        <div class="controls-large">
+          <input type=checkbox name="newsubscribernotify" <!-- IF '${SUBSCRIBER_NOTIFY}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="email_name">${SET_EMAIL_NAME}:</label>
@@ -99,11 +105,8 @@ ${INFO_ALERT}
       </div>
 	   <div class="control-group">
         <label class="control-label-large" for="require_confirmation">${SET_REQUIRE_CONFIRMATION}:</label>
-        <div class="controls-large"> <input type=checkbox name="require_confirmation"
-          <!-- IF '${REQUIRE_CONFIRMATION}' == 'yes' -->
-          checked="checked"
-          <!-- END IF -->
-          > </div>
+        <div class="controls-large">
+          <input type=checkbox name="require_confirmation" <!-- IF '${REQUIRE_CONFIRMATION}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="unsublink">${SET_UNSUBLINK}:</label>
@@ -146,27 +149,16 @@ ${INFO_ALERT}
       <div class="control-group">
         <label class="control-label-large" for="smtp_secure">${SET_SMTP_SSL}:</label>
         <div class="controls-large">
-          <label class="radio inline"> <input type="radio" 
-            <!-- IF '${SMTP_SECURE}' == 'no' -->
-            checked="checked"
-            <!-- END IF -->
-            value="no" name="smtp_secure">${STR_NO}</label>
-          <label class="radio inline"> <input type="radio" value="ssl" 
-            <!-- IF '${SMTP_SECURE}' == 'ssl' -->
-            checked="checked"
-            <!-- END IF -->
-            name="smtp_secure">${SMTP_SECURE_SSL}</label>
-          <label class="radio inline"> <input type="radio" value="tls" 
-            <!-- IF '${SMTP_SECURE}' == 'tls' -->
-            checked="checked"
-            <!-- END IF -->
-            name="smtp_secure">${SMTP_SECURE_TLS}</label>
+          <label class="radio inline"> <input type="radio" <!-- IF '${SMTP_SECURE}' == 'no' -->checked="checked"<!-- END IF -->value="no" name="smtp_secure">${STR_NO}</label>
+          <label class="radio inline"> <input type="radio" value="ssl" <!-- IF '${SMTP_SECURE}' == 'ssl' -->checked="checked"<!-- END IF -->name="smtp_secure">${SMTP_SECURE_SSL}</label>
+          <label class="radio inline"> <input type="radio" value="tls" <!-- IF '${SMTP_SECURE}' == 'tls' -->checked="checked"<!-- END IF -->name="smtp_secure">${SMTP_SECURE_TLS}</label>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="smtp_aut">${SET_SMTP_AUT}:</label>
         <div class="controls-large">
-          <label class="radio"> <input type="radio" 
+          <label class="radio">
+            <input type="radio"
             <!-- IF '${SMTP_AUT}' == 'no' -->
             checked="checked"
             <!-- END IF -->
@@ -208,53 +200,17 @@ ${INFO_ALERT}
         <div class="controls-large">
           <input type="text" class="span1 focused" name="interval_number" value="${INTERVAL_NUMBER}">
           <select class="span2 form-control" name="interval_type">
-            <option value="0" 
-          
-            <!-- IF '${INTERVAL_TYPE}' == 'no' -->
-            
-           selected="selected"
-            <!-- END IF -->
-            >${SET_INTERVAL_TYPE_NO}
-          
-            </option>
-            <option value="1" 
-          
-            <!-- IF '${INTERVAL_TYPE}' == 'm' -->
-            
-           selected="selected"
-            <!-- END IF -->
-            >${SET_INTERVAL_TYPE_M}
-          
-            </option>
-            <option value="2" 
-          
-            <!-- IF '${INTERVAL_TYPE}' == 'h' -->
-            
-           selected="selected"
-            <!-- END IF -->
-            >${SET_INTERVAL_TYPE_H}
-          
-            </option>
-            <option value="3" 
-          
-            <!-- IF '${INTERVAL_TYPE}' == 'd' -->
-            
-           selected="selected"
-            <!-- END IF -->
-            >${SET_INTERVAL_TYPE_D}
-          
-            </option>
+            <option value="0" <!-- IF '${INTERVAL_TYPE}' == 'no' -->selected="selected"<!-- END IF -->>${SET_INTERVAL_TYPE_NO}</option>
+            <option value="1" <!-- IF '${INTERVAL_TYPE}' == 'm' -->selected="selected"<!-- END IF -->>${SET_INTERVAL_TYPE_M}</option>
+            <option value="2" <!-- IF '${INTERVAL_TYPE}' == 'h' -->selected="selected"<!-- END IF -->>${SET_INTERVAL_TYPE_H}</option>
+            <option value="3" <!-- IF '${INTERVAL_TYPE}' == 'd' -->selected="selected"<!-- END IF -->>${SET_INTERVAL_TYPE_D}</option>
           </select>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="re_send">${SET_RE_SEND}:</label>
-        <div class="controls-large"> <input type=checkbox name="re_send"
-        
-          <!-- IF '${RE_SEND}' == 'yes' -->
-          checked="checked"
-          <!-- END IF -->
-          > </div>
+        <div class="controls-large">
+          <input type=checkbox name="re_send" <!-- IF '${RE_SEND}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
       </div>
       <div class="control-group">
         <label class="control-label-large" for="limit_number">${SET_NUMBER_LIMIT}:</label>
@@ -273,12 +229,8 @@ ${INFO_ALERT}
 	  
 	  <div class="control-group">
         <label class="control-label-large" for="random">${SET_RANDOM}:</label>
-        <div class="controls-large"> <input type=checkbox name="random"
-        
-          <!-- IF '${RANDOM}' == 'yes' -->
-          checked="checked"
-          <!-- END IF -->
-          > </div>
+        <div class="controls-large">
+          <input type=checkbox name="random"  <!-- IF '${RANDOM}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
       </div>
 	  
       <div class="control-group">

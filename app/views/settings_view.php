@@ -19,7 +19,9 @@ if (Core_Array::getRequest('action')){
 
 	$fields['language'] = trim(Core_Array::getRequest('language'));
 	$fields['email'] = trim(Core_Array::getRequest('email'));
+	$fields['list_owner'] = trim(Core_Array::getRequest('list_owner'));
 	$fields['email_name'] = trim(Core_Array::getRequest('email_name'));
+	$fields['return_path'] = trim(Core_Array::getRequest('return_path'));
 	$fields['show_email'] = Core_Array::getRequest('show_email') == 'on' ? "yes" : "no";
 	$fields['organization'] = trim(Core_Array::getRequest('organization'));
 	$fields['smtp_host'] = trim(Core_Array::getRequest('smtp_host'));
@@ -90,6 +92,7 @@ if (isset($success)){
 //value
 $tpl->assign('OPTION_LANG', core::getSetting('language'));
 $tpl->assign('EMAIL', core::getSetting('email'));
+$tpl->assign('LIST_OWNER', core::getSetting('list_owner'));
 $tpl->assign('SHOW_EMAIL', core::getSetting('show_email'));
 $tpl->assign('SUBSCRIBER_NOTIFY', core::getSetting('newsubscribernotify'));
 $tpl->assign('SUBJECTTEXTCONFIRM', core::getSetting('subjecttextconfirm'));
@@ -116,6 +119,7 @@ $tpl->assign('PRECEDENCE', core::getSetting('precedence'));
 $tpl->assign('SENDMAIL', core::getSetting('sendmail'));
 $tpl->assign('SLEEP', core::getSetting('sleep'));
 $tpl->assign('RANDOM', core::getSetting('random'));
+$tpl->assign('RETURN_PATH', core::getSetting('return_path'));
 $tpl->assign('ADD_DKIM', core::getSetting('add_dkim'));
 $tpl->assign('DKIM_DOMEN', core::getSetting('dkim_domain'));
 $tpl->assign('DKIM_PRIVATE', core::getSetting('dkim_private'));
@@ -126,11 +130,11 @@ $tpl->assign('DKIM_IDENTITY', core::getSetting('dkim_identity'));
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('SET_LANGUAGE', core::getLanguage('str', 'set_language'));
-$tpl->assign('SET_THEME',  core::getLanguage('str', 'set_theme'));
 $tpl->assign('SET_OPTION_RU', core::getLanguage('str', 'set_option_ru'));
 $tpl->assign('SET_OPTION_EN', core::getLanguage('str', 'set_option_en'));
 $tpl->assign('SET_INTERFACE_SETTINGS', core::getLanguage('str', 'set_interface_settings'));
 $tpl->assign('SET_EMAIL', core::getLanguage('str', 'set_email'));
+$tpl->assign('SET_LIST_OWNER', core::getLanguage('str', 'list_owner'));
 $tpl->assign('SET_SHOW_EMAIL', core::getLanguage('str', 'set_show_email'));
 $tpl->assign('SET_SUBSCRIBER_NOTIFY', core::getLanguage('str', 'set_subscriber_notify'));
 $tpl->assign('SET_EMAIL_NAME', core::getLanguage('str', 'set_email_name'));
@@ -155,9 +159,10 @@ $tpl->assign('SET_SMTP_PASSWORD', core::getLanguage('str', 'set_password'));
 $tpl->assign('SET_SMTP_PORT', core::getLanguage('str', 'set_port'));
 $tpl->assign('SET_SMTP_TIMEOUT', core::getLanguage('str', 'set_timeout'));
 $tpl->assign('SET_SMTP_SSL', core::getLanguage('str', 'set_smtp_secure'));
-$tpl->assign('STR_NO', core::getLanguage('str', 'set_no'));
-$tpl->assign('SMTP_SECURE_SSL', core::getLanguage('str', 'set_smtp_secure_ssl'));
-$tpl->assign('SMTP_SECURE_TLS', core::getLanguage('str', 'set_smtp_secure_tls'));
+$tpl->assign('SET_RETURN_PATH', core::getLanguage('str', 'set_return_path'));
+$tpl->assign('STR_NO', core::getLanguage('str', 'no'));
+$tpl->assign('SMTP_SECURE_SSL', core::getLanguage('str', 'smtp_secure_ssl'));
+$tpl->assign('SMTP_SECURE_TLS', core::getLanguage('str', 'smtp_secure_tls'));
 $tpl->assign('SET_SMTP_AUT', core::getLanguage('str', 'set_smtp_aut'));
 $tpl->assign('SET_SMTP_AUT_LOGIN', core::getLanguage('str', 'set_smtp_aut_login'));
 $tpl->assign('SET_SMTP_AUT_PLAIN', core::getLanguage('str', 'set_smtp_aut_plain'));
@@ -173,7 +178,7 @@ $tpl->assign('SET_INTERVAL_TYPE_D', core::getLanguage('str', 'set_interval_type_
 $tpl->assign('SET_RE_SEND', core::getLanguage('str', 'set_re_send'));
 $tpl->assign('SET_NUMBER_LIMIT', core::getLanguage('str', 'set_number_limit'));
 $tpl->assign('SET_NUMBER_DAYS', core::getLanguage('str', 'set_number_days'));
-$tpl->assign('SET_IPRECEDENCE_NO', core::getLanguage('str', 'set_no'));
+$tpl->assign('SET_IPRECEDENCE_NO', core::getLanguage('str', 'no'));
 $tpl->assign('SET_CHARSET', core::getLanguage('str', 'set_charset'));
 $tpl->assign('SET_HOW_TO_SEND', core::getLanguage('str', 'set_how_to_send'));
 $tpl->assign('SET_HOW_TO_SEND_OPTION_1', core::getLanguage('str', 'set_how_to_send_option_1'));

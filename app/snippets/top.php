@@ -10,3 +10,6 @@ $tpl->assign('STR_LOGOUT', core::getLanguage('str', 'logout'));
 $tpl->assign('STR_LAUNCHEDMAILING', core::getLanguage('str', 'launchedmailing'));
 $tpl->assign('STR_STOPMAILING', core::getLanguage('str', 'stopmailing'));
 $tpl->assign('LANGUAGE', core::getSetting("language"));
+
+$tpl->assign('ACCOUNT_LOGIN', $autInfo['login']);
+

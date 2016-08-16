@@ -11,12 +11,13 @@ class Auth
             $_SESSION['id'] = '';
             $_SESSION['sess_admin'] = '';
         }
-
-        $query = "SELECT * FROM " . core::database()->getTableName('aut') . "";
-        $result = core::database()->querySQL($query);
-        $row = core::database()->getRow($result);
         
         if (Core_Array::getRequest('admin')) {
+            $login = trim(core::database()->escape(Core_Array::getPost('login')));
+            $query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE login='" . $login . "'";
+            $result = core::database()->querySQL($query);
+            $row = core::database()->getRow($result);
+
             if ($_SESSION['sess_admin'] != "ok")
                 $sess_pass = md5(trim(Core_Array::getRequest('password')));
             

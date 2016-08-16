@@ -274,6 +274,8 @@ $language["str"]["set_dkim_identity"] = "Подписанная личность
 $language["str"]["set_sleep"] = "Задержка между отправки писем (сек.)";
 $language["str"]["set_theme"] = "Тема";
 $language["str"]["set_random"] = "Рандомизация подписчиков";
+$language["str"]["set_return_path"] = "Обратный адрес (Return-path)";
+$language["str"]["list_owner"] = "Email адрес организатора рассылки (List-Owner)";
 $language["str"]["charutf8"] = "Юникод (UTF-8)";
 $language["str"]["iso88591"] = "Западноевропейская (ISO)";
 $language["str"]["iso88592"] = "Центральноевропейская (ISO)";
@@ -315,6 +317,11 @@ $language["str"]["login"] = "Логин";
 $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
 $language["str"]['required_fields'] = "обязательные поля";
+
+
+
+
+
 
 
 $language["button"]["apply"]        = "Применить";

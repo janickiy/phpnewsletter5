@@ -3,10 +3,10 @@
 <head>
 <title>${TITLE}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="./templates/themes/default/styles/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/styles.css" rel="stylesheet" media="screen">
-<link href="./templates/themes/default/styles/DT_bootstrap.css" rel="stylesheet" media="screen">				
+<link href="./templates/assets/styles/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/styles.css" rel="stylesheet" media="screen">
+<link href="./templates/assets/styles/DT_bootstrap.css" rel="stylesheet" media="screen">
 </head>
 <body>				
 <div class="container">
