@@ -42,6 +42,4 @@ if (file_exists($lang_file)) {
 } else
     exit('ERROR: Language file can not load!');
 
-$temlate_path = core::getSetting("theme") ? "themes/" .  core::getSetting("theme") ."/" : "themes/default/";
-
-core::setTemplate($temlate_path);
+core::setTemplate("assets/");

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Авг 10 2016 г., 01:13
+-- Время создания: Авг 16 2016 г., 17:51
 -- Версия сервера: 10.1.13-MariaDB
 -- Версия PHP: 5.6.23
 
@@ -31,7 +31,7 @@ CREATE TABLE `pnl_attach` (
   `name` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `id_template` int(7) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -44,14 +44,14 @@ CREATE TABLE `pnl_aut` (
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','moderator','editor') NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_aut`
 --
 
 INSERT INTO `pnl_aut` (`id`, `login`, `password`, `role`) VALUES
-(1, 'admin', 'b59c67bf196a4758191e42f76670ceba', 'admin');
+(1, 'admin', '934b535800b1cba8f96a5d72f72f1611', 'admin');
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ INSERT INTO `pnl_aut` (`id`, `login`, `password`, `role`) VALUES
 CREATE TABLE `pnl_category` (
   `id_cat` int(5) NOT NULL,
   `name` varchar(200) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_category`
@@ -81,7 +81,7 @@ INSERT INTO `pnl_category` (`id_cat`, `name`) VALUES
 CREATE TABLE `pnl_charset` (
   `id_charset` int(5) NOT NULL,
   `charset` varchar(32) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_charset`
@@ -129,7 +129,7 @@ INSERT INTO `pnl_charset` (`id_charset`, `charset`) VALUES
 
 CREATE TABLE `pnl_licensekey` (
   `licensekey` varchar(100) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_licensekey`
@@ -147,7 +147,7 @@ INSERT INTO `pnl_licensekey` (`licensekey`) VALUES
 CREATE TABLE `pnl_log` (
   `id_log` int(7) NOT NULL,
   `time` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,7 @@ CREATE TABLE `pnl_log` (
 
 CREATE TABLE `pnl_process` (
   `process` enum('start','pause','stop') NOT NULL DEFAULT 'start'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_process`
@@ -181,7 +181,7 @@ CREATE TABLE `pnl_ready_send` (
   `readmail` enum('yes','no') DEFAULT 'no',
   `time` datetime DEFAULT NULL,
   `id_log` int(9) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_ready_send`
@@ -420,7 +420,6 @@ INSERT INTO `pnl_ready_send` (`id_ready_send`, `id_user`, `id_template`, `succes
 
 CREATE TABLE `pnl_settings` (
   `language` varchar(10) DEFAULT NULL,
-  `theme` enum('default','dark') DEFAULT NULL,
   `email` varchar(200) DEFAULT NULL,
   `email_name` varchar(200) DEFAULT NULL,
   `show_email` enum('no','yes') DEFAULT 'yes',
@@ -460,14 +459,14 @@ CREATE TABLE `pnl_settings` (
   `dkim_selector` varchar(255) DEFAULT NULL,
   `dkim_passphrase` varchar(255) DEFAULT NULL,
   `dkim_identity` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_settings`
 --
 
-INSERT INTO `pnl_settings` (`language`, `theme`, `email`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`) VALUES
-('ru', 'default', 'vasya-pupkin@my-domain.com', 'my-domain.com', 'yes', '', 'smtp.gmail.com', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'no', 'no', 'no', 'no', 'no', 'yes', 'Subscription to mailing', 'Hello, %NAME%\r\n\r\nGetting mail is possible after the completion of activation. To activate your subscription, click on the link below: %CONFIRM%\r\n\r\nIf you are not subscribing to this address, simply ignore the letter or go to: %UNSUB%\r\n\r\nSincerely, \r\nthe site administrator %SERVER_NAME%', 'yes', 'Unsubscribe from mailing: <a href=%UNSUB%>%UNSUB%</a>', 'no', 1, 100, 'junk', 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '');
+INSERT INTO `pnl_settings` (`language`, `email`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`) VALUES
+('ru', 'vasya-pupkin@my-domain.com', 'my-domain.com', 'yes', '', 'smtp.gmail.com', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'no', 'no', 'no', 'no', 'no', 'yes', 'Subscription to mailing', 'Hello, %NAME%\r\n\r\nGetting mail is possible after the completion of activation. To activate your subscription, click on the link below: %CONFIRM%\r\n\r\nIf you are not subscribing to this address, simply ignore the letter or go to: %UNSUB%\r\n\r\nSincerely, \r\nthe site administrator %SERVER_NAME%', 'yes', 'Unsubscribe from mailing: <a href=%UNSUB%>%UNSUB%</a>', 'no', 1, 100, 'junk', 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '');
 
 -- --------------------------------------------------------
 
@@ -479,7 +478,7 @@ CREATE TABLE `pnl_subscription` (
   `id_sub` int(7) NOT NULL,
   `id_user` int(9) DEFAULT NULL,
   `id_cat` int(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_subscription`
@@ -15358,7 +15357,7 @@ CREATE TABLE `pnl_template` (
   `pos` int(7) NOT NULL,
   `id_cat` int(7) NOT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_template`
@@ -15382,7 +15381,7 @@ CREATE TABLE `pnl_users` (
   `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status` enum('active','noactive') NOT NULL DEFAULT 'noactive',
   `time_send` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_users`
@@ -22915,7 +22914,7 @@ ALTER TABLE `pnl_aut`
 -- AUTO_INCREMENT для таблицы `pnl_category`
 --
 ALTER TABLE `pnl_category`
-  MODIFY `id_cat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `pnl_charset`
 --
@@ -22925,7 +22924,7 @@ ALTER TABLE `pnl_charset`
 -- AUTO_INCREMENT для таблицы `pnl_log`
 --
 ALTER TABLE `pnl_log`
-  MODIFY `id_log` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_log` int(7) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `pnl_ready_send`
 --

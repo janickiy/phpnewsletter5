@@ -18,7 +18,6 @@ if (Core_Array::getRequest('action')){
 	$fields = Array();
 
 	$fields['language'] = trim(Core_Array::getRequest('language'));
-	$fields['theme'] = Core_Array::getRequest('theme');
 	$fields['email'] = trim(Core_Array::getRequest('email'));
 	$fields['email_name'] = trim(Core_Array::getRequest('email_name'));
 	$fields['show_email'] = Core_Array::getRequest('show_email') == 'on' ? "yes" : "no";
@@ -90,7 +89,6 @@ if (isset($success)){
 
 //value
 $tpl->assign('OPTION_LANG', core::getSetting('language'));
-$tpl->assign('OPTION_THEME', core::getSetting('theme'));
 $tpl->assign('EMAIL', core::getSetting('email'));
 $tpl->assign('SHOW_EMAIL', core::getSetting('show_email'));
 $tpl->assign('SUBSCRIBER_NOTIFY', core::getSetting('newsubscribernotify'));

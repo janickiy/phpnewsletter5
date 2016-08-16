@@ -1,11 +1,6 @@
 <?php
-/**
- * phpnewsletter_5_0_alfa
- * Copyright (c) 2016 janic
- * Website: http://janicky.com
- * E-mail: janickiy@mail.ru
- * Skype: janickiy
- */
+
+defined('LETTER') || exit('NewsLetter: access denied.');
  
 $tpl->assign('SCRIPT_VERSION', VERSION);
 $tpl->assign('STR_WARNING', core::getLanguage('str', 'warning'));
