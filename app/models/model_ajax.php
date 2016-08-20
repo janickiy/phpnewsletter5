@@ -567,7 +567,6 @@ class Model_ajax extends Model
 						$m->SmtpClose();
 					$result = $this->updateProcess('stop');
 					return $mailcount;
-					break;
 				}
 			}
 
@@ -598,7 +597,8 @@ class Model_ajax extends Model
 					WHERE id_log=" . $id_log . "
 					ORDER BY " . $strtmp . "
 					LIMIT " . $number . "
-					OFFSET " . $offset . "";
+					OFFSET " . $offset . "
+					";
 
 			$result = core::database()->querySQL($query);
 

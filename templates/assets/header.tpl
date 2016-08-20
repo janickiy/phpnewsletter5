@@ -13,68 +13,47 @@
 <script type="text/javascript" src="./templates/js/jquery.hide_alertblock.js"></script>
 </head>
 <body>
-
 <script type="text/javascript">
-	$(document).ready(function(){  
-		$.ajax({
-			type: "GET",
-			url: "./?t=alert_update",
-			dataType: "xml",
-			success: function(xml){
-				$(xml).find("document").each(function () {
-					$('#alert_msg_block').fadeIn('700');
-					$("#alert_warning_msg").append($(this).find("warning").text());
-				});
+$(document).ready(function(){
+	$.ajax({
+		dataType: 'json',
+		url: './?t=ajax&action=alert_update',
+		success: function(data){
+			if (data.msg != ''){
+				$('#alert_msg_block').fadeIn('700');
+				$("#alert_warning_msg").append(data.msg);
 			}
-		});
-		
-		$.ajax({
-			type: "GET",
-			url: "./?t=check_licensekey",
-			dataType: "xml",
-			success: function(xml){
-				$(xml).find("document").each(function () {
-				var result = $(this).find("result").text();				
-					if(result == 'no'){
-						$('#alert_error_block').fadeIn('700');
-						$("#alert_error_msg").append($(this).find("error_msg").text());
-					}
-				});
-			}
-		});
-		
-		setInterval(function() {
-			$.ajax({
-				type: "GET",
-				url: "./?t=xmldaemonstat",
-				dataType: "xml",
-				success: function(xml){
-					$(xml).find("document").each(function () {
-						if($(this).find("status").text() == 'start'){ 
-							$("#mailing_status").html('<span title="${STR_LAUNCHEDMAILING}" id="startmailing" class="startmailing"></span>');
-						}
-						else {
-							$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
-						}			
-					});
-				}
-			});
-		}, 5000);
-		
-		 $('.startmailing').live('click', stopMailing);
+		}
 	});
-		
-	
-	function stopMailing ()
-	{
+
+	setInterval(function() {
 		$.ajax({
 			type: "GET",
-			url: "./?t=process&status=stop",
-			success: function(data){
-				$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
+			url: "./?t=ajax&action=xmldaemonstat",
+			dataType: "json",
+			success: function(data) {
+				if (data.status != ''){
+					if (data.status == 'start'){
+						$("#mailing_status").html('<span title="${STR_LAUNCHEDMAILING}" id="startmailing" class="startmailing"></span>');
+					}
+					else{
+						$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
+					}
+				}
 			}
 		});
-	}	
+	}, 5000);
+});
+
+$(document).on( "click", ".startmailing", function() {
+	$.ajax({
+		type: "GET",
+		url: "./?t=ajax&action=process&status=stop",
+		success: function(data){
+			$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
+		}
+	});
+});
 
 </script>
 <div class="container-fluid">

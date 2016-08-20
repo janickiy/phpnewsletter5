@@ -19,9 +19,9 @@ switch (Core_Array::getGet('action'))
 
 		if ($update->checkNewVersion()){
 			$update_warning = str_replace('%SCRIPTNAME%', core::getLanguage('str', 'script_name'), core::getLanguage('str', 'update_warning'));
-			$update_warning = str_replace('%VERSION%', $update->getVersion(), core::getLanguage('str', 'update_warning'));
-			$update_warning = str_replace('%CREATED%', $update->getCreated(), core::getLanguage('str', 'update_warning'));
-			$update_warning = str_replace('%DOWNLOADLINK%', $update->getDownloadLink(), core::getLanguage('str', 'update_warning'));
+			$update_warning = str_replace('%VERSION%', $update->getVersion(), $update_warning);
+			$update_warning = str_replace('%CREATED%', $update->getCreated(), $update_warning);
+			$update_warning = str_replace('%DOWNLOADLINK%', $update->getDownloadLink(), $update_warning);
 			$content = array("msg" => $update_warning);
 
 			Pnl::showJSONContent(json_encode($content));
@@ -191,7 +191,7 @@ switch (Core_Array::getGet('action'))
 
 		$arr = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
 
-		if(is_array($arr)){
+		if (is_array($arr)){
 			foreach($arr as $row){
 				$catname = $row['id_cat'] == 0 ? core::getLanguage('str', 'general') : $row['catname'];
 				$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
@@ -209,11 +209,23 @@ switch (Core_Array::getGet('action'))
 				);
 			}
 
-			if(isset($rows)) {
+			if (isset($rows)) {
 				$content = '{"item":' . json_encode($rows) . '}';
 				Pnl::showJSONContent($content);
 			}
 		}
+
+	break;
+
+	case 'process':
+		if ($data->updateProcess($_REQUEST['status'])){
+			$content = array("status" => $_REQUEST['status']);
+		}
+		else{
+			$content = array("status" => "no");
+		}
+
+		Pnl::showJSONContent(json_encode($content));
 
 	break;
 }
