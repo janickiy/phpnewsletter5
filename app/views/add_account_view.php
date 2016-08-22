@@ -1,5 +1,13 @@
 <?php
 
+/********************************************
+ * PHP Newsletter 5.0.0 alfa
+ * Copyright (c) 2006-2016 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 session_start();
@@ -7,11 +15,9 @@ session_start();
 // authorization
 Auth::authorization();
 
-session_write_close();
-
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
-if ($autInfo['role'] != 'admin') exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");

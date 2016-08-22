@@ -145,7 +145,7 @@
 <div class="alert alert-info"> ${INFO_ALERT} </div>
 <!-- END IF -->
 <!-- BEGIN LogList -->
-<p><a class="btn" href="./?t=log&clear_log"> <i class="icon-trash"></i> ${STR_CLEAR_LOG} </a></p>
+<!-- IF 'ACCOUNT_ROLE' == 'admin' || 'ACCOUNT_ROLE' == 'moderator' --><p><a class="btn" href="./?t=log&clear_log"> <i class="icon-trash"></i> ${STR_CLEAR_LOG} </a></p><!-- END IF -->
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info"> ${INFO_ALERT} </div>
 <!-- END IF -->
@@ -178,7 +178,7 @@
       <td>${TOTAL_SENT}</td>
       <td>${TOTAL_NOSENT}</td>
       <td>${TOTAL_READ}</td>
-      <td><span class="IconExcel"></span><a title="${STR_DOWNLOADSTAT}" href="./?t=logstatxls&id_log=${ID_LOG}">${STR_DOWNLOAD}</a></td>
+      <td><!-- IF '${ALLOW_DOWNLOAD}' == 'yes' --><span class="IconExcel"></span><a title="${STR_DOWNLOADSTAT}" href="./?t=logstatxls&id_log=${ID_LOG}">${STR_DOWNLOAD}</a><!-- END IF --></td>
     </tr>
     <!-- END row -->
   </tbody>

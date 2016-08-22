@@ -1,5 +1,13 @@
 <?php
 
+/********************************************
+ * PHP Newsletter 5.0.0 alfa
+ * Copyright (c) 2006-2016 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 session_start();
@@ -7,10 +15,10 @@ session_start();
 // authorization
 Auth::authorization();
 
+Auth::logOut();
+
 session_write_close();
 
-Auth::logOut();
-    
 $redirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : '/';
 	
 header("Location: " . $redirect . "");

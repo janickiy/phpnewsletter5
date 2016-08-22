@@ -144,14 +144,16 @@ class Model_import extends Model
 						$delete = "DELETE FROM " . core::database()->getTableName('subscription') . " WHERE id_user=" . $row['id_user'];
 						core::database()->delete(core::database()->getTableName('subscription'), "id_user=" . $row['id_user'], '');
 
-						foreach ($id_cat as $id) {
-							if (is_numeric($id)) {
-								$fields = array();
-								$fields['id_sub'] = 0;
-								$fields['id_user'] = $row['id_user'];
-								$fields['id_cat'] = $id;
+						if ($id_cat) {
+							foreach ($id_cat as $id) {
+								if (is_numeric($id)) {
+									$fields = array();
+									$fields['id_sub'] = 0;
+									$fields['id_user'] = $row['id_user'];
+									$fields['id_cat'] = $id;
 
-								$insert_id = core::database()->insert($fields, core::database()->getTableName('subscription'));
+									$insert_id = core::database()->insert($fields, core::database()->getTableName('subscription'));
+								}
 							}
 						}
 
@@ -171,14 +173,16 @@ class Model_import extends Model
 
 						if ($insert_id) $count++;
 
-						foreach ($id_cat as $id) {
-							if (is_numeric($id)) {
-								$fields = array();
-								$fields['id_sub'] = 0;
-								$fields['id_user'] = $insert_id;
-								$fields['id_cat'] = $id;
+						if ($id_cat) {
+							foreach ($id_cat as $id) {
+								if (is_numeric($id)) {
+									$fields = array();
+									$fields['id_sub'] = 0;
+									$fields['id_user'] = $insert_id;
+									$fields['id_cat'] = $id;
 
-								$insert_id2 = core::database()->insert($fields, core::database()->getTableName('subscription'));
+									$insert_id2 = core::database()->insert($fields, core::database()->getTableName('subscription'));
+								}
 							}
 						}
 					}

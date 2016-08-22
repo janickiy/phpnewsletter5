@@ -1,14 +1,23 @@
 <?php
+
+/********************************************
+ * PHP Newsletter 5.0.0 alfa
+ * Copyright (c) 2006-2016 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 set_time_limit(0);
-
-session_start();
 
 // authorization
 Auth::authorization();
 
 $autInfo = Auth::getAutInfo($_SESSION['id']);
+
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
 
 if (Core_Array::getRequest('action') ){
 	$arr = $data->getUserList();	

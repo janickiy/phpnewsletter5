@@ -1,7 +1,14 @@
 <?php
 
-defined('LETTER') || exit('NewsLetter: access denied.');
+/********************************************
+ * PHP Newsletter 5.0.0 alfa
+ * Copyright (c) 2006-2016 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
 
+defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Auth
 {
@@ -78,8 +85,8 @@ class Auth
 
     public static function logOut()
     {
-        if (isset($_SESSION['sess_admin'])) unset($_SESSION['sess_admin']);
-        if (isset($_SESSION['id'])) unset($_SESSION['id']);
+        unset($_SESSION['sess_admin']);
+        unset($_SESSION['id']);
     }
 
     public static function getAutInfo($id)

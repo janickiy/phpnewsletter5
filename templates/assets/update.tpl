@@ -20,22 +20,18 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: "GET",
-			url: "./?t=start_update&p=start",
-			dataType: "xml",
-			success: function(xml){
-                $(xml).find("document").each(function () {
-					var result = $(this).find("result").text();
-					var msg = $(this).find("status").text(); 
-
-					if(result == 'yes'){
-						$('.bar').css('width', '20%');
-						$("#status_process").text(msg);
-						updateFiles();
-					}
-					else{
-						$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + msg + '</span>');
-					}
-				});
+			cache: false,
+			url: "./?t=ajax&action=start_update&p=start",
+			dataType: "json",
+			success: function(data){
+  				if (data.result == 'yes'){
+					$('.bar').css('width', '20%');
+					$("#status_process").text(data.status);
+					updateFiles();
+				}
+				else{
+					$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + data.status + '</span>');
+				}
 			}
 		});
 	});
@@ -45,21 +41,17 @@ function updateFiles()
 {
 	$.ajax({
 		type: "GET",
-		url: "./?t=start_update&p=update_files",
-		dataType: "xml",
-		success: function(xml){
-			$(xml).find("document").each(function () {
-				var result = $(this).find("result").text();
-				var msg = $(this).find("status").text();
-					
-				if(result == 'yes'){
-					$('.bar').css('width', '70%');
-					updateBD();
-				}
-				else{
-					$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + msg + '</span>');
-				}
-			});
+		cache: false,
+		url: "./?t=ajax&start_update&p=update_files",
+		dataType: "json",
+		success: function(data){
+			if (data.result == 'yes'){
+				$('.bar').css('width', '70%');
+				updateBD();
+			}
+			else{
+				$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + data.status + '</span>');
+			}
 		}
 	});
 }
@@ -68,44 +60,33 @@ function updateBD()
 {
 	$.ajax({
 		type: "GET",
-		url: "./?t=start_update&p=update_bd",
-		dataType: "xml",
+		cache: false,
+		url: "./?t=ajax&start_update&p=update_bd",
+		dataType: "json",
 		success: function(xml){
-			$(xml).find("document").each(function () {
-				var result = $(this).find("result").text();
-				var msg = $(this).find("status").text();
-					
-				if(result == 'yes'){
-					$('.bar').css('width', '100%');
-					$('#progress_bar').delay(3000).fadeOut(); 
-					$('#status_process').delay(3000).text('${MSG_UPDATE_COMPLETED}'); 
-				}
-				else{
-					$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + msg + '</span>');
-				}
-			});
+			if (data.result == 'yes'){
+				$('.bar').css('width', '100%');
+				$('#progress_bar').delay(3000).fadeOut();
+				$('#status_process').delay(3000).text('${MSG_UPDATE_COMPLETED}');
+			}
+			else{
+				$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + data.status + '</span>');
+			}
 		}
 	});
 }	
 
 </script>
-<div class="span12">
-  <!-- IF '${MSG_NO_UPDATES}' == '' -->
-  <div id="btn_refresh"><a id="start_update" class="btn" href="#"> <i class="icon-refresh"></i> ${BUTTON_UPDATE} </a> </div>
-  <!-- ELSE -->
-  ${MSG_NO_UPDATES}
-  <!-- END IF -->
-</div>
 <form class="form-horizontal" action="${ACTION}" method="post">
-  <input type="hidden" name="action" value="post">
-  <div class="control-group">
-    <label for="license_key" class="control-label">${STR_LICENSE_KEY}:</label>
-    <div class="controls">
-      <input class="form-control" type="text" style="text-transform: uppercase;" name="license_key" value="${LICENSE_KEY}">
-    </div>
-  </div>
-  <div class="controls">
-    <input type="submit" class="btn btn-success" value="${BUTTON_SAVE}">
-  </div>
+	<input type="hidden" name="action" value="post">
+	<div class="control-group">
+		<label for="license_key" class="control-label">${STR_LICENSE_KEY}:</label>
+		<div class="controls">
+			<input class="form-control uneditable-input" disabled="disabled" type="text" name="license_key" value="${LICENSE_KEY}">
+		</div>
+	</div>
+	<div class="controls">
+		<input type="submit" class="btn btn-success" disabled="disabled" value="${BUTTON_SAVE}">
+	</div>
 </form>
 <!-- INCLUDE footer.tpl -->

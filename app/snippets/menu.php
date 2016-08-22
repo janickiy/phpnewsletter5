@@ -1,5 +1,13 @@
 <?php
 
+/********************************************
+ * PHP Newsletter 5.0.0 alfa
+ * Copyright (c) 2006-2016 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 $tpl->assign('ACTIVE_MENU', Core_Array::getGet('t'));
@@ -32,16 +40,3 @@ $tpl->assign('MENU_MAILING_OPTIONS_TITLE', core::getLanguage('menu', 'mailing_op
 $tpl->assign('MENU_MAILING_OPTIONS', core::getLanguage('menu', 'mailing_options'));
 $tpl->assign('MENU_UPDATE_TITLE', core::getLanguage('menu', 'update_title'));
 $tpl->assign('MENU_UPDATE', core::getLanguage('menu', 'update'));
-
-if ($autInfo['role'] == 'admin'){
-    $tpl->assign('MENU_CREATE_TEMPLATE_ITEM', 'show');
-    $tpl->assign('MENU_SUBSCRIBERS_ITEM', 'show');
-    $tpl->assign('MENU_CATEGORY_ITEM', 'show');
-    $tpl->assign('MENU_SETTINGS_ITEM', 'show');
-    $tpl->assign('MENU_ACCOUNTS_ITEM', 'show');
-    $tpl->assign('MENU_UPDATE_ITEM', 'show');
-}
-else if($autInfo['role'] == 'moderator'){
-    $tpl->assign('MENU_CREATE_TEMPLATE_ITEM', 'show');
-    $tpl->assign('MENU_CATEGORY_ITEM', 'show');
-}
