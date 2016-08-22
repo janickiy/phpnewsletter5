@@ -7,6 +7,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+session_write_close();
+
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
 if ($autInfo['role'] != 'admin') exit();

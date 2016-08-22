@@ -1,16 +1,6 @@
 <?php
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-/**
- * ******************************************
- * PHP Newsletter 4.0.15
- * Copyright (c) 2006-2015 Alexander Yanitsky
- * Website: http://janicky.com
- * E-mail: janickiy@mail.ru
- * Skype: janickiy
- * ******************************************
- */
-
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");

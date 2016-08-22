@@ -16,7 +16,7 @@ class Model_ajax extends Model
 
 	public function getTotalMails()
 	{
-		$query = "SELECT COUNT(*) FROM " . core::database()-getTableName('users') . " WHERE status = 'active'";
+		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
 
 		$result = core::database()->querySQL($query);
 		$count = core::database()->getRow($result, 'assoc');

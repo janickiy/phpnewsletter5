@@ -6,6 +6,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+session_write_close();
+
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
 //include template

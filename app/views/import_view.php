@@ -2,6 +2,8 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
+set_time_limit(0);
+
 session_start();
 
 // authorization

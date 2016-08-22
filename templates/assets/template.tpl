@@ -141,7 +141,8 @@ function sendout()
 	pausesend = false;
 
 	var All = document.forms[0];
-	for(var i = 0; i<All.elements.length; ++i){
+
+	for(var i = 0; i < All.elements.length; ++i){
 		if(All.elements[i].checked) { m++; }
 	}
 	
@@ -158,6 +159,7 @@ function sendout()
 	}	
 	else{
 		if(show == false) $('#timer1').text('00:00:00');
+
 		$('#timer2').text('00:00:00');
 		$("#pausesendout").removeClass().addClass('pausesendout_active');
 		$("#stopsendout").removeClass().addClass('stopsendout_active');
@@ -195,7 +197,7 @@ function stopsend(str)
 {
 	$.ajax({
 		type: 'GET',
-		url:'./?t=process&status=' + str,
+		url:'./?t=ajax&action=process&status=' + str,
 		dataType : "json",
 		success:function(data){
 			$("#pause").val(1);
@@ -223,6 +225,7 @@ function getcoutprocess()
 	if (pausesend == false && completed === null) {
 		$.ajax({
 			type:'GET',
+			cache: false,
 			url:'./?t=ajax&action=countsend&id_log=' + id_log,
 			dataType : "json",
 			success:function(data){
@@ -250,13 +253,14 @@ function onlinelogprocess()
 	if (pausesend == false && completed === null) {
 		$.ajax({
 			type:'GET',
+			cache: false,
 			url:'./?t=ajax&action=logonline',
 			dataType : "json",
 			success:function(data){
 				var msg = '';
 				var status;
 				var email;
-				data.item[0].
+				id_log = data.item[0].id_log;
 
 				for(var i=0; i < data.item.length; i++)	{
 					if (data.item[i].status == "yes")
@@ -269,7 +273,7 @@ function onlinelogprocess()
 						msg += email + ' - ' + status;
 						msg += '<br>';
 					}
-					$('#onlinelog').text(msg);
+					$('#onlinelog').html(msg);
 				}
 			},
 			error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + error); }
@@ -284,15 +288,16 @@ function process()
 	
 	if (pausesend == false){
 		if (typesend == 1){
-			var url = "./?t=send&typesend=1";
+			var url = "./?t=ajax&action=send&typesend=1";
 		}	
 		else{ 
-			var url = "./?t=send&typesend=2";
+			var url = "./?t=ajax&action=send&typesend=2";
 		}
 
 		$.ajax({
 			type:'POST',
 			url:url,
+			cache:false,
 			data:sBody,
 			dataType:"json",
 			success:function(data){

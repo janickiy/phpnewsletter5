@@ -1,5 +1,7 @@
 <?php
 
+defined('LETTER') || exit('NewsLetter: access denied.');
+
 class Pnl
 {
     public static function getRandomCode() {
@@ -529,4 +531,6 @@ class Pnl
 	
 		return $current_version_code;
 	}
+
+
 }

@@ -29,7 +29,7 @@ $(document).ready(function(){
 	setInterval(function() {
 		$.ajax({
 			type: "GET",
-			url: "./?t=ajax&action=xmldaemonstat",
+			url: "./?t=ajax&action=daemonstat",
 			dataType: "json",
 			success: function(data) {
 				if (data.status != ''){

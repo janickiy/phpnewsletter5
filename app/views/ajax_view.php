@@ -2,14 +2,16 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
+set_time_limit(0);
+
 session_start();
 
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
-
 session_write_close();
+
+$autInfo = Auth::getAutInfo($_SESSION['id']);
 
 switch (Core_Array::getGet('action'))
 {
