@@ -54,7 +54,7 @@ if(s>=(m*base)) {
 	if(ts>=base) { ts = ts-((m-1)*base); }
 }
 
-if(m>(h*base)) {
+if (m>(h*base)) {
 	tm = 1;
 	h++;
 } else {
@@ -62,7 +62,7 @@ if(m>(h*base)) {
 	if(tm>=base) { tm = tm-((h-1)*base); }
 }
 
-if(ts>0) { 
+if (ts>0) {
 	ds = ts; 
 	if (ts<10) { ds = '0'+ts; }
 } else { 
@@ -104,20 +104,20 @@ function Check_action()
 
 function CheckAll_Activate(Element,Name)
 {
-	if(DOM){
+	if (DOM){
 		thisCheckBoxes = Element.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('input');
 
 		var m = 0;
 
 		for(var i = 1; i < thisCheckBoxes.length; i++){
-			if(thisCheckBoxes[i].name == Name){
+			if (thisCheckBoxes[i].name == Name){
 				thisCheckBoxes[i].checked = Element.checked;
-				if(thisCheckBoxes[i].checked == true) { m++; }
-				if(thisCheckBoxes[i].checked == false) { m--; }
+				if (thisCheckBoxes[i].checked == true) { m++; }
+				if (thisCheckBoxes[i].checked == false) { m--; }
 			}
 		}
 
-		if(m > 0) { document.getElementById("Apply_").disabled = false; }
+		if (m > 0) { document.getElementById("Apply_").disabled = false; }
 		else { document.getElementById("Apply_").disabled = true;  }
 	}
 }
@@ -153,18 +153,18 @@ function sendout()
 	
 	findTIME();
 	
-	if(m == 0) {
+	if (m == 0) {
 		saveResult('${ALERT_MALING_NOT_SELECTED}');
 	}	
 	else{
-		if(show == false) document.getElementById("timer1").innerHTML = '00:00:00';
-		
-		document.getElementById("timer2").innerHTML = '00:00:00';
-		document.getElementById('pausesendout').className = "pausesendout_active";
-		document.getElementById('stopsendout').className = "stopsendout_active";
-		document.getElementById('refreshemail').className = "refreshemail_noactive";
-		document.getElementById('sendout').className = "sendout_noactive";
-		document.getElementById('process').className = "showprocess";
+		if(show == false) $('#timer1').text('00:00:00');
+		$('#timer2').text('00:00:00');
+		$("#pausesendout").removeClass().addClass('pausesendout_active');
+		$("#stopsendout").removeClass().addClass('stopsendout_active');
+		$("#refreshemail").removeClass().addClass('refreshemail_noactive');
+		$("#sendout").removeClass().addClass('sendout_noactive');
+		$("#process").removeClass().addClass('showprocess');
+
 		getcoutprocess();
 		onlinelogprocess();
 		process();
@@ -174,17 +174,17 @@ function sendout()
 function refreshsend()
 {
 	pausesend = false;
-	
 	typesend = 2;
 	completed = null;
 	successful = 0;
 	unsuccessful = 0;
 	totalmail = 0;
-	
-	document.getElementById("timer2").innerHTML = '00:00:00';
-	document.getElementById('process').className = "showprocess";
-	document.getElementById('refreshemail').className = "refreshemail_noactive";
-	document.getElementById('sendout').className = "sendout_noactive";	
+
+	$('#timer2').text('00:00:00');
+	$("#process").removeClass().addClass('showprocess');
+	$("#refreshemail").removeClass().addClass('refreshemail_noactive');
+	$("#sendout").removeClass().addClass('sendout_noactive');
+
 	findTIME();
 	getcoutprocess();
 	onlinelogprocess();
@@ -193,130 +193,88 @@ function refreshsend()
 
 function stopsend(str)
 {
-	var oXmlHttp = createXMLHttp();
-	var url = "./?t=process&status=" + str;
-	oXmlHttp.open("GET", url, true);
-	
-	oXmlHttp.onreadystatechange = function(){
-		if(oXmlHttp.readyState == 4){
-			document.getElementById('pause').value = 1;
+	$.ajax({
+		type: 'GET',
+		url:'./?t=process&status=' + str,
+		dataType : "json",
+		success:function(data){
+			$("#pause").val(1);
 			pausesend = true;
 			show = false;
-			
-			document.getElementById('process').className = "";
-			document.getElementById('pausesendout').className = "pausesendout_noactive";
-			document.getElementById('stopsendout').className = "stopsendout_noactive";
-			document.getElementById('sendout').className = "sendout_active";
-			document.getElementById('refreshemail').className = "refreshemail_noactive";
-			
-			if(str == 'stop'){
-				document.getElementById("timer2").innerHTML = '00:00:00';
+			$("#process").removeClass();
+			$("#pausesendout").removeClass().addClass('pausesendout_noactive');
+			$("#stopsendout").removeClass().addClass('stopsendout_noactive');
+			$("#sendout").removeClass().addClass('sendout_active');
+			$("#refreshemail").removeClass().addClass('refreshemail_noactive');
+			if (str == 'stop'){
+				$('#timer2').text('00:00:00');
 				clearALL();
 			}
-		
-			if(oXmlHttp.status == 200){
-				if(oXmlHttp.responseXML.getElementsByTagName("process")[0].firstChild.data == 'stop') { window.location="./"; }
-			}
-			else{
-				saveResult("${ALERT_ERROR_SERVER}: " + oXmlHttp.statusText);
-			}
-		}	
-	};		
-		
-	oXmlHttp.send(null);	
-}
-
-function createXMLHttp() {
-	var oXmlHttp = null;
-    if (window.XMLHttpRequest) {
-        oXmlHttp = new XMLHttpRequest();
-    }
-    else {
-        var arrProgIds = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"];
-        for (var iCount = 0; iCount < arrProgIds.length; iCount++) {
-            try {
-                oXmlHttp = new ActiveXObject(arrProgIds[iCount]);
-                break;
-            }
-            catch (e) { }
-        }
-    }
-    return oXmlHttp;
+		},
+		error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + error); },
+		complete: function() {
+			if (data.status == 'stop') { window.location="./"; }
+		}
+	});
 }
 
 function getcoutprocess()
 {
-	var oXmlHttp = createXMLHttp();
-	
-	if(pausesend == false && completed === null){
-		var url = "./?t=xmlcountsend&id_log=" + id_log;
-		oXmlHttp.open("POST",url, true);
-		oXmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        
-		oXmlHttp.onreadystatechange = function() {
-			if(oXmlHttp.readyState == 4) {
-				if(oXmlHttp.status == 200) {
-					if(id_log != undefined){						
-						var totalmail = oXmlHttp.responseXML.getElementsByTagName("total")[0].firstChild.data;
-						var successful = oXmlHttp.responseXML.getElementsByTagName("success")[0].firstChild.data;
-						var unsuccessful = oXmlHttp.responseXML.getElementsByTagName("unsuccessful")[0].firstChild.data;
-						var timeleft = oXmlHttp.responseXML.getElementsByTagName("time")[0].firstChild.data;
+	if (pausesend == false && completed === null) {
+		$.ajax({
+			type:'GET',
+			url:'./?t=ajax&action=countsend&id_log=' + id_log,
+			dataType : "json",
+			success:function(data){
+				if (id_log != undefined) {
+					var totalmail = data.total;
+					var successful = data.success;
+					var unsuccessful = data.unsuccessful;
+					var timeleft = data.time;
 
-						document.getElementById("totalsendlog").innerHTML = totalmail;
-						document.getElementById("unsuccessful").innerHTML = unsuccessful;
-						document.getElementById("successful").innerHTML = successful;
-						document.getElementById("timer2").innerHTML = timeleft;
-						onlinelogprocess();
-						setTimeout('getcoutprocess(id_log)', 2000);
-					} else { setTimeout('getcoutprocess()', 1000); }						
-				} else { setTimeout('getcoutprocess(id_log)', 3000); }
-			}			
-		};
-        
-		oXmlHttp.send(null);
-				
-	}	
+					$('#totalsendlog').text(totalmail);
+					$('#unsuccessful').text(unsuccessful);
+					$('#successful').text(successful);
+					$('#timer2').text(timeleft);
+					onlinelogprocess();
+					setTimeout('getcoutprocess(id_log)', 2000);
+				}
+				else{ setTimeout('getcoutprocess()', 1000); }
+			}
+		});
+	}
 }
 
 function onlinelogprocess()
 {
-	if(pausesend == false){
-		if(completed === null){	
-			var oXmlHttp = createXMLHttp();
-			var url = "./?t=xmllogonline";
-			oXmlHttp.open("GET", url, true);
-		
-			oXmlHttp.onreadystatechange = function() {
-				if(oXmlHttp.readyState == 4) {
-					if(oXmlHttp.status == 200) {					
-						var msg = '';					
-						var emails = oXmlHttp.responseXML.getElementsByTagName("emails");			
-						var status;
-						var email;
-						
-						id_log = emails[0].getElementsByTagName("id_log")[0].firstChild.data;
-				
-						for(var i = 0; i<emails.length; i++){
-							if(emails[i].getElementsByTagName("status")[0].firstChild.data == "yes"){ status = '${STR_SENT}'; }	
-							else{ status = '${STR_WASNT_SENT}';	}	
-							email = emails[i].getElementsByTagName("email")[0].firstChild.data;									
+	if (pausesend == false && completed === null) {
+		$.ajax({
+			type:'GET',
+			url:'./?t=ajax&action=logonline',
+			dataType : "json",
+			success:function(data){
+				var msg = '';
+				var status;
+				var email;
+				data.item[0].
 
-							if(email != 'undefined'){
-								msg += email + ' - ' + status;
-								msg += '<br>';
-							}
-						}
-						
-						document.getElementById("onlinelog").innerHTML = msg;
-						//setTimeout('onlinelogprocess()', 2000);
+				for(var i=0; i < data.item.length; i++)	{
+					if (data.item[i].status == "yes")
+						status = '${STR_SENT}';
+					else
+						status = '${STR_WASNT_SENT}';
+					email = data.item[i].email;
+
+					if(email != 'undefined'){
+						msg += email + ' - ' + status;
+						msg += '<br>';
 					}
-					else { saveResult("${ALERT_ERROR_SERVER}: " + oXmlHttp.statusText); }
+					$('#onlinelog').text(msg);
 				}
-			};
-		
-			oXmlHttp.send(null);		
-		}
-	}	
+			},
+			error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + error); }
+		});
+	}
 }
 
 function process()
@@ -324,44 +282,41 @@ function process()
 	var oForm = document.forms[0];
 	var sBody = getRequestBody(oForm);
 	
-	if(pausesend == false){
-		var oXmlHttp = createXMLHttp();
-		
-		if(typesend == 1){
+	if (pausesend == false){
+		if (typesend == 1){
 			var url = "./?t=send&typesend=1";
 		}	
 		else{ 
 			var url = "./?t=send&typesend=2";
 		}
-		
-		oXmlHttp.open("POST", url, true);	
-		oXmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		
-		oXmlHttp.onreadystatechange = function() {
-			if(oXmlHttp.readyState == 4) {
-				if(oXmlHttp.status == 200){		
-					completed = oXmlHttp.responseXML.getElementsByTagName("completed")[0].firstChild.data;
-					document.getElementById('process').className = "";
+
+		$.ajax({
+			type:'POST',
+			url:url,
+			data:sBody,
+			dataType:"json",
+			success:function(data){
+				if (data.completed == 'yes'){
+					$("#process").removeClass();
 					completeProcess();
-				}	
+				}
 				else{
-					setTimeout('process()', 3000);	
+					setTimeout('process()', 3000);
 				}
 			}
-		};
-		
-		oXmlHttp.send(sBody);
+		});
 	}
 }
 
 function completeProcess()
 {
-	document.getElementById('pausesendout').className = "pausesendout_noactive";
-	document.getElementById('stopsendout').className = "stopsendout_noactive";
-	document.getElementById('sendout').className = "sendout_active";
-	document.getElementById('refreshemail').className = "refreshemail_active";
-	document.getElementById('process').className = "";
-	document.getElementById("timer2").innerHTML = '00:00:00';
+	$("#pausesendout").removeClass().addClass('pausesendout_noactive');
+	$("#stopsendout").removeClass().addClass('stopsendout_noactive');
+	$("#sendout").removeClass().addClass('sendout_active');
+	$("#refreshemail").removeClass().addClass('refreshemail_active');
+	$("#process").removeClass();
+	$("#timer2").text('00:00:00');
+
 	show = false;
 	clearALL();
 	getcoutprocess();

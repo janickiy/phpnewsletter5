@@ -59,7 +59,7 @@ switch (Core_Array::getGet('action'))
 
 	break;
 
-	case 'xmldaemonstat':
+	case 'daemonstat':
 
 		$content = array("status" => $data->getMailingStatus());
 
