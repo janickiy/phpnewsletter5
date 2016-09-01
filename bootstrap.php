@@ -28,6 +28,7 @@ $cmspaths = array(
 	'tmp' => 'tmp'
 );
 
+
 require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
 require_once SYS_ROOT . $cmspaths['core'] . '/core.php';
 core::init($cmspaths);
