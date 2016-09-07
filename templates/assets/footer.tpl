@@ -4,8 +4,15 @@
    
             </div>
             <!-- /.row -->
+			
+			<footer>${STR_LOGO}, ${STR_AUTHOR}</footer>
         </div>
         <!-- /#page-wrapper -->
+		
+		
+		
+
+		
     </div>
     <!-- /#wrapper -->
 
@@ -26,7 +33,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="./templates/assets/dist/js/sb-admin-2.js"></script>
 
-	<p>${STR_LOGO}, ${STR_AUTHOR}</p>
-
+	
 </body>
 </html>

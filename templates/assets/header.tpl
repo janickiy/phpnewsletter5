@@ -22,6 +22,7 @@
 <!-- Custom Fonts -->
 <link href="./templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+<link href="./templates/assets/styles/styles.css" rel="stylesheet">
 
 <script type="text/javascript" src="./templates/js/jquery.min.js"></script>
 <script type="text/javascript" src="./templates/js/jquery.hide_alertblock.js"></script>
@@ -78,13 +79,7 @@ $(document).on( "click", ".startmailing", function() {
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">${SCRIPT_VERSION}</a>
+				<span class="logo"></span> <span class="version">${SCRIPT_VERSION}</span>
             </div>
             <!-- /.navbar-header -->
 
@@ -131,7 +126,11 @@ $(document).on( "click", ".startmailing", function() {
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    
+					
+					<h1 class="page-header">Tables</h1>
+					
+					
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
