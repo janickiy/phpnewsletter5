@@ -2,13 +2,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="./templates/assets/styles/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/styles.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/DT_bootstrap.css" rel="stylesheet" media="screen">
-<link type="text/css" href="./templates/assets/styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-<link href="./templates/assets/styles/css/font-awesome.min.css" rel="stylesheet">
 <title>PHP Newsletter | ${TITLE_PAGE}</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="./templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="./templates/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="./templates/assets/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="./templates/assets/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="./templates/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="./templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
 <script type="text/javascript" src="./templates/js/jquery.min.js"></script>
 <script type="text/javascript" src="./templates/js/jquery.hide_alertblock.js"></script>
 </head>
@@ -58,43 +72,84 @@ $(document).on( "click", ".startmailing", function() {
 });
 
 </script>
-<div class="container-fluid">
-<div class="row-fluid">
-<div class="span3" id="sidebar"> <span class="logo"></span> <span class="version">${SCRIPT_VERSION}</span>
-  <div id="mailing_status">
-    <!-- IF '${MAILING_STATUS}' == 'start' -->
-    <span title="${STR_LAUNCHEDMAILING}" id="startmailing" class="startmailing"></span>
-    <!-- ELSE -->
-    <span title="${STR_STOPMAILING}" class="stopmailing"></span>
-    <!-- END IF -->
-  </div>
-  <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-    <li <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF -->><a href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a></li>
-	<li <!-- IF '${ACTIVE_MENU}' == 'create_template' -->class="active"<!-- END IF -->><a href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span></li>
-	<!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->class="active"<!-- END IF -->><a href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a></li><!-- END IF -->
-	<!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF -->><a href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li><!-- END IF -->
-    <li <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->><a href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
-	<!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF -->><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li><!-- END IF -->
-	<!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'accounts' -->class="active"<!-- END IF -->><a href="./?t=accounts" title="${MENU_ACCOUNTS_TITLE}"><i class="fa fa-key"></i> ${MENU_ACCOUNTS}</a></li><!-- END IF -->
-	<!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'update' -->class="active"<!-- END IF -->><a href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a> </li><!-- END IF -->
-    <li <!-- IF '${ACTIVE_MENU}' == 'faq' -->class="active"<!-- END IF -->><a href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a></li>
-  </ul>
-</div>
-<div class="span9" id="content">
-<div class="row"><p class="text-right">${ACCOUNT_LOGIN} <a href="./?t=logout">${STR_LOGOUT}</a></p></div>
-<div class="row-fluid">
-  <div class="alert alert-error alert-block" id="alert_error_block" style="display:none; position: relative; z-index: 1000;"> <a class="close" href="#" data-dismiss="alert">×</a>
-    <h4 class="alert-heading">${STR_ERROR}!</h4>
-    <span id="alert_error_msg">${PAGE_ALERT_ERROR_MSG}</span> </div>
-  <div class="alert alert-block" id="alert_msg_block" style="display:none; position: relative; z-index: 1000;"> <a class="close" href="#" data-dismiss="alert">×</a>
-    <h4 class="alert-heading">${STR_WARNING}!</h4>
-    <span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span> </div>
-</div>
-<div class="row-fluid">
-<!-- block -->
-<div class="block">
-<div class="navbar navbar-inner block-header">
-  <div class="muted pull-left"><strong>${TITLE}</strong></div>
-</div>
-<div class="block-content collapse in">
-<div class="span12">
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">${SCRIPT_VERSION}</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                           <li <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF -->><a href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a></li>
+						   <li <!-- IF '${ACTIVE_MENU}' == 'create_template' -->class="active"<!-- END IF -->><a href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span></li>
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->class="active"<!-- END IF -->><a href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF -->><a href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li><!-- END IF -->
+						   <li <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->><a href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF -->><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'accounts' -->class="active"<!-- END IF -->><a href="./?t=accounts" title="${MENU_ACCOUNTS_TITLE}"><i class="fa fa-key"></i> ${MENU_ACCOUNTS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'update' -->class="active"<!-- END IF -->><a href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a> </li><!-- END IF -->
+						   <li <!-- IF '${ACTIVE_MENU}' == 'faq' -->class="active"<!-- END IF -->><a href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a></li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Tables</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
