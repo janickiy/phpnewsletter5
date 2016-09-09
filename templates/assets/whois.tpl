@@ -1,9 +1,6 @@
 <!-- INCLUDE header.tpl -->
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-<span class="icon icon-exclamation-sign"></span>
-${INFO_ALERT}
-</div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 <p>« <a href="./?t=subscribers">${RETURN_BACK}</a></p>
 <!-- BEGIN whois -->

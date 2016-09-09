@@ -109,7 +109,7 @@ if ($arr){
 		//fetch column block from row block
 		$columnBlock = $rowBlock->fetch('column');
 		
-		if($row['id_cat'] == 0) { $row['catname'] = core::getLanguage('str', 'genera'); }
+		if($row['id_cat'] == 0) { $row['catname'] = core::getLanguage('str', 'general'); }
 
 		$active = $row['active'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
         

@@ -45,8 +45,7 @@ function PnumberChange()
 
 </script>
 <!-- IF '${INFO_ALERT}' != '' -->
-
-<div class="alert alert-info"> ${INFO_ALERT} </div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 <ul class="BtnPanelIcon">
   <li><a title="${PROMPT_ADD_USER}" href="./?t=add_user"> <span class="fa fa-user-plus fa-2x"></span> <span class="IconText">${STR_ADD_USER}</span> </a> </li>
@@ -67,14 +66,16 @@ function PnumberChange()
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- END show_return_back -->
 <!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-error">
-  <button class="close" data-dismiss="alert">×</button>
-   <strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
+</div>
 <!-- END IF -->
 <!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success">
-  <button class="close" data-dismiss="alert">×</button>
-  ${MSG_ALERT} </div>
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
+</div>
 <!-- END IF -->
 <!-- BEGIN row -->
 <form class="form-horizontal" action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 3){return confirm('${ALERT_CONFIRM_REMOVE}');}" method="post">

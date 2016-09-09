@@ -1,13 +1,10 @@
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-${INFO_ALERT}
-</div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 <!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-error">
-<button class="close" data-dismiss="alert">×</button>
-<strong>${STR_ERROR}!</strong>
-${ERROR_ALERT}
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
 </div>
 <!-- END IF -->
 <form class="form-horizontal" action="${ACTION}" method="post">

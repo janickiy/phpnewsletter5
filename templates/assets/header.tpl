@@ -90,12 +90,9 @@ $(document).on( "click", ".startmailing", function() {
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+                        <li><a href="./?t=accounts"><i class="fa fa-user fa-fw"></i> ${ACCOUNT_LOGIN}</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="./?t=logout"><i class="fa fa-sign-out fa-fw"></i> ${STR_LOGOUT}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -124,12 +121,9 @@ $(document).on( "click", ".startmailing", function() {
         </nav>
 
 <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    
-					
-					<h1 class="page-header">Tables</h1>
-					
+					<div class="row">
+						<div class="col-lg-12">
+					<h1 class="page-header">${TITLE}</h1>
 					
                 </div>
                 <!-- /.col-lg-12 -->
@@ -138,7 +132,17 @@ $(document).on( "click", ".startmailing", function() {
             <div class="row">
                 <div class="col-lg-12">
 
+					<div class="alert alert-danger alert-dismissable" id="alert_error_block" style="display:none;">
+						<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+						<h4 class="alert-heading">${STR_ERROR}!</h4>
+						<span id="alert_error_msg">${PAGE_ALERT_ERROR_MSG}</span>
+					</div>
 
+					<div class="alert alert-warning alert-dismissable" id="alert_msg_block" style="display:none;">
+						<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+						<h4 class="alert-heading">${STR_WARNING}!</h4>
+						<span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span>
+					</div>
 
 
 

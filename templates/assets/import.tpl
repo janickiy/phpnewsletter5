@@ -1,23 +1,20 @@
 <!-- INCLUDE header.tpl -->
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-${INFO_ALERT}
-</div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 
 <!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-error">
-<button class="close" data-dismiss="alert">×</button>
-<strong>${STR_ERROR}!</strong>
-${ERROR_ALERT}
+<div class="alert alert-danger alert-dismissable">
+    <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+    <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
 </div>
 <!-- END IF -->
 
 <!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success">
-<button class="close" data-dismiss="alert">×</button>
-${MSG_ALERT}
+<div class="alert alert-success alert-dismissable">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    ${MSG_ALERT}
 </div>
 <!-- END IF -->
 

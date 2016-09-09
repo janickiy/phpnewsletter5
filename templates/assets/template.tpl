@@ -370,47 +370,51 @@ function PnumberChange()
 </script>
 
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-${INFO_ALERT}
-</div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 
 <!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-error">
-  <button class="close" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
+<div class="alert alert-danger alert-dismissable">
+	<button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+	<strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
+</div>
 <!-- END IF -->
 <form action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 4){return confirm('${ALERT_CONFIRM_REMOVE}');} if(this.action.value == 1) return false" method="post">
-  <table class="table-hover table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th style="text-align: center;"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" onclick="CheckAll_Activate(this,'activate[]');"></th>
-        <th width="5%">ID</th>
+        <th width="30px"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" onclick="CheckAll_Activate(this,'activate[]');"></th>
+        <th width="50px">ID</th>
 	    <th width="50%">${TH_TABLE_MAILER}</th>
         <th>${TH_TABLE_CATEGORY}</th>
         <th>${TH_TABLE_ACTIVITY}</th>
-        <th>${TH_TABLE_POSITION}</th>
+        <th width="70px">${TH_TABLE_POSITION}</th>
         <th>${TH_TABLE_EDIT}</th>
       </tr>
     </thead>
     <!-- BEGIN row -->
     <tbody>
       <!-- BEGIN column -->
-      <tr class="td-middle${CLASS_NOACTIVE}">
-        <td><input type="checkbox" onclick="Count_checked();" title="${TABLECOLMN_CHECKBOX}" value="${ROW_ID_TEMPLATE}" name=activate[]></td>
-        <td>${ROW_ID_TEMPLATE}</td>
-	    <td style="text-align: left;"><a title="${STR_EDIT_MAILINGTEXT}" href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}">${ROW_TMPLNAME}</a><br>
+      <tr class="${CLASS_NOACTIVE}">
+        <td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${TABLECOLMN_CHECKBOX}" value="${ROW_ID_TEMPLATE}" name=activate[]></td>
+        <td style="vertical-align: middle;">${ROW_ID_TEMPLATE}</td>
+	    <td style="vertical-align: middle;" class="text-left"><a title="${STR_EDIT_MAILINGTEXT}" href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}">${ROW_TMPLNAME}</a><br>
           <br>
           ${ROW_CONTENT}
           </div></td>
-        <td>${ROW_CATNAME}</td>
-        <td>${ROW_ACTIVE}</td>
-        <td><p><a href="./?id_template=${ROW_ID_TEMPLATE}&pos=up" class="btn" title="${STR_DOWN}"><i class="icon-arrow-up"></i></a></p>
-		<input class="span8" type="text" name="pos" value="${ROW_POS}">
-          <p><a href="./?id_template=${ROW_ID_TEMPLATE}&pos=down" class="btn" title="${STR_DOWN}"><i class="icon-arrow-down"></i></a></p>
-		  
+        <td style="vertical-align: middle;">${ROW_CATNAME}</td>
+        <td style="vertical-align: middle;">${ROW_ACTIVE}</td>
+        <td style="vertical-align: middle;" class="text-center">
+
+
+				<a href="./?id_template=${ROW_ID_TEMPLATE}&pos=up" class="btn btn-outline btn-default" title="${STR_DOWN}"><i class="fa fa-chevron-up"></i></a><br><br>
+			<input class="form-control" type="text" name="pos" value="${ROW_POS}"><br>
+					<a href="./?id_template=${ROW_ID_TEMPLATE}&pos=down" class="btn btn-outline btn-default" title="${STR_DOWN}"><i class="fa fa-chevron-down "></i></a>
+
+
+
 		</td>
-        <td><a href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}" class="btn" title="${STR_EDIT}"><i class="icon-pencil"></i></a></td>
+        <td style="vertical-align: middle;" class="text-center"><a href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}" class="btn btn-outline btn-default" title="${STR_EDIT}"><i class="fa fa-edit"></i></a></td>
       </tr>
       <!-- END column -->
       <!-- END row -->

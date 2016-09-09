@@ -1,17 +1,18 @@
 <!-- INCLUDE header.tpl -->
 <p>« <a href="${RETURN_BACK_LINK}">${RETURN_BACK}</a></p>
 
-
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info"><span class="icon icon-exclamation-sign"></span> ${INFO_ALERT} </div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 <!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-error">
-  <button class="close" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
+</div>
 <!-- END IF -->
 <!-- BEGIN show_errors -->
-<div class="alert alert-error"> <a class="close" href="#" data-dismiss="alert">×</a>
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
   <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
   <ul>
     <!-- BEGIN row -->

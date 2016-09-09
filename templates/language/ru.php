@@ -56,6 +56,15 @@ $language["title_page"]["accounts"] = "Учетные записи";
 $language["title"]["accounts"] = "Учетные записи";
 $language["info"]["accounts"] = "";
 
+
+$language["title_page"]["edit_account"] = "Редактирование учетной записи";
+$language["title"]["edit_account"] = "Редактирование учетной записи";
+$language["info"]["edit_account"] = "";
+
+
+
+
+
 $language["title_page"]["update"] = "Обновление";
 $language["title"]["update"] = "Обновление";
 $language["info"]["update"] = "";

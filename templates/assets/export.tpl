@@ -2,9 +2,7 @@
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-${INFO_ALERT}
-</div>
+<div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 
 <form class="form-horizontal" action="${ACTION}" target=_blank method="post">

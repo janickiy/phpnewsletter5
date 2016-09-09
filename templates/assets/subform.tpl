@@ -26,7 +26,6 @@
         <td></td>
         <td><input type="submit" value="${BUTTON_SUBSCRIBE}"></td>
       </tr>
-      
     </table>
   </form>
 </div>

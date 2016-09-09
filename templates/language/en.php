@@ -57,6 +57,10 @@ $language["title_page"]["accounts"] = "Accounts";
 $language["title"]["accounts"] = "Accounts";
 $language["info"]["accounts"] = "";
 
+$language["title_page"]["edit_account"] = "Editing Account";
+$language["title"]["edit_account"] = "Editing Account";
+$language["info"]["edit_account"] = "";
+
 $language["title_page"]["update"] = "Update";
 $language["title"]["update"] = "Update";
 $language["info"]["update"] = "";

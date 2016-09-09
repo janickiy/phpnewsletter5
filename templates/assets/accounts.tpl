@@ -25,14 +25,14 @@
 <!-- END IF -->
 
 <!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success">
-  <button class="close" data-dismiss="alert">×</button>
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
   ${MSG_ALERT}
 </div>
 <!-- END IF -->
 <a href="./?t=change_password">Сменить пароль</a><br>
 <form method="POST" action="./?t=add_account">
-  <table class="table-hover table table-bordered esponsive-utilities" border="0" cellspacing="0" cellpadding="0" width="100%">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
     <tr>
       <th>${TH_TABLE_LOGIN}</th>
@@ -46,10 +46,10 @@
     <tr>
       <td>${LOGIN}</td>
       <td>${ROLE}</td>
-      <td class="td-middle">
+      <td>
         <!-- IF '${ALLOW_EDIT}' == 'yes' -->
-         <a class="btn" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="icon-pencil"></i> ${STR_EDIT}</a>
-         <a class="btn" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="icon-trash"></i> ${STR_REMOVE}</a>
+         <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="fa fa-edit"></i> ${STR_EDIT}</a>
+         <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="fa fa-trash-o"></i> ${STR_REMOVE}</a>
         <!-- END IF -->
       </td>
     </tr>

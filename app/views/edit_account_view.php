@@ -32,10 +32,10 @@ if (Core_Array::getRequest('action')){
 	$errors = array();
 	
 	if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
-	if (empty($password_again)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
+	if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
 
 	if (!empty($password) && !empty($password_again)){
-		if($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
+		if ($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 	
 	if (count($errors) == 0){

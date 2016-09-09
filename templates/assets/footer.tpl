@@ -5,7 +5,7 @@
             </div>
             <!-- /.row -->
 			
-			<footer>${STR_LOGO}, ${STR_AUTHOR}</footer>
+			<div class="footer"><p>${STR_LOGO}, ${STR_AUTHOR}</p></div>
         </div>
         <!-- /#page-wrapper -->
 		
