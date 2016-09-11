@@ -192,20 +192,16 @@ if ($number > 1){
 	$paginationBlock = $tpl->fetch('pagination');
 	$paginationBlock->assign('STR_PNUMBER', core::getLanguage('str', 'pnumber'));
 	$paginationBlock->assign('CURRENT_PAGE', '<a>' . $page . '</a>');
-	$paginationBlock->assign('PAGE1RIGHT', $page1right);
-	$paginationBlock->assign('PAGE2RIGHT', $page2right);
-
-	$paginationBlock->assign('PAGE1LEFT', $page1left);
-	$paginationBlock->assign('PAGE2LEFT', $page2left);
-
-	$paginationBlock->assign('PERVPAGE', $pervpage);
-	$paginationBlock->assign('PERV', $perv);
-
-	$paginationBlock->assign('NEXTPAGE', $nextpage);
-	$paginationBlock->assign('NEXT', $next);
-	
+	$paginationBlock->assign('PAGE1RIGHT', isset($page1right) ? $page1right : '');
+	$paginationBlock->assign('PAGE2RIGHT', isset($page2right) ? $page2right : '');
+	$paginationBlock->assign('PAGE1LEFT', isset($page1left) ?  $page1left : '');
+	$paginationBlock->assign('PAGE2LEFT', isset($page2left) ? $page2left : '');
+	$paginationBlock->assign('PERVPAGE', isset($pervpage) ? $pervpage : '');
+	$paginationBlock->assign('PERV', isset($perv) ? $perv : '');
+	$paginationBlock->assign('NEXTPAGE', isset($nextpage) ? $nextpage : '');
+	$paginationBlock->assign('NEXT', isset($next) ? $next : '');
 	$paginationBlock->assign('PNUMBER', $pnumber);
-	$tpl->assign('pagination', $paginationBlock);	
+	$tpl->assign('pagination', $paginationBlock);
 }
 
 //footer

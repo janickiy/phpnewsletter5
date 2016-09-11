@@ -14,26 +14,27 @@
   ${MSG_ALERT}
 </div>
 <!-- END IF -->
-<table class="table-hover table table-bordered esponsive-utilities" border="0" cellspacing="0" cellpadding="0" width="100%">
+<table class="table table-striped table-bordered table-hover" border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
-    <tr>
-      <th>${TH_TABLE_NAME}</th>
-      <th>${TH_TABLE_NUMBER_SUBSCRIBERS}</th>
-      <th>${TH_TABLE_ACTION}</th>
-    </tr>
+  <tr>
+    <th>${TH_TABLE_NAME}</th>
+    <th>${TH_TABLE_NUMBER_SUBSCRIBERS}</th>
+    <th>${TH_TABLE_ACTION}</th>
+  </tr>
   </thead>
   <tbody>
-    <!-- BEGIN row -->
-    <tr class="td-middle">
-      <td>${NAME}</td>
-      <td>${COUNT}</td>
-      <td width="300">
-        <a title="${STR_EDIT}" href="./?t=edit_category&id_cat=${ID_CAT}" class="btn"> <i class="icon-pencil"></i> ${STR_EDIT} </a>
-        <a class="btn" title="${STR_REMOVE}" href="./?t=category&remove=${ID_CAT}"
-        <!-- IF '${ALERT_REMOVE_SUNBERS}' != '' -->onclick="return confirm('${ALERT_REMOVE_SUNBERS}');"<!-- END IF -->>
-        <i class="icon-trash"></i> ${STR_REMOVE} </a></td>
-    </tr>
-    <!-- END row -->
+  <!-- BEGIN row -->
+  <tr class="td-middle">
+    <td>${NAME}</td>
+    <td>${COUNT}</td>
+    <td width="150" class="center">
+      <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_category&id_cat=${ID_CAT}"> <i class="fa fa-edit"></i></a>
+      <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=category&remove=${ID_CAT}"
+      <!-- IF '${ALERT_REMOVE_SUNBERS}' != '' -->onclick="return confirm('${ALERT_REMOVE_SUNBERS}');"
+      <!-- END IF -->><i class="fa fa-trash-o"></i></a>
+    </td>
+  </tr>
+  <!-- END row -->
   </tbody>
 </table>
 <br>

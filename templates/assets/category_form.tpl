@@ -7,15 +7,13 @@
   <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
 </div>
 <!-- END IF -->
-<form class="form-horizontal" action="${ACTION}" method="post">
+<form action="${ACTION}" method="post">
   <!-- IF '${ID_CAT}' != '' -->
   <input type="hidden" name="id_cat" value="${ID_CAT}">
   <!-- END IF -->
-  <div class="control-group">
-    <label for="name" class="control-label">${STR_NAME}:</label>
-    <div class="controls">
-      <input class="span4 input-xlarge focused" type="text" name="name" value="${NAME}">
-    </div>
+  <div class="form-group">
+    <label for="name">${FORM_NAME}</label>
+    <input class="form-control" type="text" name="name" value="${NAME}">
   </div>
   <div class="controls">
     <input type="submit" class="btn btn-success" name="action" value="${BUTTON}">

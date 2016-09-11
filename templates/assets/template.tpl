@@ -117,8 +117,8 @@ function CheckAll_Activate(Element,Name)
 			}
 		}
 
-		if (m > 0) { document.getElementById("Apply_").disabled = false; }
-		else { document.getElementById("Apply_").disabled = true;  }
+		if (m > 0) { document.getElementById("apply").disabled = false; }
+		else { document.getElementById("apply").disabled = true;  }
 	}
 }
 
@@ -131,8 +131,8 @@ function Count_checked()
 		if(All.elements[i].checked) { m++; }
 	}
 
-	if(m > 0) { document.getElementById("Apply_").disabled = false; }
-	else { document.getElementById("Apply_").disabled = true; }
+	if(m > 0) { document.getElementById("apply").disabled = false; }
+	else { document.getElementById("apply").disabled = true; }
 }
 
 function sendout()
@@ -379,11 +379,23 @@ function PnumberChange()
 	<strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
 </div>
 <!-- END IF -->
+
+
+
 <form action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 4){return confirm('${ALERT_CONFIRM_REMOVE}');} if(this.action.value == 1) return false" method="post">
+
+
+
+
+
+
+
+
+
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th width="30px"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" onclick="CheckAll_Activate(this,'activate[]');"></th>
+        <th width="10px"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" onclick="CheckAll_Activate(this,'activate[]');"></th>
         <th width="50px">ID</th>
 	    <th width="50%">${TH_TABLE_MAILER}</th>
         <th>${TH_TABLE_CATEGORY}</th>
@@ -420,20 +432,91 @@ function PnumberChange()
       <!-- END row -->
     </tbody>
   </table>
-  <div class="form-inline">
-    <div class="control-group">
-      <select id="select_action" class="span3 form-control" name="action">
-        <option value="0">--${STR_ACTION}--</option>
-        <option value="1">${STR_SENDOUT}</option>
-        <option value="2">${STR_ACTIVATE}</option>
-        <option value="3">${STR_DEACTIVATE}</option>
-        <option value="4">${STR_REMOVE}</option>
-      </select>
+
+
+
+
+	<!-- BEGIN pagination -->
+	<div class="row">
+		<div class="col-sm-6">
+
+			<div class="dataTables_length">
+				<label>
+					${STR_PNUMBER}: <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">
+						<option value="5"<!-- IF '${PNUMBER}' == 5 --> selected="selected"<!-- END IF -->> 5 </option>
+						<option value="10"<!-- IF '${PNUMBER}' == 10 --> selected="selected"<!-- END IF -->> 10 </option>
+						<option value="15"<!-- IF '${PNUMBER}' == 15 --> selected="selected"<!-- END IF -->> 15 </option>
+						<option value="20"<!-- IF '${PNUMBER}' == 20 --> selected="selected"<!-- END IF -->> 20 </option>
+						<option value="50"<!-- IF '${PNUMBER}' == 50 --> selected="selected"<!-- END IF -->> 50 </option>
+						<option value="100"<!-- IF '${PNUMBER}' == 100 --> selected="selected"<!-- END IF -->> 100 </option>
+					</select>
+				</label>
+			</div>
+
+		</div>
+
+		<div class="col-sm-6">
+
+<div class="dataTables_paginate paging_simple_numbers">
+			<ul class="pagination">
+				<!-- IF '${PERVPAGE}' != '' -->
+				<li class="paginate_button previous">${PERVPAGE}</li>
+				<!-- END IF -->
+				<!-- IF '${PERV}' != '' -->
+				<li class="paginate_button previous">${PERV}</li>
+				<!-- END IF -->
+				<!-- IF '${PAGE2LEFT}' != '' -->
+				<li class="paginate_button ">${PAGE2LEFT}</li>
+				<!-- END IF -->
+				<!-- IF '${PAGE1LEFT}' != '' -->
+				<li class="paginate_button ">${PAGE1LEFT}</li>
+				<!-- END IF -->
+				<!-- IF '${CURRENT_PAGE}' != '' -->
+				<li class="paginate_button active">${CURRENT_PAGE}</li>
+				<!-- END IF -->
+				<!-- IF '${PAGE1RIGHT}' != '' -->
+				<li class="paginate_button ">${PAGE1RIGHT}</li>
+				<!-- END IF -->
+				<!-- IF '${PAGE2RIGHT}' != '' -->
+				<li class="paginate_button ">${PAGE2RIGHT}</li>
+				<!-- END IF -->
+				<!-- IF '${NEXTPAGE}' != '' -->
+				<li class="paginate_button next">${NEXTPAGE}</li>
+				<!-- END IF -->
+				<!-- IF '${NEXT}' != '' -->
+				<li class="paginate_button next">${NEXT}</li>
+				<!-- END IF -->
+			</ul>
+
+</div>
+
+		</div>
+	</div>
+	<!-- END pagination -->
+
+	<div class="row">
+		<div class="col-sm-12">
+
+
+			<div class="form-inline">
+				<div class="control-group">
+					<select id="select_action" class="span3 form-control" name="action">
+						<option value="0">--${STR_ACTION}--</option>
+						<option value="1">${STR_SENDOUT}</option>
+						<option value="2">${STR_ACTIVATE}</option>
+						<option value="3">${STR_DEACTIVATE}</option>
+						<option value="4">${STR_REMOVE}</option>
+					</select>
       <span class="help-inline">
-      <input type="submit" id="Apply_" value="${STR_APPLY}" class="btn btn-success" disabled="" name="">
+      <input type="submit" id="apply" value="${STR_APPLY}" class="btn btn-success" disabled="" name="">
       </span> </div>
-  </div>
+			</div>
+		</div>
+	</div>
+
 </form>
+
+
 <script type="text/javascript">
 
 	var modalform = '<span id="onlinelog"></span>';
@@ -459,51 +542,5 @@ function PnumberChange()
 	});	
 
 </script>
-<!-- BEGIN pagination -->
- <div class="form-inline">
-    <div class="control-group">
-		${STR_PNUMBER}: <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">
-        <option value="5"<!-- IF '${PNUMBER}' == 5 --> selected="selected"<!-- END IF -->> 5 </option>
-        <option value="10"<!-- IF '${PNUMBER}' == 10 --> selected="selected"<!-- END IF -->> 10 </option>
-		<option value="15"<!-- IF '${PNUMBER}' == 15 --> selected="selected"<!-- END IF -->> 15 </option>
-        <option value="20"<!-- IF '${PNUMBER}' == 20 --> selected="selected"<!-- END IF -->> 20 </option>
-		<option value="50"<!-- IF '${PNUMBER}' == 50 --> selected="selected"<!-- END IF -->> 50 </option>
-		<option value="100"<!-- IF '${PNUMBER}' == 100 --> selected="selected"<!-- END IF -->> 100 </option>
-      </select>
-      <span class="help-inline">
 
-<div class="pagination">
-  <ul>
-    <!-- IF '${PERVPAGE}' != '' -->
-    <li>${PERVPAGE}</li>
-    <!-- END IF -->
-    <!-- IF '${PERV}' != '' -->
-    <li>${PERV}</li>
-    <!-- END IF -->
-    <!-- IF '${PAGE2LEFT}' != '' -->
-    <li>${PAGE2LEFT}</li>
-    <!-- END IF -->
-    <!-- IF '${PAGE1LEFT}' != '' -->
-    <li>${PAGE1LEFT}</li>
-    <!-- END IF -->
-    <!-- IF '${CURRENT_PAGE}' != '' -->
-    <li class="prev disabled">${CURRENT_PAGE}</li>
-    <!-- END IF -->
-    <!-- IF '${PAGE1RIGHT}' != '' -->
-    <li>${PAGE1RIGHT}</li>
-    <!-- END IF -->
-    <!-- IF '${PAGE2RIGHT}' != '' -->
-    <li>${PAGE2RIGHT}</li>
-    <!-- END IF -->
-    <!-- IF '${NEXTPAGE}' != '' -->
-    <li>${NEXTPAGE}</li>
-    <!-- END IF -->
-    <!-- IF '${NEXT}' != '' -->
-    <li>${NEXT}</li>
-    <!-- END IF -->
-  </ul>
-</div>
-</span> </div>
-</div>
-<!-- END pagination -->
 <!-- INCLUDE footer.tpl -->

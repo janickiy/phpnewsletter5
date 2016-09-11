@@ -6,8 +6,8 @@
 <!-- END IF -->
 
 <!-- BEGIN show_errors -->
-<div class="alert alert-error">
-  <a class="close" href="#" data-dismiss="alert">×</a>
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
   <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
   <ul>
     <!-- BEGIN row -->

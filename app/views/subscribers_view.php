@@ -246,13 +246,7 @@ if ($arr){
 		$columnBlock->assign('STR_EDIT',  core::getLanguage('str', 'edit'));		
 		$columnBlock->assign('STR_REMOVE',  core::getLanguage('str', 'remove_user'));
 		$rowBlock->assign('column', $columnBlock);		
-	}		
-	
-	$rowBlock->assign('FORM_CHOOSE_ACTION', core::getLanguage('str', 'form_choose_action'));
-	$rowBlock->assign('FORM_REMOVE', core::getLanguage('str', 'form_remove'));
-	$rowBlock->assign('FORM_ACTIVATE', core::getLanguage('str', 'form_activate'));
-	$rowBlock->assign('FORM_DEACTIVATE', core::getLanguage('str', 'form_deactivate'));
-	$rowBlock->assign('BUTTON_APPLY', core::getLanguage('button', 'apply'));		
+	}
 	
 	if ($number > 1){
 		$paginationBlock = $rowBlock->fetch('pagination');
@@ -277,8 +271,13 @@ if ($arr){
 	}
 	
 	$rowBlock->assign('STR_NUMBER_OF_SUBSCRIBERS', core::getLanguage('str', 'number_of_subscribers'));	
-	$rowBlock->assign('NUMBER_OF_SUBSCRIBERS', $data->countSubscribers());	
-	$tpl->assign('row', $rowBlock);		
+	$rowBlock->assign('NUMBER_OF_SUBSCRIBERS', $data->countSubscribers());
+	$rowBlock->assign('STR_ACTION', core::getLanguage('str', 'action'));
+	$rowBlock->assign('STR_ACTIVATE', core::getLanguage('str', 'activate'));
+	$rowBlock->assign('STR_DEACTIVATE', core::getLanguage('str', 'deactivate'));
+	$rowBlock->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
+	$rowBlock->assign('STR_APPLY', core::getLanguage('str', 'apply'));
+	$tpl->assign('row', $rowBlock);
 }
 else{
 	if (!empty($search)) {

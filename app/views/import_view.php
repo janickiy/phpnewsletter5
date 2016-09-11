@@ -109,9 +109,9 @@ if (isset($result)){
 
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
-$tpl->assign('TABLE_DATABASE_FILE', core::getLanguage('str', 'database_file'));
+$tpl->assign('STR_DATABASE_FILE', core::getLanguage('str', 'database_file'));
 $tpl->assign('BUTTON_ADD', core::getLanguage('button', 'import'));
-$tpl->assign('TABLE_CATEGORY', core::getLanguage('str', 'category'));
+$tpl->assign('STR_CATEGORY', core::getLanguage('str', 'category'));
 $tpl->assign('OPTION', $option);
 $tpl->assign('STR_CHARSET', core::getLanguage('str', 'charset'));
 $tpl->assign('STR_NO', core::getLanguage('str', 'no'));
