@@ -22,7 +22,7 @@ class Model_edit_template extends Model
                for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++) {
                    if (!empty($_FILES["attachfile"]["name"][$i])) {
                        $ext = strrchr($_FILES['attachfile']['name'][$i], ".");
-                       $attachfile = $PNSL["system"]["dir_attach"] . date("YmdHis", time()) . $i . $ext;
+                       $attachfile = core::pathTo(core::getPath('attach'), date("YmdHis", time()) . $i . $ext);
 
                        if (@copy($_FILES['attachfile']['tmp_name'][$i], $attachfile)) {
                            @unlink($_FILES['attachfile']['tmp_name'][$i]);

@@ -125,15 +125,7 @@ class core
     {
         self::$language[$section][$item] = $value;
     }
-    // --------- SETTINGS -------------------------------
-    
-    /*
-     * static public function mainConfig()
-     * {
-     * // Main config
-     * self::$mainConfig = self::$config->loadConfig(self::pathTo('config', 'MainConfig.ini'));
-     * }
-     */
+
     static public function pathTo($engine, $data)
     {
         return SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $data;
@@ -158,4 +150,10 @@ class core
         } else
             return false;
     }
+
+    static public function getPath($path)
+    {
+        return self::$paths[$path];
+    }
+
 }

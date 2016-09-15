@@ -15,7 +15,7 @@ class Model_settings extends Model
     public function getCharsetList()
     {
         $temp = Array();
-        $query = "SELECT * FROM " . core::database()->getTableName('charset') . "";
+        $query = "SELECT * FROM " . core::database()->getTableName('charset');
         $result = core::database()->querySQL($query);
         while ($row = core::database()->getRow($result)) {
             $temp[$row['id_charset']] = Pnl::charsetlist($row['charset']);

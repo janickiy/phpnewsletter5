@@ -59,7 +59,7 @@ class Model_ajax extends Model
 
 	public function getMailingStatus()
 	{
-		$query = "SELECT * FROM " . core::database()->getTableName('process') . "";
+		$query = "SELECT * FROM " . core::database()->getTableName('process');
 		$result = core::database()->querySQL($query);
 		$status = core::database()->getRow($result);
 
@@ -80,7 +80,8 @@ class Model_ajax extends Model
 
 		if ($getfile){
 			$newUpdate = file_get_contents($getfile);
-			if (!is_dir(SYS_ROOT . $cmspaths['tmp'])) mkdir(SYS_ROOT . $cmspaths['tmp']);
+			if (!is_dir(SYS_ROOT . core::getPath('tmp'))) mkdir(SYS_ROOT . core::getPath('tmp'));
+
 			$dlHandler = fopen($path, 'w');
 
 			if (!fwrite($dlHandler, $newUpdate)) {

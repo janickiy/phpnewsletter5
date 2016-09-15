@@ -30,15 +30,14 @@ class Model_create_template extends Model
 		$fields['pos'] = ($total)? $total['MAX(pos)'] + 1 : 1; 
 		$id_insert = core::database()->insert($fields, core::database()->getTableName('template'));
 		
-		if($id_insert){
+		if ($id_insert){
+			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++){
 		
-			for($i = 0; $i<count($_FILES["attachfile"]["name"]); $i++){
-		
-				if(!empty($_FILES["attachfile"]["name"][$i])){
+				if (!empty($_FILES["attachfile"]["name"][$i])){
 					$ext = strrchr($_FILES['attachfile']['name'][$i], ".");
-					$attachfile = $PNSL["system"]["dir_attach"].date("YmdHis",time()).$i.$ext;
+					$attachfile = core::pathTo(core::getPath('attach'), date("YmdHis", time()) . $i . $ext);
 			
-					if(@copy($_FILES['attachfile']['tmp_name'][$i], $attachfile)) { 
+					if (@copy($_FILES['attachfile']['tmp_name'][$i], $attachfile)) {
 						@unlink($_FILES['attachfile']['tmp_name'][$i]); 
 					}
 
