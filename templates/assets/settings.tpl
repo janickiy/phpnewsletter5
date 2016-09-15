@@ -1,21 +1,5 @@
 <!-- INCLUDE header.tpl -->
 <script type="text/javascript" src="./templates/js/jquery-ui-1.8.16.custom.min.js"></script>
-<script type="text/javascript">
-$(function () {
-    // Tabs
-    $('#tabs').tabs();
-
-    //hover states on the static widgets
-    $('#dialog_link, #modal_link, ul#icons li').hover(
-
-    function () {
-        $(this).addClass('ui-state-hover');
-    }, function () {
-        $(this).removeClass('ui-state-hover');
-    });
-     
-});
-</script>
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
@@ -33,13 +17,14 @@ $(function () {
 </div>
 <!-- END IF -->
 <form class="form-horizontal" action="${ACTION}" method="post">
-  <div id="tabs">
-    <ul>
-      <li><a href="#interface">${SET_INTERFACE_SETTINGS}</a></li>
-      <li><a href="#smtp">${SET_SMTP_HOST}</a></li>
-      <li><a href="#options">${SET_SEND_PARAMETERS}</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#interface" data-toggle="tab">${SET_INTERFACE_SETTINGS}</a></li>
+      <li><a href="#smtp" data-toggle="tab">${SET_SMTP_HOST}</a></li>
+      <li><a href="#options" data-toggle="tab">${SET_SEND_PARAMETERS}</a></li>
     </ul>
-    <div id="interface">
+	<br>
+	<div class="tab-content">
+	<div class="tab-pane fade in active" id="interface">
       <div class="form-group">
         <label class="col-lg-3 control-label" for="language">${SET_LANGUAGE}</label>
         <div class="col-lg-7">
@@ -117,7 +102,7 @@ $(function () {
         </div>
       </div>
     </div>
-    <div id="smtp">
+    <div class="tab-pane fade in active" id="smtp">
       <div class="form-group">
         <label class="col-lg-3 control-label" for="smtp_host">${SET_SMTP_HOST}</label>
         <div class="col-lg-7">
@@ -166,7 +151,7 @@ $(function () {
         </div>
       </div>
     </div>
-    <div id="options">
+    <div class="tab-pane fade in active" id="options">
       <div class="form-group">
         <label class="col-lg-3 control-label" for="show_unsubscribe_link">${SET_SHOW_UNSUBSCRIBE_LINK}</label>
         <div class="col-lg-7">
@@ -317,6 +302,6 @@ $(function () {
     <div class="control" style="">
       <input class="btn btn-success" name="action" type="submit" value="${BUTTON_APPLY}">
     </div>
-  </div>
+	</div>
 </form>
 <!-- INCLUDE footer.tpl -->
