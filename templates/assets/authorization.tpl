@@ -3,28 +3,53 @@
 <head>
 <title>${TITLE}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="./templates/assets/styles/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/styles.css" rel="stylesheet" media="screen">
-<link href="./templates/assets/styles/DT_bootstrap.css" rel="stylesheet" media="screen">
+<!-- Bootstrap Core CSS -->
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="./templates/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="./templates/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
-<body>				
+<body>
 <div class="container">
-<div class="row">
-<div class="row text-center">
-<div class="col-md-12">
-<br>
-<br>
-<h2>${STR_ADMIN_AREA}  ${SCRIPT_NAME}</h2>
-<br>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${STR_ADMIN_AREA}  ${SCRIPT_NAME}</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form"  method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="login" value="${LOGIN}" placeholder="${STR_LOGIN}" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="password" placeholder="${STR_PASSWORD}">
+                            </div>
+                            <input type="submit" class="btn btn-primary" name="admin" value=" OK ">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<form class="form-signin" method="post">
-<h4 class="form-signin-heading">${STR_SIGN_IN}</h4>
-<input class="input-block-level" type="text" name="login" value="${LOGIN}" placeholder="${STR_LOGIN}">
-<input class="input-block-level" type="password" name="password" placeholder="${STR_PASSWORD}">
-<input type="submit" class="btn btn-primary" name="admin" value=" OK ">
-</form>
-</div>
+
+<!-- jQuery -->
+<script src="./templates/assets/vendor/jquery/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="./templates/assets/vendor/metisMenu/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="./templates/assets/dist/js/sb-admin-2.js"></script>
 </body>
 </html>

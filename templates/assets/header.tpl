@@ -34,6 +34,7 @@ $(document).ready(function(){
 		dataType: 'json',
 		cache: false,
 		url: './?t=ajax&action=alert_update',
+		dataType: "json",
 		success: function(data){
 			if (data.msg != ''){
 				$('#alert_msg_block').fadeIn('700');
@@ -66,6 +67,7 @@ $(document).on( "click", ".startmailing", function() {
 	$.ajax({
 		type: "GET",
 		url: "./?t=ajax&action=process&status=stop",
+		dataType: "json",
 		success: function(data){
 			$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
 		}
@@ -83,6 +85,13 @@ $(document).on( "click", ".startmailing", function() {
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
+				<li id="mailing_status">
+						<!-- IF '${MAILING_STATUS}' == 'start' -->
+						<span title="${STR_LAUNCHEDMAILING}" id="startmailing" class="startmailing"></span>
+						<!-- ELSE -->
+						<span title="${STR_STOPMAILING}" class="stopmailing"></span>
+						<!-- END IF -->
+				</li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -141,16 +150,3 @@ $(document).on( "click", ".startmailing", function() {
 						<h4 class="alert-heading">${STR_WARNING}!</h4>
 						<span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span>
 					</div>
-
-
-
-
-
-
-
-
-
-
-
-
-

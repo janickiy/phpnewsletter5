@@ -9,12 +9,12 @@
 }
 
 .version{
-	position: absolute;
-	top: 70px;
-	left: 120px;
-	font-size: 11px;
-	color: #333333;
+    color: #333333;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    left: 65px;
+    position: absolute;
+    top: 2px;
 }
 
 /** Login Page **/
@@ -439,8 +439,8 @@ background: url("../images/sort_asc.png") no-repeat scroll right center rgba(0, 
 .startmailing{
 	background: url("../images/circle_green.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
 	cursor: pointer;
-	left: 120px;
-	top: 15px;
+	left: -20px;
+	top: -13px;
 	height: 16px;
 	width: 16px;
 	z-index: 1000;
@@ -449,8 +449,8 @@ background: url("../images/sort_asc.png") no-repeat scroll right center rgba(0, 
 
 .stopmailing{
 	background: url("../images/square_red.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
-	left: 120px;
-	top: 15px;
+	left: -20px;
+	top: -13px;
 	height: 16px;
 	width: 16px;
 	z-index: 1000;

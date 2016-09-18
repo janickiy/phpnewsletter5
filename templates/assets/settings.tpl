@@ -65,6 +65,20 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-lg-3 control-label" for="return_path">${SET_RETURN_PATH}</label>
+        <div class="col-lg-7">
+          <input class="form-control" type="text" value="${RETURN_PATH}" name="return_path">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="list_owner">${SET_LIST_OWNER}</label>
+        <div class="col-lg-7">
+          <input class="form-control" type="text" value="${LIST_OWNER}" name="list_owner">
+        </div>
+      </div>
+
+
+      <div class="form-group">
         <label class="col-lg-3 control-label" for="organization">${SET_ORGANIZATION}</label>
         <div class="col-lg-7">
           <input class="form-control" type="text" value="${ORGANIZATION}" name="organization">

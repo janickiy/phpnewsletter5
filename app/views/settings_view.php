@@ -155,7 +155,7 @@ else
 	$tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
 $tpl->assign('SET_ORGANIZATION', core::getLanguage('str', 'set_organization'));
-$tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('') ['organization']));	
+$tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('organization')));
 $tpl->assign('SET_SUBJECT_TEXTCONFIRM', core::getLanguage('str', 'set_subject_textconfirm'));
 $tpl->assign('SET_TEXT_CONFIRMATION', core::getLanguage('str', 'set_text_confirmation'));
 $tpl->assign('SET_REQUIRE_CONFIRMATION', core::getLanguage('str', 'set_require_confirmation'));
@@ -217,7 +217,7 @@ foreach($temp as $key => $value){
 }
 
 $tpl->assign('OPTION', $option);
-$tpl->assign('SET_CONTENT_TYPE', core::getLanguage('str', 'set_content_type') );
+$tpl->assign('SET_CONTENT_TYPE', core::getLanguage('str', 'set_content_type'));
 $tpl->assign('CONTENT_TYPE', core::getSetting('content_type'));
 
 // footer

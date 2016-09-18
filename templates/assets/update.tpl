@@ -64,7 +64,7 @@ function updateBD()
 		cache: false,
 		url: "./?t=ajax&start_update&p=update_bd",
 		dataType: "json",
-		success: function(xml){
+		success: function(data){
 			if (data.result == 'yes'){
 				$('.bar').css('width', '100%');
 				$('#progress_bar').delay(3000).fadeOut();
@@ -78,16 +78,14 @@ function updateBD()
 }	
 
 </script>
-<form class="form-horizontal" action="${ACTION}" method="post">
+<form action="${ACTION}" method="post">
 	<input type="hidden" name="action" value="post">
-	<div class="control-group">
-		<label for="license_key" class="control-label">${STR_LICENSE_KEY}:</label>
-		<div class="controls">
-			<input class="form-control uneditable-input" disabled="disabled" type="text" name="license_key" value="${LICENSE_KEY}">
-		</div>
+	<div class="form-group">
+		<label for="license_key">${STR_LICENSE_KEY}</label>
+		<input class="form-control" type="text" style="text-transform: uppercase;" name="license_key" value="${LICENSE_KEY}">
 	</div>
 	<div class="controls">
-		<input type="submit" class="btn btn-success" disabled="disabled" value="${BUTTON_SAVE}">
+		<input type="submit" class="btn btn-success" value="${BUTTON_SAVE}">
 	</div>
 </form>
 <!-- INCLUDE footer.tpl -->

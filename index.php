@@ -11,7 +11,7 @@
 define('LETTER', TRUE);
 define('SYS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-require_once SYS_ROOT."bootstrap.php";
+require_once SYS_ROOT . "bootstrap.php";
 require_once core::pathTo('core', 'route.php');
 
 // check install
@@ -28,8 +28,8 @@ if (is_file(SYS_ROOT . $cmspaths['config'] . '/config_db.php') && is_dir(SYS_ROO
     echo "</style>\n";
     echo "</head>\n";
     echo "<body>\n";
-    echo '<p><a target="_blank" href="' .core::getLanguage('', '')["str"]["url_info"] . '">PHP Newsletter</a> | ';
-    echo "<p>" . str_replace('%URL%', SYS_ROOT . 'install/',core::getLanguage('', '')["str"]["install_msg"]) . "</p>\n";
+    echo '<p><a target="_blank" href="' .core::getLanguage('str', 'url_info') . '">PHP Newsletter</a> | ';
+    echo "<p>" . str_replace('%URL%', SYS_ROOT . 'install/', core::getLanguage('str', 'install_msg')) . "</p>\n";
     echo "</body>\n";
     echo '</html>';
 
