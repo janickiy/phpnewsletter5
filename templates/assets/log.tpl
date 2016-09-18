@@ -56,7 +56,6 @@
           id_log = getUrlVars()["id_log"];
 
           $.post('./?t=ajax&action=showlogs', {
-            action		: 'scrollpagination',
             number		: $settings.nop,
             offset		: offset,
             id_log		: id_log,
