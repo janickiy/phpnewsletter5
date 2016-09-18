@@ -35,7 +35,7 @@ core::$db = new DB($ConfigDB);
 
 // get settings
 if (!is_array(core::getSetting())) {
-    $query = "SELECT * FROM " . core::database()->getTableName('settings') . "";
+    $query = "SELECT * FROM " . core::database()->getTableName('settings');
     $result = core::database()->querySQL($query);
     core::addSetting(core::database()->getRow($result));
 }

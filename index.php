@@ -28,7 +28,7 @@ if (is_file(SYS_ROOT . $cmspaths['config'] . '/config_db.php') && is_dir(SYS_ROO
     echo "</style>\n";
     echo "</head>\n";
     echo "<body>\n";
-    echo '<p><a target="_blank" href="' .core::getLanguage('str', 'url_info') . '">PHP Newsletter</a> | ';
+    echo '<p><a target="_blank" href="' . core::getLanguage('str', 'url_info') . '">PHP Newsletter</a> | ';
     echo "<p>" . str_replace('%URL%', SYS_ROOT . 'install/', core::getLanguage('str', 'install_msg')) . "</p>\n";
     echo "</body>\n";
     echo '</html>';
