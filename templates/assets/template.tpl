@@ -535,7 +535,7 @@ function PnumberChange()
 	modalform += '<span id="divStatus" class="error"></span>';
 
 	$(document).ready(function(){
-		$('#Apply_').paulund_modal_box({
+		$('#apply').paulund_modal_box({
 			title:'${STR_ONLINE_MAILINGLOG}',
 			description: modalform
 		});		

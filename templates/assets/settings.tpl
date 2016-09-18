@@ -174,6 +174,7 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="request_reply">${SET_REPLY}</label>
         <div class="col-lg-7">
@@ -182,32 +183,17 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="interval_number">${SET_INTERVAL_TYPE}</label>
-        <div class="col-lg-7">
-          <div class="row">
-            <div class="col-xs-2">
-              <input type="text" class="form-control" name="interval_number" value="${INTERVAL_NUMBER}">
-            </div>
-            <div class="col-xs-9">
-              <select class="form-control form-primary" name="interval_type">
-                <option value="0" <!-- IF '${INTERVAL_TYPE}' == 'no' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_NO} </option>
-                <option value="1" <!-- IF '${INTERVAL_TYPE}' == 'm' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_M} </option>
-                <option value="2" <!-- IF '${INTERVAL_TYPE}' == 'h' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_H} </option>
-                <option value="3" <!-- IF '${INTERVAL_TYPE}' == 'd' -->selected="selected"
-                <!-- END IF -->>${SET_INTERVAL_TYPE_D}
-                </option>
-              </select>
+
+
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="re_send">${SET_RE_SEND}</label>
+          <div class="col-lg-7">
+            <div class="checkbox">
+              <label> <input  type="checkbox" name="re_send" <!-- IF '${RE_SEND}' == 'yes' -->checked="checked"<!-- END IF -->> </label>
             </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="re_send">${SET_RE_SEND}</label>
-        <div class="col-lg-7">
-          <div class="checkbox"> <input  type="checkbox" name="re_send" <!-- IF '${RE_SEND}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
-        </div>
-      </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="limit_number">${SET_NUMBER_LIMIT}</label>
         <div class="col-lg-7">
@@ -221,18 +207,21 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="sleep">${SET_SLEEP}</label>
         <div class="col-lg-7">
           <input class="form-control" type="text" value="${SLEEP}" name="sleep">
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="random">${SET_RANDOM}</label>
         <div class="col-lg-7">
-          <div class="checkbox"> <input type="checkbox" name="random" <!-- IF '${RANDOM}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
+          <div class="checkbox"> <label><input type="checkbox" name="random" <!-- IF '${RANDOM}' == 'yes' -->checked="checked"<!-- END IF -->></label> </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="precedence">Precedence</label>
         <div class="col-lg-7">
@@ -283,7 +272,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="add_dkim">${SET_ADD_DKIM}</label>
         <div class="col-lg-7">
-          <div class="checkbox"> <input lass="flat-checkbox" type="checkbox" name="add_dkim" <!-- IF '${ADD_DKIM}' == 'yes' -->checked="checked"<!-- END IF -->> </div>
+          <div class="checkbox"> <label><input lass="flat-checkbox" type="checkbox" name="add_dkim" <!-- IF '${ADD_DKIM}' == 'yes' -->checked="checked"<!-- END IF -->> </label></div>
         </div>
       </div>
       <div class="form-group">
@@ -313,9 +302,10 @@
         </div>
       </div>
     </div>
-    <div class="control" style="">
-      <input class="btn btn-success" name="action" type="submit" value="${BUTTON_APPLY}">
-    </div>
-	</div>
+
+
+      <div class="form-group">
+        <input class="btn btn-success" name="action" type="submit" value="${BUTTON_APPLY}">
+      </div>
 </form>
 <!-- INCLUDE footer.tpl -->
