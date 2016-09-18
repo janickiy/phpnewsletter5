@@ -531,6 +531,7 @@ class Model_ajax extends Model
 							$fields = array();
 							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
+							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
 							$fields['success'] = 'no';
 							$fields['errormsg'] = $m->ErrorInfo;
@@ -544,6 +545,7 @@ class Model_ajax extends Model
 							$fields = array();
 							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
+							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
 							$fields['success'] = 'yes';
 							$fields['readmail'] = 'no';
@@ -599,8 +601,7 @@ class Model_ajax extends Model
 		if(is_numeric($offset) && is_numeric($number) && is_numeric($id_log)) {
 			$strtmp = core::database()->escape($strtmp);
 
-			$query = "SELECT *, a.time as time, c.name as catname, s.name as name FROM " . core::database()->getTableName('ready_send') . " a
-					LEFT JOIN " . core::database()->getTableName('users') . " b ON b.id_user=a.id_user
+			$query = "SELECT *, a.time AS time, c.name AS catname, s.name AS name FROM " . core::database()->getTableName('ready_send') . " a
 					LEFT JOIN " . core::database()->getTableName('template') . " s ON a.id_template=s.id_template
 					LEFT JOIN " . core::database()->getTableName('category') . " c ON s.id_cat=c.id_cat
 					WHERE id_log=" . $id_log . "

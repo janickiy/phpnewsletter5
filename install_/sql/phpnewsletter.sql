@@ -43,6 +43,7 @@ CREATE TABLE `%prefix%process` (
 CREATE TABLE `%prefix%ready_send` (
   `id_ready_send` int(10) NOT NULL AUTO_INCREMENT,
   `id_user` int(9) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `id_template` int(9) NOT NULL,
   `success` enum('yes','no') NOT NULL,
   `errormsg` text NOT NULL,

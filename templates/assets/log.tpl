@@ -6,8 +6,8 @@
     $.fn.scrollPagination = function(options) {
 
       var settings = {
-        nop     : 10,
-        offset  : 10,
+        nop     : 50,
+        offset  : 50,
         error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
         delay   : 500,
         scroll  : true
@@ -73,7 +73,7 @@
               offset = offset+$settings.nop;
 
               for(var i=0; i < data.item.length; i++) {
-                if(data.item[i].email == null) $("#msgShow").html('ghjghj');
+                if(data.item[i].email == null) $("#msgShow").html('${STR_SHOW_MORE}');
                 var content = '';
                 content += '<tr><td>' + data.item[i].name + '</td><td>' + data.item[i].email + '</td><td>' + data.item[i].catname + '</td><td>' + data.item[i].time + '</td><td>' + data.item[i].status + '</td><td>' + data.item[i].read + '</td><td width="30%">' + data.item[i].errormsg + '</td></tr>';
                 $('#logTable > tbody > tr:last').after(content);
@@ -114,9 +114,9 @@
 
   $(document).ready(function() {
 
-    $('#content').scrollPagination({
-      nop     : 10,
-      offset  : 10,
+    $('#page-wrapper').scrollPagination({
+      nop     : 50,
+      offset  : 50,
       error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
       delay   : 500,
       scroll  : true

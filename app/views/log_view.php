@@ -91,7 +91,7 @@ if (Core_Array::getRequest('id_log')){
 	$blockDetailLog->assign('THCLASS_SUCCESS', $thclass["success"]);
 	$blockDetailLog->assign('THCLASS_READMAIL', $thclass["readmail"]);
 
-	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 10);
+	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 50);
 
 	if (is_array($arr)){
 		$blockDetailLog->assign('ID_LOG', Core_Array::getRequest('id_log'));
@@ -184,7 +184,7 @@ else{
 	if ($page + 2 <= $number) $page2right = '<a href="./?t=log&page=' . ($page + 2) . '">' . ($page + 2) . '...</a>';
 	if ($page + 1 <= $number) $page1right = '<a href="./?t=log&page=' . ($page + 1) . '">' . ($page + 1) . '</a>';
 
-	if($number > 1){
+	if ($number > 1){
 		$paginationBlock = $blockLogList->fetch('pagination');
 		$paginationBlock->assign('STR_PNUMBER', core::getLanguage('str', 'pnumber'));
 		$paginationBlock->assign('CURRENT_PAGE','<a>' . $page . '</a>');
