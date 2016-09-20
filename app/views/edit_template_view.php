@@ -98,8 +98,8 @@ $tpl->assign('STR_FORM_PRIORITY', core::getLanguage('str', 'form_priority'));
 $template = $data->getTemplate(Core_Array::getGet('id_template'));
 
 //value
-$tpl->assign('NAME', empty(Core_Array::getPost('name')) ? Core_Array::getPost('name') : $template['name']);
-$tpl->assign('CONTENT', empty(Core_Array::getPost('body')) ? Core_Array::getPost('body') : $template['body']);
+$tpl->assign('NAME', empty(Core_Array::getPost('name')) ? $template['name'] : Core_Array::getPost('name'));
+$tpl->assign('CONTENT', empty(Core_Array::getPost('body')) ? $template['body'] : Core_Array::getPost('body'));
 $tpl->assign('ID_TEMPLATE', Core_Array::getGet('id_template'));
 
 $arr = $data->getAttachmentsList(Core_Array::getGet('id_template'));
@@ -122,9 +122,9 @@ if ($arr){
 }
 
 if (Core_Array::getPost('prior') == 1)
-    $tpl->assign('PRIOR1_CHECKED', empty(Core_Array::getPost('prior')) ? Core_Array::getPost('prior') : $template['prior']);
+    $tpl->assign('PRIOR1_CHECKED', empty(Core_Array::getPost('prior')) ? $template['prior'] : Core_Array::getPost('prior'));
 else if (Core_Array::getPost('prior') == 2)
-    $tpl->assign('PRIOR2_CHECKED', empty(Core_Array::getPost('prior')) ? Core_Array::getPost('prior') : $template['prior']);
+    $tpl->assign('PRIOR2_CHECKED', empty(Core_Array::getPost('prior')) ? $template['prior'] : Core_Array::getPost('prior'));
 else
     $tpl->assign('PRIOR3_CHECKED', $template['prior']);
 
@@ -138,7 +138,7 @@ if ($arr){
         $rowBlock = $tpl->fetch('categories_row');
         $rowBlock->assign('ID_CAT', $row['id_cat']);
         $rowBlock->assign('NAME', $row['name']);
-        $rowBlock->assign('POST_ID_CAT', empty(Core_Array::getPost('id_cat')) ? Core_Array::getPost('id_cat') : $row['id_cat']);
+        $rowBlock->assign('POST_ID_CAT', empty(Core_Array::getPost('id_cat')) ? $row['id_cat'] : Core_Array::getPost('id_cat'));
         $tpl->assign('categories_row', $rowBlock);
     }
 }

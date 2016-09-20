@@ -112,15 +112,15 @@ $(document).on( "click", ".startmailing", function() {
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                           <li <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF -->><a href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a></li>
-						   <li <!-- IF '${ACTIVE_MENU}' == 'create_template' -->class="active"<!-- END IF -->><a href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span></li>
-						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->class="active"<!-- END IF -->><a href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a></li><!-- END IF -->
-						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li <!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF -->><a href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li><!-- END IF -->
-						   <li <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->><a href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
-						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF -->><a href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li><!-- END IF -->
-						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'accounts' -->class="active"<!-- END IF -->><a href="./?t=accounts" title="${MENU_ACCOUNTS_TITLE}"><i class="fa fa-key"></i> ${MENU_ACCOUNTS}</a></li><!-- END IF -->
-						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li <!-- IF '${ACTIVE_MENU}' == 'update' -->class="active"<!-- END IF -->><a href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a> </li><!-- END IF -->
-						   <li <!-- IF '${ACTIVE_MENU}' == 'faq' -->class="active"<!-- END IF -->><a href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a></li>
+                           <li><a <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF --> href="./" title="${MENU_TEMPLATES_TITLE}"><i class="fa fa-envelope"></i> ${MENU_TEMPLATES}</a></li>
+						   <li><a <!-- IF '${ACTIVE_MENU}' == 'create_template' -->class="active"<!-- END IF --> href="./?t=create_template" title="${MENU_CREATE_NEW_TEMPLATE_TITLE}"><i class="fa fa-plus"></i> ${MENU_CREATE_NEW_TEMPLATE}</a><span class="menu-create-tmpl-icon"></span></li>
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li><a <!-- IF '${ACTIVE_MENU}' == 'subscribers' -->class="active"<!-- END IF --> href="./?t=subscribers" title="${MENU_SUBSCRIBERS_TITLE}"><i class="fa fa-users"></i> ${MENU_SUBSCRIBERS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' --><li><a <!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF --> href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li><!-- END IF -->
+						   <li><a <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF --> href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li><a <!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF --> href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li><a <!-- IF '${ACTIVE_MENU}' == 'accounts' -->class="active"<!-- END IF --> href="./?t=accounts" title="${MENU_ACCOUNTS_TITLE}"><i class="fa fa-key"></i> ${MENU_ACCOUNTS}</a></li><!-- END IF -->
+						   <!-- IF '${ACCOUNT_ROLE}' == 'admin' --><li><a <!-- IF '${ACTIVE_MENU}' == 'update' -->class="active"<!-- END IF --> href="./?t=update" title="${MENU_UPDATE_TITLE}"><i class="fa fa-refresh"></i> ${MENU_UPDATE}</a> </li><!-- END IF -->
+						   <li><a <!-- IF '${ACTIVE_MENU}' == 'faq' -->class="active"<!-- END IF --> href="./?t=faq" title="FAQ"><i class="fa fa-question-circle"></i> FAQ</a></li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

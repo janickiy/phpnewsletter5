@@ -11,7 +11,7 @@ $INSTALL["lang"]["str"]["no"] = "Нет";
 $INSTALL["lang"]["str"]["check_result"] = "Результаты проверки";
 $INSTALL["lang"]["str"]["can_continue_install"] = "Вы можете продолжить установку.";
 $INSTALL["lang"]["str"]["error_after_process"] = "При обработке введёных данных возникли следующие ошибки";
-$INSTALL["lang"]["str"]["logo"]   = '© 2006-2015 <a href="http://janicky.com/">PHP Newsletter</a>';
+$INSTALL["lang"]["str"]["logo"]   = '© 2006-2016 <a href="http://janicky.com/">PHP Newsletter</a>';
 $INSTALL["lang"]["str"]["author"] = "Яницкий Александр";
 $INSTALL["lang"]["str"]["system_req"] = "Проверка на соответствие системным требованиям";
 $INSTALL["lang"]["str"]["db_and_product_settings"] = "Параметры базы данных и продукта";
@@ -41,6 +41,7 @@ $INSTALL["lang"]["str"]["admin_area"] = "Перейти в панель адми
 $INSTALL["lang"]["str"]["license_key"] = "Лицензионный ключ";
 $INSTALL["lang"]["str"]["demo_version"] = "Демонстрационная версия";
 $INSTALL["lang"]["str"]["commercial_version"] = " Коммерческая версия";
+$INSTALL["lang"]["str"]["login"] = "Логин";
 $INSTALL["lang"]["error"]["must_be_enter_dbserver"] = "Должно быть указано имя сервера БД!";
 $INSTALL["lang"]["error"]["must_be_enter_dblogin"] = "Должен быть указан логин пользователя БД!";
 $INSTALL["lang"]["error"]["must_be_enter_dbname"] = "Должно быть указано имя БД!";
@@ -53,6 +54,7 @@ $INSTALL["lang"]["error"]["must_be_enter_apass"] = "Должен быть ука
 $INSTALL["lang"]["error"]["invalid_confirm_apass"] = "Пароль администратора и его подтверждение не совпадают!";
 $INSTALL["lang"]["error"]["setting_product"] = "Ошибка при настройке продукта!";
 $INSTALL["lang"]["error"]["wrong_license_key"] = "Ошибка: неверный лицензионный ключ!";
+$INSTALL["lang"]["error"]["enter_login"] = "Введите логин администратора!";
 $INSTALL["lang"]["warning"]["detect_last_version"] = "Обнаружена последняя версия PHP Newsletter %VERSION%.";
 $INSTALL["lang"]["warning"]["detect_old_version"] = "Обнаружена старая версия PHP Newsletter %VERSION%.";
 $INSTALL["lang"]["warning"]["register_globals_on"] = "Включена потенциально опасная опция PHP register_globals! Рекомендуем отключить её в целях безопасности.";
