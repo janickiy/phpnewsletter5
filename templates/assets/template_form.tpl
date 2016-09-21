@@ -1,25 +1,20 @@
 <script type="text/javascript" src="./templates/js/ckeditor/ckeditor.js"></script>
-<script type="text/javascript">
+<script>
+  $(document).on( "click", ".remove_attach", function() {
 
-  function add_attach_file(bl_name, num)
-  {
-    var addF = document.forms['addF'];
-    prev_num = parseInt(num)-1;
-    bl_name += "_";
-    par_div = document.getElementById(bl_name+prev_num).parentNode;
-    adding_block = document.createElement("div");
-    adding_block.id = bl_name+num;
+  var Id_attach = $(this).attr('data-num');
 
-    if(bl_name == "loadfile_") adding_block.innerHTML = "<div id=loadfile_"+(parseInt(num))+"><div id=\"addf_table_"+(parseInt(num))+"\"><div id=\"Div_File_"+(parseInt(num))+"\"><input type=\"file\" onChange=\"add_attach_file('loadfile', '"+((parseInt(num))+1)+"'); return false;\" class=\"span8\" id=\"file_"+(parseInt(num))+"\" name=\"attachfile[]\"></div>&nbsp;&nbsp;<a onclick=\"del_pole(" + parseInt(num) + ");\" href=\"#\">${STR_REMOVE}</a></div></div></div>";
-
-    par_div.appendChild(adding_block);
-  }
-
-  function del_pole(btn)
-  {
-    document.getElementById ('addf_table_' + btn).parentNode.removeChild (document.getElementById ('addf_table_' + btn));
-  }
-
+    $.ajax({
+      type: "GET",
+      url: "./?t=ajax&action=remove_attach&id=" + Id_attach,
+      dataType: "json",
+      success: function(data){
+        if (data.result == 'yes'){
+          $("#attach_" + Id_attach).remove()
+        }
+      }
+    });
+  });
 </script>
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
@@ -66,7 +61,7 @@
     <label class="control-label" for="attach_list">${STR_ATTACH_LIST}:</label>
     <div class="controls inline">
       <!-- BEGIN row -->
-      ${ATTACHMENT_FILE} <a href="./?task=edit_template&id_template=${ID_TEMPLATE}&remove=${ID_ATTACHMENT}" title="${STR_REMOVE}"> X </a>&nbsp;&nbsp;
+      <span id="attach_${ID_ATTACHMENT}">${ATTACHMENT_FILE} <a href="#" data-num="${ID_ATTACHMENT}" class="remove_attach" title="${STR_REMOVE}"> X </a>&nbsp;&nbsp;</span>
       <!-- END row -->
     </div>
   </div>
@@ -75,7 +70,7 @@
     <label for="attachfile[]" class="control-label">${STR_FORM_ATTACH_FILE}:</label>
     <div class="controls">
       <div id="loadfile_0">
-        <input type="file" name="attachfile[]" class="input" id="file_0_input" onChange="add_attach_file('loadfile', '1'); return false;">
+        <input type="file" name="attachfile[]" class="input" multiple="true">
       </div>
     </div>
   </div>

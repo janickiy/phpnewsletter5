@@ -615,4 +615,18 @@ class Model_ajax extends Model
 			return core::database()->getColumnArray($result);
 		}
 	}
+
+	public function removeAttach($id_attachment)
+	{
+		if (is_numeric($id_attachment)) {
+			$query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_attachment=" . $id_attachment;
+			$result = core::database()->querySQL($query);
+
+			while ($row = core::database()->getRow($result, 'array')) {
+				if (file_exists($row['path'])) @unlink($row['path']);
+			}
+
+			return core::database()->delete(core::database()->getTableName('attach'), "id_attachment=" . $id_attachment, '');
+		}
+	}
 }	

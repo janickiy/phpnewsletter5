@@ -238,4 +238,19 @@ switch (Core_Array::getGet('action'))
 		Pnl::showJSONContent(json_encode($content));
 
 	break;
+
+	case 'remove_attach':
+
+		if (is_numeric($_REQUEST['id'])){
+			if ($data->removeAttach(Core_Array::getGet('id'))){
+				$content = array("result" => "yes");
+			}
+			else{
+				$content = array("result" => "no");
+			}
+
+			Pnl::showJSONContent(json_encode($content));
+		}
+
+	break;
 }

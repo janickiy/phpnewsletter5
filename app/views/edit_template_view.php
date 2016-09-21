@@ -48,13 +48,6 @@ if (Core_Array::getRequest('action')){
     }
 }
 
-if (Core_Array::getGet('remove')){
-    if ($data->removeAttach(Core_Array::getGet('remove'))){
-        header("Location: ./?task=edit_template&id_template=" . $_GET['id_template']);
-        exit;
-    }
-}
-
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'edit_template'));
 $tpl->assign('TITLE', core::getLanguage('title', 'edit_template'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'edit_template'));
@@ -104,7 +97,7 @@ $tpl->assign('ID_TEMPLATE', Core_Array::getGet('id_template'));
 
 $arr = $data->getAttachmentsList(Core_Array::getGet('id_template'));
 
-if ($arr){
+if (count($arr) > 0){
     $attachBlock = $tpl->fetch('attach_list');
     $attachBlock->assign('STR_ATTACH_LIST', core::getLanguage('str', 'str_attach_list'));
 

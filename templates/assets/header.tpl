@@ -24,9 +24,13 @@
 
 <link href="./templates/assets/styles/styles.css" rel="stylesheet">
 
-	<script src="./templates/js/jquery.min.js"></script>
-	<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./templates/js/jquery.hide_alertblock.js"></script>
+
+<link href="./templates/assets/styles/css/uploadfile.css" rel="stylesheet">
+
+<script src="./templates/js/jquery.min.js"></script>
+<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="./templates/js/jquery.hide_alertblock.js"></script>
+
 </head>
 <body>
 <script type="text/javascript">
