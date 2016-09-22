@@ -5,17 +5,17 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <!-- Bootstrap Core CSS -->
 
-    <!-- Bootstrap Core CSS -->
-    <link href="./templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="./templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="./templates/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="./templates/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="./templates/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="./templates/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="./templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link href="./templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">

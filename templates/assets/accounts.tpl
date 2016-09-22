@@ -1,10 +1,7 @@
 <!-- INCLUDE header.tpl -->
 <!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">
-  ${INFO_ALERT}
-</div>
+<div class="alert alert-info"> ${INFO_ALERT} </div>
 <!-- END IF -->
-
 <!-- BEGIN show_errors -->
 <div class="alert alert-danger alert-dismissable">
   <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
@@ -19,16 +16,12 @@
 <!-- IF '${ERROR_ALERT}' != '' -->
 <div class="alert alert-error">
   <button class="close" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong>
-  ${ERROR_ALERT}
-</div>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
 <!-- END IF -->
-
 <!-- IF '${MSG_ALERT}' != '' -->
 <div class="alert alert-success alert-dismissable">
   <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
+  ${MSG_ALERT} </div>
 <!-- END IF -->
 <a href="./?t=change_password">Сменить пароль</a><br>
 <form method="POST" action="./?t=add_account">
@@ -41,20 +34,17 @@
     </tr>
     </thead>
     <tbody>
-
     <!-- BEGIN row -->
     <tr>
       <td>${LOGIN}</td>
       <td>${ROLE}</td>
       <td>
         <!-- IF '${ALLOW_EDIT}' == 'yes' -->
-         <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="fa fa-edit"></i> ${STR_EDIT}</a>
-         <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="fa fa-trash-o"></i> ${STR_REMOVE}</a>
+        <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="fa fa-edit"></i> ${STR_EDIT}</a> <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="fa fa-trash-o"></i> ${STR_REMOVE}</a>
         <!-- END IF -->
       </td>
     </tr>
     <!-- END row -->
-
     </tbody>
   </table>
   <br>

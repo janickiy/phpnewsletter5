@@ -11,14 +11,14 @@ function CheckAll_Activate(Element,Name)
 		var m = 0;
 
 		for(var i = 1; i < thisCheckBoxes.length; i++){
-			if(thisCheckBoxes[i].name == Name){
+			if (thisCheckBoxes[i].name == Name){
 				thisCheckBoxes[i].checked = Element.checked;
-				if(thisCheckBoxes[i].checked == true) m++;
-				if(thisCheckBoxes[i].checked == false) m--;
+				if (thisCheckBoxes[i].checked == true) m++;
+				if (thisCheckBoxes[i].checked == false) m--;
 			}
 		}
 
-		if(m > 0) { document.getElementById("apply").disabled = false; }
+		if (m > 0) { document.getElementById("apply").disabled = false; }
 		else { document.getElementById("apply").disabled = true;  }
 	}
 }
@@ -29,10 +29,10 @@ function Count_checked()
 	var m = 0;
 
 	for(var i = 0; i < All.elements.length; ++i){
-		if(All.elements[i].checked) { m++; }
+		if (All.elements[i].checked) { m++; }
 	}
 
-	if(m > 0) { document.getElementById("apply").disabled = false; }
+	if (m > 0) { document.getElementById("apply").disabled = false; }
 	else { document.getElementById("apply").disabled = true; }
 }
 	
@@ -162,9 +162,7 @@ function PnumberChange()
           <li class="paginate_button next">${NEXT}</li>
           <!-- END IF -->
         </ul>
-
       </div>
-
     </div>
   </div>
   <!-- END pagination -->

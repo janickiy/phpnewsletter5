@@ -149,7 +149,7 @@ $tpl->assign('SET_SHOW_EMAIL', core::getLanguage('str', 'set_show_email'));
 $tpl->assign('SET_SUBSCRIBER_NOTIFY', core::getLanguage('str', 'set_subscriber_notify'));
 $tpl->assign('SET_EMAIL_NAME', core::getLanguage('str', 'set_email_name'));
 
-if(core::getSetting('email_name') == '')
+if (empty(core::getSetting('email_name')))
 	$tpl->assign('EMAIL_NAME', $_SERVER['SERVER_NAME']);
 else
 	$tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
@@ -210,13 +210,14 @@ $temp = $data->getCharsetList();
 
 asort($temp);
 
-$option = '';
 foreach($temp as $key => $value){
-	$selected = ($key == core::getSetting('id_charset') ? ' selected="selected"' : "");
-	$option .= '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+	$rowBlock = $tpl->fetch('charsetlist_row');
+	$rowBlock->assign('KEY', $key);
+	$rowBlock->assign('ID_CHARSET', core::getSetting('id_charset'));
+	$rowBlock->assign('VALUE', $value);
+	$tpl->assign('charsetlist_row', $rowBlock);
 }
 
-$tpl->assign('OPTION', $option);
 $tpl->assign('SET_CONTENT_TYPE', core::getLanguage('str', 'set_content_type'));
 $tpl->assign('CONTENT_TYPE', core::getSetting('content_type'));
 
