@@ -1,13 +1,13 @@
 CREATE TABLE `%prefix%attach` (
-  `id_attachment` int(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `path` varchar(255) NOT NULL,
-  `id_template` int(9) NOT NULL,
+  `id_attachment` int(7) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `id_template` int(7) DEFAULT NULL,
   PRIMARY KEY (`id_attachment`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%aut` (
-  `id` int(9) NOT NULL,
+  `id` int(9) NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','moderator','editor') NOT NULL,
@@ -16,23 +16,23 @@ CREATE TABLE `%prefix%aut` (
 
 CREATE TABLE `%prefix%category` (
   `id_cat` int(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_cat`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%charset` (
   `id_charset` int(5) NOT NULL AUTO_INCREMENT,
-  `charset` varchar(32) NOT NULL,
+  `charset` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id_charset`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%licensekey` (
-  `licensekey` varchar(100) NOT NULL
+  `licensekey` varchar(100) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%log` (
   `id_log` int(9) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_log`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -41,22 +41,23 @@ CREATE TABLE `%prefix%process` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%ready_send` (
-  `id_ready_send` int(10) NOT NULL AUTO_INCREMENT,
-  `id_user` int(9) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `id_template` int(9) NOT NULL,
-  `success` enum('yes','no') NOT NULL,
-  `errormsg` text NOT NULL,
-  `readmail` enum('yes','no') NOT NULL DEFAULT 'no',
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `id_log` int(9) NOT NULL,
+  `id_ready_send` int(10) NOT NULL,
+  `id_user` int(9) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `id_template` int(9) DEFAULT NULL,
+  `success` enum('yes','no') DEFAULT NULL,
+  `errormsg` text,
+  `readmail` enum('yes','no') DEFAULT 'no',
+  `time` datetime DEFAULT NULL,
+  `id_log` int(9) DEFAULT NULL,
   PRIMARY KEY (`id_ready_send`),
   KEY `id_user` (`id_user`),
   KEY `id_send` (`id_template`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%settings` (
-  `language` varchar(10) DEFAULT NULL,
+  `language` varchar(10) DEFAULT NULL,  
+  `path` varchar(255) DEFAULT NULL,  
   `email` varchar(255) DEFAULT NULL,
   `list_owner` varchar(255) DEFAULT NULL,
   `email_name` varchar(255) DEFAULT NULL,
@@ -102,8 +103,8 @@ CREATE TABLE `%prefix%settings` (
 
 CREATE TABLE `%prefix%subscription` (
   `id_sub` int(9) NOT NULL AUTO_INCREMENT,
-  `id_user` int(9) NOT NULL,
-  `id_cat` int(9) NOT NULL,
+  `id_user` int(9) DEFAULT NULL,
+  `id_cat` int(5) NOT NULL,
   PRIMARY KEY (`id_sub`),
   KEY `id_cat` (`id_cat`),
   KEY `id_user` (`id_user`)
@@ -112,22 +113,22 @@ CREATE TABLE `%prefix%subscription` (
 CREATE TABLE `%prefix%template` (
   `id_template` int(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `body` text NOT NULL,
+  `body` mediumtext NOT NULL,
   `prior` enum('1','2','3') NOT NULL DEFAULT '3',
-  `pos` int(9) NOT NULL,
-  `id_cat` int(9) NOT NULL,
+  `pos` int(7) NOT NULL,
+  `id_cat` int(7) NOT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id_template`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%users` (
   `id_user` int(7) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `ip` varchar(64) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `name` varchar(200) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `ip` varchar(64) DEFAULT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
   `status` enum('active','noactive') NOT NULL DEFAULT 'noactive',
-  `time_send` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_send` datetime DEFAULT NULL,
   PRIMARY KEY (`id_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

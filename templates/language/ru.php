@@ -56,14 +56,9 @@ $language["title_page"]["accounts"] = "Учетные записи";
 $language["title"]["accounts"] = "Учетные записи";
 $language["info"]["accounts"] = "";
 
-
 $language["title_page"]["edit_account"] = "Редактирование учетной записи";
 $language["title"]["edit_account"] = "Редактирование учетной записи";
 $language["info"]["edit_account"] = "";
-
-
-
-
 
 $language["title_page"]["update"] = "Обновление";
 $language["title"]["update"] = "Обновление";
@@ -285,6 +280,7 @@ $language["str"]["set_theme"] = "Тема";
 $language["str"]["set_random"] = "Рандомизация подписчиков";
 $language["str"]["set_return_path"] = "Обратный адрес (Return-path)";
 $language["str"]["list_owner"] = "Email адрес организатора рассылки (List-Owner)";
+$language["str"]["set_path"] = "URL путь";
 $language["str"]["charutf8"] = "Юникод (UTF-8)";
 $language["str"]["iso88591"] = "Западноевропейская (ISO)";
 $language["str"]["iso88592"] = "Центральноевропейская (ISO)";
@@ -326,12 +322,6 @@ $language["str"]["login"] = "Логин";
 $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
 $language["str"]['required_fields'] = "обязательные поля";
-
-
-
-
-
-
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";

@@ -279,6 +279,7 @@ $language["str"]["set_theme"] = "Theme";
 $language["str"]["set_random"] = "Randomization of subscribers";
 $language["str"]["set_return_path"] = "Return-path";
 $language["str"]["list_owner"] = "List-Owner";
+$language["str"]["set_path"] = "URL path";
 $language["str"]["script_name"] = "PHP Newsletter";
 $language["str"]["charutf8"] = "Unicode (UTF-8)";
 $language["str"]["iso88591"] = "Western European (ISO)";
@@ -320,7 +321,6 @@ $language["str"]["login"] = "Login";
 $language["str"]["role"] = "Role";
 $language["str"]["action"] = "Action";
 $language["str"]['required_fields'] = "Required fields";
-
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";

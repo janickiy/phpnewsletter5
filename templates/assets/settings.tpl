@@ -265,6 +265,12 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-lg-3 control-label" for="path">${SET_PATH}</label>
+        <div class="col-lg-7">
+          <input class="form-control" type="text" value="${PATH}" name="path">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-lg-3 control-label" for="add_dkim">${SET_ADD_DKIM}</label>
         <div class="col-lg-7">
           <div class="checkbox">

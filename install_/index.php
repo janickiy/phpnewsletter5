@@ -352,12 +352,12 @@ if ($INSTALL['step'] == 6 && isset($_POST['forward'])){
 	if (count($INSTALL['errors']) == 0){
 		$password = md5($_POST['password']);
 		$login = $_POST['login'];
-	
+
 		$dbh = new mysqli($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['name']);
 		$result1 = $dbh->query("TRUNCATE TABLE `" . $_SESSION['prefix'] . "aut`");
 		$result2 = $dbh->query("INSERT INTO `". $_SESSION['prefix'] . "aut` (`id`, `login`, `password`, `role`) VALUES (0, '" . $dbh->real_escape_string($login) . "', '" . $password . "', 'admin')");
 		$result3 = $dbh->query("INSERT INTO `" . $_SESSION['prefix'] . "licensekey` (`licensekey`) VALUES ('" . $_SESSION['license_key'] . "')");
-	
+
 		if ($result1 && $result2 && $result3){
 			$string = "<?php\n";
 			$string .= "\$PNSL[\"config\"][\"db\"][\"host\"] = \"".str_replace("\"", "\\\"", $_SESSION['host'])."\";\n";
@@ -368,7 +368,7 @@ if ($INSTALL['step'] == 6 && isset($_POST['forward'])){
 			$string .= "\$PNSL[\"config\"][\"db\"][\"charset\"] = \"utf8\"; // database charset\n";
 			$string .= "?>";
 	
-			$f = @fopen("../" . $INSTALL["system"]["dir_config"] . "config.php","w");
+			$f = @fopen("../" . $INSTALL["system"]["dir_config"] . "config_db.php","w");
 
 			if (fwrite($f, $string) === FALSE){
 				$_POST = array();
@@ -602,7 +602,6 @@ else if ($INSTALL['step'] == 4){
     
     $check["php_version"] = version_compare(PHP_VERSION, "5.3", ">=");
     $info["php_version"] = PHP_VERSION;
-
     $check["php_mysql"] = extension_loaded("mysql");
     $check["php_mbstring"] = extension_loaded("mbstring");
 	$check["php_iconv"] = extension_loaded("iconv");
@@ -746,9 +745,7 @@ else if ($INSTALL['step'] == 5){
           <legend><?php echo $INSTALL["lang"]["str"]["mysql_settings"]; ?></legend>
           <div class="form-group">
             <label for="host"><?php echo $INSTALL["lang"]["str"]["mysql_server"]; ?>:</label>
-
               <input class="form-control" type="text" name="host" value="<?php echo $_POST["host"]; ?>" />
-
           </div>
           <div class="form-group">
             <label for="user"><?php echo $INSTALL["lang"]["str"]["mysql_login"]; ?>:</label>
@@ -796,7 +793,7 @@ else if ($INSTALL['step'] == 5){
 	echo "<ul>\n";
 	
 	foreach($INSTALL['errors'] as $error){
-		echo "<li>".$error."</li>";
+		echo "<li>" . $error . "</li>";
 	}
 	
 	echo "</ul>\n";	

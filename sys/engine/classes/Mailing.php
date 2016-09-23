@@ -21,4 +21,3 @@ class Mailing
         return $row['process'];
     }
 }
-

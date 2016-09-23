@@ -32,6 +32,7 @@ if (Core_Array::getRequest('action')){
 	$fields['list_owner'] = trim(Core_Array::getRequest('list_owner'));
 	$fields['email_name'] = trim(Core_Array::getRequest('email_name'));
 	$fields['return_path'] = trim(Core_Array::getRequest('return_path'));
+	$fields['path'] = trim(Core_Array::getRequest('path'));
 	$fields['show_email'] = Core_Array::getRequest('show_email') == 'on' ? "yes" : "no";
 	$fields['organization'] = trim(Core_Array::getRequest('organization'));
 	$fields['smtp_host'] = trim(Core_Array::getRequest('smtp_host'));
@@ -88,8 +89,6 @@ include_once core::pathTo('extra', 'top.php');
 //menu
 include_once core::pathTo('extra', 'menu.php');
 
-$tpl->assign('STR_STOPMAILING', core::getLanguage('str', 'stopmailing'));
-
 //alert
 if (isset($error)) {
 	$tpl->assign('ERROR_ALERT', $error);
@@ -99,9 +98,13 @@ if (isset($success)){
 	$tpl->assign('MSG_ALERT', $success);
 }
 
+
+
+
 //value
 $tpl->assign('OPTION_LANG', core::getSetting('language'));
 $tpl->assign('EMAIL', core::getSetting('email'));
+$tpl->assign('PATH', core::getSetting('path') == NULL ? "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() : core::getSetting('path'));
 $tpl->assign('LIST_OWNER', core::getSetting('list_owner'));
 $tpl->assign('SHOW_EMAIL', core::getSetting('show_email'));
 $tpl->assign('SUBSCRIBER_NOTIFY', core::getSetting('newsubscribernotify'));
@@ -195,6 +198,7 @@ $tpl->assign('SET_HOW_TO_SEND_OPTION_1', core::getLanguage('str', 'set_how_to_se
 $tpl->assign('SET_HOW_TO_SEND_OPTION_2', core::getLanguage('str', 'set_how_to_send_option_2'));
 $tpl->assign('SET_HOW_TO_SEND_OPTION_3', core::getLanguage('str', 'set_how_to_send_option_3'));
 $tpl->assign('SET_SENDMAIL_PATH', core::getLanguage('str', 'set_sendmail'));
+$tpl->assign('SET_PATH', core::getLanguage('str', 'set_path'));
 $tpl->assign('SET_SLEEP', core::getLanguage('str', 'set_sleep'));
 $tpl->assign('SET_RANDOM', core::getLanguage('str', 'set_random'));
 $tpl->assign('SET_ADD_DKIM', core::getLanguage('str', 'set_add_dkim'));
