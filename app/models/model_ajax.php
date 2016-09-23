@@ -172,7 +172,7 @@ class Model_ajax extends Model
 	{
 		$user = 'USERNAME';
 
-		$subject = str_replace('%NAME%', $user['name'], $subject);
+		$subject = str_replace('%NAME%', $user, $subject);
 
 		core::requireEx('libs', "PHPMailer/class.phpmailer.php");
 
@@ -204,7 +204,7 @@ class Model_ajax extends Model
 
 			$m->Timeout = $settings['smtp_timeout'];
 		}
-		else if(core::getSetting('how_to_sen') == 3 && !empty(core::getSetting('sendmail'))){
+		else if(core::getSetting('how_to_send') == 3 && !empty(core::getSetting('sendmail'))){
 			$m->IsSendmail();
 			$m->Sendmail = core::getSetting('sendmail');
 		}
@@ -243,7 +243,7 @@ class Model_ajax extends Model
 			$m->Priority = 3;
 
 		if (core::getSetting('show_email') == "no")
-			$m->From = "noreply@".$_SERVER['SERVER_NAME']."";
+			$m->From = "noreply@" . $_SERVER['SERVER_NAME']."";
 		else
 			$m->From = core::getSetting('email');
 
@@ -261,7 +261,7 @@ class Model_ajax extends Model
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
 
-		if (core::getSetting('precedenc') == 'bulk')
+		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
 		else if(core::getSetting('precedence') == 'junk')
 			$m->addCustomHeader("Precedence: junk");
@@ -273,7 +273,7 @@ class Model_ajax extends Model
 		$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=test&token=test";
 		$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
 
-		if (core::getSetting('unsubscribe') == "yes" && !empty(core::getSetting('unsublink'))) {
+		if (core::getSetting('show_unsubscribe_link') == "yes" && !empty(core::getSetting('unsublink'))) {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
 		}

@@ -7,32 +7,22 @@
   <div class="form-group">
     <label for="export_type">${STR_EXPORT}</label>
     <div class="radio">
-      <label>
-        <input type="radio" value="1" checked name="export_type">
-        ${STR_EXPORT_TEXT} </label>
-      <label>
-        <input type="radio" value="2" name="export_type">
-        ${STR_EXPORT_EXCEL} </label>
+      <label> <input type="radio" value="1" checked name="export_type"> ${STR_EXPORT_TEXT} </label>
+      <label> <input type="radio" value="2" name="export_type"> ${STR_EXPORT_EXCEL} </label>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label" for="zip">${STR_COMPRESSION}</label>
     <div class="radio">
-      <label>
-        <input type="radio" checked value="1" name="zip">
-        ${STR_COMPRESSION_OPTION_1} </label>
-      <label>
-        <input type="radio" value="2" name="zip">
-        ${STR_COMPRESSION_OPTION_2} </label>
+      <label> <input type="radio" checked value="1" name="zip"> ${STR_COMPRESSION_OPTION_1} </label>
+      <label> <input type="radio" value="2" name="zip"> ${STR_COMPRESSION_OPTION_2} </label>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label" for="id_cat[]">${STR_CATEGORY}</label>
     <!-- BEGIN categories_list -->
     <div class="checkbox">
-      <label>
-        <input type="checkbox" value="${ID_CAT}" name="id_cat[]">
-        ${NAME} </label>
+      <label><input type="checkbox" checked="checked" value="${ID_CAT}" name="id_cat[]">${NAME} </label>
     </div>
     <!-- END categories_list -->
   </div>

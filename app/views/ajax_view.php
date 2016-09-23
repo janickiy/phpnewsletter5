@@ -153,7 +153,7 @@ switch (Core_Array::getGet('action'))
 		if (empty($subject)) $error[] = core::getLanguage('error', 'empty_subject');
 		if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
 		if (empty($email)) $error[] = core::getLanguage('error', 'empty_email');
-		if (!empty($email) && check_email($email)) $error[] = core::getLanguage('error', 'wrong_email');
+		if (!empty($email) && Pnl::check_email($email)) $error[] = core::getLanguage('error', 'wrong_email');
 
 		if (count($error) == 0){
 			if ($data->sendTestEmail($email, $subject, $body, $prior)){

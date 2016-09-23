@@ -24,7 +24,7 @@ $autInfo = Auth::getAutInfo($_SESSION['id']);
 if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
 
 if (Core_Array::getRequest('action') ){
-	$arr = $data->getUserList();	
+	$arr = $data->getUserList(Core_Array::getRequest('id_cat'));
 	
 	if (intval(Core_Array::getRequest('export_type')) == 1){
 		$ext = 'txt';

@@ -360,12 +360,12 @@ if ($INSTALL['step'] == 6 && isset($_POST['forward'])){
 
 		if ($result1 && $result2 && $result3){
 			$string = "<?php\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"host\"] = \"".str_replace("\"", "\\\"", $_SESSION['host'])."\";\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"name\"] = \"".str_replace("\"", "\\\"", $_SESSION['name'])."\";\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"user\"] = \"".str_replace("\"", "\\\"", $_SESSION['user'])."\"; // login\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"passwd\"] = \"".str_replace("\"", "\\\"", $_SESSION['password'])."\"; // password\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"prefix\"] = \"".str_replace("\"", "\\\"", $_SESSION['prefix'])."\"; // prefix\n";
-			$string .= "\$PNSL[\"config\"][\"db\"][\"charset\"] = \"utf8\"; // database charset\n";
+			$string .= "\$ConfigDB[\"host\"]  = \"".str_replace("\"", "\\\"", $_SESSION['host'])."\";\n";
+			$string .= "\$ConfigDB[\"name\"] = \"".str_replace("\"", "\\\"", $_SESSION['name'])."\";\n";
+			$string .= "\$ConfigDB[\"user\"] = \"".str_replace("\"", "\\\"", $_SESSION['user'])."\"; // login\n";
+			$string .= "\$ConfigDB[\"passwd\"] = \"".str_replace("\"", "\\\"", $_SESSION['password'])."\"; // password\n";
+			$string .= "\$ConfigDB[\"prefix\"] = \"".str_replace("\"", "\\\"", $_SESSION['prefix'])."\"; // prefix\n";
+			$string .= "\$ConfigDB[\"charset\"] = \"utf8\"; // database charset\n";
 			$string .= "?>";
 	
 			$f = @fopen("../" . $INSTALL["system"]["dir_config"] . "config_db.php","w");
