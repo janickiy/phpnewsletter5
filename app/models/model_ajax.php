@@ -267,6 +267,8 @@ class Model_ajax extends Model
 			$m->addCustomHeader("Precedence: junk");
 		else if(core::getSetting('precedence') == 'list')
 			$m->addCustomHeader("Precedence: list");
+		if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+		if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 		$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=test&token=test";
 		$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
@@ -482,6 +484,9 @@ class Model_ajax extends Model
 							$m->addCustomHeader("Precedence: junk");
 						elseif (core::getSetting('precedence') == 'list')
 							$m->addCustomHeader("Precedence: list");
+
+						if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+						if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 						$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
 						$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
