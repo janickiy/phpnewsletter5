@@ -58,7 +58,7 @@ function PnumberChange()
 
 
 <form class="form-inline" style="margin-bottom: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
-  <input type="hidden" name="task" value="subscribers">
+  <input type="hidden" name="t" value="subscribers">
   <div class="form-group">
     <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
     {this.value = '';}" onblur="if (this.value == '')
