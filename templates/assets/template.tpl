@@ -403,9 +403,9 @@
 			<td style="vertical-align: middle;">${ROW_CATNAME}</td>
 			<td style="vertical-align: middle;">${ROW_ACTIVE}</td>
 			<td style="vertical-align: middle;" class="text-center"><a href="./?id_template=${ROW_ID_TEMPLATE}&pos=up" class="btn btn-outline btn-default" title="${STR_DOWN}"><i class="fa fa-chevron-up"></i></a><br>
-				<br>
-				<input class="form-control" type="text" name="pos" value="${ROW_POS}">
-				<br>
+
+				<input style="margin-top: 15px; margin-bottom: 15px;" class="form-control" type="text" name="pos" value="${ROW_POS}">
+
 				<a href="./?id_template=${ROW_ID_TEMPLATE}&pos=down" class="btn btn-outline btn-default" title="${STR_DOWN}"><i class="fa fa-chevron-down "></i></a></td>
 			<td style="vertical-align: middle;" class="text-center"><a href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}" class="btn btn-outline btn-default" title="${STR_EDIT}"><i class="fa fa-edit"></i></a></td>
 		</tr>
