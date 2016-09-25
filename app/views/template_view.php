@@ -56,6 +56,7 @@ if (Core_Array::getRequest('action')){
 
 if (Core_Array::getRequest('pos') == 'up' && is_numeric($_GET['id_template'])){
 	if ($data->upPosition(Core_Array::getRequest('id_template'))){
+		header("Location: ./");
 		exit;
 	}
 	else {
