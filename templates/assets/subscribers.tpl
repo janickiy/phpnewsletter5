@@ -48,25 +48,29 @@ function PnumberChange()
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 
-
-<div class="BtnPanelIcon">
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_ADD_USER}" href="./?t=add_user"> <span class="fa fa-user-plus fa-2x"></span> <span class="IconText">${STR_ADD_USER}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_REMOVE_SUBSCRIBERS}" onclick="return confirm('${ALERT_CLEAR_ALL}');" href="./?t=subscribers&remove=all"> <span class="fa fa-trash-o fa-2x"></span> <span class="IconText">${STR_REMOVE_ALL_SUBSCRIBERS}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_IMPORT_SUBSCRIBERS}" href="./?t=import"> <span class="fa fa-download fa-2x"></span> <span class="IconText">${STR_IMPORT_USER}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_EXPORT_SUBSCRIBERS}" href="./?t=export"> <span class="fa fa-upload fa-2x"></span> <span class="IconText">${STR_EXPORT_USER}</span> </a>
-</div>
-
-
-<form class="form-inline" style="margin-bottom: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
-  <input type="hidden" name="t" value="subscribers">
-  <div class="form-group">
-    <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
-    {this.value = '';}" onblur="if (this.value == '')
-        {this.value = '${FORM_SEARCH_NAME}';}" id="story" name="search" value="${FORM_SEARCH_NAME}">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="BtnPanelIcon">
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_ADD_USER}" href="./?t=add_user"> <span class="fa fa-user-plus fa-2x"></span> <span class="IconText">${STR_ADD_USER}</span> </a>
+     <a class="btn btn-outline btn-danger btn-lg" title="${PROMPT_REMOVE_SUBSCRIBERS}" onclick="return confirm('${ALERT_CLEAR_ALL}');" href="./?t=subscribers&remove=all"> <span class="fa fa-trash-o fa-2x"></span> <span class="IconText">${STR_REMOVE_ALL_SUBSCRIBERS}</span> </a>
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_IMPORT_SUBSCRIBERS}" href="./?t=import"> <span class="fa fa-download fa-2x"></span> <span class="IconText">${STR_IMPORT_USER}</span> </a>
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_EXPORT_SUBSCRIBERS}" href="./?t=export"> <span class="fa fa-upload fa-2x"></span> <span class="IconText">${STR_EXPORT_USER}</span> </a>
+    </div>
   </div>
-  <input class="btn btn-info" type="submit" value="${BUTTON_FIND}" id="searchsubmit">
-</form>
-
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <form class="form-inline" style="margin-bottom: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
+     <input type="hidden" name="t" value="subscribers">
+       <div class="form-group">
+       <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
+        {this.value = '';}" onblur="if (this.value == '')
+        {this.value = '${FORM_SEARCH_NAME}';}" id="story" name="search" value="${FORM_SEARCH_NAME}">
+       </div>
+      <input class="btn btn-info" type="submit" value="${BUTTON_FIND}" id="searchsubmit">
+    </form>
+  </div>
+</div>
 <!-- BEGIN show_return_back -->
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- END show_return_back -->
@@ -127,11 +131,8 @@ function PnumberChange()
           </select>
         </label>
       </div>
-
     </div>
-
     <div class="col-sm-6">
-
       <div class="dataTables_paginate paging_simple_numbers">
         <ul class="pagination">
           <!-- IF '${PERVPAGE}' != '' -->
@@ -166,11 +167,8 @@ function PnumberChange()
     </div>
   </div>
   <!-- END pagination -->
-
   <div class="row">
     <div class="col-sm-12">
-
-
       <div class="form-inline">
         <div class="control-group">
           <select id="select_action" class="span3 form-control" name="action">
@@ -186,7 +184,6 @@ function PnumberChange()
     </div>
   </div>
 </form>
-
 <p>${STR_NUMBER_OF_SUBSCRIBERS}: ${NUMBER_OF_SUBSCRIBERS}</p>
 <!-- END row -->
 <!-- IF '${EMPTY_LIST}' != '' -->
