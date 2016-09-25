@@ -1,5 +1,5 @@
 CREATE TABLE `%prefix%attach` (
-  `id_attachment` int(7) NOT NULL,
+  `id_attachment` int(7) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `id_template` int(7) DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `%prefix%process` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%ready_send` (
-  `id_ready_send` int(10) NOT NULL,
+  `id_ready_send` int(10) NOT NULL AUTO_INCREMENT,
   `id_user` int(9) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `id_template` int(9) DEFAULT NULL,
