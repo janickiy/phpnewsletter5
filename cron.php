@@ -156,20 +156,20 @@ if ($result_send->num_rows > 0){
 	
 		if ($settings['re_send'] == "no") {
 			if ($send['id_cat'] == 0)
-				$query_users = "SELECT *,u.id_user as id FROM " . $ConfigDB["prefix"] . "users u
+				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
 								WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 			else 
-				$query_users = "SELECT *,u.id_user as id FROM " . $ConfigDB["prefix"] . "users u
+				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "subscription s ON u.id_user=s.id_user
 								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
 								WHERE (r.id_user IS NULL) AND (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 		}
 		else{
 			if ($send['id_cat'] == 0)
-				$query_users = "SELECT *,id_user as id FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
+				$query_users = "SELECT *,id_user AS id, u.email AS email FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
 			else 
-				$query_users = "SELECT *,u.id_user as id FROM " . $ConfigDB["prefix"] . "users u
+				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN ". $ConfigDB["prefix"] ."subscription s ON u.id_user=s.id_user
 								WHERE (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 		}						
@@ -192,7 +192,6 @@ if ($result_send->num_rows > 0){
 			if (getStatusProcess($ConfigDB) == 'stop' OR getStatusProcess($ConfigDB) == 'pause') break;
 			if ($settings['sleep'] && $settings['sleep'] > 0) sleep($settings['sleep']);
 			if (!empty($settings['organization'])) $m->addCustomHeader("Organization: " . $settings['organization'] . "");
-			
 			if (!empty($settings['path'])) $IMG = '<img border="0" src="' . $settings['path'] . '?t=pic&id_user=' . $user['id'] . '&id_template=' . $send['id_template'] . '" width="1" height="1">';
 			
 			$m->AddAddress($user['email']);
