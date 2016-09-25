@@ -118,7 +118,6 @@ function PnumberChange()
   <!-- BEGIN pagination -->
   <div class="row">
     <div class="col-sm-6">
-
       <div class="dataTables_length">
         <label>
           ${STR_PNUMBER}: <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">

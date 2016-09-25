@@ -112,15 +112,12 @@ if ($arr){
 		
 		if($row['id_cat'] == 0) { $row['catname'] = core::getLanguage('str', 'general'); }
 
-		$active = $row['active'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
-        
 		$row['body'] = preg_replace('/<br(\s\/)?>/siU', "", $row['body']);
 		$row['body'] = Pnl::remove_html_tags($row['body']);
 		$row['body'] = preg_replace('/\n/sU', "", $row['body']);
 		$pos = strpos(substr($row['body'], 500), " ");
 		$srttmpend = strlen($row['body']) > 500 ? '...' : '';
-		$class_noactive = $row['active'] == 'no' ? ' error' : '';
-		$columnBlock->assign('CLASS_NOACTIVE', $class_noactive);
+		$columnBlock->assign('CLASS_NOACTIVE', $row['active']);
 		$columnBlock->assign('ROW_ID_TEMPLATE', $row['id_template']);
 		$columnBlock->assign('ROW_CONTENT', substr($row['body'], 0, 500 + $pos) . (isset($srttmpend) ?  $srttmpend : ''));
 		$columnBlock->assign('STR_SEND', core::getLanguage('str', 'send'));	
@@ -129,7 +126,7 @@ if ($arr){
 		$columnBlock->assign('ROW_POS', $row['pos']);
 		$columnBlock->assign('ROW_CATNAME', $row['catname']);	
 		$columnBlock->assign('ROW_TMPLNAME', $row['tmplname']);		
-		$columnBlock->assign('ROW_ACTIVE', $active);		
+		$columnBlock->assign('ROW_ACTIVE', $row['active'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no'));
 		
 		//assign modified column block back to row block
         $rowBlock->assign('column', $columnBlock);

@@ -394,7 +394,7 @@
 		<!-- BEGIN row -->
 		<tbody>
 		<!-- BEGIN column -->
-		<tr class="${CLASS_NOACTIVE}">
+		<tr <!-- IF '${CLASS_NOACTIVE}' == 'no' -->class="danger"<!-- END IF -->>
 			<td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${TABLECOLMN_CHECKBOX}" value="${ROW_ID_TEMPLATE}" name=activate[]></td>
 			<td style="vertical-align: middle;">${ROW_ID_TEMPLATE}</td>
 			<td style="vertical-align: middle;" class="text-left"><a title="${STR_EDIT_MAILINGTEXT}" href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}">${ROW_TMPLNAME}</a><br>
