@@ -428,33 +428,31 @@ class Model_ajax extends Model
 					if (Core_Array::getRequest('typesend') == 2) {
 						if ($send['id_cat'] == 0)
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
-						LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-						WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
+											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
+											WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
 						else
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
-						LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-						LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-						WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
+											LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
+											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
 					} else {
 						if (core::getSetting('re_send') == "no") {
 							if ($send['id_cat'] == 0)
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-							WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $limit;
+												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
+												WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $limit;
 							else
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-							LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-							WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "
-							" . $limit;
+												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
+												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $limit;
 						} else {
 							if ($send['id_cat'] == 0)
-								$query_users = "SELECT *,id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
+								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
 							else
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-							WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "
-							" . $limit;
+												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $limit;
 						}
 					}
 

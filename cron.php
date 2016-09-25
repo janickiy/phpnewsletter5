@@ -8,9 +8,11 @@
  * Skype: janickiy
  ********************************************/
 
-Error_Reporting(0);
+//Error_Reporting(0);
 
 set_time_limit(0);
+
+define('LETTER', TRUE);
 
 require_once "config/config_db.php";
 require_once "sys/engine/classes/Pnl.php";
@@ -88,8 +90,7 @@ if ($result_send->num_rows > 0){
 	}
 		
 	if ($settings['how_to_send'] == 2){
-		$m->IsSMTP();
-			
+		$m->IsSMTP();			
 		$m->SMTPAuth = true;
 		$m->SMTPKeepAlive = true;
 		$m->Host = $settings['smtp_host'];
@@ -118,7 +119,6 @@ if ($result_send->num_rows > 0){
 	}
 
 	while($send = $result_send->fetch_array()) {
-		
 		$m->CharSet = $charset;
 		
 		if ($send['prior'] == "1")
@@ -136,7 +136,6 @@ if ($result_send->num_rows > 0){
 
 		if (!empty($settings['list_owner'])) $m->addCustomHeader("List-Owner: <" . $settings['list_owner'] . ">");
 		if (!empty($settings['return_path'])) $m->addCustomHeader("Return-Path: <" . $settings['return_path'] . ">");
-
 		if ($settings['content_type'] == 2)
 			$m->isHTML(true);
 		else	
@@ -167,7 +166,7 @@ if ($result_send->num_rows > 0){
 		}
 		else{
 			if ($send['id_cat'] == 0)
-				$query_users = "SELECT *,id_user AS id, u.email AS email FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
+				$query_users = "SELECT *,id_user AS id FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
 			else 
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN ". $ConfigDB["prefix"] ."subscription s ON u.id_user=s.id_user
@@ -179,7 +178,6 @@ if ($result_send->num_rows > 0){
 		if (!$result_users) exit('Error executing SQL query!');
 		
 		while($user = $result_users->fetch_array()){
-
 			$subject = $send['name'];
 			$subject = str_replace('%NAME%', $user['name'], $subject);
 			
@@ -208,7 +206,7 @@ if ($result_send->num_rows > 0){
 			else if ($settings['precedence'] == 'list')
 				$m->addCustomHeader("Precedence: list");				
 				
-			$UNSUB = "http://".$_SERVER["SERVER_NAME"].root()."?task=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+			$UNSUB = "http://".$_SERVER["SERVER_NAME"]. Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
 			$unsublink = str_replace('%UNSUB%', $UNSUB, $settings['unsublink']);
 
 			if ($settings['show_unsubscribe_link'] == "yes" && !empty($settings['unsublink'])) {
@@ -235,7 +233,7 @@ if ($result_send->num_rows > 0){
 					if ($charset != 'utf-8') $row['name'] = iconv('utf-8', $charset, $row['name']);
 
 					$ext = strrchr($row['path'], ".");
-					$mime_type = get_mime_type($ext);
+					$mime_type = Pnl::get_mime_type($ext);
 
 					$m->AddAttachment($row['path'], $row['name'], 'base64', $mime_type);
 				}					
@@ -250,26 +248,25 @@ if ($result_send->num_rows > 0){
 			}
 			else{
 				$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-				$msg = remove_html_tags($msg);
+				$msg = Pnl::remove_html_tags($msg);
 			}	
 				
 			$m->Body = $msg;	
 
 			if (!$m->Send()){
-				$errormsg = $m->ErrorInfo;							
-						
-				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`,`id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",".$send['id_template'].",'no','".$errormsg."','no', NOW(),".$id_log.")";
+				$errormsg = $m->ErrorInfo;			
+				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`, `email`, `id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",'".$user['email']."',".$send['id_template'].",'no','".$errormsg."','no', NOW(),".$id_log.")";
 				$dbh->query($insert);
-				$mailcountno = $mailcountno+1;
+				$mailcountno = $mailcountno + 1;
 			}
 			else{
-				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`,`id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",".$send['id_template'].",'yes','','no', NOW(),".$id_log.")";
+				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`, `email`, `id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",'".$user['email']."',".$send['id_template'].",'yes','','no', NOW(),".$id_log.")";
 				$dbh->query($insert);
-				
+
 				$update = "UPDATE " . $ConfigDB["prefix"] . "users SET time_send = NOW() WHERE id_user=" . $user['id'];
 				$dbh->query($update);
 
-				$mailcount = $mailcount+1;						
+				$mailcount = $mailcount + 1;
 			}	
 				
 			$m->ClearCustomHeaders(); 
