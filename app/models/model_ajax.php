@@ -256,7 +256,7 @@ class Model_ajax extends Model
 
 		$m->AddAddress($email);
 
-		if (core::getSetting('request_reply') && !empty(core::getSetting('email_reply'))){
+		if (core::getSetting('request_reply') == "yes" && !empty(core::getSetting('email_reply'))){
 			$m->addCustomHeader("Disposition-Notification-To: " . core::getSetting('email_reply'));
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
