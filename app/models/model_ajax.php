@@ -514,7 +514,7 @@ class Model_ajax extends Model
 								if ($charset != 'utf-8') $row['name'] = iconv('utf-8', $charset, $row['name']);
 
 								$ext = strrchr($row['path'], ".");
-								$mime_type = get_mime_type($ext);
+								$mime_type = Pnl::get_mime_type($ext);
 
 								$m->AddAttachment($row['path'], $row['name'], 'base64', $mime_type);
 							}
@@ -527,7 +527,7 @@ class Model_ajax extends Model
 							$msg .= $IMG;
 						} else {
 							$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-							$msg = remove_html_tags($msg);
+							$msg = Pnl::remove_html_tags($msg);
 						}
 
 						$m->Body = $msg;

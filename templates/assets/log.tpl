@@ -159,6 +159,7 @@
   ${MSG_ALERT}
 </div>
 <!-- END IF -->
+<p><a class="btn btn-outline btn-danger" href="./?t=log&clear_log"> <i class="fa fa-trash-o"></i> ${STR_CLEAR_LOG} </a></p>
 <table class="table-hover table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
     <tr>

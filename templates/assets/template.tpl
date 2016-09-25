@@ -213,7 +213,7 @@
 					clearALL();
 				}
 			},
-			error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + error); },
+			error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + data.error); },
 			complete: function() {
 				if (data.status == 'stop') { window.location="./"; }
 			}

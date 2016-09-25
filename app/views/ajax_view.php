@@ -86,11 +86,12 @@ switch (Core_Array::getGet('action'))
 				"status"  => $row['success'],
 				"id_log" => $row['id_log'],
 			);
-
-			$content = '{"item":'.json_encode($rows).'}';
 		}
 
-		Pnl::showJSONContent($content);
+		if (isset($rows)) {
+			$content = '{"item":' . json_encode($rows) . '}';
+			Pnl::showJSONContent($content);
+		}
 
 	break;
 
