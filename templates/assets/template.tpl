@@ -276,7 +276,7 @@
 						$('#onlinelog').html(msg);
 					}
 				},
-				error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + error); }
+				//error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + data.error); }
 			});
 		}
 	}
@@ -303,6 +303,7 @@
 				success:function(data){
 					if (data.completed == 'yes'){
 						$("#process").removeClass();
+						completed = data.completed;
 						completeProcess();
 					}
 					else{
