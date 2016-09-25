@@ -16,7 +16,7 @@
 <!-- END IF -->
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#start_update").live("click", function(){
+	$("#start_update").on("click", function(){
 		$("#btn_refresh").html('<div id="progress_bar" class="span6 progress progress-striped active"><div class="bar" style="width: 1%;"></div></div><span style="padding: 10px" id="status_process">${STR_START_UPDATE}</span>');
 		
 		$.ajax({
@@ -82,10 +82,10 @@ function updateBD()
 	<input type="hidden" name="action" value="post">
 	<div class="form-group">
 		<label for="license_key">${STR_LICENSE_KEY}</label>
-		<input class="form-control" type="text" style="text-transform: uppercase;" name="license_key" value="${LICENSE_KEY}">
+		<input class="form-control" type="text" style="text-transform: uppercase;" name="license_key" value="${LICENSE_KEY}" disabled>
 	</div>
 	<div class="controls">
-		<input type="submit" class="btn btn-success" value="${BUTTON_SAVE}">
+		<input type="submit" class="btn btn-success" value="${BUTTON_SAVE}" disabled>
 	</div>
 </form>
 <!-- INCLUDE footer.tpl -->
