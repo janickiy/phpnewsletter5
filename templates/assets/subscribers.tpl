@@ -102,7 +102,7 @@ function PnumberChange()
     </thead>
     <tbody>
       <!-- BEGIN column -->
-      <tr class="<!-- IF '${STATUS_CLASS}' == 'noactive' --> error<!-- END IF -->">
+      <tr <!-- IF '${STATUS_CLASS}' == 'noactive' -->class="danger"<!-- END IF -->>
         <td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${STR_CHECK_BOX}" value="${ID_USER}" name="activate[]"></td>
         <td style="vertical-align: middle;"${NAME}</td>
         <td style="vertical-align: middle;">${EMAIL}</td>

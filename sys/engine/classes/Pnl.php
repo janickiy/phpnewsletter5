@@ -23,6 +23,20 @@ class Pnl
         return $RandCode;
     }
 
+    public static function error($msg)
+    {
+        echo "<!DOCTYPE html>\n";
+        echo "<html>\n";
+        echo "<head>\n";
+        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n";
+        echo "</head>\n";
+        echo "<body>\n";
+        echo "<p>" . $msg . "</p>\n";
+        echo "</body>\n";
+        echo "</html>";
+        exit();
+    }
+
     public static function root() {
         if (dirname($_SERVER['SCRIPT_NAME']) == '/' | dirname($_SERVER['SCRIPT_NAME']) == '\\')
             return '/';

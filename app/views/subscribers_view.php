@@ -227,11 +227,7 @@ if ($arr){
 	
 	foreach($arr as $row){
 		$columnBlock = $rowBlock->fetch('column');
-		$str_stat = $row['status'] == 'active' ?  core::getLanguage('str', 'activeuser'):  core::getLanguage('str', 'noactive');
-		$tr_status_class = $row['status'] == 'noactive' ? 'noactive' : '';
-		
-		$columnBlock->assign('STATUS_CLASS', $tr_status_class);
-		
+		$columnBlock->assign('STATUS_CLASS', $row['status'] == 'noactive' ? 'noactive' : '');
 		$columnBlock->assign('STR_CHECK_BOX', core::getLanguage('str', 'check_box'));
 		$columnBlock->assign('ID_USER', $row['id_user']);
 		$columnBlock->assign('NAME', $row['name']);
@@ -239,9 +235,8 @@ if ($arr){
 		$columnBlock->assign('PUTDATE_FORMAT', $row['putdate_format']);
 		$columnBlock->assign('IP', $row['ip']);
 		$columnBlock->assign('GETHOSTBYADDR', $row['ip']);
-		$columnBlock->assign('PROMPT_IP_INFO', core::getLanguage('prompt', 'ip_info'));			
-		
-		$columnBlock->assign('STR_STAT', $str_stat);		
+		$columnBlock->assign('PROMPT_IP_INFO', core::getLanguage('prompt', 'ip_info'));
+		$columnBlock->assign('STR_STAT', $row['status'] == 'active' ?  core::getLanguage('str', 'activeuser'):  core::getLanguage('str', 'noactive'));
 		$columnBlock->assign('STR_EDIT',  core::getLanguage('str', 'edit'));		
 		$columnBlock->assign('STR_REMOVE',  core::getLanguage('str', 'remove_user'));
 		$rowBlock->assign('column', $columnBlock);		
