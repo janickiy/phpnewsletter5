@@ -94,13 +94,13 @@ if (Core_Array::getRequest('id_log')){
 	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 50);
 
 	if (is_array($arr)){
-		$blockDetailLog->assign('ID_LOG', Core_Array::getRequest('id_log'));
-		$blockDetailLog->assign('GET_NAME', Core_Array::getRequest('name'));
-		$blockDetailLog->assign('GET_EMAIL', Core_Array::getRequest('email'));
-		$blockDetailLog->assign('GET_CATNAME', Core_Array::getRequest('catname'));
-		$blockDetailLog->assign('GET_TIME', Core_Array::getRequest('time'));
-		$blockDetailLog->assign('GET_SUCCESS', Core_Array::getRequest('success'));
-		$blockDetailLog->assign('GET_READMAIL', Core_Array::getRequest('readmail'));
+		$blockDetailLog->assign('ID_LOG', $_GET['id_log']);
+		$blockDetailLog->assign('GET_NAME', $_GET['name']);
+		$blockDetailLog->assign('GET_EMAIL', $_GET['email']);
+		$blockDetailLog->assign('GET_CATNAME', $_GET['catname'] );
+		$blockDetailLog->assign('GET_TIME', $_GET['time']);
+		$blockDetailLog->assign('GET_SUCCESS', $_GET['success']);
+		$blockDetailLog->assign('GET_READMAIL', $_GET['readmail']);
 
 		foreach($arr as $row){
 			$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');  

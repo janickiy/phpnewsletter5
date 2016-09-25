@@ -208,11 +208,10 @@ if ($arr){
 	
 	//show table
 	$rowBlock->assign('PAGENAV', $pagenav);
-	$rowBlock->assign('GET_NAME', Core_Array::getRequest('name'));
-	$rowBlock->assign('GET_EMAIL', Core_Array::getRequest('email'));
-	$rowBlock->assign('GET_TIME', Core_Array::getRequest('time'));
-	$rowBlock->assign('GET_STATUS', Core_Array::getRequest('status'));
-	
+	$rowBlock->assign('GET_NAME', $_GET['name']);
+	$rowBlock->assign('GET_EMAIL', $_GET['email']);
+	$rowBlock->assign('GET_TIME', $_GET['time']);
+	$rowBlock->assign('GET_STATUS', $_GET['status']);
 	$rowBlock->assign('TH_CLASS_NAME', $thclass["name"]);	
 	$rowBlock->assign('TH_CLASS_EMAIL', $thclass["email"]);	
 	$rowBlock->assign('TH_CLASS_TIME', $thclass["time"]);	
