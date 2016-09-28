@@ -87,11 +87,11 @@ $tpl->assign('SEARCH', $search);
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 
 //alert
-if(isset($error_alert)) {
+if (isset($error_alert)) {
 	$tpl->assign('ERROR_ALERT', $error_alert);
 }
 
-if(isset($success_alert)){
+if (isset($success_alert)){
 	$tpl->assign('MSG_ALERT', $success_alert);
 }
 

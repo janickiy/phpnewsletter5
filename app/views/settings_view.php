@@ -98,9 +98,6 @@ if (isset($success)){
 	$tpl->assign('MSG_ALERT', $success);
 }
 
-
-
-
 //value
 $tpl->assign('OPTION_LANG', core::getSetting('language'));
 $tpl->assign('EMAIL', core::getSetting('email'));
@@ -152,10 +149,12 @@ $tpl->assign('SET_SHOW_EMAIL', core::getLanguage('str', 'set_show_email'));
 $tpl->assign('SET_SUBSCRIBER_NOTIFY', core::getLanguage('str', 'set_subscriber_notify'));
 $tpl->assign('SET_EMAIL_NAME', core::getLanguage('str', 'set_email_name'));
 
-if (empty(core::getSetting('email_name')))
-	$tpl->assign('EMAIL_NAME', $_SERVER['SERVER_NAME']);
+$email_name = core::getSetting('email_name');
+
+if (empty($email_name))
+    $tpl->assign('EMAIL_NAME', $_SERVER['SERVER_NAME']);
 else
-	$tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
+    $tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
 $tpl->assign('SET_ORGANIZATION', core::getLanguage('str', 'set_organization'));
 $tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('organization')));

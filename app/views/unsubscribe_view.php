@@ -10,15 +10,15 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-if(empty(Core_Array::getGet('id'))) Pnl::error(core::getLanguage('error', 'unsubscribe'));
-if(empty(Core_Array::getGet('token'))) Pnl::error(core::getLanguage('error', 'unsubscribe'));
+if (empty($_GET['id'])) Pnl::error(core::getLanguage('error', 'unsubscribe'));
+if (empty($_GET['token'])) Pnl::error(core::getLanguage('error', 'unsubscribe'));
 
 $token = $data->getToken(Core_Array::getGet('id'));
 
-if($token == $_GET['token']){
+if ($token == $_GET['token']){
 	$result = $data->makeUnsubscribe(Core_Array::getGet('id'));
 	
-	if(!$result) Pnl::error(core::getLanguage('error', 'unsubscribe'));
+	if (!$result) Pnl::error(core::getLanguage('error', 'unsubscribe'));
 	
 	echo '<!DOCTYPE html>';
 	echo "<html>\n";
@@ -27,7 +27,7 @@ if($token == $_GET['token']){
 	echo "<title>".core::getLanguage('str', 'title_unsubscribe')."</title>\n";
 	echo "</head>\n";
 	echo "<body>\n";
-	echo "<center>".core::getLanguage('msg', 'subscribe_removed')."</center>\n";
+	echo "<p style=\"text-align: center\">".core::getLanguage('msg', 'subscribe_removed')."</p>\n";
 	echo "</body>\n";
 	echo "</html>";	
 }

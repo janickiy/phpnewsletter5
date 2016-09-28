@@ -10,8 +10,8 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-if (empty(Core_Array::getGet('id'))) Pnl::error(core::getLanguage('error', 'activate_subscription'));
-if (empty(Core_Array::getGet('token'))) Pnl::error(core::getLanguage('error', 'activate_subscription'));
+if (empty($_GET['id'])) Pnl::error(core::getLanguage('error', 'activate_subscription'));
+if (empty($_GET['token'])) Pnl::error(core::getLanguage('error', 'activate_subscription'));
 
 $token = $data->getToken(Core_Array::getGet('id'));
 
@@ -26,7 +26,7 @@ if ($token == $_GET['token']) {
         echo "<title>" . core::getLanguage('str', 'title_activate_sub') . "</title>\n";
         echo "</head>\n";
         echo "<body>\n";
-        echo "<center>" . core::getLanguage('msg', 'successful_activation') . "</center>\n";
+        echo "<p style=\"text-align: center\">" . core::getLanguage('msg', 'successful_activation') . "</p>\n";
         echo "</body>\n";
         echo "</html>";
     } else Pnl::error(core::getLanguage('error', 'activate_subscription'));

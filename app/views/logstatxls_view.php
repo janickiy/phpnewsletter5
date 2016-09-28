@@ -20,7 +20,6 @@ session_write_close();
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
 if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
-
 if (!is_numeric($_GET['id_log'])) exit();
 
 core::requireEx('libs', "PHPExcel/PHPExcel.php");

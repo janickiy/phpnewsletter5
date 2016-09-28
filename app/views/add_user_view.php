@@ -25,7 +25,6 @@ $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . co
 
 if (Core_Array::getRequest('action')){
 	$errors = array();
-
 	$name = trim(Core_Array::getRequest('name'));
 	$email = trim(Core_Array::getRequest('email'));
 	
