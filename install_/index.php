@@ -1,18 +1,17 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.1 beta
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
  ********************************************/
-
 error_reporting(0);
 session_start();
 
 $INSTALL = array();
-$INSTALL["version"] = '5.0.0';
+$INSTALL["version"] = '5.0.1';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));

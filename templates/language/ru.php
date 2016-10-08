@@ -77,6 +77,9 @@ $language["title"]["error_authorization"] = "Неверные данные ав�
 $language["title"]["authorization"] = "Авторизация";
 $language["title"]["subscribe"] = "Подписаться";
 
+$language["title_page"]["page403"] = 'Доступ запрещен 403';
+$language["title"]["page403"] = 'Доступ запрещен 403';
+
 $language["title_page"]["page404"] = 'Страница не найдена 404';
 $language["title"]["page404"] = 'Страница не найдена 404';
 
@@ -322,6 +325,7 @@ $language["str"]["login"] = "Логин";
 $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
 $language["str"]['required_fields'] = "обязательные поля";
+$language["str"]["dont_have_permission_to_access"] = "У вас нет разрешения для просмотра этого раздела";
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";

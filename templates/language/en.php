@@ -73,6 +73,9 @@ $language["title_page"]["faq"] = 'FAQ';
 $language["title"]["faq"] = 'FAQ';
 $language["info"]["faq"] = "";
 
+$language["title_page"]["page403"] = '403 Forbidden';
+$language["title"]["page403"] = '403 Forbidden';
+
 $language["title_page"]["page404"] = 'Page not found 404';
 $language["title"]["page404"] = 'Page not found 404';
 
@@ -91,7 +94,6 @@ $language["info"]["change_password"] = "";
 $language["title_page"]["add_account"] = 'Adding account';
 $language["title"]["add_account"] = 'Adding account';
 $language["info"]["add_account"] = "";
-
 
 $language["str"]["action"] = "Action";
 $language["str"]["activity"] = "Activity";
@@ -321,6 +323,7 @@ $language["str"]["login"] = "Login";
 $language["str"]["role"] = "Role";
 $language["str"]["action"] = "Action";
 $language["str"]['required_fields'] = "Required fields";
+$language["str"]["dont_have_permission_to_access"] = "You don't have permission to access";
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";

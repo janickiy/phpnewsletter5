@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.1 beta
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -19,7 +19,6 @@ class Route
             core::addSetting( array('controller'=> $controller_name ) );
 			
 			$action = Core_Array::getGet('a', 'index');
-			
             $model_name = 'Model_' . $controller_name;
             $controller_name = 'Controller_' . $controller_name;
             $action_name = 'action_' . $action;
@@ -57,24 +56,39 @@ class Route
             } else {
                 self::ErrorPage500();
             }
+        } catch (Exception403 $exc) {
+			if (DEBUG == 1) {
+				echo "<!DOCTYPE html>";
+				echo "<html>";
+				echo "<head>";
+				echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
+				echo "<title>403 Forbidden</title>";
+				echo "</head>";
+				echo "<body>";
+				echo "<p>" . $exc->getMessage() . "</p>";
+				echo "</body>";
+				echo "</html>";
+				exit;
+			} else {
+				self::ErrorPage403();
+			}			
         } catch (Exception404 $exc) {
 			if (DEBUG == 1) {
 				echo "<!DOCTYPE html>";
 				echo "<html>";
 				echo "<head>";
 				echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
-				echo "<title>Application error</title>";
+				echo "<title>404 Not Found</title>";
 				echo "</head>";
 				echo "<body>";
 				echo "<p>" . $exc->getMessage() . "</p>";
-				echo "<p>Error in file " . $exc->getFile() . " at line " . $exc->getLine() . "</p>";
 				echo "</body>";
 				echo "</html>";
 				exit;
 			} else {
 				self::ErrorPage404();
-			}			
-        }
+			}
+		}
 		catch (Exception $exc) {
 			if (DEBUG == 1) {
 				echo "<!DOCTYPE html>";
@@ -94,7 +108,15 @@ class Route
 			}			
 		} 		
     }
-	
+
+	public static function ErrorPage403()
+	{
+		header('HTTP/1.1 403 Forbidden');
+		header("Status: 403 Forbidden");
+		header('Location: ./?t=page403');
+		exit();
+	}
+
 	public static function ErrorPage404()
 	{
         header('HTTP/1.1 404 Not Found');

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.1 beta
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -17,7 +17,7 @@ Auth::authorization();
 
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
@@ -53,8 +53,7 @@ if (Core_Array::getGet('ip')){
 
         $tpl->assign('whois', $whoisBlock);
     }
-}
-else {
+} else {
     $error = core::getLanguage('error', 'service_unavailable');
 }
 

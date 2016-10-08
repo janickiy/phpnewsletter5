@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.1 beta
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -11,8 +11,8 @@
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 //Error_Reporting(0); // set error reporting level
-define("DEBUG", 1);
-define('VERSION', '5.0.0');
+define("DEBUG", 0);
+define('VERSION', '5.0.1');
 
 $cmspaths = array(
     'core' => 'sys/core',
@@ -47,7 +47,8 @@ $lang_file .= ((core::getSetting("language")) ? core::getSetting("language") . "
 if (file_exists($lang_file)) {
     include $lang_file;
     core::addLanguage($language);
-} else
+} else {
     exit('ERROR: Language file can not load!');
+}
 
 core::setTemplate("assets/");

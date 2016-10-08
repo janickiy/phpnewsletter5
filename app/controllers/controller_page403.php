@@ -10,16 +10,10 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-class Controller_export extends Controller
+class Controller_page403 extends Controller
 {
-	function __construct()
-	{
-		$this->model = new Model_export();
-		$this->view = new View();
-	}
-
-	function action_index()
-	{
-		$this->view->generate('export_view.php',$this->model);
-	}
+    function action_index()
+    {
+        $this->view->generate('page403_view.php');
+    }
 }

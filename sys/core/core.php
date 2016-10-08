@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.1 beta
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -16,6 +16,8 @@ class core
     protected static $paths = array(); 
     protected static $mainConfig = NULL;
     protected static $language = NULL;
+    protected static $key = 'Rii73dg=4&8#!@9';
+    protected static $licensekey_url = 'http://janicky.com/scripts/check_licensekey.php?licensekey=qw435889012&domain=janicky.com&version=4.1.0';
     public static $db = NULL;
     public static $tpl = NULL;
     public static $path = NULL;
@@ -156,4 +158,55 @@ class core
         return self::$paths[$path];
     }
 
+    static public function encodeStr($text = null)
+    {
+        $td = mcrypt_module_open ("tripledes", '', 'cfb', '');
+        $iv = mcrypt_create_iv (mcrypt_enc_get_iv_size ($td), MCRYPT_RAND);
+        if (mcrypt_generic_init ($td, self::$key, $iv) != -1) {
+            $enc_text=base64_encode(mcrypt_generic ($td,$iv.$text));
+            mcrypt_generic_deinit ($td);
+            mcrypt_module_close ($td);
+            return $enc_text;
+        }
+    }
+
+    static public function strToHex($string)
+    {
+        $hexv = '';
+        for ($i=0; $i < strlen($string); $i++) {
+            $hex .= dechex(ord($string[$i]));
+        }
+
+        return $hex;
+    }
+
+    static public function decodeStr($text)
+    {
+        $td = mcrypt_module_open ("tripledes", '', 'cfb', '');
+        $iv_size = mcrypt_enc_get_iv_size ($td);
+        $iv = mcrypt_create_iv (mcrypt_enc_get_iv_size ($td), MCRYPT_RAND);
+        if (mcrypt_generic_init ($td, self::$key, $iv) != -1) {
+            $decode_text = substr(mdecrypt_generic ($td, base64_decode($text)),$iv_size);
+            mcrypt_generic_deinit ($td);
+            mcrypt_module_close ($td);
+            return $decode_text;
+        }
+    }
+
+    static public function hexToStr($hex)
+    {
+        $string = '';
+        for ($i=0; $i < strlen($hex)-1; $i+=2) {
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        }
+        return $string;
+    }
+
+    static public function checkLicense()
+    {
+        $result_check =  file_get_contents(self::$licensekey_url);
+
+
+
+    }
 }
