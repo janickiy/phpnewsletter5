@@ -43,7 +43,7 @@ if (Core_Array::getRequest('action')){
 	
 		echo '<p style="text-align: center">';
 	
-		if(core::getSetting("require_confirmation") == "yes")
+		if (core::getSetting("require_confirmation") == "yes")
 			echo core::getLanguage('msg', 'add_subscribe1');
 		else 
 			echo core::getLanguage('msg', 'add_subscribe2');
@@ -54,7 +54,7 @@ if (Core_Array::getRequest('action')){
 		echo "</html>";	
 		exit;
 	}
-	else{
+	else {
 		Pnl::error(core::getLanguage('error', 'subscribe'));
 	}	
 }
@@ -72,7 +72,7 @@ $tpl->assign('BUTTON_SUBSCRIBE', core::getLanguage('button', 'subscribe'));
 
 $arr = $data->getCategoryList();
 
-foreach($arr as $row){
+foreach ($arr as $row) {
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('ID_CAT', $row['id_cat']);
 	$rowBlock->assign('NAME', $row['name']);

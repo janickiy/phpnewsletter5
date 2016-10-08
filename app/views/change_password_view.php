@@ -54,11 +54,11 @@ if (Core_Array::getPost('action')){
 		}
 	}
 
-	if (!$errors) {
+	if (empty($errors)) {
 		if ($data->changePassword($password, $autInfo['id'])){
 			$success = core::getLanguage('msg', 'password_has_been_changed');
 		}	
-		else{
+		else {
 			$error_passw_change = core::getLanguage('error', 'change_password');
 		}		
 	}
@@ -78,11 +78,11 @@ if (isset($error_passw_change)) {
 	$tpl->assign('ERROR_ALERT', $error_passw_change);
 }
 	
-if (count($errors) > 0){
+if (empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($errors as $row){
+	foreach($errors as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);
@@ -91,7 +91,7 @@ if (count($errors) > 0){
 	$tpl->assign('show_errors', $errorBlock);
 }	
 
-if (isset($success)){
+if (isset($success)) {
 	$tpl->assign('MSG_ALERT', $success);
 }
 

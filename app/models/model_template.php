@@ -85,8 +85,8 @@ class Model_template extends Model
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos";
         $result = core::database()->querySQL($query);
 
-        while($row = core::database()->getRow($result)){
-            if($row["id_template"] == $id_template){
+        while($row = core::database()->getRow($result)) {
+            if ($row["id_template"] == $id_template) {
                 $pos = $row["pos"];
                 $row = core::database()->getRow($result);
                 $id_next = $row["id_template"];
@@ -94,11 +94,11 @@ class Model_template extends Model
             }
         }
 
-        if($id_next){
+        if ($id_next) {
             $update1 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $pos . " WHERE id_template=" . $id_next;
             $update2 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $posnext . " WHERE id_template=" . $id_template;
 
-            if(core::database()->querySQL($update1) && core::database()->querySQL($update2))
+            if (core::database()->querySQL($update1) && core::database()->querySQL($update2))
                 return true;
             else
                 return false;
@@ -112,8 +112,8 @@ class Model_template extends Model
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos DESC";
         $result = core::database()->querySQL($query);
 
-        while($row = core::database()->getRow($result)){
-            if($row["id_template"] == $id_template){
+        while($row = core::database()->getRow($result)) {
+            if ($row["id_template"] == $id_template) {
                 $pos = $row["pos"];
                 $row = core::database()->getRow($result);
                 $id_next = $row["id_template"];
@@ -121,7 +121,7 @@ class Model_template extends Model
             }
         }
 
-        if($id_next){
+        if ($id_next) {
             $update1 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $pos . " WHERE id_template=" . $id_next;
             $update2 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $posnext . " WHERE id_template=" . $id_template;
 

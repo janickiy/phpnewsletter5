@@ -13,7 +13,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_log extends Model
 {
-
     public function getLogArr($pnumber = 10, $page)
     {
         $table = core::database()->getTableName('log');

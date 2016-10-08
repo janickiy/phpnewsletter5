@@ -34,21 +34,19 @@ if (Core_Array::getRequest('action')){
 				$error_alert = core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 
 		case 2:
-
 			if ($data->updateUsers(Core_Array::getRequest('activate'), 'noactive')){
 				$success_alert = core::getLanguage('msg', 'selected_users_deactivated');
 			}
-			else{
+			else {
 				$error_alert = core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 
 		case 3:
-
 			if ($data->deleteUsers( Core_Array::getRequest('activate'))){
 				$success_alert =  core::getLanguage('msg', 'selected_users_deleted');
 			}
@@ -56,7 +54,7 @@ if (Core_Array::getRequest('action')){
 				$error_alert =  core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 	}
 }
 
@@ -65,8 +63,7 @@ if (Core_Array::getRequest('remove') == 'all'){
 		$success_alert = core::getLanguage('msg', 'all_users_deleted');
 	else
 		$error_alert =  core::getLanguage('error', 'web_apps_error');	
-}
-else if(Core_Array::getRequest('remove') && is_numeric($_REQUEST['remove'])) {
+} elseif (Core_Array::getRequest('remove') && is_numeric($_REQUEST['remove'])) {
 	if ($data->removeUser($_REQUEST['remove']))
 		$success_alert =   core::getLanguage('msg', 'selected_users_deleted');
 	else
@@ -124,7 +121,7 @@ $strtmp = "name";
 $sort = '';
 
 foreach($order as $parametr => $field) {
-	if (isset($_GET[$parametr])){
+	if (isset($_GET[$parametr])) {
 		if ($_GET[$parametr] == "up"){
 			$_GET[$parametr] = "down";
 			$strtmp = $field;
@@ -177,7 +174,7 @@ if ($arr){
 		if ($page + 2 <= $number) $page2right = '<a href="./?t=subscribers&page=' . ($page + 2) . '' . $sort . '">' . ($page + 2) . '...</a>';
 		if ($page + 1 <= $number) $page1right = '<a href="./?t=subscribers&page=' . ($page + 1) . '' . $sort . '">' . ($page + 1) . '</a>';
 	}
-	else{
+	else {
 		$number = $data->getTotal();
 		$page = $data->getPageNumber();
 
@@ -225,7 +222,7 @@ if ($arr){
 	$rowBlock->assign('TABLE_STATUS', core::getLanguage('str', 'status'));
 	$rowBlock->assign('TABLE_ACTION', core::getLanguage('str', 'action'));
 	
-	foreach($arr as $row){
+	foreach ($arr as $row) {
 		$columnBlock = $rowBlock->fetch('column');
 		$columnBlock->assign('STATUS_CLASS', $row['status'] == 'noactive' ? 'noactive' : '');
 		$columnBlock->assign('STR_CHECK_BOX', core::getLanguage('str', 'check_box'));
@@ -242,7 +239,7 @@ if ($arr){
 		$rowBlock->assign('column', $columnBlock);		
 	}
 	
-	if ($number > 1){
+	if ($number > 1) {
 		$paginationBlock = $rowBlock->fetch('pagination');
 		$paginationBlock->assign('STR_PNUMBER',  core::getLanguage('str', 'pnumber'));
 		$paginationBlock->assign('CURRENT_PAGE', '<a>' . $page . '</a>');
@@ -273,13 +270,13 @@ if ($arr){
 	$rowBlock->assign('STR_APPLY', core::getLanguage('str', 'apply'));
 	$tpl->assign('row', $rowBlock);
 }
-else{
+else {
 	if (!empty($search)) {
 		$notfoundBlock = $tpl->fetch('notfound');
 		$notfoundBlock->assign('MSG_NOTFOUND',   core::getLanguage('msg', 'notfound'));
 		$tpl->assign('notfound', $notfoundBlock);
 	}
-	else{
+	else {
 		$tpl->assign('EMPTY_LIST', core::getLanguage('str', 'empty'));
 	}
 }

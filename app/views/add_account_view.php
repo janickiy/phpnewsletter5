@@ -23,13 +23,13 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
 	$login = trim(htmlspecialchars(Core_Array::getPost('login')));
 	$password = trim(Core_Array::getPost('password'));
 	$password_again = trim(Core_Array::getPost('password_again'));
 	$role = Core_Array::getPost('user_role');
-	
-	$errors = array();
 	
 	if (empty($login)) $errors[] = core::getLanguage('error', 'login_isnt_entered');
 	if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
@@ -43,7 +43,7 @@ if (Core_Array::getRequest('action')){
 		if ($data->checkExistLogin($login)) $errors[] = core::getLanguage('error', 'login_already_exists');
 	}
 
-	if (count($errors) == 0){
+	if (empty($errors)){
 		$fields = array();
 		$fields['login'] = $login;
 		$fields['password'] = md5($password);
@@ -67,7 +67,7 @@ if (isset($alert_error)) {
 	$tpl->assign('ERROR_ALERT', $alert_error);
 }
 
-if (isset($errors)){
+if (!empty($errors)){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			

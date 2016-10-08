@@ -27,7 +27,6 @@ if (Core_Array::getRequest('action')){
 	$name = htmlspecialchars(trim(Core_Array::getRequest('name')));
 
 	if (empty($name)) $alert_error = core::getLanguage('error', 'empty_category_name');
-		
 	if (!isset($alert_error)){
 		$fields = array();
 		$fields['name'] = $_POST['name'];

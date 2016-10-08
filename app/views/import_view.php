@@ -84,7 +84,7 @@ $temp[] = 'utf-8';
 
 $charset = array();
 
-foreach($temp as $row){
+foreach ($temp as $row) {
 	$charset[$row] = Pnl::charsetlist($row);
 }
 
@@ -92,7 +92,7 @@ asort($charset);
 
 $option = '';
 
-foreach($charset as $key => $value){
+foreach ($charset as $key => $value) {
 	$option .= '<option value="'.$key.'">'.$value.'</option>';
 }
 
@@ -116,7 +116,7 @@ $tpl->assign('OPTION', $option);
 $tpl->assign('STR_CHARSET', core::getLanguage('str', 'charset'));
 $tpl->assign('STR_NO', core::getLanguage('str', 'no'));
 
-foreach ($data->getCategoryList() as $row){
+foreach ($data->getCategoryList() as $row) {
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('ID_CAT', $row['id']);
 	$rowBlock->assign('NAME', $row['name']);

@@ -121,8 +121,7 @@ if (Core_Array::getRequest('id_log')){
 	}
 	
 	$tpl->assign('DetailLog', $blockDetailLog);
-}
-else{
+} else {
 	$blockLogList = $tpl->fetch('LogList');	
 	
 	//alert error

@@ -23,16 +23,16 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
-	$errors = array();
+$errors = array();
 
+if (Core_Array::getRequest('action')) {
 	$name = htmlspecialchars(trim(Core_Array::getPost('name')));
 	$email = strtolower(trim(Core_Array::getPost('email')));
 	
 	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_email');
 	if (!empty($email) && Pnl::check_email($email)) $errors[] = core::getLanguage('error', 'wrong_email');
 	
-	if (count($errors) == 0){
+	if (empty($errors)) {
 		$fields = array();
 		$fields['name'] = $name;
 		$fields['email'] = $email;
@@ -53,7 +53,7 @@ if (isset($alert_error)) {
 	$tpl->assign('ERROR_ALERT', $alert_error);
 }
 
-if (isset($errors) && count($errors) > 0){
+if (empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			

@@ -10,7 +10,7 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-if( Core_Array::getRequest('id_template') && Core_Array::getRequest('id_user')){
+if ( Core_Array::getRequest('id_template') && Core_Array::getRequest('id_user')){
 	$result = $data->countUser(Core_Array::getRequest('id_template'), Core_Array::getRequest('id_user'));
 }
 

@@ -13,7 +13,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_subscribers extends Model
 {
-
     public function getSubersArr($strtmp, $search, $category, $page, $pnumber)
     {
         core::database()->tablename = core::database()->getTableName('users');
@@ -161,7 +160,7 @@ class Model_subscribers extends Model
 
     public function removeUser($id_user)
     {
-        if (is_numeric($id_user)){
+        if (is_numeric($id_user)) {
             $delete1 = core::database()->delete(core::database()->getTableName('users'), "id_user=" . $id_user);
             $delete2 = core::database()->delete(core::database()->getTableName('subscription'), "id_user=" . $id_user);
 

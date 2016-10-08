@@ -37,10 +37,9 @@ $tpl->assign('RETURN_BACK', core::getLanguage('str', 'return_back'));
 if (Core_Array::getGet('ip')){
     $sock = @fsockopen("whois.ripe.net", 43, $errno, $errstr);
 
-    if (!$sock){
+    if (!$sock) {
         $error = $errno($errstr);
-    }
-    else{
+    } else {
         $whoisBlock = $tpl->fetch('whois');
         $whoisBlock->assign('TH_TABLE_IP_INFO', core::getLanguage('str', 'ip_info'));
 
@@ -55,7 +54,7 @@ if (Core_Array::getGet('ip')){
         $tpl->assign('whois', $whoisBlock);
     }
 }
-else{
+else {
     $error = core::getLanguage('error', 'service_unavailable');
 }
 

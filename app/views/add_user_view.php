@@ -23,8 +23,10 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
-	$errors = array();
+$errors = array();
+
+if (Core_Array::getRequest('action')) {
+
 	$name = trim(Core_Array::getRequest('name'));
 	$email = trim(Core_Array::getRequest('email'));
 	
@@ -38,7 +40,7 @@ if (Core_Array::getRequest('action')){
 		$error[] = core::getLanguage('error', 'subscribe_is_already_done');
 	}
 	
-	if (isset($errors) && count($errors) == 0){
+	if (empty($errors)) {
 		$fields = array();
 		$fields['id_user']   = 0;
 		$fields['name']      = $name;
@@ -47,7 +49,7 @@ if (Core_Array::getRequest('action')){
 		$fields['time']      = date("Y-m-d H:i:s");	
 		$fields['status']    = 'active';
 		
-		if ($data->addUser($fields)){
+		if ($data->addUser($fields)) {
 			header("Location: ./?t=subscribers");
 			exit;
 		}
@@ -64,15 +66,15 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 //alert
-if (isset($success)){
+if (isset($success)) {
 	$tpl->assign('MSG_ALERT', $success);
 }
 
-if (isset($errors) && count($errors) > 0){
+if (!empty($errors)){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($errors as $row){
+	foreach($errors as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);

@@ -4,7 +4,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_import extends Model
 {
-	
 	public function getCategoryList()
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat

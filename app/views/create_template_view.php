@@ -23,7 +23,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
+if (Core_Array::getRequest('action')) {
 	$error = array();
 
 	$name = trim(Core_Array::getPost('name'));
@@ -32,7 +32,7 @@ if (Core_Array::getRequest('action')){
 	if (empty($name)) $error[] = core::getLanguage('error', 'empty_subject');
 	if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
 	
-	if (count($error) == 0){
+	if (count($error) == 0) {
 		$fields = array();
 		$fields['id_template'] = 0; 
 		$fields['name'] = $name;
@@ -44,8 +44,7 @@ if (Core_Array::getRequest('action')){
 		if ($data->addNewTemplate($fields)){
 			header("Location: ./");
 			exit();
-		}
-		else{
+		} else {
 			$alert_error =  core::getLanguage('error', 'web_apps_error');
 		}	
 	}
@@ -66,11 +65,11 @@ if (isset($alert_error)) {
 	$tpl->assign('ERROR_ALERT', $alert_error);
 }
 	
-if (isset($error) && count($error) > 0){
+if (isset($error) && count($error) > 0) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($error as $row){
+	foreach($error as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);
@@ -101,14 +100,14 @@ $tpl->assign('ID_TEMPLATE', Core_Array::getPost('id_template'));
 
 if (Core_Array::getRequest('prior') == 1)
 	$tpl->assign('PRIOR1_CHECKED', 1);
-else if(Core_Array::getRequest('prior') == 2)
+elseif(Core_Array::getRequest('prior') == 2)
 	$tpl->assign('PRIOR2_CHECKED', 2);
 else 
 	$tpl->assign('PRIOR3_CHECKED', 3);
 
 $arr = $data->getCategoryOptionList();
 
-if ($arr){
+if ($arr) {
 	$tpl->assign('POST_ID_CAT', Core_Array::getPost('id_cat'));
 	$tpl->assign('STR_SEND_TO_ALL', core::getLanguage('str', 'send_to_all'));
 

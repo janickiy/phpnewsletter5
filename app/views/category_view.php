@@ -54,7 +54,7 @@ $tpl->assign('TH_TABLE_NAME', core::getLanguage('str', 'name'));
 $tpl->assign('TH_TABLE_NUMBER_SUBSCRIBERS', core::getLanguage('str', 'number_subscribers'));
 $tpl->assign('TH_TABLE_ACTION', core::getLanguage('str', 'action'));
 
-foreach ($data->getCategoryArr() as $row){
+foreach ($data->getCategoryArr() as $row) {
 	$count = $data->getCountSubscription($row['id_cat']);
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('NAME', $row['name']);

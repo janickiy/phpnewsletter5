@@ -5,7 +5,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_subscribe extends Model
 {
-
     public function getToken($id_user)
     {
         if (is_numeric($id_user)) {

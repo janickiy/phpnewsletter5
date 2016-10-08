@@ -23,16 +23,17 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
-    $error = array();
     $name = trim(Core_Array::getPost('name'));
     $body = trim(Core_Array::getPost('body'));
     $id_template = (int)Core_Array::getPost('id_template');
 
-    if (empty($name)) $error[] = core::getLanguage('error', 'empty_subject');
-    if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
+    if (empty($name)) $errors[] = core::getLanguage('error', 'empty_subject');
+    if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 
-    if (count($error) == 0){
+    if (empty($error)) {
         $fields = array();
         $fields['name'] = $name;
         $fields['body'] = $body;
@@ -42,7 +43,7 @@ if (Core_Array::getRequest('action')){
         if ($data->editTemplate($fields, $id_template)){
             header("Location: ./");
             exit();
-        }else {
+        } else {
             $alert_error = core::getLanguage('error', 'web_apps_error');
         }
     }
@@ -62,11 +63,11 @@ if (isset($alert_error)) {
     $tpl->assign('ERROR_ALERT', $alert_error);
 }
 
-if (isset($error) && count($error) > 0){
+if (!empty($errors)) {
     $errorBlock = $tpl->fetch('show_errors');
     $errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 
-    foreach($error as $row){
+    foreach($errors as $row){
         $rowBlock = $errorBlock->fetch('row');
         $rowBlock->assign('ERROR', $row);
         $errorBlock->assign('row', $rowBlock);
@@ -116,14 +117,14 @@ if (count($arr) > 0){
 
 if (Core_Array::getPost('prior') == 1)
     $tpl->assign('PRIOR1_CHECKED', empty(Core_Array::getPost('prior')) ? $template['prior'] : Core_Array::getPost('prior'));
-else if (Core_Array::getPost('prior') == 2)
+elseif (Core_Array::getPost('prior') == 2)
     $tpl->assign('PRIOR2_CHECKED', empty(Core_Array::getPost('prior')) ? $template['prior'] : Core_Array::getPost('prior'));
 else
     $tpl->assign('PRIOR3_CHECKED', $template['prior']);
 
 $arr = $data->getCategoryOptionList();
 
-if ($arr){
+if ($arr) {
     $tpl->assign('POST_ID_CAT', empty(Core_Array::getPost('id_cat')) ? Core_Array::getPost('id_cat') : $row['id_cat']);
     $tpl->assign('STR_SEND_TO_ALL', core::getLanguage('str', 'send_to_all'));
 
