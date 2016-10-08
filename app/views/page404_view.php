@@ -19,7 +19,7 @@ session_write_close();
 
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
-echo core::checkLicense();
+echo core::expired_day_count();
 exit;
 
 

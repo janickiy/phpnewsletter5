@@ -18,6 +18,7 @@ class core
     protected static $language = NULL;
     protected static $key = 'Rii73dg=4&8#!@9';
     protected static $licensekey_url = 'http://site3.ru/licensekey.php';
+    protected static $license_path = 'sys/license_key';
     public static $db = NULL;
     public static $tpl = NULL;
     public static $path = NULL;
@@ -210,8 +211,8 @@ class core
     static public function checkLicense()
     {
         $result = true;
-        if (file_exists(SYS_ROOT . 'sys/licensekey')) {
-            $lisense_info = self::getLicenseInfo(SYS_ROOT . 'sys/licensekey');
+        if (file_exists(SYS_ROOT . self::$license_path)) {
+            $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
 
             if ($lisense_info['license_type'] == 'demo' && $_SERVER["SERVER_NAME"] == $lisense_info['domain'] && $_REQUEST['t'] != 'expired') {
                 if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
@@ -230,10 +231,10 @@ class core
 
             $encodeStr = self::encodeStr(json_encode($arr));
 
-            $f = fopen(SYS_ROOT . 'sys/licensekey', "w");
+            $f = fopen(SYS_ROOT . self::$license_path, "w");
 
             if (fwrite($f, $encodeStr) === FALSE) {
-                throw new Exception('Error: can not create ' . SYS_ROOT . self::getPath('core') . '/licensekey! PLease check the permissions (chmod)');
+                throw new Exception('Error: can not create ' . self::$license_path  . '! PLease check the permissions (chmod)');
             }
 
             fclose($f);
@@ -266,5 +267,13 @@ class core
 
         return $data;
     }
-}
 
+    static public function expired_day_count()
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+
+        if ($lisense_info['license_type'] == 'demo') {
+            return round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24);
+        }
+    }
+}
