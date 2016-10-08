@@ -86,6 +86,9 @@ $language["title"]["page404"] = 'Страница не найдена 404';
 $language["title_page"]["page500"] = 'Ошибка сервера 500';
 $language["title"]["page500"] = 'Ошибка сервера 500';
 
+$language["title_page"]["expired"] = 'Срок действия лицензионного ключа истек';
+$language["title"]["expired"] = 'Срок действия лицензионного ключа истек';
+
 $language["title_page"]["change_password"] = 'Смена пароля';
 $language["title"]["change_password"] = 'Смена пароля';
 $language["info"]["change_password"] = "";

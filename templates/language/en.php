@@ -82,6 +82,9 @@ $language["title"]["page404"] = 'Page not found 404';
 $language["title_page"]["page500"] = 'Server error 500';
 $language["title"]["page500"] = 'Server error 500';
 
+$language["title_page"]["expired"] = 'License key has expired';
+$language["title"]["expired"] = 'License key has expired';
+
 $language["title"]["error_authorization"] = "Invalid authorization data!";
 
 $language["title"]["authorization"] = "Authorization";
