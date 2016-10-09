@@ -12,7 +12,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_add_category extends Model
 {
-
     public function checkExistCatName($name)
     {
         $name = core::database()->escape($name);

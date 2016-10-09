@@ -29,7 +29,7 @@ if (Core_Array::getRequest('action')){
 		
 			$fields['active'] = 'yes';
 			
-			if(!$data->changeStatusNewsLetter($fields)) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
 		break;
 		
@@ -37,13 +37,13 @@ if (Core_Array::getRequest('action')){
 		
 			$fields['active'] = 'no';
 			
-			if(!$data->changeStatusNewsLetter($fields)) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 
 		break;
 		
 		case 4:
 		
-			if(!$data->removeTemplate()) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->removeTemplate(Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
 		break;
 		

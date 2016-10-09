@@ -78,6 +78,9 @@ if (Core_Array::getRequest('action')){
 		$success = core::getLanguage('msg', 'changes_added');
 	else
 		$error = core::getLanguage('error', 'web_apps_error');
+	
+	header('Location: ./?t=settings');
+	exit;
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'settings'));

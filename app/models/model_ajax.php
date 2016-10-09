@@ -324,7 +324,7 @@ class Model_ajax extends Model
 			}
 
 			$fields = array();
-			$fields['id_log'] = 0;
+			$fields['id_log'] = null;
 			$fields['time'] = date("Y-m-d H:i:s");
 
 			$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
@@ -532,7 +532,7 @@ class Model_ajax extends Model
 
 						if (! $m->Send()) {
 							$fields = array();
-							$fields['id_ready_send'] = 0;
+							$fields['id_ready_send'] = null;
 							$fields['id_user'] = $user['id'];
 							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
@@ -546,7 +546,7 @@ class Model_ajax extends Model
 							$mailcountno = $mailcountno + 1;
 						} else {
 							$fields = array();
-							$fields['id_ready_send'] = 0;
+							$fields['id_ready_send'] = null;
 							$fields['id_user'] = $user['id'];
 							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];

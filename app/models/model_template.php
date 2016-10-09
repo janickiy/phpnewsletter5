@@ -35,10 +35,10 @@ class Model_template extends Model
         return core::database()->page;
     }
 
-    public function changeStatusNewsLetter($fields)
+    public function changeStatusNewsLetter($fields, $activate)
     {
         $temp = array();
-        foreach (Core_Array::getRequest('activate') as $id) {
+        foreach ($activate as $id) {
             if (is_numeric($id))
                 $temp[] = $id;
         }
@@ -50,14 +50,13 @@ class Model_template extends Model
         return $result;
     }
 
-    public function removeTemplate()
+    public function removeTemplate($activate)
     {
-        if (Core_Array::getRequest('activate')) {
+        if (!empty($activate)) {
             $temp = array();
 
-            foreach (Core_Array::getRequest('activate') as $id) {
-                if (is_numeric($id))
-                    $temp[] = $id;
+            foreach ($activate as $id) {
+                if (is_numeric($id)) $temp[] = $id;
             }
 
             $query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_template IN (" . implode(",", $temp) . ")";
@@ -66,9 +65,8 @@ class Model_template extends Model
             $arr = core::database()->getColumnArray($result);
 
             if (is_array($arr)) {
-                for ($i = 0; $i < count($arr); $i ++) {
-                    if (file_exists($arr[$i]['path']))
-                        @unlink($arr[$i]['path']);
+                for ($i = 0; $i < count($arr); $i++) {
+                    if (file_exists($arr[$i]['path'])) @unlink($arr[$i]['path']);
                 }
             }
             
@@ -132,5 +130,4 @@ class Model_template extends Model
         }
         else return true;
     }
-
 }

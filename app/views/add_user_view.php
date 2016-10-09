@@ -42,14 +42,14 @@ if (Core_Array::getRequest('action')) {
 	
 	if (empty($errors)) {
 		$fields = array();
-		$fields['id_user']   = 0;
+		$fields['id_user']   = null;
 		$fields['name']      = $name;
 		$fields['email']     = $email;
 		$fields['token']     = Pnl::getRandomCode();
 		$fields['time']      = date("Y-m-d H:i:s");	
 		$fields['status']    = 'active';
 		
-		if ($data->addUser($fields)) {
+		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");
 			exit;
 		}

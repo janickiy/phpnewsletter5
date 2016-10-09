@@ -31,7 +31,7 @@ if (Core_Array::getRequest('action')){
 	
 	if (!isset($alert_error)){
 		$fields = array();
-		$fields['id_cat'] = 0;
+		$fields['id_cat'] = null;
 		$fields['name'] = $_POST['name'];	
 	
 		if ($data->addNewCategory($fields)){

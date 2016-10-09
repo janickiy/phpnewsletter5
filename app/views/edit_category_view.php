@@ -29,9 +29,9 @@ if (Core_Array::getRequest('action')){
 	if (empty($name)) $alert_error = core::getLanguage('error', 'empty_category_name');
 	if (!isset($alert_error)){
 		$fields = array();
-		$fields['name'] = $_POST['name'];
+		$fields['name'] = $name;
 	
-		if ($data->editCategoryRow($fields)){
+		if ($data->editCategoryRow($fields, Core_Array::getPost('id_cat'))){
 			header("Location: ./?t=category");
 			exit;
 		}
@@ -60,7 +60,7 @@ $tpl->assign('STR_NAME', core::getLanguage('str', 'name'));
 $tpl->assign('BUTTON', core::getLanguage('button', 'edit'));
 $tpl->assign('STR_RETURN_BACK', core::getLanguage('str', 'return_back'));
 
-$row = $data->getCategoryRow();
+$row = $data->getCategoryRow(Core_Array::getRequest('id_cat'));
 
 //value
 $tpl->assign('NAME', Core_Array::getPost('name') ?  $_POST['name'] : $row['name']);

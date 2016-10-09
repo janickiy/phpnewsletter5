@@ -12,7 +12,7 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_accounts extends Model
 {
-    public function changePassword( $password)
+    public function changePassword($password)
     {
         $password = md5(trim($password));
         $query = "UPDATE " . core::database()->getTableName('aut') . " SET password='".$password."'";
