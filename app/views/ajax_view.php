@@ -16,8 +16,6 @@ session_start();
 // authorization
 Auth::authorization();
 
-session_write_close();
-
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
 switch (Core_Array::getGet('action'))
@@ -26,7 +24,7 @@ switch (Core_Array::getGet('action'))
 		$update = new Update();
 		$update->currenversion = VERSION;
 
-		if ($update->checkNewVersion()){
+		if ($update->checkNewVersion()) {
 			$update_warning = str_replace('%SCRIPTNAME%', core::getLanguage('str', 'script_name'), core::getLanguage('str', 'update_warning'));
 			$update_warning = str_replace('%VERSION%', $update->getVersion(), $update_warning);
 			$update_warning = str_replace('%CREATED%', $update->getCreated(), $update_warning);
@@ -156,12 +154,11 @@ switch (Core_Array::getGet('action'))
 			if ($data->sendTestEmail($email, $subject, $body, $prior)){
 				$result_send = 'success';
 				$msg = core::getLanguage('msg', 'letter_was_sent');
-			} else{
+			} else {
 				$result_send = 'error';
 				$msg = core::getLanguage('error', 'letter_wasnt_sent');
 			}
-		}
-		else {
+		} else {
 			$result_send = 'errors';
 			$msg = implode(",", $error);
 		}
@@ -175,7 +172,6 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'send':
-
 		$result = 0;
 
 		if ($_REQUEST['activate']) {
@@ -190,7 +186,6 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'showlogs':
-
 		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
 		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
 		$id_log = isset($_REQUEST['id_log']) && is_numeric($_REQUEST['id_log']) ? $_REQUEST['id_log'] : exit();
@@ -225,6 +220,7 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'process':
+
 		$_SESSION['process'] = $_REQUEST['status'];
 		$content = array("status" => $_REQUEST['status']);
 
@@ -234,10 +230,10 @@ switch (Core_Array::getGet('action'))
 
 	case 'remove_attach':
 
-		if (is_numeric($_REQUEST['id'])){
+		if (is_numeric($_REQUEST['id'])) {
 			if ($data->removeAttach(Core_Array::getGet('id'))){
 				$content = array("result" => "yes");
-			} else{
+			} else {
 				$content = array("result" => "no");
 			}
 
@@ -246,3 +242,5 @@ switch (Core_Array::getGet('action'))
 
 		break;
 }
+
+session_write_close();
