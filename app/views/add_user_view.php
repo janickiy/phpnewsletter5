@@ -42,7 +42,7 @@ if (Core_Array::getRequest('action')) {
 	
 	if (empty($errors)) {
 		$fields = array();
-		$fields['id_user']   = null;
+		$fields['id_user']   = 0;
 		$fields['name']      = $name;
 		$fields['email']     = $email;
 		$fields['token']     = Pnl::getRandomCode();

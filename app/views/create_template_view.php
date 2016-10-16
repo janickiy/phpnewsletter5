@@ -34,7 +34,7 @@ if (Core_Array::getRequest('action')) {
 	
 	if (count($error) == 0) {
 		$fields = array();
-		$fields['id_template'] = null;
+		$fields['id_template'] = 0;
 		$fields['name'] = $name;
 		$fields['body'] = $body;
 		$fields['prior'] = (int)Core_Array::getPost('prior');

@@ -69,7 +69,7 @@ switch (Core_Array::getGet('action'))
 
 	case 'daemonstat':
 
-		$content = array("status" => $data->getMailingStatus());
+		$content = array("status" => $_SESSION['process']);
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -179,7 +179,8 @@ switch (Core_Array::getGet('action'))
 		$result = 0;
 
 		if ($_REQUEST['activate']) {
-			if ($data->updateProcess('start')) $result = $data->SendEmails($_REQUEST['activate']);
+			$_SESSION['process'] = 'start';
+			$data->SendEmails($_REQUEST['activate']);
 		}
 
 		$content = array("completed" => "yes");
@@ -224,11 +225,8 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'process':
-		if ($data->updateProcess($_REQUEST['status'])){
-			$content = array("status" => $_REQUEST['status']);
-		} else{
-			$content = array("status" => "no");
-		}
+		$_SESSION['process'] = $_REQUEST['status'];
+		$content = array("status" => $_REQUEST['status']);
 
 		Pnl::showJSONContent(json_encode($content));
 

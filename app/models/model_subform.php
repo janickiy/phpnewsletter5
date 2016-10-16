@@ -39,7 +39,7 @@ class Model_subform extends Model
             foreach ($id_cat as $id) {
                 if (is_numeric($id)) {
                     $fields = array();
-                    $fields['id_sub'] = null;
+                    $fields['id_sub'] = 0;
                     $fields['id_user'] = $id_user;
                     $fields['id_cat'] = $id;
                     $result = core::database()->insert($fields, core::database()->getTableName('subscription'));

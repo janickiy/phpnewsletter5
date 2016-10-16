@@ -63,7 +63,7 @@ class Model_import extends Model
 						foreach($id_cat as $id){
 							if(is_numeric($id))	{
 								$fields = array();
-								$fields['id_sub'] = null;
+								$fields['id_sub'] = 0;
 								$fields['id_user'] = $row['id_user'];
 								$fields['id_cat'] = $id;
 									
@@ -73,7 +73,7 @@ class Model_import extends Model
 					}
 					else{
 						$fields = array();
-						$fields['id_user'] = null;
+						$fields['id_user'] = 0;
 						$fields['name'] = $name;
 						$fields['email'] = $email;
 						$fields['token'] = Pnl::getRandomCode();
@@ -87,7 +87,7 @@ class Model_import extends Model
 						foreach($id_cat as $id){
 							if(is_numeric($id)){
 								$subfields = array();
-								$subfields['id_sub'] = null;
+								$subfields['id_sub'] = 0;
 								$subfields['id_user'] = $insert_id;
 								$subfields['id_cat'] = $id;
 									
@@ -155,7 +155,7 @@ class Model_import extends Model
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
 									$fields = array();
-									$fields['id_sub'] = null;
+									$fields['id_sub'] = 0;
 									$fields['id_user'] = $row['id_user'];
 									$fields['id_cat'] = $id;
 
@@ -169,7 +169,7 @@ class Model_import extends Model
 						$name = core::database()->escape($name);
 
 						$fields = array();
-						$fields['id_user'] = null;
+						$fields['id_user'] = 0;
 						$fields['name'] = $name;
 						$fields['email'] = $email;
 						$fields['token'] = Pnl::getRandomCode();
@@ -184,7 +184,7 @@ class Model_import extends Model
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
 									$fields = array();
-									$fields['id_sub'] = null;
+									$fields['id_sub'] = 0;
 									$fields['id_user'] = $insert_id;
 									$fields['id_cat'] = $id;
 

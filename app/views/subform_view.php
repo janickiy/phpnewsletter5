@@ -19,7 +19,7 @@ if (Core_Array::getRequest('action')){
 	if ($data->checkExistEmail($email)) Pnl::error(core::getLanguage('error', 'subscribe_is_already_done'));
 
 	$fields = array();
-	$fields['id_user']   = null;
+	$fields['id_user']   = 0;
 	$fields['name']      = $name;
 	$fields['email']     = $email;
 	$fields['ip']        = Pnl::getIP();

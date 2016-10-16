@@ -12,16 +12,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_ajax extends Model
 {
-	public function updateProcess($status)
-	{
-		if ($status){
-			$status = core::database()->escape($status);
-			$query = "UPDATE " . core::database()->getTableName('process') . " SET process='" . $status . "'";
-			return core::database()->querySQL($query);
-		}
-		else return false;
-	}
-
 	public function getTotalMails()
 	{
 		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
@@ -41,8 +31,8 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		}
-		else return 0;
+		} else
+			return 0;
 	}
 
 	public function getUnsuccessfulMails($id_log)
@@ -53,17 +43,8 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		}
-		else return 0;
-	}
-
-	public function getMailingStatus()
-	{
-		$query = "SELECT * FROM " . core::database()->getTableName('process');
-		$result = core::database()->querySQL($query);
-		$status = core::database()->getRow($result);
-
-		return $status['process'];
+		} else
+			return 0;
 	}
 
 	public function getCurrentUserLog($limit = 10)
@@ -104,7 +85,7 @@ class Model_ajax extends Model
 			$query = str_replace('%prefix%', $configdb["prefix"], $query);
 			$query = trim($query);
 
-			if (empty($query)){
+			if (empty($query)) {
 				continue;
 			}
 
@@ -149,7 +130,7 @@ class Model_ajax extends Model
 
 		$exists_tables = array();
 
-		foreach($tables_list as $table){
+		foreach($tables_list as $table) {
 			if (isset($tables[$table])) {
 				$exists_tables[] = $table;
 			}
@@ -182,7 +163,7 @@ class Model_ajax extends Model
 
 		$m = new PHPMailer();
 
-		if (core::getSetting('how_to_send') == 2){
+		if (core::getSetting('how_to_send') == 2) {
 			$m->IsSMTP();
 
 			$m->SMTPAuth = true;
@@ -194,21 +175,20 @@ class Model_ajax extends Model
 
 			if (core::getSetting('smtp_secure') == 'ssl')
 				$m->SMTPSecure  = 'ssl';
-			else if(core::getSetting('smtp_secure') == 'tls')
+			elseif (core::getSetting('smtp_secure') == 'tls')
 				$m->SMTPSecure  = 'tls';
 
 			if (core::getSetting('smtp_aut') == 'plain')
 				$m->AuthType = 'PLAIN';
-			else if (core::getSetting('smtp_aut') == 'cram-md5')
+			elseif (core::getSetting('smtp_aut') == 'cram-md5')
 				$m->AuthType = 'CRAM-MD5';
 
 			$m->Timeout = $settings['smtp_timeout'];
 		}
-		else if(core::getSetting('how_to_send') == 3 && !empty(core::getSetting('sendmail'))){
+		elseif (core::getSetting('how_to_send') == 3 && !empty(core::getSetting('sendmail'))) {
 			$m->IsSendmail();
 			$m->Sendmail = core::getSetting('sendmail');
-		}
-		else{
+		} else {
 			$m->IsMail();
 		}
 
@@ -237,7 +217,7 @@ class Model_ajax extends Model
 
 		if ($prior == 1)
 			$m->Priority = 1;
-		else if ($prior == 2)
+		elseif ($prior == 2)
 			$m->Priority = 2;
 		else
 			$m->Priority = 3;
@@ -263,9 +243,9 @@ class Model_ajax extends Model
 
 		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
-		else if(core::getSetting('precedence') == 'junk')
+		elseif (core::getSetting('precedence') == 'junk')
 			$m->addCustomHeader("Precedence: junk");
-		else if(core::getSetting('precedence') == 'list')
+		elseif (core::getSetting('precedence') == 'list')
 			$m->addCustomHeader("Precedence: list");
 		if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
 		if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
@@ -276,8 +256,7 @@ class Model_ajax extends Model
 		if (core::getSetting('show_unsubscribe_link') == "yes" && !empty(core::getSetting('unsublink'))) {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
-		}
-		else $msg = $body;
+		} else $msg = $body;
 
 		$msg = str_replace('%NAME%', $user, $msg);
 		$msg = str_replace('%UNSUB%', $UNSUB, $msg);
@@ -285,18 +264,17 @@ class Model_ajax extends Model
 		$msg = str_replace('%USERID%', 0, $msg);
 
 		if ($charset != 'utf-8') $msg = iconv('utf-8', $charset, $msg);
-		if (core::getSetting('content_type') == 1){
+		if (core::getSetting('content_type') == 1) {
 			$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
 			$msg = Pnl::remove_html_tags($msg);
 		}
 
 		$m->Body = $msg;
 
-		if (!$m->Send()){
+		if (!$m->Send()) {
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return false;
-		}
-		else{
+		} else {
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return true;
 		}
@@ -324,22 +302,27 @@ class Model_ajax extends Model
 			}
 
 			$fields = array();
-			$fields['id_log'] = null;
+			$fields['id_log'] = 0;
 			$fields['time'] = date("Y-m-d H:i:s");
 
-			$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
+			if (!isset($_SESSION['id_log'])) {
+				$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
+				$_SESSION['id_log'] = $insert_id;
+			} else {
+				$insert_id = $_SESSION['id_log'];
+			}
 
 			$query = "SELECT * FROM " . core::database()->getTableName('charset') . " WHERE id_charset=" . core::getSetting('id_charset');
 			$result = core::database()->querySQL($query);
 			$char = core::database()->getRow($result);
 			$charset = $char['charset'];
 
+			$from = core::getSetting('email_name') == '' ? $_SERVER["SERVER_NAME"] : core::getSetting('email_name');
+
 			if ($charset != 'utf-8') {
-				$from = iconv('utf-8', $charset, '');
+				$from = iconv('utf-8', $charset, $from);
 				if (core::getSetting('organization') != '') core::setSetting('organization', iconv('utf-8', $charset, core::getSetting('organization')));
 			}
-
-			$from = core::getSetting('email_name') == '' ? $_SERVER["SERVER_NAME"] : core::getSetting('email_name');
 
 			$query = "SELECT * FROM " . core::database()->getTableName('template') . " WHERE active='yes' AND id_template IN (" . implode(",", $temp) . ")";
 			$result = core::database()->querySQL($query);
@@ -459,7 +442,7 @@ class Model_ajax extends Model
 					$result_users = core::database()->querySQL($query_users);
 
 					while ($user = core::database()->getRow($result_users)) {
-						if ( $this->getStatusProcess() == 'stop' || $this->getStatusProcess() == 'pause')
+						if ($_SESSION['process'] == 'stop' || $_SESSION['process'] == 'pause')
 							break;
 						if (core::getSetting('sleep') && core::getSetting('sleep') > 0)
 							sleep(core::getSetting('sleep'));
@@ -518,9 +501,7 @@ class Model_ajax extends Model
 							}
 						}
 
-						if ($charset != 'utf-8')
-							$msg = iconv('utf-8', $charset, $msg);
-
+						if ($charset != 'utf-8') $msg = iconv('utf-8', $charset, $msg);
 						if (core::getSetting('content_type') == 2) {
 							$msg .= $IMG;
 						} else {
@@ -530,9 +511,9 @@ class Model_ajax extends Model
 
 						$m->Body = $msg;
 
-						if (! $m->Send()) {
+						if (!$m->Send()) {
 							$fields = array();
-							$fields['id_ready_send'] = null;
+							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
 							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
@@ -546,7 +527,7 @@ class Model_ajax extends Model
 							$mailcountno = $mailcountno + 1;
 						} else {
 							$fields = array();
-							$fields['id_ready_send'] = null;
+							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
 							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
@@ -569,7 +550,8 @@ class Model_ajax extends Model
 
 						if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
 							if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
-							$result = $this->updateProcess('stop');
+							$_SESSION['process'] = 'stop';
+							if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
 							return $mailcount;
 							break;
 						}
@@ -577,26 +559,18 @@ class Model_ajax extends Model
 				}
 
 				if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
-					if (core::getSetting('how_to_send') == 2)
-						$m->SmtpClose();
-					$result = $this->updateProcess('stop');
+					if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
+					$_SESSION['process'] = 'stop';
+					if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
 					return $mailcount;
 				}
 			}
 
-			$result = $this->updateProcess('stop');
+			$_SESSION['process'] = 'stop';
+			if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
 		}
 
 		return $mailcount;
-	}
-
-	public function getStatusProcess()
-	{
-		$query = "SELECT * FROM " . core::database()->getTableName('process');
-		$result = core::database()->querySQL($query);
-		$row = core::database()->getRow($result, 'array');
-
-		return $row['process'];
 	}
 
 	public function getDetaillog($offset, $number, $id_log, $strtmp)
