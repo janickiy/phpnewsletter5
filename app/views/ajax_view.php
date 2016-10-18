@@ -16,6 +16,8 @@ session_start();
 // authorization
 Auth::authorization();
 
+session_write_close();
+
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
 switch (Core_Array::getGet('action'))
@@ -37,6 +39,7 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'countsend':
+
 		$totalmails = 0;
 		$successmails = 0;
 		$unsuccessfulmails = 0;
@@ -67,7 +70,7 @@ switch (Core_Array::getGet('action'))
 
 	case 'daemonstat':
 
-		$content = array("status" => $_SESSION['process']);
+		$content = array("status" =>  $data->getMailingStatus($_SESSION['id']));
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -138,6 +141,7 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'sendtest':
+
 		$subject = trim(Core_Array::getRequest('name'));
 		$body = trim(Core_Array::getRequest('body'));
 		$prior = Core_Array::getRequest('prior');
@@ -172,14 +176,13 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'send':
-		$result = 0;
+		$mailcount = 0;
 
-		if ($_REQUEST['activate']) {
-			$_SESSION['process'] = 'start';
-			$data->SendEmails($_REQUEST['activate']);
+		if ($_REQUEST['activate']){
+			if ($data->updateProcess('start', $_SESSION['id'])) $mailcount = $data->SendEmails($_REQUEST['activate']);
 		}
 
-		$content = array("completed" => "yes");
+		$content = array("completed" => "yes", "mailcount" => $mailcount);
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -221,8 +224,18 @@ switch (Core_Array::getGet('action'))
 
 	case 'process':
 
-		$_SESSION['process'] = $_REQUEST['status'];
-		$content = array("status" => $_REQUEST['status']);
+		if ($data->updateProcess($_REQUEST['status'], $_SESSION['id'])){
+
+			if ($_REQUEST['status'] == 'stop') {
+				session_start();
+				if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
+				session_write_close();
+			}
+
+			$content = array("status" => $_REQUEST['status']);
+		} else {
+			$content = array("status" => "no");
+		}
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -242,5 +255,3 @@ switch (Core_Array::getGet('action'))
 
 		break;
 }
-
-session_write_close();
