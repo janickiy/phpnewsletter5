@@ -22,6 +22,7 @@ class core
     public static $db = NULL;
     public static $tpl = NULL;
     public static $path = NULL;
+    public static $session = NULL;
 
     /**
      * Check if self::init() has been called
@@ -71,6 +72,11 @@ class core
     static public function database()
     {
         return self::$db;
+    }
+
+    static public function session()
+    {
+        return self::$session;
     }
 
     /**

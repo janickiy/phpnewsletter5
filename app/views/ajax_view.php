@@ -11,14 +11,11 @@
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 set_time_limit(0);
-session_start();
 
 // authorization
 Auth::authorization();
 
-session_write_close();
-
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
 switch (Core_Array::getGet('action'))
 {
@@ -70,7 +67,7 @@ switch (Core_Array::getGet('action'))
 
 	case 'daemonstat':
 
-		$content = array("status" =>  $data->getMailingStatus($_SESSION['id']));
+		$content = array("status" =>  $data->getMailingStatus(Auth::getAutId()));
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -179,7 +176,7 @@ switch (Core_Array::getGet('action'))
 		$mailcount = 0;
 
 		if ($_REQUEST['activate']){
-			if ($data->updateProcess('start', $_SESSION['id'])) $mailcount = $data->SendEmails($_REQUEST['activate']);
+			if ($data->updateProcess('start', Auth::getAutId())) $mailcount = $data->SendEmails($_REQUEST['activate']);
 		}
 
 		$content = array("completed" => "yes", "mailcount" => $mailcount);
@@ -189,6 +186,7 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'showlogs':
+
 		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
 		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
 		$id_log = isset($_REQUEST['id_log']) && is_numeric($_REQUEST['id_log']) ? $_REQUEST['id_log'] : exit();
@@ -224,12 +222,12 @@ switch (Core_Array::getGet('action'))
 
 	case 'process':
 
-		if ($data->updateProcess($_REQUEST['status'], $_SESSION['id'])){
+		if ($data->updateProcess($_REQUEST['status'], Auth::getAutId())){
 
 			if ($_REQUEST['status'] == 'stop') {
-				session_start();
-				if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
-				session_write_close();
+				core::session()->start();
+				core::session()->delete('id_log');
+				core::session()->commit();
 			}
 
 			$content = array("status" => $_REQUEST['status']);

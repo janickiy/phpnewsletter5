@@ -10,14 +10,10 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
 Auth::logOut();
-
-session_write_close();
 
 $redirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : '/';
 	

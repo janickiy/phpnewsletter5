@@ -79,9 +79,9 @@ class Model_log extends Model
 
     public function clearLog()
     {
-        session_start();
-        if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
-        session_write_close();
+        core::session()->start();
+        core::session()->delete('id_log');
+        core::session()->commit();
 
         $delete1 = core::database()->delete(core::database()->getTableName('log'));
         $delete2 = core::database()->delete(core::database()->getTableName('ready_send'));

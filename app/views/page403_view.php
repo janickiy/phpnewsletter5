@@ -10,15 +10,12 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
 session_write_close();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
-
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");

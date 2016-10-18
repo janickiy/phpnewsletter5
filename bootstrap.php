@@ -32,6 +32,7 @@ require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
 require_once SYS_ROOT . $cmspaths['core'] . '/core.php';
 core::init($cmspaths);
 core::$db = new DB($ConfigDB);
+core::$session = new Session();
 
 // get settings
 if (!is_array(core::getSetting())) {

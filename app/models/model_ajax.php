@@ -346,16 +346,17 @@ class Model_ajax extends Model
 			$fields['id_log'] = 0;
 			$fields['time'] = date("Y-m-d H:i:s");
 
-			session_start();
+			core::session()->start();
 
-			if (isset($_SESSION['id_log'])) {
-				$insert_id = $_SESSION['id_log'];
+			if (core::session()->issetName('id_log') == true) {
+				$insert_id = core::session()->get('id_log');
+				core::session()->commit();
 			} else {
 				$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
-				$_SESSION['id_log'] = $insert_id;
+				core::session()->set('id_log', $insert_id);
 			}
 
-			session_write_close();
+			core::session()->commit();
 
 			$query = "SELECT * FROM " . core::database()->getTableName('charset') . " WHERE id_charset=" . core::getSetting('id_charset');
 			$result = core::database()->querySQL($query);
@@ -486,7 +487,7 @@ class Model_ajax extends Model
 					$result_users = core::database()->querySQL($query_users);
 
 					while ($user = core::database()->getRow($result_users)) {
-						if ( $this->getStatusProcess($_SESSION['id']) == 'stop' || $this->getStatusProcess($_SESSION['id']) == 'pause') {
+						if ( $this->getStatusProcess(Auth::getAutId()) == 'stop' || $this->getStatusProcess(Auth::getAutId()) == 'pause') {
 							break;
 						}
 
@@ -598,11 +599,11 @@ class Model_ajax extends Model
 
 						if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
 							if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
-							if ($this->getStatusProcess($_SESSION['id']) == 'start') {
-								if ($this->updateProcess('stop', $_SESSION['id'])) {
-									session_start();
-									if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
-									session_write_close();
+							if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+								if ($this->updateProcess('stop', Auth::getAutId())) {
+									core::session()->start();
+									core::session()->delete('id_log');
+									core::session()->commit();
 								}
 							}
 
@@ -614,22 +615,22 @@ class Model_ajax extends Model
 
 				if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
 					if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
-					if ($this->getStatusProcess($_SESSION['id']) == 'start') {
-						if ($this->updateProcess('stop', $_SESSION['id'])) {
-							session_start();
-							if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
-							session_write_close();
+					if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+						if ($this->updateProcess('stop', Auth::getAutId())) {
+							core::session()->start();
+							core::session()->delete('id_log');
+							core::session()->commit();
 						}
 					}
 					return $mailcount;
 				}
 			}
 
-			if ($this->getStatusProcess($_SESSION['id']) == 'start') {
-				if ($this->updateProcess('stop', $_SESSION['id'])) {
-					session_start();
-					if (isset($_SESSION['id_log'])) unset($_SESSION['id_log']);
-					session_write_close();
+			if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+				if ($this->updateProcess('stop', Auth::getAutId())) {
+					core::session()->start();
+					core::session()->delete('id_log');
+					core::session()->commit();
 				}
 			}
 		}

@@ -30,5 +30,4 @@ if ($token == $_GET['token']){
 	echo "<p style=\"text-align: center\">".core::getLanguage('msg', 'subscribe_removed')."</p>\n";
 	echo "</body>\n";
 	echo "</html>";	
-}
-else Pnl::error(core::getLanguage('error', 'unsubscribe'));
+} else Pnl::error(core::getLanguage('error', 'unsubscribe'));

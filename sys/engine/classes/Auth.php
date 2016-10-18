@@ -14,23 +14,24 @@ class Auth
 {
     public static function authorization()
     {
-        if (!isset($_SESSION['sess_admin']) || !isset($_SESSION['id'])) {
-            $_SESSION['id'] = '';
-            $_SESSION['sess_admin'] = '';
+        core::session()->start();
+
+        if (core::session()->issetName('sess_admin') === false || core::session()->issetName('id') === false ) {
+            core::session()->set('id', null);
+            core::session()->set('sess_admin', null);
         }
         
-        if (Core_Array::getRequest('admin')) {
-            $login = trim(core::database()->escape(Core_Array::getPost('login')));
+        if (isset($_REQUEST['admin'])) {
+            $login = trim(core::database()->escape($_POST['login']));
             $query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE login='" . $login . "'";
             $result = core::database()->querySQL($query);
             $row = core::database()->getRow($result);
 
-            if ($_SESSION['sess_admin'] != "ok")
-                $sess_pass = md5(trim(Core_Array::getRequest('password')));
-            
+            if (core::session()->get('sess_admin') != "ok") $sess_pass = md5(trim($_POST['password']));
             if ($sess_pass === $row['password']) {
-                $_SESSION['sess_admin'] = "ok";
-                $_SESSION['id'] = $row['id'];
+                core::session()->set('sess_admin', "ok");
+                core::session()->set('id', $row['id']);
+                core::session()->commit();
             } else {
                 self::logOut();
 
@@ -47,11 +48,10 @@ class Auth
 				</script>
 				</body>
 				</html>';
-                
                 exit();
             }
         } else {
-            if ($_SESSION['sess_admin'] != "ok") {
+            if (core::session()->get('sess_admin') != "ok") {
 
 				// require temlate class
 				core::requireEx('libs', "html_template/SeparateTemplate.php");
@@ -65,8 +65,8 @@ class Auth
 				$tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 				
 				// display content
-				$tpl->display();				
-        
+				$tpl->display();
+                core::session()->commit();
                 exit();
             }
         }
@@ -85,8 +85,8 @@ class Auth
 
     public static function logOut()
     {
-        unset($_SESSION['sess_admin']);
-        unset($_SESSION['id']);
+        core::session()->start();
+        core::session()->destroy();
     }
 
     public static function getAutInfo($id)
@@ -96,5 +96,13 @@ class Auth
             $result = core::database()->querySQL($query);
             return core::database()->getRow($result);
         }
+    }
+
+    public static function getAutId()
+    {
+        core::session()->start();
+        $id = core::session()->get('id');
+        core::session()->commit();
+        return $id;
     }
 }
