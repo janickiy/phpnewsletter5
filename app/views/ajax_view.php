@@ -20,14 +20,14 @@ $autInfo = Auth::getAutInfo(Auth::getAutId());
 switch (Core_Array::getGet('action'))
 {
 	case 'alert_update':
-		$update = new Update();
-		$update->currenversion = VERSION;
+		$update = new Update(core::getSetting("language"), VERSION);
 
 		if ($update->checkNewVersion()) {
 			$update_warning = str_replace('%SCRIPTNAME%', core::getLanguage('str', 'script_name'), core::getLanguage('str', 'update_warning'));
 			$update_warning = str_replace('%VERSION%', $update->getVersion(), $update_warning);
 			$update_warning = str_replace('%CREATED%', $update->getCreated(), $update_warning);
 			$update_warning = str_replace('%DOWNLOADLINK%', $update->getDownloadLink(), $update_warning);
+			$update_warning = str_replace('%MESSAGE%', $update->getMessage(), $update_warning);
 			$content = array("msg" => $update_warning);
 
 			Pnl::showJSONContent(json_encode($content));
@@ -94,6 +94,11 @@ switch (Core_Array::getGet('action'))
 	case 'start_update':
 
 		$path = SYS_ROOT . $cmspaths['tmp'] . 'update.zip';
+
+		$update = new Update(core::getSetting("language"), VERSION);
+		$newversion = $update->getVersion();
+
+
 		$content = array();
 
 		if (Core_Array::getRequest('p') == 'start' && Auth::checkLicenseKey()) {

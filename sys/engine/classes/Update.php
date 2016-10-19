@@ -12,11 +12,19 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Update
 {
-	public $currenversion = null;
-	
+	private $language;
+	private $url = 'http://site3.ru/';
+	private $currenversion;
+
+	public function __construct($language, $currenversion)
+	{
+		$this->language = $language;
+		$this->currenversion = $currenversion;
+	}
+
 	public function checkNewVersion()
 	{
-		$str = $this->getDataNewVersion();		
+		$str = $this->getDataNewVersion($this->getUrlInfo());
 		$newversion = $this->getVersion($str);
 		
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
@@ -31,51 +39,59 @@ class Update
 			return false;
 	}
 
-	public function getDataNewVersion() 
-	{ 
-		$headers = "GET /scripts/index.php?s=newsletter&version=" . $this->currenversion . " HTTP/1.0\r\n";
-		$headers .= "Host: janicky.com\r\n";
-		if (isset($_SERVER['HTTP_USER_AGENT'])) $headers .= "User-Agent: " . $_SERVER['HTTP_USER_AGENT'] . "\r\n";
-		$headers .= "Accept: */*\r\n";
-		$headers .= "Accept-Charset: utf-8;q=0.7,*;q=0.7\r\n";
-		if (isset($_SERVER['HTTP_REFERER'])) $headers .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\r\n";
-		$headers .= "Connection: Close\r\n\r\n";
+	public function getUrlInfo()
+	{
+		return $this->url . '?s=newsletter&version=' . $this->currenversion . '&lang=' . $this->language;
+	}
 
-		$out = '';
-		
-		$fp = @fsockopen('janicky.com', 80, $errno, $errstr, 30);
+	public function getDataNewVersion($url)
+	{
+		$ch = curl_init();
 
-		fwrite($fp, $headers);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_URL, $url);
 
-		while (!feof($fp))
-		{
-			$out .= fgets($fp, 1024);
-		}
-		
-		return $out; 
+		$data = curl_exec($ch);
+		curl_close($ch);
+
+		return json_decode($data, true);
 	}
 	
 	public function getVersion()
 	{
-		$str = $this->getDataNewVersion(); 	
-		preg_match("/<version>([^<]+)<\/version>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['version'];
 	}
 
 	public function getDownloadLink()
 	{
-		$str = $this->getDataNewVersion(); 
-		preg_match("/<download>([^<]+)<\/download>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['download'];
 	}
 	
 	public function getCreated()
 	{
-		$str = $this->getDataNewVersion(); 
-		preg_match("/<created>([^<]+)<\/created>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['created'];
+	}
+
+	public function getUpdate()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['update'];
+	}
+
+	public function getUpgradeVersion()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['upgrade_version'];
+	}
+
+	public function getMessage()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['message'];
 	}
 }

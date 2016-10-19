@@ -239,7 +239,7 @@ class core
 
             $f = fopen(SYS_ROOT . self::$license_path, "w");
 
-            if (fwrite($f, $encodeStr) === FALSE) {
+            if (fwrite($f, $encodeStr) === false) {
                 throw new Exception('Error: can not create ' . self::$license_path  . '! PLease check the permissions (chmod)');
             }
 
