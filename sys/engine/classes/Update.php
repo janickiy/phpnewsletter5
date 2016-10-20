@@ -24,8 +24,7 @@ class Update
 
 	public function checkNewVersion()
 	{
-		$str = $this->getDataNewVersion($this->getUrlInfo());
-		$newversion = $this->getVersion($str);
+		$newversion = $this->getVersion();
 		
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $newversion, $out2);

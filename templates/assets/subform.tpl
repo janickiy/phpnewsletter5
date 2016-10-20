@@ -10,8 +10,8 @@
   <input type="hidden" name="action" value="post">
     <!-- BEGIN row -->
     <p>
-      <input type="checkbox" checked="checked" value="${ID_CAT}" name="id_cat[]">
-      ${NAME}</p>
+      <input type="checkbox" checked="checked" value="${ID_CAT}" name="id_cat[]">${NAME}
+    </p>
     <!-- END row -->
     <table cellpadding="0" cellspacing="6">
       <tr>

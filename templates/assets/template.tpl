@@ -373,11 +373,17 @@
 
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
-<!-- IF '${ERROR_ALERT}' != '' -->
+<!-- BEGIN show_errors -->
 <div class="alert alert-danger alert-dismissable">
 	<button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-	<strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
-<!-- END IF -->
+	<h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
+	<ul>
+		<!-- BEGIN row -->
+		<li> ${ERROR}</li>
+		<!-- END row -->
+	</ul>
+</div>
+<!-- END show_errors -->
 <form action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 4){return confirm('${ALERT_CONFIRM_REMOVE}');} if(this.action.value == 1) return false" method="post">
 	<table class="table table-bordered table-hover">
 		<thead>

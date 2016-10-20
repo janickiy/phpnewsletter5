@@ -30,10 +30,10 @@ $errors = array();
 if (Core_Array::getRequest('action')){
 	$license_key = trim(Core_Array::getPost('license_key'));
 
-	if ($data->updateLicenseKey(Core_Array::getPost("license_key")))
-		$success_msg = core::getSetting('msg', 'changes_added');
+	if ($data->updateLicenseKey($license_key))
+		$success_msg = core::getLanguage('msg', 'changes_added');
 	else
-		$errors[] = core::getSetting('error', 'web_apps_error');
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 }
 
 //alert
@@ -81,6 +81,9 @@ $tpl->assign('STR_LICENSE_KEY', core::getLanguage('str', 'license_key'));
 $tpl->assign('BUTTON_SAVE', core::getLanguage('button', 'save'));
 $tpl->assign('STR_START_UPDATE', core::getLanguage('str', 'start_update'));
 $tpl->assign('MSG_UPDATE_COMPLETED', core::getLanguage('msg', 'update_completed'));
+
+//value
+$tpl->assign('LICENSE_KEY', $data->getLicenseKey());
 
 //footer
 include_once core::pathTo('extra', 'footer.php');

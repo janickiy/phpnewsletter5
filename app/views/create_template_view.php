@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors[] = array();
+$errors = array();
 
 if (Core_Array::getRequest('action')) {
 	$name = trim(Core_Array::getPost('name'));
@@ -63,7 +63,7 @@ if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($error as $row) {
+	foreach($errors as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);
