@@ -38,7 +38,7 @@ if (Core_Array::getRequest('action')) {
 		if ($data->editUser($fields, Core_Array::getPost('id_user'), Core_Array::getPost('id_cat'))){
 			header("Location: ./?t=subscribers");
 			exit;	
-		} else $alert_error = core::getLanguage('error', 'edit_user');
+		} else $errors[] = core::getLanguage('error', 'edit_user');
 	}
 }
 
@@ -47,11 +47,7 @@ $tpl->assign('TITLE', core::getLanguage('title', 'edit_user'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'edit_user'));
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-
-if (empty($errors)) {
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			

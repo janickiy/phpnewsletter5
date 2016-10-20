@@ -21,11 +21,13 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (isset($_REQUEST['clear_log'])){
 	if ($data->clearLog())
 		$alert_success = core::getLanguage('msg', 'clear_log');
 	else
-		$alert_error = core::getLanguage('error', 'clear_log');				
+		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
 $order = array();
@@ -44,14 +46,12 @@ foreach($order as $parametr => $field){
 			$_GET[$parametr] = "down";
 			$strtmp = $field;
 			$thclass[$parametr] = 'headerSortDown';
-		}
-		else{
+		} else{
 			$_GET[$parametr] = "up";
 			$strtmp = "" . $field . " DESC";
 			$thclass[$parametr] = 'headerSortUp';
 		}
-	}
-	else {
+	} else {
 		$_GET[$parametr] = "up";
 		$thclass[$parametr] = 'headerUnSort';
 	}
@@ -123,10 +123,19 @@ if (Core_Array::getRequest('id_log')){
 	$blockLogList = $tpl->fetch('LogList');	
 	
 	//alert error
-	if (isset($alert_error)) {
-		$blockLogList->assign('ERROR_ALERT', $alert_error);
+	if (!empty($errors)) {
+		$errorBlock = $tpl->fetch('show_errors');
+		$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+		foreach($errors as $row){
+			$rowBlock = $errorBlock->fetch('row');
+			$rowBlock->assign('ERROR', $row);
+			$errorBlock->assign('row', $rowBlock);
+		}
+
+		$tpl->assign('show_errors', $errorBlock);
 	}
-	
+
 	//alert success
 	if (isset($alert_success)){
 		$blockLogList->assign('MSG_ALERT', $alert_success);
@@ -181,7 +190,7 @@ if (Core_Array::getRequest('id_log')){
 	if ($page + 2 <= $number) $page2right = '<a href="./?t=log&page=' . ($page + 2) . '">' . ($page + 2) . '...</a>';
 	if ($page + 1 <= $number) $page1right = '<a href="./?t=log&page=' . ($page + 1) . '">' . ($page + 1) . '</a>';
 
-	if ($number > 1){
+	if ($number > 1) {
 		$paginationBlock = $blockLogList->fetch('pagination');
 		$paginationBlock->assign('STR_PNUMBER', core::getLanguage('str', 'pnumber'));
 		$paginationBlock->assign('CURRENT_PAGE','<a>' . $page . '</a>');

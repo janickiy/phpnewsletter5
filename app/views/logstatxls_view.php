@@ -34,12 +34,11 @@ $readmail = $data->getTotalread($_GET['id_log']);
 
 $arr = $data->getLogList($_GET['id_log']);
 
-if (is_array($arr)){
+if (is_array($arr)) {
 	$success = count($arr) - $totalfaild;
 	$count = 100 * $success / count($arr);
 	$total = count($arr);
-}
-else{
+} else {
 	$success = 0;
 	$count = 0;
 	$total = 0;
@@ -87,7 +86,6 @@ if (is_array($arr)){
 
 	foreach($arr as $row){
 		$i++;
-		
 		$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
 		$readmail = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
 		

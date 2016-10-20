@@ -58,6 +58,19 @@ class Update
 
 		return json_decode($data, true);
 	}
+
+	public function checkTree()
+	{
+		$newversion = $this->getVersion();
+
+		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
+		preg_match("/(\d+)\.(\d+)\.(\d+)/", $newversion, $out2);
+
+		if($out1[1] < $out1[2])
+			return false;
+		else
+			return true;
+	}
 	
 	public function getVersion()
 	{

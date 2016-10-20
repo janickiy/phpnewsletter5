@@ -94,14 +94,11 @@ switch (Core_Array::getGet('action'))
 	case 'start_update':
 
 		$path = SYS_ROOT . $cmspaths['tmp'] . 'update.zip';
-
 		$update = new Update(core::getSetting("language"), VERSION);
 		$newversion = $update->getVersion();
-
-
 		$content = array();
 
-		if (Core_Array::getRequest('p') == 'start' && Auth::checkLicenseKey()) {
+		if (Core_Array::getRequest('p') == 'start') {
 			$result = $data->DownloadUpdate($path, $update->getUpdate());
 		}
 
@@ -114,7 +111,7 @@ switch (Core_Array::getGet('action'))
 			}
 		}
 
-		if (Core_Array::getRequest('p') == 'update_bd' && Auth::checkLicenseKey()) {
+		if (Core_Array::getRequest('p') == 'update_bd') {
 			$current_version_code = Pnl::get_current_version_code($currentversion);
 			$version_code_detect = $data->version_code_detect();
 
@@ -149,12 +146,12 @@ switch (Core_Array::getGet('action'))
 		$prior = Core_Array::getRequest('prior');
 		$email = trim(Core_Array::getRequest('email'));
 
-		$error = array();
+		$errors = array();
 
-		if (empty($subject)) $error[] = core::getLanguage('error', 'empty_subject');
-		if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
-		if (empty($email)) $error[] = core::getLanguage('error', 'empty_email');
-		if (!empty($email) && Pnl::check_email($email)) $error[] = core::getLanguage('error', 'wrong_email');
+		if (empty($subject)) $errors[] = core::getLanguage('error', 'empty_subject');
+		if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
+		if (empty($email)) $errors[] = core::getLanguage('error', 'empty_email');
+		if (!empty($email) && Pnl::check_email($email)) $errors[] = core::getLanguage('error', 'wrong_email');
 
 		if (count($error) == 0) {
 			if ($data->sendTestEmail($email, $subject, $body, $prior)){
@@ -166,7 +163,7 @@ switch (Core_Array::getGet('action'))
 			}
 		} else {
 			$result_send = 'errors';
-			$msg = implode(",", $error);
+			$msg = implode(",", $errors);
 		}
 
 		$content = array();

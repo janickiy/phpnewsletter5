@@ -21,8 +21,9 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
+$errors = array();
 
+if (Core_Array::getRequest('action')){
 	$fields = Array();
 
 	$fields['language'] = trim(Core_Array::getRequest('language'));
@@ -56,10 +57,17 @@ if (Core_Array::getRequest('action')){
 	$fields['require_confirmation'] = Core_Array::getRequest('require_confirmation') == 'on' ? "yes" : "no";
 	$fields['unsublink'] = trim(Core_Array::getRequest('unsublink'));
 	$fields['limit_number'] = trim((int)Core_Array::getRequest('limit_number'));
-	if(Core_Array::getRequest('interval_type') == '1') { $fields['interval_type'] = 'm'; }
-	else if(Core_Array::getRequest('interval_type') == '2') { $fields['interval_type'] = 'h'; }
-	else if(Core_Array::getRequest('interval_type') == '3') { $fields['interval_type'] = 'd'; }
-	else { $fields['interval_type'] = 'no'; }
+
+	if (Core_Array::getRequest('interval_type') == '1') {
+		$fields['interval_type'] = 'm';
+	} elseif (Core_Array::getRequest('interval_type') == '2') {
+		$fields['interval_type'] = 'h';
+	} elseif (Core_Array::getRequest('interval_type') == '3') {
+		$fields['interval_type'] = 'd';
+	} else {
+		$fields['interval_type'] = 'no';
+	}
+
 	$fields['interval_number'] = trim((int)Core_Array::getRequest('interval_number'));
 	$fields['limit_number'] = Core_Array::getRequest('limit_number');
 	$fields['precedence'] = Core_Array::getRequest('precedence');
@@ -75,7 +83,7 @@ if (Core_Array::getRequest('action')){
 	if ($data->updateSettings($fields))
 		$success = core::getLanguage('msg', 'changes_added');
 	else
-		$error = core::getLanguage('error', 'web_apps_error');
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 	
 	header('Location: ./?t=settings');
 	exit;
@@ -91,11 +99,20 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 	
-if (isset($success)){
+if (isset($success)) {
 	$tpl->assign('MSG_ALERT', $success);
 }
 

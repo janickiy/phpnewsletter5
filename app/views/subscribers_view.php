@@ -21,35 +21,34 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception40
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
+$errors = array();
 
-	switch($_REQUEST['action']){
+if (Core_Array::getRequest('action')) {
+
+	switch($_REQUEST['action']) {
 		case 1:
-			if ($data->updateUsers( Core_Array::getRequest('activate'), 'active')){
+			if ($data->updateUsers( Core_Array::getRequest('activate'), 'active')) {
 				$success_alert = core::getLanguage('msg', 'selected_users_activated');
-			}
-			else{
-				$error_alert = core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] = core::getLanguage('error', 'web_apps_error');
 			}
 
 			break;
 
 		case 2:
-			if ($data->updateUsers(Core_Array::getRequest('activate'), 'noactive')){
+			if ($data->updateUsers(Core_Array::getRequest('activate'), 'noactive')) {
 				$success_alert = core::getLanguage('msg', 'selected_users_deactivated');
-			}
-			else {
-				$error_alert = core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] = core::getLanguage('error', 'web_apps_error');
 			}
 
 			break;
 
 		case 3:
-			if ($data->deleteUsers( Core_Array::getRequest('activate'))){
+			if ($data->deleteUsers( Core_Array::getRequest('activate'))) {
 				$success_alert =  core::getLanguage('msg', 'selected_users_deleted');
-			}
-			else {
-				$error_alert =  core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] =  core::getLanguage('error', 'web_apps_error');
 			}
 
 			break;
@@ -60,12 +59,12 @@ if (Core_Array::getRequest('remove') == 'all'){
 	if ($data->removeAllUsers())
 		$success_alert = core::getLanguage('msg', 'all_users_deleted');
 	else
-		$error_alert =  core::getLanguage('error', 'web_apps_error');	
+		$errors[] =  core::getLanguage('error', 'web_apps_error');
 } elseif (Core_Array::getRequest('remove') && is_numeric($_REQUEST['remove'])) {
 	if ($data->removeUser($_REQUEST['remove']))
 		$success_alert =   core::getLanguage('msg', 'selected_users_deleted');
 	else
-		$error_alert =   core::getLanguage('error', 'web_apps_error');
+		$errors[] =   core::getLanguage('error', 'web_apps_error');
 }
 
 $tpl->assign('TITLE_PAGE',  core::getLanguage('title_page', 'subscribers'));
@@ -82,8 +81,17 @@ $tpl->assign('SEARCH', $search);
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 
 //alert
-if (isset($error_alert)) {
-	$tpl->assign('ERROR_ALERT', $error_alert);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 if (isset($success_alert)){
@@ -125,15 +133,13 @@ foreach($order as $parametr => $field) {
 			$strtmp = $field;
 			$sort = "&" . $field . "=up";
 			$thclass[$parametr] = 'headerSortUp';
-		}
-		else{
+		} else {
 			$_GET[$parametr] = "up";
 			$strtmp = "" . $field . " DESC";
 			$sort = "&" . $field . "=down";
 			$thclass[$parametr] = 'headerSortDown';
 		}
-	}
-	else {
+	} else {
 		$_GET[$parametr] = "up";
 		$thclass[$parametr] = 'headerUnSort';
 	}
@@ -171,8 +177,7 @@ if ($arr){
 		if ($page - 1 > 0) $page1left = '<a href="./?t=subscribers&page=' . ($page - 1) . '' . $sort . '">'.($page - 1) . '</a>';
 		if ($page + 2 <= $number) $page2right = '<a href="./?t=subscribers&page=' . ($page + 2) . '' . $sort . '">' . ($page + 2) . '...</a>';
 		if ($page + 1 <= $number) $page1right = '<a href="./?t=subscribers&page=' . ($page + 1) . '' . $sort . '">' . ($page + 1) . '</a>';
-	}
-	else {
+	} else {
 		$number = $data->getTotal();
 		$page = $data->getPageNumber();
 
@@ -267,14 +272,12 @@ if ($arr){
 	$rowBlock->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
 	$rowBlock->assign('STR_APPLY', core::getLanguage('str', 'apply'));
 	$tpl->assign('row', $rowBlock);
-}
-else {
+} else {
 	if (!empty($search)) {
 		$notfoundBlock = $tpl->fetch('notfound');
 		$notfoundBlock->assign('MSG_NOTFOUND',   core::getLanguage('msg', 'notfound'));
 		$tpl->assign('notfound', $notfoundBlock);
-	}
-	else {
+	} else {
 		$tpl->assign('EMPTY_LIST', core::getLanguage('str', 'empty'));
 	}
 }

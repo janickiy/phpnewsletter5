@@ -32,11 +32,13 @@ include_once core::pathTo('extra', 'menu.php');
 
 $tpl->assign('RETURN_BACK', core::getLanguage('str', 'return_back'));
 
+$errors = array();
+
 if (Core_Array::getGet('ip')){
     $sock = @fsockopen("whois.ripe.net", 43, $errno, $errstr);
 
     if (!$sock) {
-        $error = $errno($errstr);
+        $errors[] = $errno($errstr);
     } else {
         $whoisBlock = $tpl->fetch('whois');
         $whoisBlock->assign('TH_TABLE_IP_INFO', core::getLanguage('str', 'ip_info'));
@@ -52,11 +54,21 @@ if (Core_Array::getGet('ip')){
         $tpl->assign('whois', $whoisBlock);
     }
 } else {
-    $error = core::getLanguage('error', 'service_unavailable');
+    $errors[] = core::getLanguage('error', 'service_unavailable');
 }
 
-if (isset($error)) {
-    $tpl->assign('ERROR_ALERT', $error);
+//alert
+if (!empty($errors)) {
+    $errorBlock = $tpl->fetch('show_errors');
+    $errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+    foreach($errors as $row){
+        $rowBlock = $errorBlock->fetch('row');
+        $rowBlock->assign('ERROR', $row);
+        $errorBlock->assign('row', $rowBlock);
+    }
+
+    $tpl->assign('show_errors', $errorBlock);
 }
 
 //footer

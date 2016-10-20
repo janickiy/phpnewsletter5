@@ -40,7 +40,6 @@ if (Core_Array::getRequest('action')){
 		echo "<title>" . core::getLanguage('subject', 'subscription') . "</title>\n";
 		echo "</head>\n";
 		echo "<body>\n";
-	
 		echo '<p style="text-align: center">';
 	
 		if (core::getSetting("require_confirmation") == "yes")
@@ -53,8 +52,7 @@ if (Core_Array::getRequest('action')){
 		echo "</body>\n";
 		echo "</html>";	
 		exit;
-	}
-	else {
+	} else {
 		Pnl::error(core::getLanguage('error', 'subscribe'));
 	}	
 }

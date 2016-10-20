@@ -35,7 +35,7 @@ if (Core_Array::getRequest('action')) {
 	}
 	
 	if (!empty($email) && $data->checkExistEmail($email)){
-		$error[] = core::getLanguage('error', 'subscribe_is_already_done');
+		$errors[] = core::getLanguage('error', 'subscribe_is_already_done');
 	}
 	
 	if (empty($errors)) {
@@ -50,6 +50,8 @@ if (Core_Array::getRequest('action')) {
 		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");
 			exit;
+		} else {
+			$errors[] =  core::getLanguage('error', 'web_apps_error');
 		}
 	}
 }

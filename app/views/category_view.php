@@ -21,12 +21,14 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception40
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('remove')){
 
 	if ($data->removeCategory(Core_Array::getRequest('remove')))
 		$success = core::getLanguage('msg', 'category_removed');
 	else
-		$error = core::getLanguage('error', 'web_apps_error');
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'category'));
@@ -34,10 +36,19 @@ $tpl->assign('TITLE', core::getLanguage('title', 'category'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'category'));
 
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row) {
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
-	
+
 if (isset($success)){
 	$tpl->assign('MSG_ALERT', $success);
 }

@@ -17,7 +17,7 @@ $autInfo = Auth::getAutInfo(Auth::getAutId());
 
 if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
-$update = new Update(core::getSetting('language'));
+$update = new Update(core::getSetting('language'), VERSION);
 $newversion = $update->getVersion();
 $currentversion = VERSION;
 
@@ -25,13 +25,33 @@ $currentversion = VERSION;
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-//alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+$errors = array();
+
+if (Core_Array::getRequest('action')){
+	$license_key = trim(Core_Array::getPost('license_key'));
+
+	if ($data->updateLicenseKey(Core_Array::getPost("license_key")))
+		$success_msg = core::getSetting('msg', 'changes_added');
+	else
+		$errors[] = core::getSetting('error', 'web_apps_error');
 }
-	
-if (isset($success)){
-	$tpl->assign('MSG_ALERT', $success);
+
+//alert
+if (isset($success_msg)){
+	$tpl->assign('MSG_ALERT', $success_msg);
+}
+
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row) {
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'update'));
@@ -39,6 +59,18 @@ $tpl->assign('TITLE', core::getLanguage('title', 'update'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'update'));
 
 include_once core::pathTo('extra', 'top.php');
+
+if ($update->checkNewVersion() && $update->checkTree()){
+	$button_update = core::getLanguage('button', 'update');
+	$button_update = str_replace('%NEW_VERSION%', $newversion, $button_update);
+	$button_update = str_replace('%SCRIPT_NAME%', core::getLanguage('script', 'name'), $button_update);
+	$tpl->assign('BUTTON_UPDATE', $button_update);
+} else {
+	$no_updates = core::getLanguage('button', 'no_updates');
+	$no_updates = str_replace('%SCRIPT_NAME%', core::getLanguage('script', 'name'), $no_updates);
+	$no_updates = str_replace('%NEW_VERSION%', VERSION, $no_updates);
+	$tpl->assign('MSG_NO_UPDATES', $no_updates);
+}
 
 //menu
 include_once core::pathTo('extra', 'menu.php');
@@ -48,7 +80,6 @@ $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('STR_LICENSE_KEY', core::getLanguage('str', 'license_key'));
 $tpl->assign('BUTTON_SAVE', core::getLanguage('button', 'save'));
 $tpl->assign('STR_START_UPDATE', core::getLanguage('str', 'start_update'));
-
 $tpl->assign('MSG_UPDATE_COMPLETED', core::getLanguage('msg', 'update_completed'));
 
 //footer

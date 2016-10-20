@@ -21,14 +21,14 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')) {
-	$error = array();
+$errors[] = array();
 
+if (Core_Array::getRequest('action')) {
 	$name = trim(Core_Array::getPost('name'));
 	$body = trim(Core_Array::getPost('body'));
 	
-	if (empty($name)) $error[] = core::getLanguage('error', 'empty_subject');
-	if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
+	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_subject');
+	if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 	
 	if (count($error) == 0) {
 		$fields = array();
@@ -43,7 +43,7 @@ if (Core_Array::getRequest('action')) {
 			header("Location: ./");
 			exit();
 		} else {
-			$alert_error =  core::getLanguage('error', 'web_apps_error');
+			$errors[] =  core::getLanguage('error', 'web_apps_error');
 		}	
 	}
 }
@@ -59,11 +59,7 @@ include_once core::pathTo('extra', 'menu.php');
 
 
 // alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-	
-if (isset($error) && count($error) > 0) {
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
@@ -98,7 +94,7 @@ $tpl->assign('ID_TEMPLATE', Core_Array::getPost('id_template'));
 
 if (Core_Array::getRequest('prior') == 1)
 	$tpl->assign('PRIOR1_CHECKED', 1);
-elseif(Core_Array::getRequest('prior') == 2)
+elseif (Core_Array::getRequest('prior') == 2)
 	$tpl->assign('PRIOR2_CHECKED', 2);
 else 
 	$tpl->assign('PRIOR3_CHECKED', 3);

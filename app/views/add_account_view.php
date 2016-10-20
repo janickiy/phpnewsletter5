@@ -37,11 +37,11 @@ if (Core_Array::getRequest('action')){
 		if ($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 
-	if (!empty($login)){
+	if (!empty($login)) {
 		if ($data->checkExistLogin($login)) $errors[] = core::getLanguage('error', 'login_already_exists');
 	}
 
-	if (empty($errors)){
+	if (empty($errors)) {
 		$fields = array();
 		$fields['login'] = $login;
 		$fields['password'] = md5($password);
@@ -50,9 +50,8 @@ if (Core_Array::getRequest('action')){
 		if ($data->createAccount($fields)){
 			header("Location: ./?t=accounts");
 			exit();
-		}
-		else{ 
-			$alert_error = core::getLanguage('error', 'web_apps_error');
+		} else {
+			$errors[] = core::getLanguage('error', 'web_apps_error');
 		}		
 	}
 }
@@ -61,10 +60,6 @@ $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'add_account'));
 $tpl->assign('TITLE', core::getLanguage('title', 'add_account'));
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-
 if (!empty($errors)){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));

@@ -23,24 +23,20 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$error = '';
+$errors = array();
 
-if (Core_Array::getRequest('action')){
-
-	if ($_FILES['file']['tmp_name']){
-
+if (Core_Array::getRequest('action')) {
+	if ($_FILES['file']['tmp_name']) {
 		$ext = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 	
-		if ($ext == 'xls' || $ext == 'xlsx'){
+		if ($ext == 'xls' || $ext == 'xlsx') {
 			$result = $data->importFromExcel(Core_Array::getPost('id_cat'));
-		}
-		else{	
+		} else {
 			$result = $data->importFromText(Core_Array::getPost('id_cat'));
 		}
 		
-		if (!$result) $error = core::getLanguage('error', 'no_import');
-	}
-	else $error = core::getLanguage('error', 'no_import_file');	
+		if (!$result) $errors[] = core::getLanguage('error', 'no_import');
+	} else $errors[] = core::getLanguage('error', 'no_import_file');
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'import'));
@@ -97,8 +93,17 @@ foreach ($charset as $key => $value) {
 $tpl->assign('STR_BACK', core::getLanguage('str', 'return_back'));
 
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 if (isset($result)){

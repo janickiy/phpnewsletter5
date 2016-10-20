@@ -21,6 +21,8 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
 	switch($_REQUEST['action']){
 		case 2:
@@ -29,7 +31,7 @@ if (Core_Array::getRequest('action')){
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
-		break;
+			break;
 		
 		case 3:
 		
@@ -37,13 +39,13 @@ if (Core_Array::getRequest('action')){
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 
-		break;
+			break;
 		
 		case 4:
 		
 			if(!$data->removeTemplate(Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
-		break;
+			break;
 		
 		default:
 		
@@ -56,9 +58,8 @@ if (Core_Array::getRequest('pos') == 'up' && is_numeric($_GET['id_template'])){
 	if ($data->upPosition(Core_Array::getRequest('id_template'))){
 		header("Location: ./");
 		exit;
-	}
-	else {
-		$alert_error = core::getLanguage('error', 'web_apps_error');
+	} else {
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 	}
 }
 
@@ -66,9 +67,8 @@ if (Core_Array::getRequest('pos') == 'down' && is_numeric($_GET['id_template']))
 	if ($data->downPosition(Core_Array::getRequest('id_template'))){
 		header("Location: ./");
 		exit;
-	}
-	else{
-		$alert_error = core::getLanguage('error', 'web_apps_error');
+	} else {
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 	}	
 }
 
@@ -82,8 +82,17 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 //alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 $tpl->assign('TH_TABLE_ACTIVITY', core::getLanguage('str', 'activity'));

@@ -42,7 +42,7 @@ if (Core_Array::getRequest('action')){
             header("Location: ./");
             exit();
         } else {
-            $alert_error = core::getLanguage('error', 'web_apps_error');
+            $errors[] = core::getLanguage('error', 'web_apps_error');
         }
     }
 }
@@ -57,10 +57,6 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 // alert
-if (isset($alert_error)) {
-    $tpl->assign('ERROR_ALERT', $alert_error);
-}
-
 if (!empty($errors)) {
     $errorBlock = $tpl->fetch('show_errors');
     $errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
@@ -136,7 +132,6 @@ if ($arr) {
 }
 
 $tpl->assign('BUTTON',core::getLanguage('button', 'edit'));
-
 $tpl->assign('STR_SEND_TEST_EMAIL', core::getLanguage('str', 'send_test_email'));
 $tpl->assign('BUTTON_SEND', core::getLanguage('button', 'send'));
 $tpl->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
