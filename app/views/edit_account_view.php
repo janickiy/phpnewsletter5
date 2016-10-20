@@ -54,7 +54,7 @@ $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'edit_account'));
 $tpl->assign('TITLE', core::getLanguage('title', 'edit_account'));
 
 //error alert
-if (empty($errors)){
+if (!empty($errors)){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS',  core::getLanguage('str', 'identified_following_errors'));
 			
