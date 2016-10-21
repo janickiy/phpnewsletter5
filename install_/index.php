@@ -16,6 +16,8 @@ $INSTALL["version"] = '5.0.1';
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
 
+$_SESSION['domain'] = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
+
 // Step
 $INSTALL['step_count'] = 7;
 $INSTALL['step'] = 1;
@@ -55,12 +57,12 @@ if (empty($INSTALL['language']) && !empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 	foreach ($accept_langs[1] as $lang) {
 		$code = substr($lang, 0, 2);
 
-		if($code == 'en') {
+		if ($code == 'en') {
 			$INSTALL['language'] = 'en';
 			break;
 		}
 
-		if($code == 'ru') {
+		if ($code == 'ru') {
 			$INSTALL['language'] = 'ru';
 			break;
 		}
@@ -163,8 +165,7 @@ if ($INSTALL['step'] == 5){
 
 			if (mysqli_connect_errno()){
 				$INSTALL['errors'][] = $INSTALL["lang"]["error"]["dbconnect_error"];
-			}
-			else{
+			} else {
 				$dbh->query("SET NAMES 'utf8'");
 				
 				if (!$dbh->select_db($_POST["name"])){
@@ -224,7 +225,6 @@ if ($INSTALL['step'] == 5){
 			
 			if ($INSTALL['type'] == 'update'){
 				if ($_POST['action'] == 'update') {
-
 					if (count($INSTALL['errors']) == 0){
 						$_SESSION['name'] = $_POST["name"];
 						$_SESSION['host'] = $_POST['host'];
@@ -260,8 +260,7 @@ if ($INSTALL['step'] == 5){
 						$INSTALL['step'] = 6;
 					}
 				}
-			}
-			else if ($_POST['action'] == 'clear'){
+			} elseif ($_POST['action'] == 'clear'){
 				if ($INSTALL['version_detect'] && $_POST['action'] == 'clear'){
 					$tables_drop = array();
 					 
@@ -286,7 +285,7 @@ if ($INSTALL['step'] == 5){
                         $_POST = array();
                         $INSTALL['step'] = 6;
                     }
-				} else if ($_POST['action'] == 'clear') {
+				} elseif ($_POST['action'] == 'clear') {
 					$tables_drop = array();
         
 					foreach($INSTALL['tables'] as $table) {
@@ -310,7 +309,7 @@ if ($INSTALL['step'] == 5){
 						$INSTALL['step'] = 6;
 					}
                 }
-			}else if ($INSTALL['type'] == 'install'){
+			} elseif ($INSTALL['type'] == 'install'){
                 if ($_POST['action'] == 'install'){
                     import_scheme('sql/phpnewsletter.sql', $_POST['prefix']);
                     import_data('sql/phpnewsletter_data_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
@@ -373,15 +372,13 @@ if ($INSTALL['step'] == 6 && isset($_POST['forward'])){
 				$_POST = array();
 				$INSTALL['step'] = 6;
 				$INSTALL['errors'][] = $INSTALL["lang"]["error"]["unwritabl_config"];						
-			}
-			else{
+			} else {
 				$_POST = array();
 				$INSTALL['step'] = 7;
 			}
 	
 			fclose($f);
-		}
-		else{
+		} else {
 			$_POST = array();
 			$INSTALL['step'] = 6;
 			$INSTALL['errors'][] = $INSTALL["lang"]["error"]["setting_product"];
@@ -425,6 +422,11 @@ header('Content-Type: text/html; charset=utf-8');
 	<link href="../templates/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	<link href="../templates/assets/styles/styles.css" rel="stylesheet">
+
+
+	<script src="../templates/js/jquery.min.js"></script>
+	<script src="../templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../templates/js/jquery.hide_alertblock.js"></script>
 
 </head>
 <body>
@@ -493,33 +495,25 @@ else if($INSTALL['step'] == 2){
 
 ?>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#license_key").change(function(){ 
-	
-		var licensekey = $("#license_key").val();
-	
-		$.ajax({
-			type: "POST",
-			url: "./check_license.php",
-			data: "licensekey=" + licensekey,
-			dataType: "xml",
-			success: function(xml){
-				$(xml).find("document").each(function () {
-					var result = $(this).find("result").text();				
+$(document).on('change','#license_key',function(){
+	var licensekey = $("#license_key").val();
 
-					if(result == 'no'){
-						$("#error_msg").text('<?php echo $INSTALL["lang"]["error"]["wrong_license_key"]; ?>');
-						$(".btn-primary").attr("disabled","disabled");
-					}
-					else{
-						$("#error_msg").text('');
-						$('.btn-primary').removeAttr("disabled");
-					}
-				});
+	$.ajax({
+		type: "POST",
+		url: "./check_license.php",
+		data: "licensekey=" + licensekey + '&version=<?php echo $INSTALL["version"]; ?>&lang=<?php echo $_SESSION['language']; ?>',
+		dataType: "json",
+		success: function(data) {
+			if (data.result == 'no') {
+				$("#error_msg").text(data.error);
+				$(".btn-primary").attr("disabled", "disabled");
+			} else {
+				$("#error_msg").text('');
+				$('.btn-primary').removeAttr("disabled");
 			}
-		});		
+		}
 	});
-});			
+});
 	
 </script>
 <form role="form" action="?" method="post">
@@ -540,8 +534,7 @@ $(document).ready(function(){
 					<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO"><span id="error_msg"></span>
 
 			</div>			
-		</div>
-	</fieldset>	
+	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
 		<input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
@@ -549,8 +542,7 @@ $(document).ready(function(){
 </form> 
 <?php
 
-}
-else if ($INSTALL['step'] == 3){
+} elseif ($INSTALL['step'] == 3){
 
 	/*********
 	  Step 3
@@ -580,7 +572,6 @@ else if ($INSTALL['step'] == 3){
 				</label>
 
 			</div>	
-		</div>
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary"  value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" disabled="disabled"/>
@@ -589,8 +580,7 @@ else if ($INSTALL['step'] == 3){
 </form>
 <?php
 
-}
-else if ($INSTALL['step'] == 4){
+} elseif ($INSTALL['step'] == 4) {
 
 	/*********
 	  Step 4
@@ -604,9 +594,10 @@ else if ($INSTALL['step'] == 4){
     $check["php_mysql"] = extension_loaded("mysql");
     $check["php_mbstring"] = extension_loaded("mbstring");
 	$check["php_iconv"] = extension_loaded("iconv");
-	$check["php_zip"] = extension_loaded("zip");	
-	
-    if (ini_get('register_globals') == 1) {
+	$check["php_zip"] = extension_loaded("zip");
+	$check["php_curl"] = extension_loaded("curl");
+
+if (ini_get('register_globals') == 1) {
 	
 ?>
 <div class="alert alert-warning"> <a class="close" href="#" data-dismiss="alert">×</a>
@@ -654,6 +645,10 @@ else if ($INSTALL['step'] == 4){
 			   <tr>
 				  <td width="250">Zip</td>
 				  <td><strong><?php echo $check["php_zip"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+			  </tr>
+			  <tr>
+				  <td width="250">cURL</td>
+				  <td><strong><?php echo $check["php_curl"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
 			  </tr>
 			</tbody>
           </table>
@@ -717,7 +712,7 @@ else if ($INSTALL['step'] == 5){
         </div>
         <?php
 
-    } else if($INSTALL['type'] == 'clear'){
+    } elseif ($INSTALL['type'] == 'clear'){
 	
 ?>
         <h4><?php echo $INSTALL["lang"]["str"]["install"]; ?></h4>
@@ -825,7 +820,7 @@ else if ($INSTALL['step'] == 5){
       </form>
 <?php
 
-} else if($INSTALL['step'] == 7) {
+} elseif ($INSTALL['step'] == 7) {
 
 ?>
       <fieldset>
@@ -844,7 +839,7 @@ else if ($INSTALL['step'] == 5){
 					</div>
 
 				</div>
-					<footer> <?php echo "".$INSTALL["lang"]["str"]["logo"].", ".$INSTALL["lang"]["str"]["author"]."" ?> </footer>
+			<footer> <?php echo "".$INSTALL["lang"]["str"]["logo"].", ".$INSTALL["lang"]["str"]["author"]."" ?> </footer>
 
 			</div>
 
@@ -853,25 +848,6 @@ else if ($INSTALL['step'] == 5){
 	</div>
 </div>
 </div>
-
-<script src="./templates/assets/vendor/jquery/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="./templates/assets/vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- DataTables JavaScript -->
-<script src="./templates/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="./templates/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="./templates/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="./templates/assets/dist/js/sb-admin-2.js"></script>
-
-
-
 </body>
 </html>
 <?php

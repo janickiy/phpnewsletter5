@@ -213,12 +213,12 @@ class Model_ajax extends Model
 
 			if (core::getSetting('smtp_secure') == 'ssl')
 				$m->SMTPSecure  = 'ssl';
-			else if(core::getSetting('smtp_secure') == 'tls')
+			elseif (core::getSetting('smtp_secure') == 'tls')
 				$m->SMTPSecure  = 'tls';
 
 			if (core::getSetting('smtp_aut') == 'plain')
 				$m->AuthType = 'PLAIN';
-			else if (core::getSetting('smtp_aut') == 'cram-md5')
+			elseif (core::getSetting('smtp_aut') == 'cram-md5')
 				$m->AuthType = 'CRAM-MD5';
 
 			$m->Timeout = $settings['smtp_timeout'];
@@ -256,7 +256,7 @@ class Model_ajax extends Model
 
 		if ($prior == 1)
 			$m->Priority = 1;
-		else if ($prior == 2)
+		elseif ($prior == 2)
 			$m->Priority = 2;
 		else
 			$m->Priority = 3;
@@ -282,9 +282,9 @@ class Model_ajax extends Model
 
 		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
-		else if(core::getSetting('precedence') == 'junk')
+		elseif (core::getSetting('precedence') == 'junk')
 			$m->addCustomHeader("Precedence: junk");
-		else if(core::getSetting('precedence') == 'list')
+		elseif (core::getSetting('precedence') == 'list')
 			$m->addCustomHeader("Precedence: list");
 		if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
 		if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
@@ -295,8 +295,7 @@ class Model_ajax extends Model
 		if (core::getSetting('show_unsubscribe_link') == "yes" && !empty(core::getSetting('unsublink'))) {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
-		}
-		else $msg = $body;
+		} else $msg = $body;
 
 		$msg = str_replace('%NAME%', $user, $msg);
 		$msg = str_replace('%UNSUB%', $UNSUB, $msg);
@@ -314,8 +313,7 @@ class Model_ajax extends Model
 		if (!$m->Send()){
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return false;
-		}
-		else{
+		} else {
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return true;
 		}

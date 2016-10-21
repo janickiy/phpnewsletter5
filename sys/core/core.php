@@ -23,6 +23,7 @@ class core
     public static $tpl = NULL;
     public static $path = NULL;
     public static $session = NULL;
+    protected static $licensekey = NULL;
 
     /**
      * Check if self::init() has been called
@@ -32,11 +33,6 @@ class core
 
     static public function isInit()
     {
-        if (self::checkLicense() === false){
-            header('Location: ./?t=expired');
-            exit();
-        }
-
         return self::$_init;
     }
 
@@ -94,6 +90,25 @@ class core
             if (is_file($lib))
                 require_once $lib;
         }
+
+        self::$licensekey = self::getLicensekey();
+
+        if (self::checkLicense() === false){
+            header('Location: ./?t=expired');
+            exit();
+        }
+    }
+
+    static public function getLicensekey()
+    {
+        global $ConfigDB;
+
+        $db = new DB($ConfigDB);
+        $query = "SELECT * FROM " . $db->getTableName('licensekey') . "";
+        $result = $db->querySQL($query);
+        $row = $db->getRow($result);
+
+        return $row['licensekey'];
     }
 
     static public function getTemplate()
@@ -184,7 +199,7 @@ class core
 
     static public function strToHex($string)
     {
-        $hexv = '';
+        $hex = '';
         for ($i = 0; $i < strlen($string); $i++) {
             $hex .= dechex(ord($string[$i]));
         }
@@ -217,36 +232,49 @@ class core
     static public function checkLicense()
     {
         $result = true;
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+
         if (file_exists(SYS_ROOT . self::$license_path)) {
+
             $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
 
-            if ($lisense_info['license_type'] == 'demo' && $_SERVER["SERVER_NAME"] == $lisense_info['domain'] && $_REQUEST['t'] != 'expired') {
+            if ($lisense_info['domain'] != $domain) {
+                self::makeLicensekey();
+            }
+
+            if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && (isset($_REQUEST['t']) and $_REQUEST['t'] != 'expired')) {
                 if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
                     return false;
                 }
             }
         } else {
-            $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url), true);
-
-            $arr = array();
-            $arr['domain'] = $_SERVER["SERVER_NAME"];
-            $arr['license_type'] = $lisense_info['license_type'];
-            $arr['created'] = $lisense_info['created'];
-            $arr['date_from'] = $lisense_info['date_from'];
-            $arr['date_to'] = $lisense_info['date_to'];
-
-            $encodeStr = self::encodeStr(json_encode($arr));
-
-            $f = fopen(SYS_ROOT . self::$license_path, "w");
-
-            if (fwrite($f, $encodeStr) === false) {
-                throw new Exception('Error: can not create ' . self::$license_path  . '! PLease check the permissions (chmod)');
-            }
-
-            fclose($f);
+            self::makeLicensekey();
         }
 
         return $result;
+    }
+
+    static public function makeLicensekey()
+    {
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?licensekey=' . self::$licensekey.'&domain=' . $domain . ''), true);
+
+        $arr = array();
+        $arr['domain'] = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+        $arr['license_type'] = $lisense_info['license_type'];
+        $arr['created'] = $lisense_info['date_created'];
+        $arr['date_from'] = $lisense_info['date_active_from'];
+        $arr['date_to'] = $lisense_info['date_active_to'];
+
+        $encodeStr = self::encodeStr(json_encode($arr));
+
+        $f = fopen(SYS_ROOT . self::$license_path, "w");
+
+        if (fwrite($f, $encodeStr) === false) {
+            throw new Exception('Error: can not create ' . self::$license_path  . '! Please check the permissions (chmod)');
+        }
+
+        fclose($f);
     }
 
     static public function getLicenseInfo($filename)

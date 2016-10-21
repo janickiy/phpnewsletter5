@@ -415,6 +415,9 @@ $language["error"]["trial_license_has_expired"] = 'Trial license has expired. To
 $language["error"]["invalid_license"] = 'The license key is invalid. To continue to use this application you must buy a license key. <a href="%BUY_LICENSE_LINK%" target="_blank">Buy a license key</a>';
 $language["error"]['login_isnt_entered'] = "Login is not entered!";
 $language["error"]['login_already_exists'] = "This login already exists! Please enter another login";
+$language["error"]["error_checking_license"] = "Error checking license! Server is not available.";
+$language["error"]["license_is_used"] = "This license key is already in use!";
+$language["error"]["license_not_found"] = "The licensekey not found!";
 
 //menu
 $language["menu"]["templates_title"] = "Email Templates";

@@ -55,6 +55,10 @@ $INSTALL["lang"]["error"]["invalid_confirm_apass"] = "Пароль админи�
 $INSTALL["lang"]["error"]["setting_product"] = "Ошибка при настройке продукта!";
 $INSTALL["lang"]["error"]["wrong_license_key"] = "Ошибка: неверный лицензионный ключ!";
 $INSTALL["lang"]["error"]["enter_login"] = "Введите логин администратора!";
+$INSTALL["lang"]["error"]["error_checking_license"] = "Ошибка проверки лицензии! Сервер недоступен.";
+$INSTALL["lang"]["error"]["license_is_used"] = "Этот лицензионный ключ уже используется!";
+$INSTALL["lang"]["error"]["license_not_found"] = "Лицензионный ключ не найден";
+
 $INSTALL["lang"]["warning"]["detect_last_version"] = "Обнаружена последняя версия PHP Newsletter %VERSION%.";
 $INSTALL["lang"]["warning"]["detect_old_version"] = "Обнаружена старая версия PHP Newsletter %VERSION%.";
 $INSTALL["lang"]["warning"]["register_globals_on"] = "Включена потенциально опасная опция PHP register_globals! Рекомендуем отключить её в целях безопасности.";

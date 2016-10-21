@@ -9,36 +9,45 @@
  ********************************************/
 
 $licensekey = trim(strtolower($_REQUEST['licensekey']));
+
+if ($_REQUEST['lang'])
+	$lang_file = $_REQUEST['lang'] . '.php';
+else
+	$lang_file = "en.php";
+
+if (file_exists($lang_file)) include $lang_file;
+
 $version = $_REQUEST['version'];
 	
-$headers = "GET /scripts/check_licensekey.php?licensekey=" . $licensekey . "&domain=" . $_SERVER['SERVER_NAME'] . "&version=" . $version . " HTTP/1.1\r\n";
-$headers .= "Host: janicky.com\r\n";
-$headers .= "Accept: */*\r\n";
-$headers .= "Accept-Charset: utf-8;q=0.7,*;q=0.7\r\n";
-$headers .= "Connection: Close\r\n\r\n";	
+$domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
+$url = 'http://site3.ru/check_licensekey.php?licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . $version . '';
 
-$str = '';
-		
-$fp = @fsockopen('janicky.com', 80, $errno, $errstr, 30);
+$ch = curl_init();
 
-fwrite($fp, $headers);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_URL, $url);
 
-while (!feof($fp))
-{
-	$str .= fgets($fp, 1024);
-}		
+$data = curl_exec($ch);
+curl_close($ch);
 
-preg_match("/<result>([^<]+)<\/result>/i", $str, $out);
+$content = array();
 
-header('Content-Type: application/xml; charset=utf-8');
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-echo "<document>\n";
-	
-if($out[1] == 'yes'){
-	echo "<result>yes</result>";
-}
-else{
-	echo "<result>no</result>";
-}		
-	
-echo "</document>";
+if ($data) {
+	$arr = json_decode($data, true);
+
+	if (isset($arr['error'])) $arr['error'] = str_replace('LICENSE_IS_USED', $INSTALL["lang"]["error"]["license_is_used"], $arr['error']);
+	if (isset($arr['error']))  $arr['error'] = str_replace('LICENSE_NOT_FOUND', $INSTALL["lang"]["error"]["license_not_found"], $arr['error']);
+
+	if ($arr['result'] == 'yes')
+		$content = array('result' => 'yes');
+	else
+		$content = array('result' => 'no', 'error' => $arr['error']);
+} else $content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+
+
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Content-Type: application/json');
+echo json_encode($content);
+exit();

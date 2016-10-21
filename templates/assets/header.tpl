@@ -26,7 +26,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
-			dataType: 'json',
 			cache: false,
 			url: './?t=ajax&action=alert_update',
 			dataType: "json",

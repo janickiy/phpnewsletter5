@@ -12,6 +12,7 @@
 		<!-- END row -->
 	</ul>
 </div>
+<!-- END show_errors -->
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#start_update").on("click", function(){
