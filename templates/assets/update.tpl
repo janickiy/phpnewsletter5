@@ -81,10 +81,12 @@ function updateBD()
 
 </script>
 <div class="span12">
-	<!-- IF '${MSG_NO_UPDATES}' == '' -->
-	<div id="btn_refresh"><a id="start_update" class="btn btn-outline btn-default" href="#"> <i class="icon-refresh"></i> ${BUTTON_UPDATE} </a> </div>
-	<!-- ELSE -->
-	${MSG_NO_UPDATES}
+	<!-- IF '${BUTTON_UPDATE}' != '' -->
+	<div id="btn_refresh"><a id="start_update" class="btn btn-outline btn-default" href="#"><i class="fa fa-refresh"></i> ${BUTTON_UPDATE} </a></div>
+	<!-- END IF -->
+
+	<!-- IF '${MSG_NO_UPDATES}' != '' -->
+	<a class="btn btn-outline btn-default" disabled><i class="fa fa-refresh"></i> ${MSG_NO_UPDATES}</a>
 	<!-- END IF -->
 </div>
 <form action="${ACTION}" method="post">

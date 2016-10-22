@@ -75,16 +75,17 @@ $tpl->assign('INFO_ALERT', core::getLanguage('info', 'update'));
 
 include_once core::pathTo('extra', 'top.php');
 
+
 if ($update->checkNewVersion() && $update->checkTree()){
 	$button_update = core::getLanguage('button', 'update');
 	$button_update = str_replace('%NEW_VERSION%', $newversion, $button_update);
 	$button_update = str_replace('%SCRIPT_NAME%', core::getLanguage('script', 'name'), $button_update);
 	$tpl->assign('BUTTON_UPDATE', $button_update);
 } else {
-	$no_updates = core::getLanguage('button', 'no_updates');
+	$no_updates = core::getLanguage('msg', 'no_updates');
 	$no_updates = str_replace('%SCRIPT_NAME%', core::getLanguage('script', 'name'), $no_updates);
 	$no_updates = str_replace('%NEW_VERSION%', VERSION, $no_updates);
-	$tpl->assign('MSG_NO_UPDATES', $no_updates);
+	$tpl->assign('MSG_NO_UPDATES', core::getLanguage('str', 'no_updates'));
 }
 
 //menu
