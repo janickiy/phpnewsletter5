@@ -80,6 +80,13 @@ function updateBD()
 }	
 
 </script>
+<div class="span12">
+	<!-- IF '${MSG_NO_UPDATES}' == '' -->
+	<div id="btn_refresh"><a id="start_update" class="btn btn-outline btn-default" href="#"> <i class="icon-refresh"></i> ${BUTTON_UPDATE} </a> </div>
+	<!-- ELSE -->
+	${MSG_NO_UPDATES}
+	<!-- END IF -->
+</div>
 <form action="${ACTION}" method="post">
 	<input type="hidden" name="action" value="post">
 	<div class="form-group">
