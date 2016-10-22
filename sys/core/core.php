@@ -236,7 +236,7 @@ class core
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
 
         if (file_exists(SYS_ROOT . self::$license_path)) {
-            $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+            $lisense_info = self::getLicenseInfo();
 
             if ($lisense_info['domain'] != $domain) {
                 self::makeLicensekey();
@@ -253,6 +253,8 @@ class core
 
         return $result;
     }
+
+
 
     static public function updateLicensekey($licensekey)
     {
@@ -291,11 +293,11 @@ class core
         }
     }
 
-    static public function getLicenseInfo($filename)
+    static public function getLicenseInfo()
     {
-        if (file_exists($filename)) {
-            $handle = fopen($filename, "r");
-            $contents = fread($handle, filesize($filename));
+        if (file_exists(SYS_ROOT . self::$license_path)) {
+            $handle = fopen(SYS_ROOT . self::$license_path, "r");
+            $contents = fread($handle, filesize(SYS_ROOT . self::$license_path));
             fclose($handle);
 
             return json_decode(self::decodeStr($contents), true);

@@ -88,6 +88,7 @@ $language["title"]["page500"] = 'Ошибка сервера 500';
 
 $language["title_page"]["expired"] = 'Срок действия лицензионного ключа истек';
 $language["title"]["expired"] = 'Срок действия лицензионного ключа истек';
+$language["info"]["expired"] = '';
 
 $language["title_page"]["change_password"] = 'Смена пароля';
 $language["title"]["change_password"] = 'Смена пароля';
@@ -329,6 +330,8 @@ $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
 $language["str"]['required_fields'] = "обязательные поля";
 $language["str"]["dont_have_permission_to_access"] = "У вас нет разрешения для просмотра этого раздела";
+$language["str"]["demo_version_has_expired"] = '<p>Срок действия демо-версии истек. Чтобы пользоваться приложением приобретите лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
+$language["str"]["licensekey_has_expired"] = '<p>Срок действия лицензионного ключа истек. Чтобы пользоваться приложением приобретите новый лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";

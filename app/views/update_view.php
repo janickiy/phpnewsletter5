@@ -75,7 +75,6 @@ $tpl->assign('INFO_ALERT', core::getLanguage('info', 'update'));
 
 include_once core::pathTo('extra', 'top.php');
 
-
 if ($update->checkNewVersion() && $update->checkTree()){
 	$button_update = core::getLanguage('button', 'update');
 	$button_update = str_replace('%NEW_VERSION%', $newversion, $button_update);
