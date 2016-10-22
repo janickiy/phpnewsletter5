@@ -4,6 +4,11 @@
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success">
+  <button class="close" data-dismiss="alert">×</button>
+  ${MSG_ALERT} </div>
+<!-- END IF -->
 <!-- BEGIN show_errors -->
 <div class="alert alert-danger alert-dismissable">
   <button class="close" aria-hidden="true" data-dismiss="alert">×</button>

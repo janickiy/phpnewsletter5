@@ -14,6 +14,12 @@
   </ul>
 </div>
 <!-- END show_errors -->
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
+</div>
+<!-- END IF -->
 <form action="${ACTION}" target=_blank method="post">
   <div class="form-group">
     <label for="export_type">${STR_EXPORT}</label>

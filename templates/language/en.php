@@ -370,12 +370,15 @@ $language["msg"]["no_updates"] = "There are no updates at this time. You already
 $language["msg"]["php_doesnt_support_unzip_func"] = "Error: Your PHP version does not support unzip functionality";
 $language["msg"]["files_unzipped_successfully"] = "Files unzipped successfully";
 $language["msg"]["directory_not_writeable"] = "Error: Directory not writeable by webserver";
-$language["msg"]["has_no_zlib_support_enabled"] = "Error: Your PHP has no zlib support enabled";
+$language["msg"]["no_zlib_support_enabled"] = "Error: Your PHP has no zlib support enabled";
 $language["msg"]["cannot_read_zip_archive"] = "Error: Cannot read .zip archive";
 $language["msg"]["error_unzipping_file"] = "Error unzipping file";
 $language["msg"]["update_not_available"] = "Update is not available";
 $language["msg"]["update_completed"] = "Update is completed.";
 $language["msg"]["account_removed"] = "Account has been removed";
+$language["msg"]["demo_version_will_expire"] = 'Duration of the demo version will expire in %DAYS% days';
+$language["msg"]["cannt_create_licensekey_file"] = "Error: can not create the  licensekey file sys/license_key! Please check the permissions (CHMOD) for index.php";
+$language["msg"]["error_check_licensekey"] = "Error checking licensekey";
 
 $language["subject"]["notification_newuser"] = 'Registered new subscriber';
 $language["subject"]["subscription"] = "Subscribe to Newsletter";
@@ -417,7 +420,8 @@ $language["error"]['login_isnt_entered'] = "Login is not entered!";
 $language["error"]['login_already_exists'] = "This login already exists! Please enter another login";
 $language["error"]["error_checking_license"] = "Error checking license! Server is not available.";
 $language["error"]["license_is_used"] = "This license key is already in use!";
-$language["error"]["license_not_found"] = "The licensekey not found!";
+$language["error"]["license_not_found"] = "The license key not found!";
+$language["error"]["enter_licensekey"] = "Enter the license key!";
 
 //menu
 $language["menu"]["templates_title"] = "Email Templates";

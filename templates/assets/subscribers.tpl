@@ -47,7 +47,12 @@ function PnumberChange()
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
-
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
+</div>
+<!-- END IF -->
 <div class="row">
   <div class="col-lg-12">
     <div class="BtnPanelIcon">

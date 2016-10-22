@@ -156,8 +156,7 @@
 
 		if (m == 0) {
 			saveResult('${ALERT_MALING_NOT_SELECTED}');
-		}
-		else{
+		} else {
 			if(show == false) $('#timer1').text('00:00:00');
 
 			$('#timer2').text('00:00:00');

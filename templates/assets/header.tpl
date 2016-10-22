@@ -132,11 +132,27 @@
 		<!-- /.row -->
 		<div class="row">
 			<div class="col-lg-12">
+				<!-- IF '${SYS_ERROR_MSG}' != '' -->
+				<div class="alert alert-danger alert-dismissable" id="alert_error_block">
+					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+					<h4 class="alert-heading">${STR_ERROR}!</h4>
+					<span>${SYS_ERROR_MSG}</span>
+				</div>
+				<!-- END IF -->
 				<div class="alert alert-danger alert-dismissable" id="alert_error_block" style="display:none;">
 					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 					<h4 class="alert-heading">${STR_ERROR}!</h4>
-					<span id="alert_error_msg">${PAGE_ALERT_ERROR_MSG}</span> </div>
+					<span id="alert_error_msg">${PAGE_ALERT_ERROR_MSG}</span>
+				</div>
+				<!-- IF '${ALERT_EXPIRE_LICENSE_MSG}' != '' -->
+				<div class="alert alert-warning alert-dismissable">
+					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+					<h4 class="alert-heading">${STR_WARNING}!</h4>
+					<span>${ALERT_EXPIRE_LICENSE_MSG}</span>
+				</div>
+				<!-- END IF -->
 				<div class="alert alert-warning alert-dismissable" id="alert_msg_block" style="display:none;">
 					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 					<h4 class="alert-heading">${STR_WARNING}!</h4>
-					<span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span> </div>
+					<span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span>
+				</div>

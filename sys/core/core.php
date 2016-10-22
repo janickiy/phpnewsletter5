@@ -24,6 +24,7 @@ class core
     public static $path = NULL;
     public static $session = NULL;
     protected static $licensekey = NULL;
+    public static $system_error = NULL;
 
     /**
      * Check if self::init() has been called
@@ -235,7 +236,6 @@ class core
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
 
         if (file_exists(SYS_ROOT . self::$license_path)) {
-
             $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
 
             if ($lisense_info['domain'] != $domain) {
@@ -254,36 +254,53 @@ class core
         return $result;
     }
 
+    static public function updateLicensekey($licensekey)
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+
+        if (file_exists(SYS_ROOT . self::$license_path) || $lisense_info['licensekey'] != $licensekey) {
+           self::makeLicensekey();
+        }
+    }
+
     static public function makeLicensekey()
     {
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
-        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?licensekey=' . self::$licensekey.'&domain=' . $domain . ''), true);
+        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
 
-        $arr = array();
-        $arr['domain'] = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
-        $arr['license_type'] = $lisense_info['license_type'];
-        $arr['created'] = $lisense_info['date_created'];
-        $arr['date_from'] = $lisense_info['date_active_from'];
-        $arr['date_to'] = $lisense_info['date_active_to'];
+        if (!isset($lisense_info['error'])) {
+            $arr = array();
+            $arr['domain'] = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+            $arr['license_type'] = $lisense_info['license_type'];
+            $arr['licensekey'] = self::$licensekey;
+            $arr['created'] = $lisense_info['date_created'];
+            $arr['date_from'] = $lisense_info['date_active_from'];
+            $arr['date_to'] = $lisense_info['date_active_to'];
 
-        $encodeStr = self::encodeStr(json_encode($arr));
+            $encodeStr = self::encodeStr(json_encode($arr));
 
-        $f = fopen(SYS_ROOT . self::$license_path, "w");
+            $f = fopen(SYS_ROOT . self::$license_path, "w");
 
-        if (fwrite($f, $encodeStr) === false) {
-            throw new Exception('Error: can not create ' . self::$license_path  . '! Please check the permissions (chmod)');
+            if (fwrite($f, $encodeStr) === false) {
+                self::$system_error = 'CANNT_CREATE_LICENSEKEY_FILE';
+            }
+
+            fclose($f);
+        } else {
+            self::$system_error = 'ERROR_CHECK_LICENSEKEY';
         }
-
-        fclose($f);
     }
 
     static public function getLicenseInfo($filename)
     {
-        if ($handle = fopen($filename, "r")) {
+        if (file_exists($filename)) {
+            $handle = fopen($filename, "r");
             $contents = fread($handle, filesize($filename));
             fclose($handle);
 
             return json_decode(self::decodeStr($contents), true);
+        } else {
+            self::makeLicensekey();
         }
     }
 

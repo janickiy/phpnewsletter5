@@ -20,7 +20,7 @@ class Unzipper {
     {
         $this->zipfile = $zipfile;
 
-        if($this->zipfile != '') {
+        if(!empty($this->zipfile)) {
             self::extract($this->zipfile, $this->localdir);
         }
     }

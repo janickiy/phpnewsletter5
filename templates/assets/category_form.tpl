@@ -12,6 +12,11 @@
   </ul>
 </div>
 <!-- END show_errors -->
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success">
+  <button class="close" data-dismiss="alert">×</button>
+  ${MSG_ALERT} </div>
+<!-- END IF -->
 <form action="${ACTION}" method="post">
   <!-- IF '${ID_CAT}' != '' -->
   <input type="hidden" name="id_cat" value="${ID_CAT}">

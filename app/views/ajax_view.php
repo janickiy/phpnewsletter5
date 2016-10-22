@@ -102,11 +102,19 @@ switch (Core_Array::getGet('action'))
 			$result = $data->DownloadUpdate($path, $update->getUpdate());
 		}
 
-		if (Core_Array::getRequest('p') == 'update_files' && Auth::checkLicenseKey()) {
+		if (Core_Array::getRequest('p') == 'update_files') {
 			if (is_file($path)) {
 				$arc = new Unzipper($path);
 
-				$content['status'] = $arc::$status;
+				$status = self::$status;
+				$status = str_replace('UNZIP_FUNCTION_IS_NOT_SUPPORT', $language["msg"]["php_doesnt_support_unzip_func"], $status);
+				$status = str_replace('FILES_UNZIPPED_SUCCESSFULLY', $language["msg"]["files_unzipped_successfully"], $status);
+				$status = str_replace('DIRECTORY_NOT_WRITEABLE', $language["msg"]["directory_not_writeable"], $status);
+				$status = str_replace('CANNOT_READ_ZIP_ARCHIVE', $language["msg"]["cannot_read_zip_archive"], $status);
+				$status = str_replace('ZLIB_IS_NOT_SUPPORT', $language["msg"]["no_zlib_support_enabled"], $status);
+				$status = str_replace('FILES_UNZIPPED_SUCCESSFULLY', $language["msg"]["files_unzipped_successfully"], $status);
+				$status = str_replace('ERROR_UNZIPPING_FILE', $language["msg"]["error_unzipping_file"], $status);
+				$content['status'] = $status;
 				$content['result'] = $arc::$result;
 			}
 		}

@@ -568,11 +568,11 @@ class Pnl
             return TRUE;
     }
 
-    static public function file_get_contents_curl($url)
+    static public function file_get_contents_curl($url, $timeout = 10)
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -581,5 +581,27 @@ class Pnl
         curl_close($ch);
 
         return $data;
+    }
+
+    static public function sys_error_msg($msg)
+    {
+        $msg = str_replace('CANNT_CREATE_LICENSEKEY_FILE', core::getLanguage('msg', 'cannt_create_licensekey_file'), $msg);
+        $msg = str_replace('ERROR_CHECK_LICENSEKEY', core::getLanguage('msg', 'error_check_licensekey'), $msg);
+
+        return $msg;
+    }
+
+    static public function checkLicensekey($licensekey)
+    {
+        $domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
+        $url = 'http://site3.ru/check_licensekey.php?licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . VERSION . '';
+
+        $data = self::file_get_contents_curl($url, 5);
+
+        if ($data)  {
+            return json_decode($data, true);
+        } else {
+            return array('error' => 'ERROR_CHECKING_LICENSE');
+        }
     }
 }

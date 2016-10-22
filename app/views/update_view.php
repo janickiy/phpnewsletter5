@@ -30,10 +30,25 @@ $errors = array();
 if (Core_Array::getRequest('action')){
 	$license_key = trim(Core_Array::getPost('license_key'));
 
-	if ($data->updateLicenseKey($license_key))
-		$success_msg = core::getLanguage('msg', 'changes_added');
-	else
-		$errors[] = core::getLanguage('error', 'web_apps_error');
+	if (empty($license_key)) $errors[] = core::getLanguage('error', 'enter_licensekey');
+	if (!empty($license_key)) {
+		$arr = Pnl::checkLicensekey($license_key);
+		if (isset($arr['error'])) {
+			$arr['error'] = str_replace('LICENSE_IS_USED', core::getLanguage('error', 'license_is_used'), $arr['error']);
+			$arr['error'] = str_replace('LICENSE_NOT_FOUND', core::getLanguage('error', 'license_not_found'), $arr['error']);
+			$arr['error'] = str_replace('ERROR_CHECKING_LICENSE', core::getLanguage('error', 'error_checking_license'), $arr['error']);
+			$errors[] = $arr['error'];
+		}
+	}
+
+	if (empty($errors)) {
+		if ($data->updateLicenseKey($license_key)){
+			core::updateLicensekey($license_key);
+			$success_msg = core::getLanguage('msg', 'changes_added');
+		} else {
+			$errors[] = core::getLanguage('error', 'web_apps_error');
+		}
+	}
 }
 
 //alert
@@ -83,7 +98,7 @@ $tpl->assign('STR_START_UPDATE', core::getLanguage('str', 'start_update'));
 $tpl->assign('MSG_UPDATE_COMPLETED', core::getLanguage('msg', 'update_completed'));
 
 //value
-$tpl->assign('LICENSE_KEY', $data->getLicenseKey());
+$tpl->assign('LICENSE_KEY', Core_Array::getPost('license_key') ? $_POST['license_key'] : $data->getLicenseKey());
 
 //footer
 include_once core::pathTo('extra', 'footer.php');

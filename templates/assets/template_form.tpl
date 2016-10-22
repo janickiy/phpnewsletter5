@@ -30,6 +30,12 @@
   </ul>
 </div>
 <!-- END show_errors -->
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
+</div>
+<!-- END IF -->
 <script type="text/javascript">//<![CDATA[
   window.CKEDITOR_BASEPATH='./templates/js/ckeditor/';
   CKEDITOR.lang.languages={"${LANGUAGE}":1};
