@@ -22,5 +22,4 @@ class Controller_subscribers extends Controller
 	{
 		$this->view->generate('subscribers_view.php', $this->model);
 	}
-	
 }

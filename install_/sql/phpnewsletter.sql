@@ -37,7 +37,9 @@ CREATE TABLE `%prefix%log` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%process` (
-  `process` enum('start','pause','stop') NOT NULL DEFAULT 'start'
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `process` enum('start','pause','stop') NOT NULL DEFAULT 'start',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `%prefix%ready_send` (

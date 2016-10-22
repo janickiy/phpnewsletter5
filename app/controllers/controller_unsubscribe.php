@@ -23,5 +23,3 @@ class Controller_unsubscribe extends Controller
 		$this->view->generate('unsubscribe_view.php',$this->model);
 	}
 }
-
-?>

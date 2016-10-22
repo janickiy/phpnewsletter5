@@ -7,6 +7,7 @@
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
  ********************************************/
+
 error_reporting(0);
 session_start();
 
