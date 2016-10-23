@@ -17,7 +17,7 @@ class core
     protected static $mainConfig = NULL;
     protected static $language = NULL;
     protected static $key = 'Rii73dg=4&8#!@9';
-    protected static $licensekey_url = 'http://site3.ru/licensekey.php';
+    protected static $licensekey_url = 'http://license.janicky.com';
     protected static $license_path = 'sys/license_key';
     public static $db = NULL;
     public static $tpl = NULL;
@@ -268,7 +268,7 @@ class core
     static public function makeLicensekey()
     {
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
-        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
+        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?t=licensekey&licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
 
         if (!isset($lisense_info['error'])) {
             $arr = array();

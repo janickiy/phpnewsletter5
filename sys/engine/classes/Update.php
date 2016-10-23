@@ -13,7 +13,7 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Update
 {
 	private $language;
-	private $url = 'http://site3.ru/';
+	private $url = 'http://license.janicky.com/';
 	private $currenversion;
 
 	public function __construct($language, $currenversion)
@@ -40,7 +40,7 @@ class Update
 
 	public function getUrlInfo()
 	{
-		return $this->url . '?s=newsletter&version=' . $this->currenversion . '&lang=' . $this->language;
+		return $this->url . '?id=1&version=' . $this->currenversion . '&lang=' . $this->language;
 	}
 
 	public function getDataNewVersion($url)

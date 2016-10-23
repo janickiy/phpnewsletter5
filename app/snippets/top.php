@@ -21,5 +21,11 @@ $tpl->assign('MAILING_STATUS', Mailing::getCurrentMailingStatus(Auth::getAutId()
 $tpl->assign('LANGUAGE', core::getSetting("language"));
 $tpl->assign('ACCOUNT_LOGIN', $autInfo['login']);
 $tpl->assign('ACCOUNT_ROLE', $autInfo['role']);
-$tpl->assign('ALERT_EXPIRE_LICENSE_MSG', core::expired_day_count() >= 0 ? str_replace('%DAYS%', core::expired_day_count(),  core::getLanguage('msg', 'demo_version_will_expire')) : '');
 $tpl->assign('SYS_ERROR_MSG', !empty(core::$system_error) ? Pnl::sys_error_msg(core::$system_error) : '');
+
+if (core::expired_day_count() > 0)
+    $alert_expire_license_msg = str_replace('%DAYS%', core::expired_day_count(),  core::getLanguage('msg', 'demo_version_will_expire'));
+elseif (core::expired_day_count() == 0)
+    $alert_expire_license_msg = core::getLanguage('msg', 'demo_version_will_expire_today');
+
+if (isset($alert_expire_license_msg)) $tpl->assign('ALERT_EXPIRE_LICENSE_MSG', $alert_expire_license_msg);

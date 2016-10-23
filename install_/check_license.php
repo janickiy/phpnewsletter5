@@ -20,7 +20,7 @@ if (file_exists($lang_file)) include $lang_file;
 $version = $_REQUEST['version'];
 	
 $domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
-$url = 'http://site3.ru/check_licensekey.php?licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . $version . '';
+$url = 'http://license.janicky.com/?t=check_licensekey&licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . $version . '';
 
 $ch = curl_init();
 
