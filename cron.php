@@ -8,7 +8,7 @@
  * Skype: janickiy
  ********************************************/
 
-//Error_Reporting(0);
+Error_Reporting(0);
 
 set_time_limit(0);
 
@@ -100,21 +100,19 @@ if ($result_send->num_rows > 0){
 			
 		if ($settings['smtp_secure'] == 'ssl')
 			$m->SMTPSecure  = 'ssl';
-		else if ($settings['smtp_secure'] == 'tls')
+		elseif ($settings['smtp_secure'] == 'tls')
 			$m->SMTPSecure  = 'tls';
 				
 		if ($settings['smtp_aut'] == 'plain')
 			$m->AuthType = 'PLAIN';
-		else if ($settings['smtp_aut'] == 'cram-md5')
+		elseif ($settings['smtp_aut'] == 'cram-md5')
 			$m->AuthType = 'CRAM-MD5';
 		
 		$m->Timeout = $settings['smtp_timeout'];
-	}
-	else if($settings['how_to_send'] == 3 and !empty($settings['sendmail'])){
+	} elseif ($settings['how_to_send'] == 3 and !empty($settings['sendmail'])){
 		$m->IsSendmail();
 		$m->Sendmail = $settings['sendmail'];
-	}
-	else{
+	} else {
 		$m->IsMail();
 	}
 
@@ -123,7 +121,7 @@ if ($result_send->num_rows > 0){
 		
 		if ($send['prior'] == "1")
 			$m->Priority = 1;
-		else if ($send['prior'] == "2")
+		elseif ($send['prior'] == "2")
 			$m->Priority = 5;
 		else $m->Priority = 3;
 
@@ -143,9 +141,9 @@ if ($result_send->num_rows > 0){
 			
 		if ($settings['interval_type'] == 'm')
 			$interval = "AND (time_send < NOW() - INTERVAL '" . $settings['interval_number'] . "' MINUTE)";
-		else if ($settings['interval_type'] == 'h')
+		elseif ($settings['interval_type'] == 'h')
 			$interval = "AND (time_send < NOW() - INTERVAL '" . $settings['interval_number'] . "' HOUR)";
-		else if ($settings['interval_type'] == 'd')
+		elseif ($settings['interval_type'] == 'd')
 			$interval = "AND (time_send < NOW() - INTERVAL '" . $settings['interval_number'] . "' DAY)";
 		else  
 			$interval = '';
@@ -187,7 +185,6 @@ if ($result_send->num_rows > 0){
 					
 			$m->Subject = $subject;		
 		
-			if (getStatusProcess($ConfigDB) == 'stop' OR getStatusProcess($ConfigDB) == 'pause') break;
 			if ($settings['sleep'] && $settings['sleep'] > 0) sleep($settings['sleep']);
 			if (!empty($settings['organization'])) $m->addCustomHeader("Organization: " . $settings['organization'] . "");
 			if (!empty($settings['path'])) $IMG = '<img border="0" src="' . $settings['path'] . '?t=pic&id_user=' . $user['id'] . '&id_template=' . $send['id_template'] . '" width="1" height="1">';
@@ -201,9 +198,9 @@ if ($result_send->num_rows > 0){
 
 			if ($settings['precedence'] == 'bulk')
 				$m->addCustomHeader("Precedence: bulk");
-			else if ($settings['precedence'] == 'junk')
+			elseif ($settings['precedence'] == 'junk')
 				$m->addCustomHeader("Precedence: junk");
-			else if ($settings['precedence'] == 'list')
+			elseif ($settings['precedence'] == 'list')
 				$m->addCustomHeader("Precedence: list");				
 				
 			$UNSUB = "http://".$_SERVER["SERVER_NAME"]. Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
@@ -212,8 +209,8 @@ if ($result_send->num_rows > 0){
 			if ($settings['show_unsubscribe_link'] == "yes" && !empty($settings['unsublink'])) {
 				$msg = "".$send['body']."<br><br>" . $unsublink . "";
 				$m->addCustomHeader("List-Unsubscribe: " . $UNSUB . "");
-			}
-			else $msg = $send['body'];				
+			} else
+				$msg = $send['body'];
 
 			$msg = str_replace('%NAME%', $user['name'], $msg);
 			$msg = str_replace('%UNSUB%', $UNSUB, $msg);
@@ -245,8 +242,7 @@ if ($result_send->num_rows > 0){
 				
 			if ($settings['content_type'] == 2){
 				$msg .= $IMG;
-			}
-			else{
+			} else {
 				$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
 				$msg = Pnl::remove_html_tags($msg);
 			}	
@@ -258,8 +254,7 @@ if ($result_send->num_rows > 0){
 				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`, `email`, `id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",'".$user['email']."',".$send['id_template'].",'no','".$errormsg."','no', NOW(),".$id_log.")";
 				$dbh->query($insert);
 				$mailcountno = $mailcountno + 1;
-			}
-			else{
+			} else {
 				$insert = "INSERT INTO " . $ConfigDB["prefix"] . "ready_send (`id_ready_send`,`id_user`, `email`, `id_template`,`success`,`errormsg`,`readmail`,`time`,`id_log`) VALUES (0,".$user['id'].",'".$user['email']."',".$send['id_template'].",'yes','','no', NOW(),".$id_log.")";
 				$dbh->query($insert);
 
@@ -275,22 +270,12 @@ if ($result_send->num_rows > 0){
 
 			if ($settings['make_limit_send'] == "yes" && $settings['limit_number'] == $mailcount){
 				if ($settings['how_to_send'] == 2) $m->SmtpClose();
-					
-				$update = "UPDATE " . $ConfigDB["prefix"] . "process SET process='stop'";
-
-				if (!$dbh->query($update)) exit('Error executing SQL query!');
-					
 				break;
 			}
 		}
 			
 		if ($settings['make_limit_send'] == "yes" && $settings['limit_number'] == $mailcount){
 			if ($settings['how_to_send'] == 2) $m->SmtpClose();
-				
-			$update = "UPDATE " . $ConfigDB["prefix"] . "process SET process='stop'";
-
-			if(!$dbh->query($update)) exit('Error executing SQL query!');
-
 			break;
 		}				
 	}
@@ -298,21 +283,4 @@ if ($result_send->num_rows > 0){
 
 $result_send->close();
 
-$update = "UPDATE ". $ConfigDB["prefix"] . "process SET process='stop'";
-
-if (!$dbh->query($update)) exit('Error executing SQL query!');
-
 $dbh->close();
-
-function getStatusProcess($ConfigDB)
-{
-	global $dbh;
-
-	$query = "SELECT * FROM ". $ConfigDB["prefix"] . "process";
-	
-	$result = $dbh->query($query);
-	
-	$row = $result->fetch_array();
-	
-	return $row['process'];
-}

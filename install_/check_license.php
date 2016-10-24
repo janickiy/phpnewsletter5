@@ -22,20 +22,25 @@ $version = $_REQUEST['version'];
 $domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
 $url = 'http://license.janicky.com/?t=check_licensekey&licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . $version . '';
 
-$ch = curl_init();
+$ch = curl_init($url);
 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 
 $data = curl_exec($ch);
+
 curl_close($ch);
+
+preg_match('/\{([^\}])+\}/',$data, $out);
 
 $content = array();
 
-if ($data) {
-	$arr = json_decode($data, true);
+if ($out[0]) {
+	$arr = json_decode($out[0], true);
 
 	if (isset($arr['error'])) $arr['error'] = str_replace('LICENSE_IS_USED', $INSTALL["lang"]["error"]["license_is_used"], $arr['error']);
 	if (isset($arr['error']))  $arr['error'] = str_replace('LICENSE_NOT_FOUND', $INSTALL["lang"]["error"]["license_not_found"], $arr['error']);
