@@ -224,7 +224,7 @@ if ($arr){
 	$rowBlock->assign('TABLE_ADDED', core::getLanguage('str', 'added'));
 	$rowBlock->assign('TABLE_STATUS', core::getLanguage('str', 'status'));
 	$rowBlock->assign('TABLE_ACTION', core::getLanguage('str', 'action'));
-	
+
 	foreach ($arr as $row) {
 		$columnBlock = $rowBlock->fetch('column');
 		$columnBlock->assign('STATUS_CLASS', $row['status'] == 'noactive' ? 'noactive' : '');

@@ -35,16 +35,16 @@ class Model_subscribers extends Model
                 $temp = strtok(" ");
             }
             
-            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
+            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format, usr.name AS name";
             core::database()->where = "WHERE " . $tmpl . "";
             core::database()->group = "GROUP BY id_user";
             core::database()->order = "ORDER BY name";
         } elseif (is_numeric($category)) {
             core::database()->tablename = "" . core::database()->getTableName('users') . " usr LEFT JOIN " . core::database()->getTableName('subscription') . " sub ON usr.id_user=sub.id_user";
             $_where = (isset($category) && $category > 0) ? "sub.id_cat=" . $category . " " : "1";
-            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
+            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format, usr.name AS name";
             core::database()->where = "WHERE " . $_where . " ";
-            core::database()->order = "ORDER BY name";
+            core::database()->order = "ORDER BY usr.name";
         } else {
             core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
             core::database()->order = "ORDER BY " . $strtmp . "";

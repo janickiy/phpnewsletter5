@@ -109,7 +109,7 @@ function PnumberChange()
       <!-- BEGIN column -->
       <tr <!-- IF '${STATUS_CLASS}' == 'noactive' -->class="danger"<!-- END IF -->>
         <td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${STR_CHECK_BOX}" value="${ID_USER}" name="activate[]"></td>
-        <td style="vertical-align: middle;"${NAME}</td>
+        <td style="vertical-align: middle;">${NAME}</td>
         <td style="vertical-align: middle;">${EMAIL}</td>
         <td style="vertical-align: middle;">${PUTDATE_FORMAT}</td>
         <td style="vertical-align: middle;"><a title="${PROMPT_IP_INFO}" href="./?t=whois&ip=${IP}">${IP}</a></td>
