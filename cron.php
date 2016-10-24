@@ -45,10 +45,6 @@ if (!$result) exit('Error executing SQL query!');
 $settings = $result->fetch_array();
 $result->close();
 
-$update = "UPDATE " . $ConfigDB["prefix"] . "process SET process='start'";
-
-if (!$dbh->query($update)) exit('Error executing SQL query!');
-
 $insert = "INSERT INTO " . $ConfigDB["prefix"] . "log (`id_log`, `time`) VALUES (0, NOW())";
 $result = $dbh->prepare($insert);
 	
