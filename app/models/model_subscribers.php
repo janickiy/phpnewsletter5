@@ -35,7 +35,7 @@ class Model_subscribers extends Model
                 $temp = strtok(" ");
             }
             
-            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format, usr.name AS name";
+            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
             core::database()->where = "WHERE " . $tmpl . "";
             core::database()->group = "GROUP BY id_user";
             core::database()->order = "ORDER BY name";

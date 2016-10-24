@@ -46,7 +46,7 @@ $tpl->assign('TITLE', core::getLanguage('title', 'add_category'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'add_category'));
 
 //error alert
-if (empty($errors)) {
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 
