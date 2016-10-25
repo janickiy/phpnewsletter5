@@ -23,5 +23,3 @@ class Controller_settings extends Controller
 		$this->view->generate('settings_view.php',$this->model);
 	}
 }
-
-?>

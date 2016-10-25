@@ -23,5 +23,3 @@ class Controller_subscribe extends Controller
 		$this->view->generate('subscribe_view.php',$this->model);
 	}
 }
-
-?>

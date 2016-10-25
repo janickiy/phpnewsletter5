@@ -47,7 +47,7 @@ function updateFiles()
 	$.ajax({
 		type: "GET",
 		cache: false,
-		url: "./?t=ajax&start_update&p=update_files",
+		url: "./?t=ajax&action=start_update&p=update_files",
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {
@@ -65,7 +65,7 @@ function updateBD()
 	$.ajax({
 		type: "GET",
 		cache: false,
-		url: "./?t=ajax&start_update&p=update_bd",
+		url: "./?t=ajax&action=start_update&p=update_bd",
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {

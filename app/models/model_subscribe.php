@@ -30,5 +30,3 @@ class Model_subscribe extends Model
         }
     }
 }
-
-?>

@@ -23,5 +23,3 @@ class Controller_edit_user extends Controller
 		$this->view->generate('edit_user_view.php', $this->model);
 	}
 }
-
-?>
