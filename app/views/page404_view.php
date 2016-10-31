@@ -19,6 +19,9 @@ session_write_close();
 
 $autInfo = Auth::getAutInfo($_SESSION['id']);
 
+echo core::checkLicense();
+exit;
+
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
