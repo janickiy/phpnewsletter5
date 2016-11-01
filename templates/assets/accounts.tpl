@@ -35,7 +35,7 @@
       <td>${ROLE}</td>
       <td>
         <!-- IF '${ALLOW_EDIT}' == 'yes' -->
-        <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="fa fa-edit"></i> ${STR_EDIT}</a> <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="fa fa-trash-o"></i> ${STR_REMOVE}</a>
+        <a class="btn btn-outline btn-default" title="${STR_EDIT}" href="./?t=edit_account&id=${ID}"><i class="fa fa-edit"></i></a> <a class="btn btn-outline btn-danger" title="${STR_REMOVE}" href="./?t=accounts&action=remove&id=${ID}"><i class="fa fa-trash-o"></i></a>
         <!-- END IF -->
       </td>
     </tr>

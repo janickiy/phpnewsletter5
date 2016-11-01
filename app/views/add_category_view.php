@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.1 beta
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -37,7 +37,9 @@ if (Core_Array::getRequest('action')){
 		if ($data->addNewCategory($fields)){
 			header("Location: ./?t=category");
 			exit();
-		} else $errors[] = core::getLanguage('error', 'no_category_added') ;
+		} else {
+			$errors[] = core::getLanguage('error', 'no_category_added');
+		}		
 	}
 }
 

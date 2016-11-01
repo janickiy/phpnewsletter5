@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.1 beta
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -94,7 +94,7 @@ class core
 
         self::$licensekey = self::getLicensekey();
 
-        if (self::checkLicense() === false){
+        if (self::checkLicense() == false && $_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
             header('Location: ./?t=expired');
             exit();
         }
@@ -235,26 +235,26 @@ class core
         $result = true;
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
 
-        if (file_exists(SYS_ROOT . self::$license_path)) {
-            $lisense_info = self::getLicenseInfo();
+		if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+			if (file_exists(SYS_ROOT . self::$license_path)) {
+				$lisense_info = self::getLicenseInfo();
 
-            if ($lisense_info['domain'] != $domain) {
-                self::makeLicensekey();
-            }
+				if ($lisense_info['domain'] != $domain) {
+					self::makeLicensekey();
+				}
 
-            if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && (isset($_REQUEST['t']) and $_REQUEST['t'] != 'expired')) {
-                if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
-                    return false;
-                }
-            }
-        } else {
-            self::makeLicensekey();
-        }
+				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && (isset($_REQUEST['t']) and $_REQUEST['t'] != 'expired')) {
+					if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
+						return false;
+					}
+				}
+			} else {
+				self::makeLicensekey();
+			}			
+		}       
 
         return $result;
     }
-
-
 
     static public function updateLicensekey($licensekey)
     {

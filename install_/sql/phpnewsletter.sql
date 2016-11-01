@@ -39,7 +39,7 @@ CREATE TABLE `%prefix%log` (
 CREATE TABLE `%prefix%process` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `process` enum('start','pause','stop') NOT NULL DEFAULT 'start',
-  `id_user` int(9) NOT NULL,
+  `id_user` int(9) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -107,7 +107,7 @@ CREATE TABLE `%prefix%settings` (
 CREATE TABLE `%prefix%subscription` (
   `id_sub` int(9) NOT NULL AUTO_INCREMENT,
   `id_user` int(9) DEFAULT NULL,
-  `id_cat` int(5) NOT NULL,
+  `id_cat` int(5) DEFAULT NULL,
   PRIMARY KEY (`id_sub`),
   KEY `id_cat` (`id_cat`),
   KEY `id_user` (`id_user`)
@@ -115,11 +115,11 @@ CREATE TABLE `%prefix%subscription` (
 
 CREATE TABLE `%prefix%template` (
   `id_template` int(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `body` mediumtext NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `body` mediumtext DEFAULT NULL,
   `prior` enum('1','2','3') NOT NULL DEFAULT '3',
-  `pos` int(7) NOT NULL,
-  `id_cat` int(7) NOT NULL,
+  `pos` int(7) DEFAULT NULL,
+  `id_cat` int(7) DEFAULT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id_template`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.1 beta
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -16,7 +16,7 @@ class Update
 	private $url = 'http://license.janicky.com/';
 	private $currenversion;
 
-	public function __construct($language, $currenversion)
+	public function __construct($language, $currenversion, $ip)
 	{
 		$this->language = $language;
 		$this->currenversion = $currenversion;
@@ -40,7 +40,7 @@ class Update
 
 	public function getUrlInfo()
 	{
-		return $this->url . '?id=1&version=' . $this->currenversion . '&lang=' . $this->language;
+		return $this->url . '?id=1&version=' . $this->currenversion . '&lang=' . $this->language . '&ip=' . $this->getIP();
 	}
 
 	public function getDataNewVersion($url)
@@ -49,6 +49,8 @@ class Update
 
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0); 
+		curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_URL, $url);
 
@@ -106,4 +108,19 @@ class Update
 		$out = $this->getDataNewVersion($this->getUrlInfo());
 		return $out['message'];
 	}
+	
+	public function getIP() {
+        if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+            $ip = getenv("HTTP_CLIENT_IP");
+        elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+            $ip = getenv("HTTP_X_FORWARDED_FOR");
+        elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+            $ip = getenv("REMOTE_ADDR");
+        elseif (! empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+            $ip = $_SERVER['REMOTE_ADDR'];
+        else
+            $ip = "unknown";
+
+        return ($ip);
+    }
 }

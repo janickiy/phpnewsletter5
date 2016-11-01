@@ -65,7 +65,7 @@ function PnumberChange()
 </div>
 <div class="row">
   <div class="col-lg-12">
-    <form class="form-inline" style="margin-bottom: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
+    <form class="form-inline" style="margin-bottom: 20px; margin-top: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
      <input type="hidden" name="t" value="subscribers">
        <div class="form-group">
        <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
@@ -93,7 +93,7 @@ function PnumberChange()
 <!-- END IF -->
 <!-- BEGIN row -->
 <form class="form-horizontal" action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 3){return confirm('${ALERT_CONFIRM_REMOVE}');}" method="post">
-  <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" border="0" cellspacing="0" cellpadding="0" width="100%">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <th width="10px"><input type="checkbox" title="${STR_CHECK_ALLBOX}" onclick="CheckAll_Activate(this,'activate[]');"></th>
@@ -114,7 +114,7 @@ function PnumberChange()
         <td style="vertical-align: middle;">${PUTDATE_FORMAT}</td>
         <td style="vertical-align: middle;"><a title="${PROMPT_IP_INFO}" href="./?t=whois&ip=${IP}">${IP}</a></td>
         <td style="vertical-align: middle;">${STR_STAT}</td>
-        <td style="vertical-align: middle;"><a class="btn btn-outline btn-default" href="./?t=edit_user&id_user=${ID_USER}" title="${STR_EDIT}"> <i class="fa fa-edit"></i>${STR_EDIT}</a> <a class="btn btn-outline btn-danger" href="./?t=subscribers&remove=${ID_USER}" title="${STR_REMOVE}"> <i class="fa fa-trash-o"></i> ${STR_REMOVE} </a>
+        <td style="vertical-align: middle;"><a class="btn btn-outline btn-default" href="./?t=edit_user&id_user=${ID_USER}" title="${STR_EDIT}"> <i class="fa fa-edit"></i></a> <a class="btn btn-outline btn-danger" href="./?t=subscribers&remove=${ID_USER}" title="${STR_REMOVE}"> <i class="fa fa-trash-o"></i></a>
 		</td>
       </tr>
       <!-- END column -->

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.1 beta
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -9,17 +9,6 @@
  ********************************************/
 
 defined('LETTER') || exit('NewsLetter: access denied.');
-
-// authorization
-Auth::authorization();
-
-session_write_close();
-
-$autInfo = Auth::getAutInfo(Auth::getAutId());
-
-echo core::expired_day_count();
-exit;
-
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");

@@ -73,13 +73,13 @@ $language["title_page"]["faq"] = 'FAQ';
 $language["title"]["faq"] = 'FAQ';
 $language["info"]["faq"] = "";
 
-$language["title_page"]["page403"] = '403 Forbidden';
-$language["title"]["page403"] = '403 Forbidden';
+$language["title_page"]["page403"] = 'Access denied';
+$language["title"]["page403"] = '403 Access denied';
 
-$language["title_page"]["page404"] = 'Page not found 404';
+$language["title_page"]["page404"] = 'Page not found';
 $language["title"]["page404"] = 'Page not found 404';
 
-$language["title_page"]["page500"] = 'Server error 500';
+$language["title_page"]["page500"] = 'Server error';
 $language["title"]["page500"] = 'Server error 500';
 
 $language["title_page"]["expired"] = 'License key has expired';

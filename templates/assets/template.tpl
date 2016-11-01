@@ -240,8 +240,7 @@
 						$('#timer2').text(timeleft);
 						onlinelogprocess();
 						setTimeout('getcoutprocess(id_log)', 2000);
-					}
-					else{ setTimeout('getcoutprocess()', 1000); }
+					} else{ setTimeout('getcoutprocess()', 1000); }
 				}
 			});
 		}
@@ -288,8 +287,7 @@
 		if (pausesend == false){
 			if (typesend == 1){
 				var url = "./?t=ajax&action=send&typesend=1";
-			}
-			else{
+			} else {
 				var url = "./?t=ajax&action=send&typesend=2";
 			}
 
@@ -304,8 +302,7 @@
 						$("#process").removeClass();
 						completed = data.completed;
 						completeProcess();
-					}
-					else{
+					} else {
 						setTimeout('process()', 3000);
 					}
 				}
@@ -339,15 +336,14 @@
 		for(var i = 0; i < oForm.elements.length; i++) {
 			var sParam = encodeURIComponent(oForm.elements[i].name);
 
-			if(sParam != ''){
-				if(oForm.elements[i].name == 'activate[]'){
-					if(oForm.elements[i].checked){
+			if (sParam != ''){
+				if (oForm.elements[i].name == 'activate[]'){
+					if (oForm.elements[i].checked){
 						var sParam = encodeURIComponent(oForm.elements[i].name);
 						sParam += "=";
 						sParam += encodeURIComponent(oForm.elements[i].value);
 					}
-				}
-				else{
+				} else {
 					var sParam = encodeURIComponent(oForm.elements[i].name);
 					sParam += "=";
 					sParam += encodeURIComponent(oForm.elements[i].value);
