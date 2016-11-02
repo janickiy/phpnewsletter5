@@ -30,7 +30,7 @@ if (Core_Array::getRequest('action')) {
 	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_subject');
 	if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 	
-	if (count($error) == 0) {
+	if (empty($errors)) {
 		$fields = array();
 		$fields['id_template'] = 0;
 		$fields['name'] = $name;
@@ -93,11 +93,11 @@ $tpl->assign('CONTENT', Core_Array::getPost('body'));
 $tpl->assign('ID_TEMPLATE', Core_Array::getPost('id_template'));
 
 if (Core_Array::getRequest('prior') == 1)
-	$tpl->assign('PRIOR1_CHECKED', 1);
+	$tpl->assign('PRIOR', 1);
 elseif (Core_Array::getRequest('prior') == 2)
-	$tpl->assign('PRIOR2_CHECKED', 2);
+	$tpl->assign('PRIOR', 2);
 else 
-	$tpl->assign('PRIOR3_CHECKED', 3);
+	$tpl->assign('PRIOR', 3);
 
 $arr = $data->getCategoryOptionList();
 

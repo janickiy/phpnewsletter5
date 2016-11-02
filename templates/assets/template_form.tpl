@@ -86,10 +86,9 @@
   <div class="form-group">
     <label for="exampleInputFile">${STR_FORM_PRIORITY}:</label>
     <div class="controls">
-      <label> <input type="radio" name="prior" value="3"
-        <!-- IF '${PRIOR3_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_NORMAL} </label>
-      <label> <input type="radio" name="prior" value="2" <!-- IF '${PRIOR2_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_LOW} </label>
-      <label> <input type="radio" name="prior" value="1" <!-- IF '${PRIOR1_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_HIGH} </label>
+      <label> <input type="radio" name="prior" value="3" <!-- IF '${PRIOR}' == 3 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_NORMAL} </label>
+      <label> <input type="radio" name="prior" value="2" <!-- IF '${PRIOR}' == 2 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_LOW} </label>
+      <label> <input type="radio" name="prior" value="1" <!-- IF '${PRIOR}' == 1 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_HIGH} </label>
     </div>
   </div>
   <div class="form-group">

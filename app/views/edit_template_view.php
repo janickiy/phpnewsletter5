@@ -35,8 +35,8 @@ if (Core_Array::getRequest('action')){
         $fields = array();
         $fields['name'] = $name;
         $fields['body'] = $body;
-        $fields['prior'] = (int)Core_Array::getPost('prior');
-        $fields['id_cat'] = (int)Core_Array::getPost('id_cat');
+        $fields['prior'] = Core_Array::getPost('prior');
+        $fields['id_cat'] = Core_Array::getPost('id_cat');
 
         if ($data->editTemplate($fields, $id_template)){
             header("Location: ./");
@@ -89,6 +89,8 @@ $template = $data->getTemplate(Core_Array::getGet('id_template'));
 $tpl->assign('NAME', Core_Array::getPost('name') == '' ? $template['name'] : Core_Array::getPost('name'));
 $tpl->assign('CONTENT', Core_Array::getPost('body') == '' ? $template['body'] : Core_Array::getPost('body'));
 $tpl->assign('ID_TEMPLATE', Core_Array::getGet('id_template'));
+$prior = Core_Array::getPost('prior') == '' ? $template['prior'] : Core_Array::getPost('prior');
+$id_cat = Core_Array::getPost('id_cat') == '' ? $template['id_cat'] : Core_Array::getPost('id_cat');
 
 $arr = $data->getAttachmentsList(Core_Array::getGet('id_template'));
 
@@ -109,12 +111,12 @@ if (count($arr) > 0){
     $tpl->assign('attach_list', $attachBlock);
 }
 
-if (Core_Array::getPost('prior') == 1)
-    $tpl->assign('PRIOR1_CHECKED', Core_Array::getPost('prior') == '' ? $template['prior'] : Core_Array::getPost('prior'));
-elseif (Core_Array::getPost('prior') == 2)
-    $tpl->assign('PRIOR2_CHECKED', Core_Array::getPost('prior') == '' ? $template['prior'] : Core_Array::getPost('prior'));
+if ($prior == 1)
+    $tpl->assign('PRIOR', 1);
+elseif ($prior == 2)
+    $tpl->assign('PRIOR', 2);
 else
-    $tpl->assign('PRIOR3_CHECKED', $template['prior']);
+    $tpl->assign('PRIOR', 3);
 
 $arr = $data->getCategoryOptionList();
 
@@ -126,7 +128,7 @@ if ($arr) {
         $rowBlock = $tpl->fetch('categories_row');
         $rowBlock->assign('ID_CAT', $row['id_cat']);
         $rowBlock->assign('NAME', $row['name']);
-        $rowBlock->assign('POST_ID_CAT', Core_Array::getPost('id_cat') == '' ? $row['id_cat'] : Core_Array::getPost('id_cat'));
+        $rowBlock->assign('POST_ID_CAT', $id_cat);
         $tpl->assign('categories_row', $rowBlock);
     }
 }
