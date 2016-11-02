@@ -299,6 +299,14 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-lg-3 control-label" for="dkim_domain" for="dkim_private">
+          ${SET_DKIM_PRIVATE}
+        </label>
+        <div class="col-lg-7">
+          <input type="text" class="form-control" value="${DKIM_PRIVATE}" name="dkim_private">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-lg-3 control-label" for="dkim_passphrase">${SET_DKIM_PASSPHRASE}</label>
         <div class="col-lg-7">
           <input type="text" class="form-control" value="${DKIM_PASSPHRASE}" name="dkim_passphrase">
