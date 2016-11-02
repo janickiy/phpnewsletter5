@@ -144,13 +144,13 @@
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>';
             alert_msg += data.msg;
             alert_msg += '</div>';
-          } elsebif (data.result == 'error'){
+          } else if (data.result == 'error'){
             alert_msg += '<div class="alert alert-danger alert-dismissable">';
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>';
             alert_msg += '<strong>${STR_ERROR}!</strong>';
             alert_msg += data.msg;
             alert_msg += '</div>';
-          } else if(data.result == 'errors'){
+          } else if (data.result == 'errors'){
             alert_msg += '<div class="alert alert-danger alert-dismissable">';
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert">×</button>';
             alert_msg += '<strong><h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4></strong>';

@@ -222,12 +222,10 @@ class Model_ajax extends Model
 				$m->AuthType = 'CRAM-MD5';
 
 			$m->Timeout = $settings['smtp_timeout'];
-		}
-		else if(core::getSetting('how_to_send') == 3 && !empty(core::getSetting('sendmail'))){
+		} elseif (core::getSetting('how_to_send') == 3 && core::getSetting('sendmail') != ''){
 			$m->IsSendmail();
 			$m->Sendmail = core::getSetting('sendmail');
-		}
-		else{
+		} else{
 			$m->IsMail();
 		}
 
@@ -238,7 +236,7 @@ class Model_ajax extends Model
 
 		$m->CharSet = $charset;
 
-		if (empty($settings['email_name']))
+		if ($settings['email_name'] == '')
 			$from = $_SERVER["SERVER_NAME"];
 		else
 			$from = core::getSetting('email_name');
@@ -252,7 +250,7 @@ class Model_ajax extends Model
 		}
 
 		$m->Subject = $subject;
-		if (!empty(core::getSetting('organization'))) $m->addCustomHeader("Organization: " . core::getSetting('organization'));
+		if (core::getSetting('organization') != '') $m->addCustomHeader("Organization: " . core::getSetting('organization'));
 
 		if ($prior == 1)
 			$m->Priority = 1;
@@ -275,7 +273,7 @@ class Model_ajax extends Model
 
 		$m->AddAddress($email);
 
-		if (core::getSetting('request_reply') == "yes" && !empty(core::getSetting('email_reply'))){
+		if (core::getSetting('request_reply') == "yes" && core::getSetting('email_reply') != ''){
 			$m->addCustomHeader("Disposition-Notification-To: " . core::getSetting('email_reply'));
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
@@ -286,13 +284,13 @@ class Model_ajax extends Model
 			$m->addCustomHeader("Precedence: junk");
 		elseif (core::getSetting('precedence') == 'list')
 			$m->addCustomHeader("Precedence: list");
-		if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
-		if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
+		if (core::getSetting('list_owner') != '') $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+		if (core::getSetting('return_path') != '') $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 		$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=test&token=test";
 		$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
 
-		if (core::getSetting('show_unsubscribe_link') == "yes" && !empty(core::getSetting('unsublink'))) {
+		if (core::getSetting('show_unsubscribe_link') == "yes" && core::getSetting('unsublink') != '') {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
 		} else $msg = $body;
@@ -511,8 +509,8 @@ class Model_ajax extends Model
 						elseif (core::getSetting('precedence') == 'list')
 							$m->addCustomHeader("Precedence: list");
 
-						if (!empty(core::getSetting('list_owner'))) $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
-						if (!empty(core::getSetting('return_path'))) $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
+						if (core::getSetting('list_owner') != '') $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+						if (core::getSetting('return_path') != '') $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 						$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
 						$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));

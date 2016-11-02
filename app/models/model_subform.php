@@ -97,7 +97,7 @@ class Model_subform extends Model
 
                 $m->Timeout = core::getSetting('smtp_timeout');
             } else
-                if (core::getSetting('how_to_send') == 3 && ! empty(core::getSetting('sendmail'))) {
+                if (core::getSetting('how_to_send') == 3 && core::getSetting('sendmail') != '') {
                     $m->IsSendmail();
                     $m->Sendmail = core::getSetting('sendmail');
                 } else {
