@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,29 +10,28 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action') == 'remove'){
 
 	$accountInfo = Auth::getAutInfo(Core_Array::getGet('id'));
 
-	if ($accountInfo['login'] != $autInfo['login']){
+	if ($accountInfo['login'] != $autInfo['login']) {
 		if ($data->removeAccount((int)Core_Array::getGet('id'))){
-			$success = core::getLanguage('msg', 'account_removed');
-		}
-		else{
-			$error = core::getLanguage('error', 'web_apps_error');
+			$success_msg = core::getLanguage('msg', 'account_removed');
+		} else {
+			$errors[] = core::getLanguage('error', 'web_apps_error');
 		}
 	}
 }
@@ -47,13 +46,21 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 	
 //alert
-if (isset($error)) {
-	$tpl->assign('STR_ERROR', core::getLanguage('str', 'error'));
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)){
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 	
-if (isset($success)){
-	$tpl->assign('MSG_ALERT', $success);
+if (isset($success_msg)) {
+	$tpl->assign('MSG_ALERT', $success_msg);
 }
 
 $tpl->assign('TH_TABLE_LOGIN', core::getLanguage('str', 'login'));
@@ -65,11 +72,11 @@ foreach ($data->getAccountList() as $row){
 	$rowBlock->assign('ID', $row['id']);
 	$rowBlock->assign('LOGIN', $row['login']);
 
-	if($row["role"] == 'admin')
+	if ($row["role"] == 'admin')
 		$role = core::getLanguage('str', 'admin');
-	else if($row["role"] == 'moderator')
+	elseif ($row["role"] == 'moderator')
 		$role = core::getLanguage('str', 'moderator');
-	else if($row["role"] == 'editor')
+	elseif ($row["role"] == 'editor')
 		$role = core::getLanguage('str', 'editor');
 
 	$rowBlock->assign('ROLE', $role);

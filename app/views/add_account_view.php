@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,26 +10,24 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
+
+$errors = array();
 
 if (Core_Array::getRequest('action')){
 	$login = trim(htmlspecialchars(Core_Array::getPost('login')));
 	$password = trim(Core_Array::getPost('password'));
 	$password_again = trim(Core_Array::getPost('password_again'));
 	$role = Core_Array::getPost('user_role');
-	
-	$errors = array();
 	
 	if (empty($login)) $errors[] = core::getLanguage('error', 'login_isnt_entered');
 	if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
@@ -39,11 +37,11 @@ if (Core_Array::getRequest('action')){
 		if ($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 
-	if (!empty($login)){
+	if (!empty($login)) {
 		if ($data->checkExistLogin($login)) $errors[] = core::getLanguage('error', 'login_already_exists');
 	}
 
-	if (count($errors) == 0){
+	if (empty($errors)) {
 		$fields = array();
 		$fields['login'] = $login;
 		$fields['password'] = md5($password);
@@ -52,9 +50,8 @@ if (Core_Array::getRequest('action')){
 		if ($data->createAccount($fields)){
 			header("Location: ./?t=accounts");
 			exit();
-		}
-		else{ 
-			$alert_error = core::getLanguage('error', 'web_apps_error');
+		} else {
+			$errors[] = core::getLanguage('error', 'web_apps_error');
 		}		
 	}
 }
@@ -63,11 +60,7 @@ $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'add_account'));
 $tpl->assign('TITLE', core::getLanguage('title', 'add_account'));
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-
-if (isset($errors)){
+if (!empty($errors)){
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			

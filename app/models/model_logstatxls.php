@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -44,11 +44,10 @@ class Model_logstatxls extends Model
 	
 	public function getLogList($id_log)
 	{
-		if(is_numeric($id_log)) {
+		if (is_numeric($id_log)) {
 			$query = "SELECT *, a.time as time FROM " . core::database()->getTableName('ready_send') . " a
-			LEFT JOIN " . core::database()->getTableName('users') . " b ON b.id_user=a.id_user
-			LEFT JOIN " . core::database()->getTableName('template') . " s ON s.id_template=a.id_template
-			WHERE id_log=" . $id_log;
+						LEFT JOIN " . core::database()->getTableName('template') . " b ON b.id_template=a.id_template
+						WHERE id_log=" . $id_log;
 
 			$result = core::database()->querySQL($query);
 			return core::database()->getColumnArray($result);
@@ -57,7 +56,7 @@ class Model_logstatxls extends Model
 
 	public function getTotalread($id_log)
 	{
-		if(is_numeric($id_log)) {
+		if (is_numeric($id_log)) {
 			$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('ready_send') . " WHERE id_log=" . $id_log . " AND readmail='yes'";
 			$result = core::database()->querySQL($query);
 			$total = core::database()->getRow($result, 'assoc');

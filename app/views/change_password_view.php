@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,14 +10,12 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
@@ -25,41 +23,40 @@ $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . co
 
 $errors = array();
 
-if (Core_Array::getPost('action')){
+if (Core_Array::getPost('action')) {
 	$current_password = trim(Core_Array::getPost('current_password'));
 	$password = trim(Core_Array::getPost('password'));
 	$password_again = trim(Core_Array::getPost('password_again'));
 
-	if (!$current_password){
+	if (!$current_password) {
 		$errors[] = core::getLanguage('error', 'enter_current_passwd');
 	}
 
-	if (!$password){
+	if (!$password) {
 		$errors[] = core::getLanguage('error', 'password_isnt_entered');
 	}
 
-	if (!$password_again){
+	if (!$password_again) {
 		$errors[] = core::getLanguage('error', 're_enter_password');
 	}
 	
-	if($password && $password_again && $password != $password_again){
+	if ($password && $password_again && $password != $password_again) {
 		$errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 	
 	if ($current_password){
 		$current_password = md5($_POST["current_password"]);
 		
-		if(Auth::getCurrentHash($autInfo['id']) != $current_password){
-			$error[] = core::getLanguage('error', 'current_password_incorrect');
+		if (Auth::getCurrentHash($autInfo['id']) != $current_password) {
+			$errors[] = core::getLanguage('error', 'current_password_incorrect');
 		}
 	}
 
-	if (!$errors) {
-		if ($data->changePassword($password, $autInfo['id'])){
-			$success = core::getLanguage('msg', 'password_has_been_changed');
-		}	
-		else{
-			$error_passw_change = core::getLanguage('error', 'change_password');
+	if (empty($errors)) {
+		if ($data->changePassword($password, $autInfo['id'])) {
+			$success_msg = core::getLanguage('msg', 'password_has_been_changed');
+		} else {
+			$errors[] = core::getLanguage('error', 'change_password');
 		}		
 	}
 }
@@ -74,15 +71,11 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 	
 //alert
-if (isset($error_passw_change)) {
-	$tpl->assign('ERROR_ALERT', $error_passw_change);
-}
-	
-if (count($errors) > 0){
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($errors as $row){
+	foreach($errors as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);
@@ -91,8 +84,8 @@ if (count($errors) > 0){
 	$tpl->assign('show_errors', $errorBlock);
 }	
 
-if (isset($success)){
-	$tpl->assign('MSG_ALERT', $success);
+if (isset($success_msg)) {
+	$tpl->assign('MSG_ALERT', $success_msg);
 }
 
 //form

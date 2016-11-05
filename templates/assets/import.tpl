@@ -4,12 +4,17 @@
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
 
-<!-- IF '${ERROR_ALERT}' != '' -->
+<!-- BEGIN show_errors -->
 <div class="alert alert-danger alert-dismissable">
     <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-    <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
+    <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
+    <ul>
+        <!-- BEGIN row -->
+        <li> ${ERROR}</li>
+        <!-- END row -->
+    </ul>
 </div>
-<!-- END IF -->
+<!-- END show_errors -->
 
 <!-- IF '${MSG_ALERT}' != '' -->
 <div class="alert alert-success alert-dismissable">

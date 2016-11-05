@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,14 +12,33 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_ajax extends Model
 {
-	public function updateProcess($status)
+	public function updateProcess($status, $id_user)
 	{
-		if ($status){
+		if ($status && is_numeric($id_user)){
+
 			$status = core::database()->escape($status);
-			$query = "UPDATE " . core::database()->getTableName('process') . " SET process='" . $status . "'";
-			return core::database()->querySQL($query);
-		}
-		else return false;
+			$query = "SELECT * FROM " . core::database()->getTableName('process') . "  WHERE id_user=" . $id_user;
+			$result = core::database()->querySQL($query);
+
+			if (core::database()->getRecordCount($result) == 0) {
+				$fields = array();
+				$fields['id'] = 0;
+				$fields['process'] = $status;
+				$fields['id_user'] = $id_user;
+
+				$insert = core::database()->insert($fields, core::database()->getTableName("process"));
+
+				if ($insert)
+					return true;
+				else
+					return false;
+			} else {
+				$query = "UPDATE " . core::database()->getTableName('process') . " SET process='" . $status . "'
+							WHERE id_user=" . $id_user;
+				return core::database()->querySQL($query);
+			}
+
+		} else return false;
 	}
 
 	public function getTotalMails()
@@ -41,8 +60,7 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		}
-		else return 0;
+		} else return 0;
 	}
 
 	public function getUnsuccessfulMails($id_log)
@@ -53,17 +71,18 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		}
-		else return 0;
+		}  else return 0;
 	}
 
-	public function getMailingStatus()
+	public function getMailingStatus($id_user)
 	{
-		$query = "SELECT * FROM " . core::database()->getTableName('process');
-		$result = core::database()->querySQL($query);
-		$status = core::database()->getRow($result);
+		if ($id_user) {
+			$query = "SELECT * FROM " . core::database()->getTableName('process') . " WHERE id_user=" . $id_user;
+			$result = core::database()->querySQL($query);
+			$status = core::database()->getRow($result);
 
-		return $status['process'];
+			return $status['process'];
+		}
 	}
 
 	public function getCurrentUserLog($limit = 10)
@@ -172,7 +191,7 @@ class Model_ajax extends Model
 	{
 		$user = 'USERNAME';
 
-		$subject = str_replace('%NAME%', $user['name'], $subject);
+		$subject = str_replace('%NAME%', $user, $subject);
 
 		core::requireEx('libs', "PHPMailer/class.phpmailer.php");
 
@@ -194,21 +213,19 @@ class Model_ajax extends Model
 
 			if (core::getSetting('smtp_secure') == 'ssl')
 				$m->SMTPSecure  = 'ssl';
-			else if(core::getSetting('smtp_secure') == 'tls')
+			elseif (core::getSetting('smtp_secure') == 'tls')
 				$m->SMTPSecure  = 'tls';
 
 			if (core::getSetting('smtp_aut') == 'plain')
 				$m->AuthType = 'PLAIN';
-			else if (core::getSetting('smtp_aut') == 'cram-md5')
+			elseif (core::getSetting('smtp_aut') == 'cram-md5')
 				$m->AuthType = 'CRAM-MD5';
 
 			$m->Timeout = $settings['smtp_timeout'];
-		}
-		else if(core::getSetting('how_to_sen') == 3 && !empty(core::getSetting('sendmail'))){
+		} elseif (core::getSetting('how_to_send') == 3 && core::getSetting('sendmail') != ''){
 			$m->IsSendmail();
 			$m->Sendmail = core::getSetting('sendmail');
-		}
-		else{
+		} else{
 			$m->IsMail();
 		}
 
@@ -219,7 +236,7 @@ class Model_ajax extends Model
 
 		$m->CharSet = $charset;
 
-		if (empty($settings['email_name']))
+		if ($settings['email_name'] == '')
 			$from = $_SERVER["SERVER_NAME"];
 		else
 			$from = core::getSetting('email_name');
@@ -233,17 +250,17 @@ class Model_ajax extends Model
 		}
 
 		$m->Subject = $subject;
-		if (!empty(core::getSetting('organization'))) $m->addCustomHeader("Organization: " . core::getSetting('organization'));
+		if (core::getSetting('organization') != '') $m->addCustomHeader("Organization: " . core::getSetting('organization'));
 
 		if ($prior == 1)
 			$m->Priority = 1;
-		else if ($prior == 2)
+		elseif ($prior == 2)
 			$m->Priority = 2;
 		else
 			$m->Priority = 3;
 
 		if (core::getSetting('show_email') == "no")
-			$m->From = "noreply@".$_SERVER['SERVER_NAME']."";
+			$m->From = "noreply@" . $_SERVER['SERVER_NAME']."";
 		else
 			$m->From = core::getSetting('email');
 
@@ -256,26 +273,27 @@ class Model_ajax extends Model
 
 		$m->AddAddress($email);
 
-		if (core::getSetting('request_reply') && !empty(core::getSetting('email_reply'))){
+		if (core::getSetting('request_reply') == "yes" && core::getSetting('email_reply') != ''){
 			$m->addCustomHeader("Disposition-Notification-To: " . core::getSetting('email_reply'));
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
 
-		if (core::getSetting('precedenc') == 'bulk')
+		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
-		else if(core::getSetting('precedence') == 'junk')
+		elseif (core::getSetting('precedence') == 'junk')
 			$m->addCustomHeader("Precedence: junk");
-		else if(core::getSetting('precedence') == 'list')
+		elseif (core::getSetting('precedence') == 'list')
 			$m->addCustomHeader("Precedence: list");
+		if (core::getSetting('list_owner') != '') $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+		if (core::getSetting('return_path') != '') $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 		$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=test&token=test";
 		$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
 
-		if (core::getSetting('unsubscribe') == "yes" && !empty(core::getSetting('unsublink'))) {
+		if (core::getSetting('show_unsubscribe_link') == "yes" && core::getSetting('unsublink') != '') {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
-		}
-		else $msg = $body;
+		} else $msg = $body;
 
 		$msg = str_replace('%NAME%', $user, $msg);
 		$msg = str_replace('%UNSUB%', $UNSUB, $msg);
@@ -293,8 +311,7 @@ class Model_ajax extends Model
 		if (!$m->Send()){
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return false;
-		}
-		else{
+		} else {
 			if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
 			return true;
 		}
@@ -325,19 +342,28 @@ class Model_ajax extends Model
 			$fields['id_log'] = 0;
 			$fields['time'] = date("Y-m-d H:i:s");
 
-			$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
+			core::session()->start();
+
+			if (core::session()->issetName('id_log') == true) {
+				$insert_id = core::session()->get('id_log');
+				core::session()->commit();
+			} else {
+				$insert_id = core::database()->insert($fields, core::database()->getTableName('log'));
+				core::session()->set('id_log', $insert_id);
+			}
+
+			core::session()->commit();
 
 			$query = "SELECT * FROM " . core::database()->getTableName('charset') . " WHERE id_charset=" . core::getSetting('id_charset');
 			$result = core::database()->querySQL($query);
 			$char = core::database()->getRow($result);
 			$charset = $char['charset'];
+			$from = core::getSetting('email_name') == '' ? $_SERVER["SERVER_NAME"] : core::getSetting('email_name');
 
 			if ($charset != 'utf-8') {
-				$from = iconv('utf-8', $charset, '');
+				$from = iconv('utf-8', $charset, $from);
 				if (core::getSetting('organization') != '') core::setSetting('organization', iconv('utf-8', $charset, core::getSetting('organization')));
 			}
-
-			$from = core::getSetting('email_name') == '' ? $_SERVER["SERVER_NAME"] : core::getSetting('email_name');
 
 			$query = "SELECT * FROM " . core::database()->getTableName('template') . " WHERE active='yes' AND id_template IN (" . implode(",", $temp) . ")";
 			$result = core::database()->querySQL($query);
@@ -425,42 +451,42 @@ class Model_ajax extends Model
 
 					if (Core_Array::getRequest('typesend') == 2) {
 						if ($send['id_cat'] == 0)
-							$query_users = "SELECT *,u.id_user as id FROM " . core::database()->getTableName('users') . " u
-						LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-						WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
+							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
+											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
+											WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
 						else
-							$query_users = "SELECT *,u.id_user as id FROM " . core::database()->getTableName('users') . " u
-						LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-						LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-						WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
+							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
+											LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
+											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
 					} else {
 						if (core::getSetting('re_send') == "no") {
 							if ($send['id_cat'] == 0)
-								$query_users = "SELECT *,u.id_user as id FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-							WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $limit;
+								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
+												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
+												WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $limit;
 							else
-								$query_users = "SELECT *,u.id_user as id FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-							LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-							WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "
-							" . $limit;
+								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
+												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
+												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $limit;
 						} else {
 							if ($send['id_cat'] == 0)
-								$query_users = "SELECT *,id_user as id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
+								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
 							else
-								$query_users = "SELECT *,u.id_user as id FROM " . core::database()->getTableName('users') . " u
-							LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-							WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "
-							" . $limit;
+								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
+												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $limit;
 						}
 					}
 
 					$result_users = core::database()->querySQL($query_users);
 
 					while ($user = core::database()->getRow($result_users)) {
-						if ( $this->getStatusProcess() == 'stop' || $this->getStatusProcess() == 'pause')
+						if ( $this->getStatusProcess(Auth::getAutId()) == 'stop' || $this->getStatusProcess(Auth::getAutId()) == 'pause') {
 							break;
+						}
+
 						if (core::getSetting('sleep') && core::getSetting('sleep') > 0)
 							sleep(core::getSetting('sleep'));
 
@@ -482,6 +508,9 @@ class Model_ajax extends Model
 							$m->addCustomHeader("Precedence: junk");
 						elseif (core::getSetting('precedence') == 'list')
 							$m->addCustomHeader("Precedence: list");
+
+						if (core::getSetting('list_owner') != '') $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
+						if (core::getSetting('return_path') != '') $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
 						$UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
 						$unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
@@ -509,7 +538,7 @@ class Model_ajax extends Model
 								if ($charset != 'utf-8') $row['name'] = iconv('utf-8', $charset, $row['name']);
 
 								$ext = strrchr($row['path'], ".");
-								$mime_type = get_mime_type($ext);
+								$mime_type = Pnl::get_mime_type($ext);
 
 								$m->AddAttachment($row['path'], $row['name'], 'base64', $mime_type);
 							}
@@ -522,15 +551,16 @@ class Model_ajax extends Model
 							$msg .= $IMG;
 						} else {
 							$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-							$msg = remove_html_tags($msg);
+							$msg = Pnl::remove_html_tags($msg);
 						}
 
 						$m->Body = $msg;
 
-						if (! $m->Send()) {
+						if (!$m->Send()) {
 							$fields = array();
 							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
+							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
 							$fields['success'] = 'no';
 							$fields['errormsg'] = $m->ErrorInfo;
@@ -544,6 +574,7 @@ class Model_ajax extends Model
 							$fields = array();
 							$fields['id_ready_send'] = 0;
 							$fields['id_user'] = $user['id'];
+							$fields['email'] = $user['email'];
 							$fields['id_template'] = $send['id_template'];
 							$fields['success'] = 'yes';
 							$fields['readmail'] = 'no';
@@ -564,7 +595,14 @@ class Model_ajax extends Model
 
 						if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
 							if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
-							$result = $this->updateProcess('stop');
+							if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+								if ($this->updateProcess('stop', Auth::getAutId())) {
+									core::session()->start();
+									core::session()->delete('id_log');
+									core::session()->commit();
+								}
+							}
+
 							return $mailcount;
 							break;
 						}
@@ -572,26 +610,39 @@ class Model_ajax extends Model
 				}
 
 				if (core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') == $mailcount) {
-					if (core::getSetting('how_to_send') == 2)
-						$m->SmtpClose();
-					$result = $this->updateProcess('stop');
+					if (core::getSetting('how_to_send') == 2) $m->SmtpClose();
+					if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+						if ($this->updateProcess('stop', Auth::getAutId())) {
+							core::session()->start();
+							core::session()->delete('id_log');
+							core::session()->commit();
+						}
+					}
 					return $mailcount;
 				}
 			}
 
-			$result = $this->updateProcess('stop');
+			if ($this->getStatusProcess(Auth::getAutId()) == 'start') {
+				if ($this->updateProcess('stop', Auth::getAutId())) {
+					core::session()->start();
+					core::session()->delete('id_log');
+					core::session()->commit();
+				}
+			}
 		}
 
 		return $mailcount;
 	}
 
-	public function getStatusProcess()
+	public function getStatusProcess($id_user)
 	{
-		$query = "SELECT * FROM " . core::database()->getTableName('process');
-		$result = core::database()->querySQL($query);
-		$row = core::database()->getRow($result, 'array');
+		if (is_numeric($id_user)){
+			$query = "SELECT * FROM " . core::database()->getTableName('process') . "  WHERE id_user=" . $id_user;
+			$result = core::database()->querySQL($query);
+			$row = core::database()->getRow($result);
 
-		return $row['process'];
+			return $row['process'];
+		}
 	}
 
 	public function getDetaillog($offset, $number, $id_log, $strtmp)
@@ -599,8 +650,7 @@ class Model_ajax extends Model
 		if(is_numeric($offset) && is_numeric($number) && is_numeric($id_log)) {
 			$strtmp = core::database()->escape($strtmp);
 
-			$query = "SELECT *, a.time as time, c.name as catname, s.name as name FROM " . core::database()->getTableName('ready_send') . " a
-					LEFT JOIN " . core::database()->getTableName('users') . " b ON b.id_user=a.id_user
+			$query = "SELECT *, a.time AS time, c.name AS catname, s.name AS name FROM " . core::database()->getTableName('ready_send') . " a
 					LEFT JOIN " . core::database()->getTableName('template') . " s ON a.id_template=s.id_template
 					LEFT JOIN " . core::database()->getTableName('category') . " c ON s.id_cat=c.id_cat
 					WHERE id_log=" . $id_log . "
@@ -614,4 +664,18 @@ class Model_ajax extends Model
 			return core::database()->getColumnArray($result);
 		}
 	}
-}	
+
+	public function removeAttach($id_attachment)
+	{
+		if (is_numeric($id_attachment)) {
+			$query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_attachment=" . $id_attachment;
+			$result = core::database()->querySQL($query);
+
+			while ($row = core::database()->getRow($result, 'array')) {
+				if (file_exists($row['path'])) @unlink($row['path']);
+			}
+
+			return core::database()->delete(core::database()->getTableName('attach'), "id_attachment=" . $id_attachment, '');
+		}
+	}
+}

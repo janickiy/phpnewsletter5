@@ -6,8 +6,8 @@
     $.fn.scrollPagination = function(options) {
 
       var settings = {
-        nop     : 10,
-        offset  : 10,
+        nop     : 50,
+        offset  : 50,
         error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
         delay   : 500,
         scroll  : true
@@ -56,7 +56,6 @@
           id_log = getUrlVars()["id_log"];
 
           $.post('./?t=ajax&action=showlogs', {
-            action		: 'scrollpagination',
             number		: $settings.nop,
             offset		: offset,
             id_log		: id_log,
@@ -73,7 +72,7 @@
               offset = offset+$settings.nop;
 
               for(var i=0; i < data.item.length; i++) {
-                if(data.item[i].email == null) $("#msgShow").html('ghjghj');
+                if(data.item[i].email == null) $("#msgShow").html('${STR_SHOW_MORE}');
                 var content = '';
                 content += '<tr><td>' + data.item[i].name + '</td><td>' + data.item[i].email + '</td><td>' + data.item[i].catname + '</td><td>' + data.item[i].time + '</td><td>' + data.item[i].status + '</td><td>' + data.item[i].read + '</td><td width="30%">' + data.item[i].errormsg + '</td></tr>';
                 $('#logTable > tbody > tr:last').after(content);
@@ -114,9 +113,9 @@
 
   $(document).ready(function() {
 
-    $('#content').scrollPagination({
-      nop     : 10,
-      offset  : 10,
+    $('#page-wrapper').scrollPagination({
+      nop     : 50,
+      offset  : 50,
       error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
       delay   : 500,
       scroll  : true
@@ -160,6 +159,7 @@
   ${MSG_ALERT}
 </div>
 <!-- END IF -->
+<p><a class="btn btn-outline btn-danger" href="./?t=log&clear_log"> <i class="fa fa-trash-o"></i> ${STR_CLEAR_LOG} </a></p>
 <table class="table-hover table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
     <tr>

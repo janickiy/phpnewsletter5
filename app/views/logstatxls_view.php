@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,17 +10,14 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
 session_write_close();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
-
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 if (!is_numeric($_GET['id_log'])) exit();
 
 core::requireEx('libs', "PHPExcel/PHPExcel.php");
@@ -37,12 +34,11 @@ $readmail = $data->getTotalread($_GET['id_log']);
 
 $arr = $data->getLogList($_GET['id_log']);
 
-if (is_array($arr)){
+if (is_array($arr)) {
 	$success = count($arr) - $totalfaild;
 	$count = 100 * $success / count($arr);
 	$total = count($arr);
-}
-else{
+} else {
 	$success = 0;
 	$count = 0;
 	$total = 0;
@@ -90,7 +86,6 @@ if (is_array($arr)){
 
 	foreach($arr as $row){
 		$i++;
-		
 		$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
 		$readmail = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
 		

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -35,10 +35,10 @@ class Model_template extends Model
         return core::database()->page;
     }
 
-    public function changeStatusNewsLetter($fields)
+    public function changeStatusNewsLetter($fields, $activate)
     {
         $temp = array();
-        foreach (Core_Array::getRequest('activate') as $id) {
+        foreach ($activate as $id) {
             if (is_numeric($id))
                 $temp[] = $id;
         }
@@ -50,14 +50,13 @@ class Model_template extends Model
         return $result;
     }
 
-    public function removeTemplate()
+    public function removeTemplate($activate)
     {
-        if (Core_Array::getRequest('activate')) {
+        if (!empty($activate)) {
             $temp = array();
 
-            foreach (Core_Array::getRequest('activate') as $id) {
-                if (is_numeric($id))
-                    $temp[] = $id;
+            foreach ($activate as $id) {
+                if (is_numeric($id)) $temp[] = $id;
             }
 
             $query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_template IN (" . implode(",", $temp) . ")";
@@ -66,9 +65,8 @@ class Model_template extends Model
             $arr = core::database()->getColumnArray($result);
 
             if (is_array($arr)) {
-                for ($i = 0; $i < count($arr); $i ++) {
-                    if (file_exists($arr[$i]['path']))
-                        @unlink($arr[$i]['path']);
+                for ($i = 0; $i < count($arr); $i++) {
+                    if (file_exists($arr[$i]['path'])) @unlink($arr[$i]['path']);
                 }
             }
             
@@ -85,8 +83,8 @@ class Model_template extends Model
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos";
         $result = core::database()->querySQL($query);
 
-        while($row = core::database()->getRow($result)){
-            if($row["id_template"] == $id_template){
+        while($row = core::database()->getRow($result)) {
+            if ($row["id_template"] == $id_template) {
                 $pos = $row["pos"];
                 $row = core::database()->getRow($result);
                 $id_next = $row["id_template"];
@@ -94,11 +92,11 @@ class Model_template extends Model
             }
         }
 
-        if($id_next){
+        if ($id_next) {
             $update1 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $pos . " WHERE id_template=" . $id_next;
             $update2 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $posnext . " WHERE id_template=" . $id_template;
 
-            if(core::database()->querySQL($update1) && core::database()->querySQL($update2))
+            if (core::database()->querySQL($update1) && core::database()->querySQL($update2))
                 return true;
             else
                 return false;
@@ -112,8 +110,8 @@ class Model_template extends Model
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos DESC";
         $result = core::database()->querySQL($query);
 
-        while($row = core::database()->getRow($result)){
-            if($row["id_template"] == $id_template){
+        while($row = core::database()->getRow($result)) {
+            if ($row["id_template"] == $id_template) {
                 $pos = $row["pos"];
                 $row = core::database()->getRow($result);
                 $id_next = $row["id_template"];
@@ -121,7 +119,7 @@ class Model_template extends Model
             }
         }
 
-        if($id_next){
+        if ($id_next) {
             $update1 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $pos . " WHERE id_template=" . $id_next;
             $update2 = "UPDATE " . core::database()->getTableName('template') . " SET pos=" . $posnext . " WHERE id_template=" . $id_template;
 
@@ -132,5 +130,4 @@ class Model_template extends Model
         }
         else return true;
     }
-
 }

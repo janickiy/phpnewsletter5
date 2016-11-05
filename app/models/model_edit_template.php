@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -66,20 +66,6 @@ class Model_edit_template extends Model
             $result = core::database()->querySQL($query);
 
             return core::database()->getRow($result);
-        }
-    }
-
-    public function removeAttach($id_attachment)
-    {
-        if (is_numeric($id_attachment)) {
-            $query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_attachment=" . $id_attachment;
-            $result = core::database()->querySQL($query);
-
-            while ($row = core::database()->getRow($result, 'array')) {
-                if (file_exists($row['path'])) @unlink($row['path']);
-            }
-
-            return core::database()->delete(core::database()->getTableName('attach'), "id_attachment=" . $id_attachment, '');
         }
     }
 }

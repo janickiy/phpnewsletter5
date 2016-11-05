@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,32 +12,27 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 set_time_limit(0);
 
-set_time_limit(0);
-
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
-if (Core_Array::getRequest('action') ){
-	$arr = $data->getUserList();	
+if (Core_Array::getRequest('action')) {
+	$arr = $data->getUserList(Core_Array::getRequest('id_cat'));
 	
-	if (intval(Core_Array::getRequest('export_type')) == 1){
+	if (intval(Core_Array::getRequest('export_type')) == 1) {
 		$ext = 'txt';
 		$filename = 'emailexport.txt';			
 			
-		if (is_array($arr)){
+		if (is_array($arr)) {
 			$contents = '';	
-			foreach ($arr as $row){
+			foreach ($arr as $row) {
 				$contents .= "" . $row['email'] . " " . $row['name'] . "\r\n";
 			}
 		}
-	}	
-	elseif (intval(Core_Array::getRequest('export_type')) == 2){
+	} elseif (intval(Core_Array::getRequest('export_type')) == 2) {
 		$ext = 'xls';
 		$filename = 'emailexport.xls';
 			
@@ -53,7 +48,7 @@ if (Core_Array::getRequest('action') ){
 			
 		$i=1;
 
-		foreach ($arr as $row){
+		foreach ($arr as $row) {
 			$i++;
 			$aSheet->setCellValue('A'.$i, $row['email']);
 			$aSheet->setCellValue('B'.$i, $row['name']);
@@ -103,8 +98,7 @@ if (Core_Array::getRequest('action') ){
 			fclose($fout);
 		}		
 		exit();		
-	}
-	else{
+	} else {
 		header('Content-Type: ' . Pnl::get_mime_type($ext));
 		header('Content-Disposition: attachment; filename=' . $filename);
 		header('Cache-Control: max-age=0');
@@ -140,7 +134,7 @@ $tpl->assign('STR_COMPRESSION_OPTION_1', core::getLanguage('str', 'compression_o
 $tpl->assign('STR_COMPRESSION_OPTION_2', core::getLanguage('str', 'compression_option_2'));
 $tpl->assign('STR_CATEGORY', core::getLanguage('str', 'category'));
 
-foreach ($data->getCategoryList() as $row){
+foreach ($data->getCategoryList() as $row) {
 	$rowBlock = $tpl->fetch('categories_list');
 	$rowBlock->assign('ID_CAT', $row['id']);
 	$rowBlock->assign('NAME', $row['name']);

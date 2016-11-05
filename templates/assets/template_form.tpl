@@ -1,34 +1,23 @@
 <script type="text/javascript" src="./templates/js/ckeditor/ckeditor.js"></script>
-<script type="text/javascript">
+<script>
+  $(document).on( "click", ".remove_attach", function() {
 
-  function add_attach_file(bl_name, num)
-  {
-    var addF = document.forms['addF'];
-    prev_num = parseInt(num)-1;
-    bl_name += "_";
-    par_div = document.getElementById(bl_name+prev_num).parentNode;
-    adding_block = document.createElement("div");
-    adding_block.id = bl_name+num;
+  var Id_attach = $(this).attr('data-num');
 
-    if(bl_name == "loadfile_") adding_block.innerHTML = "<div id=loadfile_"+(parseInt(num))+"><div id=\"addf_table_"+(parseInt(num))+"\"><div id=\"Div_File_"+(parseInt(num))+"\"><input type=\"file\" onChange=\"add_attach_file('loadfile', '"+((parseInt(num))+1)+"'); return false;\" class=\"span8\" id=\"file_"+(parseInt(num))+"\" name=\"attachfile[]\"></div>&nbsp;&nbsp;<a onclick=\"del_pole(" + parseInt(num) + ");\" href=\"#\">${STR_REMOVE}</a></div></div></div>";
-
-    par_div.appendChild(adding_block);
-  }
-
-  function del_pole(btn)
-  {
-    document.getElementById ('addf_table_' + btn).parentNode.removeChild (document.getElementById ('addf_table_' + btn));
-  }
-
+    $.ajax({
+      type: "GET",
+      url: "./?t=ajax&action=remove_attach&id=" + Id_attach,
+      dataType: "json",
+      success: function(data){
+        if (data.result == 'yes'){
+          $("#attach_" + Id_attach).remove()
+        }
+      }
+    });
+  });
 </script>
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
-</div>
 <!-- END IF -->
 <!-- BEGIN show_errors -->
 <div class="alert alert-danger alert-dismissable">
@@ -41,6 +30,12 @@
   </ul>
 </div>
 <!-- END show_errors -->
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
+</div>
+<!-- END IF -->
 <script type="text/javascript">//<![CDATA[
   window.CKEDITOR_BASEPATH='./templates/js/ckeditor/';
   CKEDITOR.lang.languages={"${LANGUAGE}":1};
@@ -66,7 +61,7 @@
     <label class="control-label" for="attach_list">${STR_ATTACH_LIST}:</label>
     <div class="controls inline">
       <!-- BEGIN row -->
-      ${ATTACHMENT_FILE} <a href="./?task=edit_template&id_template=${ID_TEMPLATE}&remove=${ID_ATTACHMENT}" title="${STR_REMOVE}"> X </a>&nbsp;&nbsp;
+      <span id="attach_${ID_ATTACHMENT}">${ATTACHMENT_FILE} <a href="#" data-num="${ID_ATTACHMENT}" class="remove_attach" title="${STR_REMOVE}"> X </a>&nbsp;&nbsp;</span>
       <!-- END row -->
     </div>
   </div>
@@ -75,7 +70,7 @@
     <label for="attachfile[]" class="control-label">${STR_FORM_ATTACH_FILE}:</label>
     <div class="controls">
       <div id="loadfile_0">
-        <input type="file" name="attachfile[]" class="input" id="file_0_input" onChange="add_attach_file('loadfile', '1'); return false;">
+        <input type="file" name="attachfile[]" class="input" multiple="true">
       </div>
     </div>
   </div>
@@ -91,10 +86,9 @@
   <div class="form-group">
     <label for="exampleInputFile">${STR_FORM_PRIORITY}:</label>
     <div class="controls">
-      <label> <input type="radio" name="prior" value="3"
-        <!-- IF '${PRIOR3_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_NORMAL} </label>
-      <label> <input type="radio" name="prior" value="2" <!-- IF '${PRIOR2_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_LOW} </label>
-      <label> <input type="radio" name="prior" value="1" <!-- IF '${PRIOR1_CHECKED}' != '' -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_HIGH} </label>
+      <label> <input type="radio" name="prior" value="3" <!-- IF '${PRIOR}' == 3 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_NORMAL} </label>
+      <label> <input type="radio" name="prior" value="2" <!-- IF '${PRIOR}' == 2 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_LOW} </label>
+      <label> <input type="radio" name="prior" value="1" <!-- IF '${PRIOR}' == 1 -->checked="checked"<!-- END IF -->> ${STR_FORM_PRIORITY_HIGH} </label>
     </div>
   </div>
   <div class="form-group">
@@ -144,20 +138,18 @@
         success: function(data){
           var alert_msg = '';
 
-          if(data.result == 'success'){
+          if (data.result == 'success'){
             alert_msg += '<div class="alert alert-success alert-dismissable">';
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>';
-             alert_msg += data.msg;
+            alert_msg += data.msg;
             alert_msg += '</div>';
-          }
-          else if(data.result == 'error'){
+          } else if (data.result == 'error'){
             alert_msg += '<div class="alert alert-danger alert-dismissable">';
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>';
             alert_msg += '<strong>${STR_ERROR}!</strong>';
             alert_msg += data.msg;
             alert_msg += '</div>';
-          }
-          else if(data.result == 'errors'){
+          } else if (data.result == 'errors'){
             alert_msg += '<div class="alert alert-danger alert-dismissable">';
             alert_msg += '<button class="close" aria-hidden="true" data-dismiss="alert">×</button>';
             alert_msg += '<strong><h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4></strong>';

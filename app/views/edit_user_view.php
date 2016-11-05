@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,29 +10,27 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
-	$errors = array();
+$errors = array();
 
+if (Core_Array::getRequest('action')) {
 	$name = htmlspecialchars(trim(Core_Array::getPost('name')));
 	$email = strtolower(trim(Core_Array::getPost('email')));
 	
 	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_email');
 	if (!empty($email) && Pnl::check_email($email)) $errors[] = core::getLanguage('error', 'wrong_email');
 	
-	if (count($errors) == 0){
+	if (empty($errors)) {
 		$fields = array();
 		$fields['name'] = $name;
 		$fields['email'] = $email;
@@ -40,7 +38,7 @@ if (Core_Array::getRequest('action')){
 		if ($data->editUser($fields, Core_Array::getPost('id_user'), Core_Array::getPost('id_cat'))){
 			header("Location: ./?t=subscribers");
 			exit;	
-		} else $alert_error = core::getLanguage('error', 'edit_user');
+		} else $errors[] = core::getLanguage('error', 'edit_user');
 	}
 }
 
@@ -49,11 +47,7 @@ $tpl->assign('TITLE', core::getLanguage('title', 'edit_user'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'edit_user'));
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-
-if (isset($errors) && count($errors) > 0){
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			

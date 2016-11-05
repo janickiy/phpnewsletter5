@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,21 +10,20 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
+$errors = array();
 
+if (Core_Array::getRequest('action')){
 	$fields = Array();
 
 	$fields['language'] = trim(Core_Array::getRequest('language'));
@@ -32,6 +31,7 @@ if (Core_Array::getRequest('action')){
 	$fields['list_owner'] = trim(Core_Array::getRequest('list_owner'));
 	$fields['email_name'] = trim(Core_Array::getRequest('email_name'));
 	$fields['return_path'] = trim(Core_Array::getRequest('return_path'));
+	$fields['path'] = trim(Core_Array::getRequest('path'));
 	$fields['show_email'] = Core_Array::getRequest('show_email') == 'on' ? "yes" : "no";
 	$fields['organization'] = trim(Core_Array::getRequest('organization'));
 	$fields['smtp_host'] = trim(Core_Array::getRequest('smtp_host'));
@@ -57,10 +57,17 @@ if (Core_Array::getRequest('action')){
 	$fields['require_confirmation'] = Core_Array::getRequest('require_confirmation') == 'on' ? "yes" : "no";
 	$fields['unsublink'] = trim(Core_Array::getRequest('unsublink'));
 	$fields['limit_number'] = trim((int)Core_Array::getRequest('limit_number'));
-	if(Core_Array::getRequest('interval_type') == '1') { $fields['interval_type'] = 'm'; }
-	else if(Core_Array::getRequest('interval_type') == '2') { $fields['interval_type'] = 'h'; }
-	else if(Core_Array::getRequest('interval_type') == '3') { $fields['interval_type'] = 'd'; }
-	else { $fields['interval_type'] = 'no'; }
+
+	if (Core_Array::getRequest('interval_type') == '1') {
+		$fields['interval_type'] = 'm';
+	} elseif (Core_Array::getRequest('interval_type') == '2') {
+		$fields['interval_type'] = 'h';
+	} elseif (Core_Array::getRequest('interval_type') == '3') {
+		$fields['interval_type'] = 'd';
+	} else {
+		$fields['interval_type'] = 'no';
+	}
+
 	$fields['interval_number'] = trim((int)Core_Array::getRequest('interval_number'));
 	$fields['limit_number'] = Core_Array::getRequest('limit_number');
 	$fields['precedence'] = Core_Array::getRequest('precedence');
@@ -76,7 +83,10 @@ if (Core_Array::getRequest('action')){
 	if ($data->updateSettings($fields))
 		$success = core::getLanguage('msg', 'changes_added');
 	else
-		$error = core::getLanguage('error', 'web_apps_error');
+		$errors[] = core::getLanguage('error', 'web_apps_error');
+	
+	header('Location: ./?t=settings');
+	exit;
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'settings'));
@@ -88,20 +98,28 @@ include_once core::pathTo('extra', 'top.php');
 //menu
 include_once core::pathTo('extra', 'menu.php');
 
-$tpl->assign('STR_STOPMAILING', core::getLanguage('str', 'stopmailing'));
-
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 	
-if (isset($success)){
+if (isset($success)) {
 	$tpl->assign('MSG_ALERT', $success);
 }
 
 //value
 $tpl->assign('OPTION_LANG', core::getSetting('language'));
 $tpl->assign('EMAIL', core::getSetting('email'));
+$tpl->assign('PATH', core::getSetting('path') == NULL ? "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() : core::getSetting('path'));
 $tpl->assign('LIST_OWNER', core::getSetting('list_owner'));
 $tpl->assign('SHOW_EMAIL', core::getSetting('show_email'));
 $tpl->assign('SUBSCRIBER_NOTIFY', core::getSetting('newsubscribernotify'));
@@ -149,13 +167,15 @@ $tpl->assign('SET_SHOW_EMAIL', core::getLanguage('str', 'set_show_email'));
 $tpl->assign('SET_SUBSCRIBER_NOTIFY', core::getLanguage('str', 'set_subscriber_notify'));
 $tpl->assign('SET_EMAIL_NAME', core::getLanguage('str', 'set_email_name'));
 
-if(core::getSetting('email_name') == '')
-	$tpl->assign('EMAIL_NAME', $_SERVER['SERVER_NAME']);
+$email_name = core::getSetting('email_name');
+
+if (empty($email_name))
+    $tpl->assign('EMAIL_NAME', $_SERVER['SERVER_NAME']);
 else
-	$tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
+    $tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
 $tpl->assign('SET_ORGANIZATION', core::getLanguage('str', 'set_organization'));
-$tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('') ['organization']));	
+$tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('organization')));
 $tpl->assign('SET_SUBJECT_TEXTCONFIRM', core::getLanguage('str', 'set_subject_textconfirm'));
 $tpl->assign('SET_TEXT_CONFIRMATION', core::getLanguage('str', 'set_text_confirmation'));
 $tpl->assign('SET_REQUIRE_CONFIRMATION', core::getLanguage('str', 'set_require_confirmation'));
@@ -195,6 +215,7 @@ $tpl->assign('SET_HOW_TO_SEND_OPTION_1', core::getLanguage('str', 'set_how_to_se
 $tpl->assign('SET_HOW_TO_SEND_OPTION_2', core::getLanguage('str', 'set_how_to_send_option_2'));
 $tpl->assign('SET_HOW_TO_SEND_OPTION_3', core::getLanguage('str', 'set_how_to_send_option_3'));
 $tpl->assign('SET_SENDMAIL_PATH', core::getLanguage('str', 'set_sendmail'));
+$tpl->assign('SET_PATH', core::getLanguage('str', 'set_path'));
 $tpl->assign('SET_SLEEP', core::getLanguage('str', 'set_sleep'));
 $tpl->assign('SET_RANDOM', core::getLanguage('str', 'set_random'));
 $tpl->assign('SET_ADD_DKIM', core::getLanguage('str', 'set_add_dkim'));
@@ -210,14 +231,15 @@ $temp = $data->getCharsetList();
 
 asort($temp);
 
-$option = '';
 foreach($temp as $key => $value){
-	$selected = ($key == core::getSetting('id_charset') ? ' selected="selected"' : "");
-	$option .= '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+	$rowBlock = $tpl->fetch('charsetlist_row');
+	$rowBlock->assign('KEY', $key);
+	$rowBlock->assign('ID_CHARSET', core::getSetting('id_charset'));
+	$rowBlock->assign('VALUE', $value);
+	$tpl->assign('charsetlist_row', $rowBlock);
 }
 
-$tpl->assign('OPTION', $option);
-$tpl->assign('SET_CONTENT_TYPE', core::getLanguage('str', 'set_content_type') );
+$tpl->assign('SET_CONTENT_TYPE', core::getLanguage('str', 'set_content_type'));
 $tpl->assign('CONTENT_TYPE', core::getSetting('content_type'));
 
 // footer

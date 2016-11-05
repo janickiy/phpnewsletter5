@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,12 +12,19 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Update
 {
-	public $currenversion = null;
-	
+	private $language;
+	private $url = 'http://license.janicky.com/';
+	private $currenversion;
+
+	public function __construct($language, $currenversion, $ip)
+	{
+		$this->language = $language;
+		$this->currenversion = $currenversion;
+	}
+
 	public function checkNewVersion()
 	{
-		$str = $this->getDataNewVersion();		
-		$newversion = $this->getVersion($str);
+		$newversion = $this->getVersion();
 		
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $newversion, $out2);
@@ -31,51 +38,89 @@ class Update
 			return false;
 	}
 
-	public function getDataNewVersion() 
-	{ 
-		$headers = "GET /scripts/index.php?s=newsletter&version=" . $this->currenversion . " HTTP/1.0\r\n";
-		$headers .= "Host: janicky.com\r\n";
-		if (isset($_SERVER['HTTP_USER_AGENT'])) $headers .= "User-Agent: " . $_SERVER['HTTP_USER_AGENT'] . "\r\n";
-		$headers .= "Accept: */*\r\n";
-		$headers .= "Accept-Charset: utf-8;q=0.7,*;q=0.7\r\n";
-		if (isset($_SERVER['HTTP_REFERER'])) $headers .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\r\n";
-		$headers .= "Connection: Close\r\n\r\n";
+	public function getUrlInfo()
+	{
+		return $this->url . '?id=1&version=' . $this->currenversion . '&lang=' . $this->language . '&ip=' . $this->getIP();
+	}
 
-		$out = '';
-		
-		$fp = @fsockopen('janicky.com', 80, $errno, $errstr, 30);
+	public function getDataNewVersion($url)
+	{
+		$ch = curl_init();
 
-		fwrite($fp, $headers);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0); 
+		curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_URL, $url);
 
-		while (!feof($fp))
-		{
-			$out .= fgets($fp, 1024);
-		}
-		
-		return $out; 
+		$data = curl_exec($ch);
+		curl_close($ch);
+
+		return json_decode($data, true);
+	}
+
+	public function checkTree()
+	{
+		$newversion = $this->getVersion();
+
+		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
+		preg_match("/(\d+)\.(\d+)\.(\d+)/", $newversion, $out2);
+
+		if($out1[1] < $out1[2])
+			return false;
+		else
+			return true;
 	}
 	
 	public function getVersion()
 	{
-		$str = $this->getDataNewVersion(); 	
-		preg_match("/<version>([^<]+)<\/version>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['version'];
 	}
 
 	public function getDownloadLink()
 	{
-		$str = $this->getDataNewVersion(); 
-		preg_match("/<download>([^<]+)<\/download>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['download'];
 	}
 	
 	public function getCreated()
 	{
-		$str = $this->getDataNewVersion(); 
-		preg_match("/<created>([^<]+)<\/created>/i", $str, $out);
-		
-		return $out[1];
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['created'];
 	}
+
+	public function getUpdate()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['update'];
+	}
+
+	public function getUpgradeVersion()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['upgrade_version'];
+	}
+
+	public function getMessage()
+	{
+		$out = $this->getDataNewVersion($this->getUrlInfo());
+		return $out['message'];
+	}
+	
+	public function getIP() {
+        if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+            $ip = getenv("HTTP_CLIENT_IP");
+        elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+            $ip = getenv("HTTP_X_FORWARDED_FOR");
+        elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+            $ip = getenv("REMOTE_ADDR");
+        elseif (! empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+            $ip = $_SERVER['REMOTE_ADDR'];
+        else
+            $ip = "unknown";
+
+        return ($ip);
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -11,7 +11,7 @@
 define('LETTER', TRUE);
 define('SYS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-require_once SYS_ROOT."bootstrap.php";
+require_once SYS_ROOT . "bootstrap.php";
 require_once core::pathTo('core', 'route.php');
 
 // check install
@@ -28,8 +28,8 @@ if (is_file(SYS_ROOT . $cmspaths['config'] . '/config_db.php') && is_dir(SYS_ROO
     echo "</style>\n";
     echo "</head>\n";
     echo "<body>\n";
-    echo '<p><a target="_blank" href="' .core::getLanguage('', '')["str"]["url_info"] . '">PHP Newsletter</a> | ';
-    echo "<p>" . str_replace('%URL%', SYS_ROOT . 'install/',core::getLanguage('', '')["str"]["install_msg"]) . "</p>\n";
+    echo '<p><a target="_blank" href="' . core::getLanguage('str', 'url_info') . '">PHP Newsletter</a> | ';
+    echo "<p>" . str_replace('%URL%', "http://" . $_SERVER["SERVER_NAME"] . Pnl::root(). "install", core::getLanguage('str', 'install_msg')) . "</p>\n";
     echo "</body>\n";
     echo '</html>';
 

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,14 +10,12 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
@@ -34,13 +32,14 @@ include_once core::pathTo('extra', 'menu.php');
 
 $tpl->assign('RETURN_BACK', core::getLanguage('str', 'return_back'));
 
+$errors = array();
+
 if (Core_Array::getGet('ip')){
     $sock = @fsockopen("whois.ripe.net", 43, $errno, $errstr);
 
-    if (!$sock){
-        $error = $errno($errstr);
-    }
-    else{
+    if (!$sock) {
+        $errors[] = $errno($errstr);
+    } else {
         $whoisBlock = $tpl->fetch('whois');
         $whoisBlock->assign('TH_TABLE_IP_INFO', core::getLanguage('str', 'ip_info'));
 
@@ -54,13 +53,22 @@ if (Core_Array::getGet('ip')){
 
         $tpl->assign('whois', $whoisBlock);
     }
-}
-else{
-    $error = core::getLanguage('error', 'service_unavailable');
+} else {
+    $errors[] = core::getLanguage('error', 'service_unavailable');
 }
 
-if (isset($error)) {
-    $tpl->assign('ERROR_ALERT', $error);
+//alert
+if (!empty($errors)) {
+    $errorBlock = $tpl->fetch('show_errors');
+    $errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+    foreach($errors as $row){
+        $rowBlock = $errorBlock->fetch('row');
+        $rowBlock->assign('ERROR', $row);
+        $errorBlock->assign('row', $rowBlock);
+    }
+
+    $tpl->assign('show_errors', $errorBlock);
 }
 
 //footer

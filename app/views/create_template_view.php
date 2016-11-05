@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,31 +10,29 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
-	$error = array();
+$errors = array();
 
+if (Core_Array::getRequest('action')) {
 	$name = trim(Core_Array::getPost('name'));
 	$body = trim(Core_Array::getPost('body'));
 	
-	if (empty($name)) $error[] = core::getLanguage('error', 'empty_subject');
-	if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
+	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_subject');
+	if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 	
-	if (count($error) == 0){
+	if (empty($errors)) {
 		$fields = array();
-		$fields['id_template'] = 0; 
+		$fields['id_template'] = 0;
 		$fields['name'] = $name;
 		$fields['body'] = $body;
 		$fields['prior'] = (int)Core_Array::getPost('prior');
@@ -44,9 +42,8 @@ if (Core_Array::getRequest('action')){
 		if ($data->addNewTemplate($fields)){
 			header("Location: ./");
 			exit();
-		}
-		else{
-			$alert_error =  core::getLanguage('error', 'web_apps_error');
+		} else {
+			$errors[] =  core::getLanguage('error', 'web_apps_error');
 		}	
 	}
 }
@@ -62,15 +59,11 @@ include_once core::pathTo('extra', 'menu.php');
 
 
 // alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
-}
-	
-if (isset($error) && count($error) > 0){
+if (!empty($errors)) {
 	$errorBlock = $tpl->fetch('show_errors');
 	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 			
-	foreach($error as $row){
+	foreach($errors as $row) {
 		$rowBlock = $errorBlock->fetch('row');
 		$rowBlock->assign('ERROR', $row);
 		$errorBlock->assign('row', $rowBlock);
@@ -100,15 +93,15 @@ $tpl->assign('CONTENT', Core_Array::getPost('body'));
 $tpl->assign('ID_TEMPLATE', Core_Array::getPost('id_template'));
 
 if (Core_Array::getRequest('prior') == 1)
-	$tpl->assign('PRIOR1_CHECKED', 1);
-else if(Core_Array::getRequest('prior') == 2)
-	$tpl->assign('PRIOR2_CHECKED', 2);
+	$tpl->assign('PRIOR', 1);
+elseif (Core_Array::getRequest('prior') == 2)
+	$tpl->assign('PRIOR', 2);
 else 
-	$tpl->assign('PRIOR3_CHECKED', 3);
+	$tpl->assign('PRIOR', 3);
 
 $arr = $data->getCategoryOptionList();
 
-if ($arr){
+if ($arr) {
 	$tpl->assign('POST_ID_CAT', Core_Array::getPost('id_cat'));
 	$tpl->assign('STR_SEND_TO_ALL', core::getLanguage('str', 'send_to_all'));
 

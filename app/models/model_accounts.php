@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,7 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_accounts extends Model
 {
-    public function changePassword( $password)
+    public function changePassword($password)
     {
         $password = md5(trim($password));
         $query = "UPDATE " . core::database()->getTableName('aut') . " SET password='".$password."'";

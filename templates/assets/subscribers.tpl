@@ -11,14 +11,14 @@ function CheckAll_Activate(Element,Name)
 		var m = 0;
 
 		for(var i = 1; i < thisCheckBoxes.length; i++){
-			if(thisCheckBoxes[i].name == Name){
+			if (thisCheckBoxes[i].name == Name){
 				thisCheckBoxes[i].checked = Element.checked;
-				if(thisCheckBoxes[i].checked == true) m++;
-				if(thisCheckBoxes[i].checked == false) m--;
+				if (thisCheckBoxes[i].checked == true) m++;
+				if (thisCheckBoxes[i].checked == false) m--;
 			}
 		}
 
-		if(m > 0) { document.getElementById("apply").disabled = false; }
+		if (m > 0) { document.getElementById("apply").disabled = false; }
 		else { document.getElementById("apply").disabled = true;  }
 	}
 }
@@ -29,10 +29,10 @@ function Count_checked()
 	var m = 0;
 
 	for(var i = 0; i < All.elements.length; ++i){
-		if(All.elements[i].checked) { m++; }
+		if (All.elements[i].checked) { m++; }
 	}
 
-	if(m > 0) { document.getElementById("apply").disabled = false; }
+	if (m > 0) { document.getElementById("apply").disabled = false; }
 	else { document.getElementById("apply").disabled = true; }
 }
 	
@@ -47,26 +47,35 @@ function PnumberChange()
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
-
-
-<div class="BtnPanelIcon">
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_ADD_USER}" href="./?t=add_user"> <span class="fa fa-user-plus fa-2x"></span> <span class="IconText">${STR_ADD_USER}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_REMOVE_SUBSCRIBERS}" onclick="return confirm('${ALERT_CLEAR_ALL}');" href="./?t=subscribers&remove=all"> <span class="fa fa-trash-o fa-2x"></span> <span class="IconText">${STR_REMOVE_ALL_SUBSCRIBERS}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_IMPORT_SUBSCRIBERS}" href="./?t=import"> <span class="fa fa-download fa-2x"></span> <span class="IconText">${STR_IMPORT_USER}</span> </a>
-  <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_EXPORT_SUBSCRIBERS}" href="./?t=export"> <span class="fa fa-upload fa-2x"></span> <span class="IconText">${STR_EXPORT_USER}</span> </a>
+<!-- IF '${MSG_ALERT}' != '' -->
+<div class="alert alert-success alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+  ${MSG_ALERT}
 </div>
-
-
-<form class="form-inline" style="margin-bottom: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
-  <input type="hidden" name="task" value="subscribers">
-  <div class="form-group">
-    <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
-    {this.value = '';}" onblur="if (this.value == '')
-        {this.value = '${FORM_SEARCH_NAME}';}" id="story" name="search" value="${FORM_SEARCH_NAME}">
+<!-- END IF -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="BtnPanelIcon">
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_ADD_USER}" href="./?t=add_user"> <span class="fa fa-user-plus fa-2x"></span> <span class="IconText">${STR_ADD_USER}</span> </a>
+     <a class="btn btn-outline btn-danger btn-lg" title="${PROMPT_REMOVE_SUBSCRIBERS}" onclick="return confirm('${ALERT_CLEAR_ALL}');" href="./?t=subscribers&remove=all"> <span class="fa fa-trash-o fa-2x"></span> <span class="IconText">${STR_REMOVE_ALL_SUBSCRIBERS}</span> </a>
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_IMPORT_SUBSCRIBERS}" href="./?t=import"> <span class="fa fa-download fa-2x"></span> <span class="IconText">${STR_IMPORT_USER}</span> </a>
+     <a class="btn btn-outline btn-default btn-lg" title="${PROMPT_EXPORT_SUBSCRIBERS}" href="./?t=export"> <span class="fa fa-upload fa-2x"></span> <span class="IconText">${STR_EXPORT_USER}</span> </a>
+    </div>
   </div>
-  <input class="btn btn-info" type="submit" value="${BUTTON_FIND}" id="searchsubmit">
-</form>
-
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <form class="form-inline" style="margin-bottom: 20px; margin-top: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
+     <input type="hidden" name="t" value="subscribers">
+       <div class="form-group">
+       <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
+        {this.value = '';}" onblur="if (this.value == '')
+        {this.value = '${FORM_SEARCH_NAME}';}" id="story" name="search" value="${FORM_SEARCH_NAME}">
+       </div>
+      <input class="btn btn-info" type="submit" value="${BUTTON_FIND}" id="searchsubmit">
+    </form>
+  </div>
+</div>
 <!-- BEGIN show_return_back -->
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- END show_return_back -->
@@ -84,7 +93,7 @@ function PnumberChange()
 <!-- END IF -->
 <!-- BEGIN row -->
 <form class="form-horizontal" action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 3){return confirm('${ALERT_CONFIRM_REMOVE}');}" method="post">
-  <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" border="0" cellspacing="0" cellpadding="0" width="100%">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <th width="10px"><input type="checkbox" title="${STR_CHECK_ALLBOX}" onclick="CheckAll_Activate(this,'activate[]');"></th>
@@ -98,14 +107,14 @@ function PnumberChange()
     </thead>
     <tbody>
       <!-- BEGIN column -->
-      <tr class="<!-- IF '${STATUS_CLASS}' == 'noactive' --> error<!-- END IF -->">
+      <tr <!-- IF '${STATUS_CLASS}' == 'noactive' -->class="danger"<!-- END IF -->>
         <td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${STR_CHECK_BOX}" value="${ID_USER}" name="activate[]"></td>
-        <td style="vertical-align: middle;"${NAME}</td>
+        <td style="vertical-align: middle;">${NAME}</td>
         <td style="vertical-align: middle;">${EMAIL}</td>
         <td style="vertical-align: middle;">${PUTDATE_FORMAT}</td>
         <td style="vertical-align: middle;"><a title="${PROMPT_IP_INFO}" href="./?t=whois&ip=${IP}">${IP}</a></td>
         <td style="vertical-align: middle;">${STR_STAT}</td>
-        <td style="vertical-align: middle;"><a class="btn btn-outline btn-default" href="./?t=edit_user&id_user=${ID_USER}" title="${STR_EDIT}"> <i class="fa fa-edit"></i>${STR_EDIT}</a> <a class="btn btn-outline btn-danger" href="./?t=subscribers&remove=${ID_USER}" title="${STR_REMOVE}"> <i class="fa fa-trash-o"></i> ${STR_REMOVE} </a>
+        <td style="vertical-align: middle;"><a class="btn btn-outline btn-default" href="./?t=edit_user&id_user=${ID_USER}" title="${STR_EDIT}"> <i class="fa fa-edit"></i></a> <a class="btn btn-outline btn-danger" href="./?t=subscribers&remove=${ID_USER}" title="${STR_REMOVE}"> <i class="fa fa-trash-o"></i></a>
 		</td>
       </tr>
       <!-- END column -->
@@ -114,7 +123,6 @@ function PnumberChange()
   <!-- BEGIN pagination -->
   <div class="row">
     <div class="col-sm-6">
-
       <div class="dataTables_length">
         <label>
           ${STR_PNUMBER}: <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">
@@ -127,11 +135,8 @@ function PnumberChange()
           </select>
         </label>
       </div>
-
     </div>
-
     <div class="col-sm-6">
-
       <div class="dataTables_paginate paging_simple_numbers">
         <ul class="pagination">
           <!-- IF '${PERVPAGE}' != '' -->
@@ -162,17 +167,12 @@ function PnumberChange()
           <li class="paginate_button next">${NEXT}</li>
           <!-- END IF -->
         </ul>
-
       </div>
-
     </div>
   </div>
   <!-- END pagination -->
-
   <div class="row">
     <div class="col-sm-12">
-
-
       <div class="form-inline">
         <div class="control-group">
           <select id="select_action" class="span3 form-control" name="action">
@@ -188,7 +188,6 @@ function PnumberChange()
     </div>
   </div>
 </form>
-
 <p>${STR_NUMBER_OF_SUBSCRIBERS}: ${NUMBER_OF_SUBSCRIBERS}</p>
 <!-- END row -->
 <!-- IF '${EMPTY_LIST}' != '' -->

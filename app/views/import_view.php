@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,39 +10,33 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-set_time_limit(0);
-
 session_start();
 
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$error = '';
+$errors = array();
 
-if (Core_Array::getRequest('action')){
-
-	if ($_FILES['file']['tmp_name']){
-
+if (Core_Array::getRequest('action')) {
+	if ($_FILES['file']['tmp_name']) {
 		$ext = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 	
-		if ($ext == 'xls' || $ext == 'xlsx'){
+		if ($ext == 'xls' || $ext == 'xlsx') {
 			$result = $data->importFromExcel(Core_Array::getPost('id_cat'));
-		}
-		else{	
+		} else {
 			$result = $data->importFromText(Core_Array::getPost('id_cat'));
 		}
 		
-		if (!$result) $error = core::getLanguage('error', 'no_import');
-	}
-	else $error = core::getLanguage('error', 'no_import_file');	
+		if (!$result) $errors[] = core::getLanguage('error', 'no_import');
+	} else $errors[] = core::getLanguage('error', 'no_import_file');
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'import'));
@@ -84,7 +78,7 @@ $temp[] = 'utf-8';
 
 $charset = array();
 
-foreach($temp as $row){
+foreach ($temp as $row) {
 	$charset[$row] = Pnl::charsetlist($row);
 }
 
@@ -92,15 +86,24 @@ asort($charset);
 
 $option = '';
 
-foreach($charset as $key => $value){
+foreach ($charset as $key => $value) {
 	$option .= '<option value="'.$key.'">'.$value.'</option>';
 }
 
 $tpl->assign('STR_BACK', core::getLanguage('str', 'return_back'));
 
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 if (isset($result)){
@@ -116,7 +119,7 @@ $tpl->assign('OPTION', $option);
 $tpl->assign('STR_CHARSET', core::getLanguage('str', 'charset'));
 $tpl->assign('STR_NO', core::getLanguage('str', 'no'));
 
-foreach ($data->getCategoryList() as $row){
+foreach ($data->getCategoryList() as $row) {
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('ID_CAT', $row['id']);
 	$rowBlock->assign('NAME', $row['name']);

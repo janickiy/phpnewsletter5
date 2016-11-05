@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,25 +10,25 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(core::session()->get('id'));
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
+
+$errors = array();
 
 if (Core_Array::getRequest('remove')){
 
 	if ($data->removeCategory(Core_Array::getRequest('remove')))
 		$success = core::getLanguage('msg', 'category_removed');
 	else
-		$error = core::getLanguage('error', 'web_apps_error');
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 }
 
 $tpl->assign('TITLE_PAGE', core::getLanguage('title_page', 'category'));
@@ -36,10 +36,19 @@ $tpl->assign('TITLE', core::getLanguage('title', 'category'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'category'));
 
 //alert
-if (isset($error)) {
-	$tpl->assign('ERROR_ALERT', $error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row) {
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
-	
+
 if (isset($success)){
 	$tpl->assign('MSG_ALERT', $success);
 }
@@ -54,7 +63,7 @@ $tpl->assign('TH_TABLE_NAME', core::getLanguage('str', 'name'));
 $tpl->assign('TH_TABLE_NUMBER_SUBSCRIBERS', core::getLanguage('str', 'number_subscribers'));
 $tpl->assign('TH_TABLE_ACTION', core::getLanguage('str', 'action'));
 
-foreach ($data->getCategoryArr() as $row){
+foreach ($data->getCategoryArr() as $row) {
 	$count = $data->getCountSubscription($row['id_cat']);
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('NAME', $row['name']);

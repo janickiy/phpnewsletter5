@@ -56,14 +56,9 @@ $language["title_page"]["accounts"] = "Учетные записи";
 $language["title"]["accounts"] = "Учетные записи";
 $language["info"]["accounts"] = "";
 
-
 $language["title_page"]["edit_account"] = "Редактирование учетной записи";
 $language["title"]["edit_account"] = "Редактирование учетной записи";
 $language["info"]["edit_account"] = "";
-
-
-
-
 
 $language["title_page"]["update"] = "Обновление";
 $language["title"]["update"] = "Обновление";
@@ -82,11 +77,18 @@ $language["title"]["error_authorization"] = "Неверные данные ав�
 $language["title"]["authorization"] = "Авторизация";
 $language["title"]["subscribe"] = "Подписаться";
 
-$language["title_page"]["page404"] = 'Страница не найдена 404';
+$language["title_page"]["page403"] = 'Доступ запрещен';
+$language["title"]["page403"] = 'Доступ запрещен 403';
+
+$language["title_page"]["page404"] = 'Страница не найдена';
 $language["title"]["page404"] = 'Страница не найдена 404';
 
-$language["title_page"]["page500"] = 'Ошибка сервера 500';
+$language["title_page"]["page500"] = 'Ошибка сервера';
 $language["title"]["page500"] = 'Ошибка сервера 500';
+
+$language["title_page"]["expired"] = 'Срок действия лицензионного ключа истек';
+$language["title"]["expired"] = 'Срок действия лицензионного ключа истек';
+$language["info"]["expired"] = '';
 
 $language["title_page"]["change_password"] = 'Смена пароля';
 $language["title"]["change_password"] = 'Смена пароля';
@@ -196,7 +198,7 @@ $language["str"]["import_user"] = "Импорт";
 $language["str"]["export_user"] = "Экспорт";
 $language["str"]["send_test_email"] = "Отправить себе тестовое письмо";
 $language["str"]["supported_tags_list"] = "%NAME% - имя подписчика, %UNSUB% - ссылка для удаления рассылки, %SERVER_NAME% - адрес сайта";
-$language["str"]["update_warning"] = 'Доступна более новая версия %SCRIPTNAME% и вам предлагается её использовать. Новейшая версия %VERSION%, выпущена %CREATED%. <a href="%DOWNLOADLINK%">Скачать</a>';
+$language["str"]["update_warning"] = 'Доступна более новая версия %SCRIPTNAME% и вам предлагается её использовать. Новейшая версия %VERSION%, выпущена %CREATED%. <a href="%DOWNLOADLINK%">Скачать</a> %MESSAGE%';
 $language["str"]["warning"] = 'Внимание';
 $language["str"]["install_msg"] = 'Если PHP Newsletter уже установлен, то удалите папку <strong>install</strong>, иначе запустите <a href="%URL%">мастер установки</a>.';
 $language["str"]["url_info"] = 'http://janicky.com/php-scripts/pochtovaya-rassylka';
@@ -285,6 +287,7 @@ $language["str"]["set_theme"] = "Тема";
 $language["str"]["set_random"] = "Рандомизация подписчиков";
 $language["str"]["set_return_path"] = "Обратный адрес (Return-path)";
 $language["str"]["list_owner"] = "Email адрес организатора рассылки (List-Owner)";
+$language["str"]["set_path"] = "URL путь";
 $language["str"]["charutf8"] = "Юникод (UTF-8)";
 $language["str"]["iso88591"] = "Западноевропейская (ISO)";
 $language["str"]["iso88592"] = "Центральноевропейская (ISO)";
@@ -326,12 +329,9 @@ $language["str"]["login"] = "Логин";
 $language["str"]["role"] = "Роль";
 $language["str"]["action"] = "Действие";
 $language["str"]['required_fields'] = "обязательные поля";
-
-
-
-
-
-
+$language["str"]["dont_have_permission_to_access"] = "У вас нет разрешения для просмотра этого раздела";
+$language["str"]["demo_version_has_expired"] = '<p>Срок действия демо-версии истек. Чтобы пользоваться приложением приобретите лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
+$language["str"]["licensekey_has_expired"] = '<p>Срок действия лицензионного ключа истек. Чтобы пользоваться приложением приобретите новый лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";
@@ -375,12 +375,15 @@ $language["msg"]["no_updates"] = "Обновления отсутствуют. �
 $language["msg"]["php_doesnt_support_unzip_func"] = "Ошибка: Ваша версия PHP версия не поддерживает функцию UNZIP";
 $language["msg"]["files_unzipped_successfully"] = "Файлы успешно распакованы";
 $language["msg"]["directory_not_writeable"] = "Ошибка: Каталог не доступен для записи веб-сервером";
-$language["msg"]["has_no_zlib_support_enabled"] = "Ошибка: В вашай версии PHP не включена поддержка Zlib";
+$language["msg"]["no_zlib_support_enabled"] = "Ошибка: В вашай версии PHP не включена поддержка Zlib";
 $language["msg"]["cannot_read_zip_archive"] = "Ошибка: Невозможно прочитать .zip архив";
 $language["msg"]["error_unzipping_file"] = "Ошибка распаковки архива";
 $language["msg"]["update_not_available"] = "Обновление недоступно.";
 $language["msg"]["update_completed"] = "Обновление завершено.";
 $language["msg"]["account_removed"] = "Аккаунт удален";
+$language["msg"]["demo_version_will_expire"] = 'Срок действия демо версии истекает через %DAYS% дней';
+$language["msg"]["cannt_create_licensekey_file"] = "Ошибка: не могу создать файл лицензионного ключа sys/license_key! Пожалуйста, проверьте права доступа (CHMOD) для index.php";
+$language["msg"]["error_check_licensekey"] = "Ошибка проверки лицензионного ключа";
 
 $language["subject"]["notification_newuser"] = 'Зарегистрирован новый подписчик';
 $language["subject"]["subscription"] = "Подписка на рассылку";
@@ -420,6 +423,10 @@ $language["error"]["trial_license_has_expired"] = 'Срок действия п�
 $language["error"]["invalid_license"] = 'Лицензионный ключ недействительный. Чтобы продолжать использовать это приложение необходимо приобрести лицензионный ключ. <a href="%BUY_LICENSE_LINK%" target="_blank">Купить лицензионный ключ</a>';
 $language["error"]['login_isnt_entered'] = "Введите логин!";
 $language["error"]['login_already_exists'] = "Логин уже существует! Введите другой логин";
+$language["error"]["error_checking_license"] = "Ошибка проверки лицензии! Сервер недоступен.";
+$language["error"]["license_is_used"] = "Этот лицензионный ключ уже используется!";
+$language["error"]["license_not_found"] = "Лицензионный ключ не найден!";
+$language["error"]["enter_licensekey"] = "Введите лицензионный ключ!";
 
 //menu
 $language["menu"]["templates_title"] = "Email Шаблоны";

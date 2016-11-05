@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -21,6 +21,20 @@ class Pnl
             $RandCode .= substr($rand, rand(1, 15), 1);
 
         return $RandCode;
+    }
+
+    public static function error($msg)
+    {
+        echo "<!DOCTYPE html>\n";
+        echo "<html>\n";
+        echo "<head>\n";
+        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n";
+        echo "</head>\n";
+        echo "<body>\n";
+        echo "<p>" . $msg . "</p>\n";
+        echo "</body>\n";
+        echo "</html>";
+        exit();
     }
 
     public static function root() {
@@ -552,5 +566,46 @@ class Pnl
             return FALSE;
         else
             return TRUE;
+    }
+
+    static public function file_get_contents_curl($url, $timeout = 10)
+    {
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+
+        $data = curl_exec($ch);
+
+        curl_close($ch);
+
+        preg_match('/\{([^\}])+\}/',$data, $out);
+        return $out[0];
+    }
+
+    static public function sys_error_msg($msg)
+    {
+        $msg = str_replace('CANNT_CREATE_LICENSEKEY_FILE', core::getLanguage('msg', 'cannt_create_licensekey_file'), $msg);
+        $msg = str_replace('ERROR_CHECK_LICENSEKEY', core::getLanguage('msg', 'error_check_licensekey'), $msg);
+
+        return $msg;
+    }
+
+    static public function checkLicensekey($licensekey)
+    {
+        $domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
+        $url = 'http://license.janicky.com/?t=check_licensekey&licensekey=' . $licensekey . '&domain=' . $domain . '&s=phpnewsletter&version=' . VERSION . '';
+
+        $data = self::file_get_contents_curl($url, 5);
+
+        if ($data)  {
+            return json_decode($data, true);
+        } else {
+            return array('error' => 'ERROR_CHECKING_LICENSE');
+        }
     }
 }

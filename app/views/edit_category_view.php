@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,33 +10,31 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
 	$name = htmlspecialchars(trim(Core_Array::getRequest('name')));
 
 	if (empty($name)) $alert_error = core::getLanguage('error', 'empty_category_name');
-		
 	if (!isset($alert_error)){
 		$fields = array();
-		$fields['name'] = $_POST['name'];
+		$fields['name'] = $name;
 	
-		if ($data->editCategoryRow($fields)){
+		if ($data->editCategoryRow($fields, Core_Array::getPost('id_cat'))){
 			header("Location: ./?t=category");
 			exit;
-		}
-		else  $alert_error = core::getLanguage('error', 'edit_cat_name');
+		} else  $errors[] = core::getLanguage('error', 'edit_cat_name');
 	}
 }
 
@@ -51,8 +49,17 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
+if (!empty($errors)){
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS',  core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 //form
@@ -61,7 +68,7 @@ $tpl->assign('STR_NAME', core::getLanguage('str', 'name'));
 $tpl->assign('BUTTON', core::getLanguage('button', 'edit'));
 $tpl->assign('STR_RETURN_BACK', core::getLanguage('str', 'return_back'));
 
-$row = $data->getCategoryRow();
+$row = $data->getCategoryRow(Core_Array::getRequest('id_cat'));
 
 //value
 $tpl->assign('NAME', Core_Array::getPost('name') ?  $_POST['name'] : $row['name']);

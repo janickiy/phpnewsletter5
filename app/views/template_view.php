@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,18 +10,18 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
+
+$errors = array();
 
 if (Core_Array::getRequest('action')){
 	switch($_REQUEST['action']){
@@ -29,23 +29,23 @@ if (Core_Array::getRequest('action')){
 		
 			$fields['active'] = 'yes';
 			
-			if(!$data->changeStatusNewsLetter($fields)) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
-		break;
+			break;
 		
 		case 3:
 		
 			$fields['active'] = 'no';
 			
-			if(!$data->changeStatusNewsLetter($fields)) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 
-		break;
+			break;
 		
 		case 4:
 		
-			if(!$data->removeTemplate()) $alert_error = core::getLanguage('error', 'web_apps_error');
+			if(!$data->removeTemplate(Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
-		break;
+			break;
 		
 		default:
 		
@@ -56,10 +56,10 @@ if (Core_Array::getRequest('action')){
 
 if (Core_Array::getRequest('pos') == 'up' && is_numeric($_GET['id_template'])){
 	if ($data->upPosition(Core_Array::getRequest('id_template'))){
+		header("Location: ./");
 		exit;
-	}
-	else {
-		$alert_error = core::getLanguage('error', 'web_apps_error');
+	} else {
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 	}
 }
 
@@ -67,9 +67,8 @@ if (Core_Array::getRequest('pos') == 'down' && is_numeric($_GET['id_template']))
 	if ($data->downPosition(Core_Array::getRequest('id_template'))){
 		header("Location: ./");
 		exit;
-	}
-	else{
-		$alert_error = core::getLanguage('error', 'web_apps_error');
+	} else {
+		$errors[] = core::getLanguage('error', 'web_apps_error');
 	}	
 }
 
@@ -83,8 +82,17 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 //alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 $tpl->assign('TH_TABLE_ACTIVITY', core::getLanguage('str', 'activity'));
@@ -111,15 +119,12 @@ if ($arr){
 		
 		if($row['id_cat'] == 0) { $row['catname'] = core::getLanguage('str', 'general'); }
 
-		$active = $row['active'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
-        
 		$row['body'] = preg_replace('/<br(\s\/)?>/siU', "", $row['body']);
 		$row['body'] = Pnl::remove_html_tags($row['body']);
 		$row['body'] = preg_replace('/\n/sU', "", $row['body']);
 		$pos = strpos(substr($row['body'], 500), " ");
 		$srttmpend = strlen($row['body']) > 500 ? '...' : '';
-		$class_noactive = $row['active'] == 'no' ? ' error' : '';
-		$columnBlock->assign('CLASS_NOACTIVE', $class_noactive);
+		$columnBlock->assign('CLASS_NOACTIVE', $row['active']);
 		$columnBlock->assign('ROW_ID_TEMPLATE', $row['id_template']);
 		$columnBlock->assign('ROW_CONTENT', substr($row['body'], 0, 500 + $pos) . (isset($srttmpend) ?  $srttmpend : ''));
 		$columnBlock->assign('STR_SEND', core::getLanguage('str', 'send'));	
@@ -128,7 +133,7 @@ if ($arr){
 		$columnBlock->assign('ROW_POS', $row['pos']);
 		$columnBlock->assign('ROW_CATNAME', $row['catname']);	
 		$columnBlock->assign('ROW_TMPLNAME', $row['tmplname']);		
-		$columnBlock->assign('ROW_ACTIVE', $active);		
+		$columnBlock->assign('ROW_ACTIVE', $row['active'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no'));
 		
 		//assign modified column block back to row block
         $rowBlock->assign('column', $columnBlock);

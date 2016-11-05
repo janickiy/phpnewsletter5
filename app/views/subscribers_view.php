@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,53 +10,48 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 // require temlate class
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-if (Core_Array::getRequest('action')){
+$errors = array();
 
-	switch($_REQUEST['action']){
+if (Core_Array::getRequest('action')) {
+
+	switch($_REQUEST['action']) {
 		case 1:
-			if ($data->updateUsers( Core_Array::getRequest('activate'), 'active')){
+			if ($data->updateUsers( Core_Array::getRequest('activate'), 'active')) {
 				$success_alert = core::getLanguage('msg', 'selected_users_activated');
-			}
-			else{
-				$error_alert = core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] = core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 
 		case 2:
-
-			if ($data->updateUsers(Core_Array::getRequest('activate'), 'noactive')){
+			if ($data->updateUsers(Core_Array::getRequest('activate'), 'noactive')) {
 				$success_alert = core::getLanguage('msg', 'selected_users_deactivated');
-			}
-			else{
-				$error_alert = core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] = core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 
 		case 3:
-
-			if ($data->deleteUsers( Core_Array::getRequest('activate'))){
+			if ($data->deleteUsers( Core_Array::getRequest('activate'))) {
 				$success_alert =  core::getLanguage('msg', 'selected_users_deleted');
-			}
-			else {
-				$error_alert =  core::getLanguage('error', 'web_apps_error');
+			} else {
+				$errors[] =  core::getLanguage('error', 'web_apps_error');
 			}
 
-		break;
+			break;
 	}
 }
 
@@ -64,13 +59,12 @@ if (Core_Array::getRequest('remove') == 'all'){
 	if ($data->removeAllUsers())
 		$success_alert = core::getLanguage('msg', 'all_users_deleted');
 	else
-		$error_alert =  core::getLanguage('error', 'web_apps_error');	
-}
-else if(Core_Array::getRequest('remove') && is_numeric($_REQUEST['remove'])) {
+		$errors[] =  core::getLanguage('error', 'web_apps_error');
+} elseif (Core_Array::getRequest('remove') && is_numeric($_REQUEST['remove'])) {
 	if ($data->removeUser($_REQUEST['remove']))
 		$success_alert =   core::getLanguage('msg', 'selected_users_deleted');
 	else
-		$error_alert =   core::getLanguage('error', 'web_apps_error');
+		$errors[] =   core::getLanguage('error', 'web_apps_error');
 }
 
 $tpl->assign('TITLE_PAGE',  core::getLanguage('title_page', 'subscribers'));
@@ -87,11 +81,20 @@ $tpl->assign('SEARCH', $search);
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 
 //alert
-if(isset($error_alert)) {
-	$tpl->assign('ERROR_ALERT', $error_alert);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
-if(isset($success_alert)){
+if (isset($success_alert)){
 	$tpl->assign('MSG_ALERT', $success_alert);
 }
 
@@ -124,21 +127,19 @@ $strtmp = "name";
 $sort = '';
 
 foreach($order as $parametr => $field) {
-	if (isset($_GET[$parametr])){
+	if (isset($_GET[$parametr])) {
 		if ($_GET[$parametr] == "up"){
 			$_GET[$parametr] = "down";
 			$strtmp = $field;
 			$sort = "&" . $field . "=up";
 			$thclass[$parametr] = 'headerSortUp';
-		}
-		else{
+		} else {
 			$_GET[$parametr] = "up";
 			$strtmp = "" . $field . " DESC";
 			$sort = "&" . $field . "=down";
 			$thclass[$parametr] = 'headerSortDown';
 		}
-	}
-	else {
+	} else {
 		$_GET[$parametr] = "up";
 		$thclass[$parametr] = 'headerUnSort';
 	}
@@ -176,8 +177,7 @@ if ($arr){
 		if ($page - 1 > 0) $page1left = '<a href="./?t=subscribers&page=' . ($page - 1) . '' . $sort . '">'.($page - 1) . '</a>';
 		if ($page + 2 <= $number) $page2right = '<a href="./?t=subscribers&page=' . ($page + 2) . '' . $sort . '">' . ($page + 2) . '...</a>';
 		if ($page + 1 <= $number) $page1right = '<a href="./?t=subscribers&page=' . ($page + 1) . '' . $sort . '">' . ($page + 1) . '</a>';
-	}
-	else{
+	} else {
 		$number = $data->getTotal();
 		$page = $data->getPageNumber();
 
@@ -208,11 +208,10 @@ if ($arr){
 	
 	//show table
 	$rowBlock->assign('PAGENAV', $pagenav);
-	$rowBlock->assign('GET_NAME', Core_Array::getRequest('name'));
-	$rowBlock->assign('GET_EMAIL', Core_Array::getRequest('email'));
-	$rowBlock->assign('GET_TIME', Core_Array::getRequest('time'));
-	$rowBlock->assign('GET_STATUS', Core_Array::getRequest('status'));
-	
+	$rowBlock->assign('GET_NAME', $_GET['name']);
+	$rowBlock->assign('GET_EMAIL', $_GET['email']);
+	$rowBlock->assign('GET_TIME', $_GET['time']);
+	$rowBlock->assign('GET_STATUS', $_GET['status']);
 	$rowBlock->assign('TH_CLASS_NAME', $thclass["name"]);	
 	$rowBlock->assign('TH_CLASS_EMAIL', $thclass["email"]);	
 	$rowBlock->assign('TH_CLASS_TIME', $thclass["time"]);	
@@ -225,14 +224,10 @@ if ($arr){
 	$rowBlock->assign('TABLE_ADDED', core::getLanguage('str', 'added'));
 	$rowBlock->assign('TABLE_STATUS', core::getLanguage('str', 'status'));
 	$rowBlock->assign('TABLE_ACTION', core::getLanguage('str', 'action'));
-	
-	foreach($arr as $row){
+
+	foreach ($arr as $row) {
 		$columnBlock = $rowBlock->fetch('column');
-		$str_stat = $row['status'] == 'active' ?  core::getLanguage('str', 'activeuser'):  core::getLanguage('str', 'noactive');
-		$tr_status_class = $row['status'] == 'noactive' ? 'noactive' : '';
-		
-		$columnBlock->assign('STATUS_CLASS', $tr_status_class);
-		
+		$columnBlock->assign('STATUS_CLASS', $row['status'] == 'noactive' ? 'noactive' : '');
 		$columnBlock->assign('STR_CHECK_BOX', core::getLanguage('str', 'check_box'));
 		$columnBlock->assign('ID_USER', $row['id_user']);
 		$columnBlock->assign('NAME', $row['name']);
@@ -240,15 +235,14 @@ if ($arr){
 		$columnBlock->assign('PUTDATE_FORMAT', $row['putdate_format']);
 		$columnBlock->assign('IP', $row['ip']);
 		$columnBlock->assign('GETHOSTBYADDR', $row['ip']);
-		$columnBlock->assign('PROMPT_IP_INFO', core::getLanguage('prompt', 'ip_info'));			
-		
-		$columnBlock->assign('STR_STAT', $str_stat);		
+		$columnBlock->assign('PROMPT_IP_INFO', core::getLanguage('prompt', 'ip_info'));
+		$columnBlock->assign('STR_STAT', $row['status'] == 'active' ?  core::getLanguage('str', 'activeuser'):  core::getLanguage('str', 'noactive'));
 		$columnBlock->assign('STR_EDIT',  core::getLanguage('str', 'edit'));		
 		$columnBlock->assign('STR_REMOVE',  core::getLanguage('str', 'remove_user'));
 		$rowBlock->assign('column', $columnBlock);		
 	}
 	
-	if ($number > 1){
+	if ($number > 1) {
 		$paginationBlock = $rowBlock->fetch('pagination');
 		$paginationBlock->assign('STR_PNUMBER',  core::getLanguage('str', 'pnumber'));
 		$paginationBlock->assign('CURRENT_PAGE', '<a>' . $page . '</a>');
@@ -278,14 +272,12 @@ if ($arr){
 	$rowBlock->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
 	$rowBlock->assign('STR_APPLY', core::getLanguage('str', 'apply'));
 	$tpl->assign('row', $rowBlock);
-}
-else{
+} else {
 	if (!empty($search)) {
 		$notfoundBlock = $tpl->fetch('notfound');
 		$notfoundBlock->assign('MSG_NOTFOUND',   core::getLanguage('msg', 'notfound'));
 		$tpl->assign('notfound', $notfoundBlock);
-	}
-	else{
+	} else {
 		$tpl->assign('EMPTY_LIST', core::getLanguage('str', 'empty'));
 	}
 }

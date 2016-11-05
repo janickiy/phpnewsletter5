@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,35 +10,36 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
 	$name = trim(htmlspecialchars(Core_Array::getRequest('name')));
 
-	if (empty($name)) $alert_error = core::getLanguage('error', 'empty_category_name');
-	if (!empty($name) && $data->checkExistCatName($name)) $alert_error = core::getLanguage('error', 'cat_name_exist');
+	if (empty($name)) $errors[] = core::getLanguage('error', 'empty_category_name');
+	if (!empty($name) && $data->checkExistCatName($name)) $errors[] = core::getLanguage('error', 'cat_name_exist');
 	
-	if (!isset($alert_error)){
+	if (empty($errors)){
 		$fields = array();
 		$fields['id_cat'] = 0;
-		$fields['name'] = $_POST['name'];	
+		$fields['name'] = $name;
 	
 		if ($data->addNewCategory($fields)){
 			header("Location: ./?t=category");
 			exit();
-		}
-		else $alert_error = core::getLanguage('error', 'no_category_added') ;
+		} else {
+			$errors[] = core::getLanguage('error', 'no_category_added');
+		}		
 	}
 }
 
@@ -47,8 +48,17 @@ $tpl->assign('TITLE', core::getLanguage('title', 'add_category'));
 $tpl->assign('INFO_ALERT', core::getLanguage('info', 'add_category'));
 
 //error alert
-if (isset($alert_error)) {
-	$tpl->assign('ERROR_ALERT', $alert_error);
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($error as $row) {
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
 }
 
 include_once core::pathTo('extra', 'top.php');

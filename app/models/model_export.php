@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,11 +12,25 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_export extends Model
 {
+	public function getUserList($id_cat){
+		if ($id_cat) {
+			$temp = array();
+			foreach ($id_cat as $id) {
+				if (is_numeric($id)) {
+					$temp[] = $id;
+				}
+			}
 
-	public function getUserList(){
-		$query = "SELECT name,email FROM ".core::database()->getTableName('users')." WHERE status='active'";
+			$query = "SELECT u.name, u.email FROM " . core::database()->getTableName('users') . " u
+						LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
+						WHERE status='active' AND s.id_cat IN (" . implode(",", $temp) . ")
+						GROUP BY u.id_user";
+		}
+		else{
+			$query = "SELECT name, email FROM " . core::database()->getTableName('users') . " WHERE status='active'";
+		}
+
 		$result = core::database()->querySQL($query);
-		
 		return core::database()->getColumnArray($result);
 	}
 

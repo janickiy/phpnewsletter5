@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,24 +10,24 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (isset($_REQUEST['clear_log'])){
 	if ($data->clearLog())
 		$alert_success = core::getLanguage('msg', 'clear_log');
 	else
-		$alert_error = core::getLanguage('error', 'clear_log');				
+		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
 $order = array();
@@ -46,14 +46,12 @@ foreach($order as $parametr => $field){
 			$_GET[$parametr] = "down";
 			$strtmp = $field;
 			$thclass[$parametr] = 'headerSortDown';
-		}
-		else{
+		} else{
 			$_GET[$parametr] = "up";
 			$strtmp = "" . $field . " DESC";
 			$thclass[$parametr] = 'headerSortUp';
 		}
-	}
-	else {
+	} else {
 		$_GET[$parametr] = "up";
 		$thclass[$parametr] = 'headerUnSort';
 	}
@@ -91,16 +89,16 @@ if (Core_Array::getRequest('id_log')){
 	$blockDetailLog->assign('THCLASS_SUCCESS', $thclass["success"]);
 	$blockDetailLog->assign('THCLASS_READMAIL', $thclass["readmail"]);
 
-	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 10);
+	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 50);
 
 	if (is_array($arr)){
-		$blockDetailLog->assign('ID_LOG', Core_Array::getRequest('id_log'));
-		$blockDetailLog->assign('GET_NAME', Core_Array::getRequest('name'));
-		$blockDetailLog->assign('GET_EMAIL', Core_Array::getRequest('email'));
-		$blockDetailLog->assign('GET_CATNAME', Core_Array::getRequest('catname'));
-		$blockDetailLog->assign('GET_TIME', Core_Array::getRequest('time'));
-		$blockDetailLog->assign('GET_SUCCESS', Core_Array::getRequest('success'));
-		$blockDetailLog->assign('GET_READMAIL', Core_Array::getRequest('readmail'));
+		$blockDetailLog->assign('ID_LOG', $_GET['id_log']);
+		$blockDetailLog->assign('GET_NAME', $_GET['name']);
+		$blockDetailLog->assign('GET_EMAIL', $_GET['email']);
+		$blockDetailLog->assign('GET_CATNAME', $_GET['catname'] );
+		$blockDetailLog->assign('GET_TIME', $_GET['time']);
+		$blockDetailLog->assign('GET_SUCCESS', $_GET['success']);
+		$blockDetailLog->assign('GET_READMAIL', $_GET['readmail']);
 
 		foreach($arr as $row){
 			$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');  
@@ -121,15 +119,23 @@ if (Core_Array::getRequest('id_log')){
 	}
 	
 	$tpl->assign('DetailLog', $blockDetailLog);
-}
-else{
+} else {
 	$blockLogList = $tpl->fetch('LogList');	
 	
 	//alert error
-	if (isset($alert_error)) {
-		$blockLogList->assign('ERROR_ALERT', $alert_error);
+	if (!empty($errors)) {
+		$errorBlock = $tpl->fetch('show_errors');
+		$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+		foreach($errors as $row){
+			$rowBlock = $errorBlock->fetch('row');
+			$rowBlock->assign('ERROR', $row);
+			$errorBlock->assign('row', $rowBlock);
+		}
+
+		$tpl->assign('show_errors', $errorBlock);
 	}
-	
+
 	//alert success
 	if (isset($alert_success)){
 		$blockLogList->assign('MSG_ALERT', $alert_success);
@@ -184,7 +190,7 @@ else{
 	if ($page + 2 <= $number) $page2right = '<a href="./?t=log&page=' . ($page + 2) . '">' . ($page + 2) . '...</a>';
 	if ($page + 1 <= $number) $page1right = '<a href="./?t=log&page=' . ($page + 1) . '">' . ($page + 1) . '</a>';
 
-	if($number > 1){
+	if ($number > 1) {
 		$paginationBlock = $blockLogList->fetch('pagination');
 		$paginationBlock->assign('STR_PNUMBER', core::getLanguage('str', 'pnumber'));
 		$paginationBlock->assign('CURRENT_PAGE','<a>' . $page . '</a>');

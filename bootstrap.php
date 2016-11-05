@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,9 +10,9 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-//Error_Reporting(0); // set error reporting level
-define("DEBUG", 1);
-define('VERSION', '5.0.0');
+Error_Reporting(0); // set error reporting level
+define("DEBUG", 0);
+define('VERSION', '5.0.2');
 
 $cmspaths = array(
     'core' => 'sys/core',
@@ -32,10 +32,11 @@ require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
 require_once SYS_ROOT . $cmspaths['core'] . '/core.php';
 core::init($cmspaths);
 core::$db = new DB($ConfigDB);
+core::$session = new Session();
 
 // get settings
 if (!is_array(core::getSetting())) {
-    $query = "SELECT * FROM " . core::database()->getTableName('settings') . "";
+    $query = "SELECT * FROM " . core::database()->getTableName('settings');
     $result = core::database()->querySQL($query);
     core::addSetting(core::database()->getRow($result));
 }
@@ -47,7 +48,8 @@ $lang_file .= ((core::getSetting("language")) ? core::getSetting("language") . "
 if (file_exists($lang_file)) {
     include $lang_file;
     core::addLanguage($language);
-} else
+} else {
     exit('ERROR: Language file can not load!');
+}
 
 core::setTemplate("assets/");

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,41 +12,37 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 set_time_limit(0);
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-session_write_close();
-
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
 switch (Core_Array::getGet('action'))
 {
 	case 'alert_update':
-		$update = new Update();
-		$update->currenversion = VERSION;
+		$update = new Update(core::getSetting("language"), VERSION);
 
-		if ($update->checkNewVersion()){
+		if ($update->checkNewVersion()) {
 			$update_warning = str_replace('%SCRIPTNAME%', core::getLanguage('str', 'script_name'), core::getLanguage('str', 'update_warning'));
 			$update_warning = str_replace('%VERSION%', $update->getVersion(), $update_warning);
 			$update_warning = str_replace('%CREATED%', $update->getCreated(), $update_warning);
 			$update_warning = str_replace('%DOWNLOADLINK%', $update->getDownloadLink(), $update_warning);
+			$update_warning = str_replace('%MESSAGE%', $update->getMessage(), $update_warning);
 			$content = array("msg" => $update_warning);
 
 			Pnl::showJSONContent(json_encode($content));
 		}
 
-	break;
+		break;
 
 	case 'countsend':
+
 		$totalmails = 0;
 		$successmails = 0;
 		$unsuccessfulmails = 0;
 
-		if (Core_Array::getGet('id_log')){
+		if (Core_Array::getGet('id_log')) {
 			$id_log = (int)Core_Array::getGet('id_log');
-
 			$totalmails = $data->getTotalMails();
 			$successmails = $data->getSuccessMails($id_log);
 			$unsuccessfulmails = $data->getUnsuccessfulMails($id_log);
@@ -67,72 +63,92 @@ switch (Core_Array::getGet('action'))
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
 
 	case 'daemonstat':
 
-		$content = array("status" => $data->getMailingStatus());
+		$content = array("status" =>  $data->getMailingStatus(Auth::getAutId()));
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
 
 	case 'logonline':
 
-		foreach($data->getCurrentUserLog(10) as $row){
+		foreach($data->getCurrentUserLog(10) as $row) {
 			$rows[] = array(
 				"id_user" => $row['id_user'],
 				"email"   => $row['email'],
 				"status"  => $row['success'],
 				"id_log" => $row['id_log'],
 			);
-
-			$content = '{"item":'.json_encode($rows).'}';
 		}
 
-		Pnl::showJSONContent($content);
+		if (isset($rows)) {
+			$content = '{"item":' . json_encode($rows) . '}';
+			Pnl::showJSONContent($content);
+		}
 
-	break;
+		break;
 
 	case 'start_update':
 
-		$path = SYS_ROOT . $cmspaths['tmp'] . 'update.zip';
+		$path = SYS_ROOT . 'tmp/update.zip';
+
+		$update = new Update(core::getSetting("language"), VERSION);
+		$newversion = $update->getVersion();
 		$content = array();
 
-		if (Core_Array::getRequest('p') == 'start' && Auth::checkLicenseKey()){
-			$result = $data->DownloadUpdate($path, $update->getUpdate());
-		}
-
-		if (Core_Array::getRequest('p') == 'update_files' && Auth::checkLicenseKey()){
-			if (is_file($path)){
-				$arc = new Unzipper($path);
-
-				$content['status'] = $arc::$status;
-				$content['result'] = $arc::$result;
+		if (Core_Array::getRequest('p') == 'start') {
+			if ($data->DownloadUpdate($path, $update->getUpdate())){
+				$content['status'] = core::getLanguage('str', 'download_completed');
+				$content['result'] = 'yes';
+			} else {
+				$content['status'] = core::getLanguage('str', 'failed_to_update');
+				$content['result'] = 'no';
 			}
 		}
 
-		if (Core_Array::getRequest('p') == 'update_bd' && Auth::checkLicenseKey()){
+		if (Core_Array::getRequest('p') == 'update_files') {
+			$destination = SYS_ROOT;
+
+			$zip = new ZipArchive;
+			if ($zip->open($path) === TRUE) {
+
+				if (is_writeable($destination)) {
+					$zip->extractTo($destination);
+					$zip->close();
+					$status = core::getLanguage('msg', 'files_unzipped_successfully');
+					$result = 'yes';
+				} else {
+					$status = core::getLanguage('msg', 'directory_not_writeable');
+					$result = 'no';
+				}
+			} else {
+				$status = core::getLanguage('msg', 'cannot_read_zip_archive');
+				$result = 'no';
+			}
+		}
+
+		if (Core_Array::getRequest('p') == 'update_bd') {
 			$current_version_code = Pnl::get_current_version_code($currentversion);
 			$version_code_detect = $data->version_code_detect();
 
-			if ($version_code_detect < $current_version_code){
-				if ($version_code_detect == 50000){
+			if ($version_code_detect < $current_version_code) {
+				if ($version_code_detect == 50000) {
 					$path_update = 'tmp/update_5_0_' . core::getSetting('language') . '.sql';
 				}
 
-				if (is_file($path_update)){
-					if ($data->updateDB($path_update, $ConfigDB)){
+				if (is_file($path_update)) {
+					if ($data->updateDB($path_update, $ConfigDB)) {
 						$content['status'] = core::getLanguage('msg', 'update_completed');
 						$content['result'] = 'yes';
-					}
-					else{
+					} else {
 						$content['status'] = core::getLanguage('error', 'failed_to_update');
 						$content['result'] = 'no';
 					}
 				}
-			}
-			else{
+			} else {
 				$content['status'] = core::getLanguage('msg', 'update_completed');
 				$content['result'] = 'yes';
 			}
@@ -140,34 +156,33 @@ switch (Core_Array::getGet('action'))
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
 
 	case 'sendtest':
+
 		$subject = trim(Core_Array::getRequest('name'));
 		$body = trim(Core_Array::getRequest('body'));
 		$prior = Core_Array::getRequest('prior');
 		$email = trim(Core_Array::getRequest('email'));
 
-		$error = array();
+		$errors = array();
 
-		if (empty($subject)) $error[] = core::getLanguage('error', 'empty_subject');
-		if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
-		if (empty($email)) $error[] = core::getLanguage('error', 'empty_email');
-		if (!empty($email) && check_email($email)) $error[] = core::getLanguage('error', 'wrong_email');
+		if (empty($subject)) $errors[] = core::getLanguage('error', 'empty_subject');
+		if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
+		if (empty($email)) $errors[] = core::getLanguage('error', 'empty_email');
+		if (!empty($email) && Pnl::check_email($email)) $errors[] = core::getLanguage('error', 'wrong_email');
 
-		if (count($error) == 0){
+		if (count($error) == 0) {
 			if ($data->sendTestEmail($email, $subject, $body, $prior)){
 				$result_send = 'success';
 				$msg = core::getLanguage('msg', 'letter_was_sent');
-			}
-			else{
+			} else {
 				$result_send = 'error';
 				$msg = core::getLanguage('error', 'letter_wasnt_sent');
 			}
-		}
-		else{
+		} else {
 			$result_send = 'errors';
-			$msg = implode(",", $error);
+			$msg = implode(",", $errors);
 		}
 
 		$content = array();
@@ -176,21 +191,20 @@ switch (Core_Array::getGet('action'))
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
 
 	case 'send':
-
-		$result = 0;
+		$mailcount = 0;
 
 		if ($_REQUEST['activate']){
-			if ($data->updateProcess('start')) $result = $data->SendEmails($_REQUEST['activate']);
+			if ($data->updateProcess('start', Auth::getAutId())) $mailcount = $data->SendEmails($_REQUEST['activate']);
 		}
 
-		$content = array("completed" => "yes");
+		$content = array("completed" => "yes", "mailcount" => $mailcount);
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
 
 	case 'showlogs':
 
@@ -201,8 +215,8 @@ switch (Core_Array::getGet('action'))
 
 		$arr = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
 
-		if (is_array($arr)){
-			foreach($arr as $row){
+		if (is_array($arr)) {
+			foreach($arr as $row) {
 				$catname = $row['id_cat'] == 0 ? core::getLanguage('str', 'general') : $row['catname'];
 				$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
 				$read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
@@ -225,17 +239,38 @@ switch (Core_Array::getGet('action'))
 			}
 		}
 
-	break;
+		break;
 
 	case 'process':
-		if ($data->updateProcess($_REQUEST['status'])){
+
+		if ($data->updateProcess($_REQUEST['status'], Auth::getAutId())){
+
+			if ($_REQUEST['status'] == 'stop') {
+				core::session()->start();
+				core::session()->delete('id_log');
+				core::session()->commit();
+			}
+
 			$content = array("status" => $_REQUEST['status']);
-		}
-		else{
+		} else {
 			$content = array("status" => "no");
 		}
 
 		Pnl::showJSONContent(json_encode($content));
 
-	break;
+		break;
+
+	case 'remove_attach':
+
+		if (is_numeric($_REQUEST['id'])) {
+			if ($data->removeAttach(Core_Array::getGet('id'))){
+				$content = array("result" => "yes");
+			} else {
+				$content = array("result" => "no");
+			}
+
+			Pnl::showJSONContent(json_encode($content));
+		}
+
+		break;
 }

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -13,7 +13,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_subscribers extends Model
 {
-
     public function getSubersArr($strtmp, $search, $category, $page, $pnumber)
     {
         core::database()->tablename = core::database()->getTableName('users');
@@ -43,9 +42,9 @@ class Model_subscribers extends Model
         } elseif (is_numeric($category)) {
             core::database()->tablename = "" . core::database()->getTableName('users') . " usr LEFT JOIN " . core::database()->getTableName('subscription') . " sub ON usr.id_user=sub.id_user";
             $_where = (isset($category) && $category > 0) ? "sub.id_cat=" . $category . " " : "1";
-            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
+            core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format, usr.name AS name";
             core::database()->where = "WHERE " . $_where . " ";
-            core::database()->order = "ORDER BY name";
+            core::database()->order = "ORDER BY usr.name";
         } else {
             core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%y') as putdate_format";
             core::database()->order = "ORDER BY " . $strtmp . "";
@@ -161,7 +160,7 @@ class Model_subscribers extends Model
 
     public function removeUser($id_user)
     {
-        if (is_numeric($id_user)){
+        if (is_numeric($id_user)) {
             $delete1 = core::database()->delete(core::database()->getTableName('users'), "id_user=" . $id_user);
             $delete2 = core::database()->delete(core::database()->getTableName('subscription'), "id_user=" . $id_user);
 

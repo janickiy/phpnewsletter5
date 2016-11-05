@@ -73,11 +73,17 @@ $language["title_page"]["faq"] = 'FAQ';
 $language["title"]["faq"] = 'FAQ';
 $language["info"]["faq"] = "";
 
-$language["title_page"]["page404"] = 'Page not found 404';
+$language["title_page"]["page403"] = 'Access denied';
+$language["title"]["page403"] = '403 Access denied';
+
+$language["title_page"]["page404"] = 'Page not found';
 $language["title"]["page404"] = 'Page not found 404';
 
-$language["title_page"]["page500"] = 'Server error 500';
+$language["title_page"]["page500"] = 'Server error';
 $language["title"]["page500"] = 'Server error 500';
+
+$language["title_page"]["expired"] = 'License key has expired';
+$language["title"]["expired"] = 'License key has expired';
 
 $language["title"]["error_authorization"] = "Invalid authorization data!";
 
@@ -91,7 +97,6 @@ $language["info"]["change_password"] = "";
 $language["title_page"]["add_account"] = 'Adding account';
 $language["title"]["add_account"] = 'Adding account';
 $language["info"]["add_account"] = "";
-
 
 $language["str"]["action"] = "Action";
 $language["str"]["activity"] = "Activity";
@@ -279,6 +284,7 @@ $language["str"]["set_theme"] = "Theme";
 $language["str"]["set_random"] = "Randomization of subscribers";
 $language["str"]["set_return_path"] = "Return-path";
 $language["str"]["list_owner"] = "List-Owner";
+$language["str"]["set_path"] = "URL path";
 $language["str"]["script_name"] = "PHP Newsletter";
 $language["str"]["charutf8"] = "Unicode (UTF-8)";
 $language["str"]["iso88591"] = "Western European (ISO)";
@@ -320,6 +326,9 @@ $language["str"]["login"] = "Login";
 $language["str"]["role"] = "Role";
 $language["str"]["action"] = "Action";
 $language["str"]['required_fields'] = "Required fields";
+$language["str"]["dont_have_permission_to_access"] = "You don't have permission to access";
+$language["str"]["demo_version_has_expired"] = '<p>The validity of the demo version has expired. To use the application buy the license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
+$language["str"]["licensekey_has_expired"] = '<p>The validity of a license key has expired. To use the application buy a new license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 
 
 $language["button"]["apply"]        = "apply";
@@ -364,12 +373,15 @@ $language["msg"]["no_updates"] = "There are no updates at this time. You already
 $language["msg"]["php_doesnt_support_unzip_func"] = "Error: Your PHP version does not support unzip functionality";
 $language["msg"]["files_unzipped_successfully"] = "Files unzipped successfully";
 $language["msg"]["directory_not_writeable"] = "Error: Directory not writeable by webserver";
-$language["msg"]["has_no_zlib_support_enabled"] = "Error: Your PHP has no zlib support enabled";
+$language["msg"]["no_zlib_support_enabled"] = "Error: Your PHP has no zlib support enabled";
 $language["msg"]["cannot_read_zip_archive"] = "Error: Cannot read .zip archive";
 $language["msg"]["error_unzipping_file"] = "Error unzipping file";
 $language["msg"]["update_not_available"] = "Update is not available";
 $language["msg"]["update_completed"] = "Update is completed.";
 $language["msg"]["account_removed"] = "Account has been removed";
+$language["msg"]["demo_version_will_expire"] = 'Duration of the demo version will expire in %DAYS% days';
+$language["msg"]["cannt_create_licensekey_file"] = "Error: can not create the  licensekey file sys/license_key! Please check the permissions (CHMOD) for index.php";
+$language["msg"]["error_check_licensekey"] = "Error checking licensekey";
 
 $language["subject"]["notification_newuser"] = 'Registered new subscriber';
 $language["subject"]["subscription"] = "Subscribe to Newsletter";
@@ -409,6 +421,10 @@ $language["error"]["trial_license_has_expired"] = 'Trial license has expired. To
 $language["error"]["invalid_license"] = 'The license key is invalid. To continue to use this application you must buy a license key. <a href="%BUY_LICENSE_LINK%" target="_blank">Buy a license key</a>';
 $language["error"]['login_isnt_entered'] = "Login is not entered!";
 $language["error"]['login_already_exists'] = "This login already exists! Please enter another login";
+$language["error"]["error_checking_license"] = "Error checking license! Server is not available.";
+$language["error"]["license_is_used"] = "This license key is already in use!";
+$language["error"]["license_not_found"] = "The license key not found!";
+$language["error"]["enter_licensekey"] = "Enter the license key!";
 
 //menu
 $language["menu"]["templates_title"] = "Email Templates";

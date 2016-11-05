@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -22,5 +22,4 @@ class Controller_subscribers extends Controller
 	{
 		$this->view->generate('subscribers_view.php', $this->model);
 	}
-	
 }

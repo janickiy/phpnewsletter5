@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -41,13 +41,13 @@ class Model_add_user extends Model
         }
     }
 
-    public function addUser($fields)
+    public function addUser($fields, $id_cat)
     {
         $id_user = core::database()->insert($fields, core::database()->getTableName('users'));
         
         if ($id_user) {
-            if (Core_Array::getRequest('id_cat')) {
-                foreach (Core_Array::getRequest('id_cat') as $id) {
+            if (!empty($id_cat)) {
+                foreach ($id_cat as $id) {
                     if (is_numeric($id)) {
                         $insert = "INSERT INTO " . core::database()->getTableName('subscription') . " (`id_sub`,`id_user`,`id_cat`) VALUES (0," . $id_user . "," . $id . ")";
                         core::database()->querySQL($insert);

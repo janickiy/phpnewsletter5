@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.0 alfa
+ * PHP Newsletter 5.0.2
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,48 +10,40 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-session_start();
-
 // authorization
 Auth::authorization();
 
-$autInfo = Auth::getAutInfo($_SESSION['id']);
+$autInfo = Auth::getAutInfo(Auth::getAutId());
 
-if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) exit();
+if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
 
 //include template
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
+$errors = array();
+
 if (Core_Array::getRequest('action')){
-    $error = array();
     $name = trim(Core_Array::getPost('name'));
     $body = trim(Core_Array::getPost('body'));
     $id_template = (int)Core_Array::getPost('id_template');
 
-    if (empty($name)) $error[] = core::getLanguage('error', 'empty_subject');
-    if (empty($body)) $error[] = core::getLanguage('error', 'empty_content');
+    if (empty($name)) $errors[] = core::getLanguage('error', 'empty_subject');
+    if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 
-    if (count($error) == 0){
+    if (empty($error)) {
         $fields = array();
         $fields['name'] = $name;
         $fields['body'] = $body;
-        $fields['prior'] = (int)Core_Array::getPost('prior');
-        $fields['id_cat'] = (int)Core_Array::getPost('id_cat');
+        $fields['prior'] = Core_Array::getPost('prior');
+        $fields['id_cat'] = Core_Array::getPost('id_cat');
 
         if ($data->editTemplate($fields, $id_template)){
             header("Location: ./");
             exit();
-        }else {
-            $alert_error = core::getLanguage('error', 'web_apps_error');
+        } else {
+            $errors[] = core::getLanguage('error', 'web_apps_error');
         }
-    }
-}
-
-if (Core_Array::getGet('remove')){
-    if ($data->removeAttach(Core_Array::getGet('remove'))){
-        header("Location: ./?task=edit_template&id_template=" . $_GET['id_template']);
-        exit;
     }
 }
 
@@ -65,15 +57,11 @@ include_once core::pathTo('extra', 'top.php');
 include_once core::pathTo('extra', 'menu.php');
 
 // alert
-if (isset($alert_error)) {
-    $tpl->assign('ERROR_ALERT', $alert_error);
-}
-
-if (isset($error) && count($error) > 0){
+if (!empty($errors)) {
     $errorBlock = $tpl->fetch('show_errors');
     $errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
 
-    foreach($error as $row){
+    foreach($errors as $row){
         $rowBlock = $errorBlock->fetch('row');
         $rowBlock->assign('ERROR', $row);
         $errorBlock->assign('row', $rowBlock);
@@ -98,18 +86,15 @@ $tpl->assign('STR_FORM_PRIORITY', core::getLanguage('str', 'form_priority'));
 $template = $data->getTemplate(Core_Array::getGet('id_template'));
 
 //value
-if (empty(Core_Array::getPost('name')) && empty(Core_Array::getPost('id_template'))) $name = $_POST["name"] = $template['name'];
-if (empty(Core_Array::getPost('body')) && empty(Core_Array::getPost('id_template'))) $_POST['body'] = $template['body'];
-if (empty(Core_Array::getPost('prior')) && empty(Core_Array::getPost('id_template'))) $_POST['prior'] = $template['prior'];
-if (empty(Core_Array::getPost('id_cat')) && empty(Core_Array::getPost('id_template'))) $_POST['id_cat'] = $template['id_cat'];
-
-$tpl->assign('NAME', empty(Core_Array::getPost('name')) ? Core_Array::getPost('name') : $template['name']);
-$tpl->assign('CONTENT', empty(Core_Array::getPost('body'))  ? Core_Array::getPost('body') : $template['name']);
+$tpl->assign('NAME', Core_Array::getPost('name') == '' ? $template['name'] : Core_Array::getPost('name'));
+$tpl->assign('CONTENT', Core_Array::getPost('body') == '' ? $template['body'] : Core_Array::getPost('body'));
 $tpl->assign('ID_TEMPLATE', Core_Array::getGet('id_template'));
+$prior = Core_Array::getPost('prior') == '' ? $template['prior'] : Core_Array::getPost('prior');
+$id_cat = Core_Array::getPost('id_cat') == '' ? $template['id_cat'] : Core_Array::getPost('id_cat');
 
 $arr = $data->getAttachmentsList(Core_Array::getGet('id_template'));
 
-if ($arr){
+if (count($arr) > 0){
     $attachBlock = $tpl->fetch('attach_list');
     $attachBlock->assign('STR_ATTACH_LIST', core::getLanguage('str', 'str_attach_list'));
 
@@ -126,30 +111,29 @@ if ($arr){
     $tpl->assign('attach_list', $attachBlock);
 }
 
-if (Core_Array::getPost('prior') == 1)
-    $tpl->assign('PRIOR1_CHECKED', empty(Core_Array::getPost('prior')) ? Core_Array::getPost('prior') : $template['prior']);
-else if (Core_Array::getPost('prior') == 2)
-    $tpl->assign('PRIOR2_CHECKED', empty(Core_Array::getPost('prior')) ? Core_Array::getPost('prior') : $template['prior']);
+if ($prior == 1)
+    $tpl->assign('PRIOR', 1);
+elseif ($prior == 2)
+    $tpl->assign('PRIOR', 2);
 else
-    $tpl->assign('PRIOR3_CHECKED', $template['prior']);
+    $tpl->assign('PRIOR', 3);
 
 $arr = $data->getCategoryOptionList();
 
-if ($arr){
-    $tpl->assign('POST_ID_CAT', empty(Core_Array::getPost('id_cat')) ? Core_Array::getPost('id_cat') : $row['id_cat']);
+if ($arr) {
+    $tpl->assign('POST_ID_CAT', Core_Array::getPost('id_cat') == '' ? Core_Array::getPost('id_cat') : $row['id_cat']);
     $tpl->assign('STR_SEND_TO_ALL', core::getLanguage('str', 'send_to_all'));
 
     foreach($arr as $row){
         $rowBlock = $tpl->fetch('categories_row');
         $rowBlock->assign('ID_CAT', $row['id_cat']);
         $rowBlock->assign('NAME', $row['name']);
-        $rowBlock->assign('POST_ID_CAT', empty(Core_Array::getPost('id_cat')) ? Core_Array::getPost('id_cat') : $row['id_cat']);
+        $rowBlock->assign('POST_ID_CAT', $id_cat);
         $tpl->assign('categories_row', $rowBlock);
     }
 }
 
 $tpl->assign('BUTTON',core::getLanguage('button', 'edit'));
-
 $tpl->assign('STR_SEND_TEST_EMAIL', core::getLanguage('str', 'send_test_email'));
 $tpl->assign('BUTTON_SEND', core::getLanguage('button', 'send'));
 $tpl->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
