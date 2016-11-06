@@ -9,5 +9,3 @@ class View
         include core::pathTo('views', $template_view);
     }
 }
-
-?>
