@@ -7,7 +7,7 @@
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
  ********************************************/
- 
+
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 if (Core_Array::getRequest('action')){
@@ -24,11 +24,11 @@ if (Core_Array::getRequest('action')){
 	$fields['email']     = $email;
 	$fields['ip']        = Pnl::getIP();
 	$fields['token']     = Pnl::getRandomCode();
-	$fields['time']      = date("Y-m-d H:i:s");	
+	$fields['time']      = date("Y-m-d H:i:s");
  	$fields['status']    = core::getSetting("require_confirmation") == 'yes' ? 'noactive' : 'active';
-		
+
 	$insert_id = $data->makeSubscribe($fields);
-	
+
 	if ($insert_id){
 		$isert = $data->insertSubs($insert_id, Core_Array::getRequest('id_cat'));
 		$result = $data->sendNotification($insert_id);
@@ -41,20 +41,20 @@ if (Core_Array::getRequest('action')){
 		echo "</head>\n";
 		echo "<body>\n";
 		echo '<p style="text-align: center">';
-	
+
 		if (core::getSetting("require_confirmation") == "yes")
 			echo core::getLanguage('msg', 'add_subscribe1');
-		else 
+		else
 			echo core::getLanguage('msg', 'add_subscribe2');
-		
+
 		echo "<br><br><a href=http://" . $_SERVER['SERVER_NAME'] . ">" . core::getLanguage('str', 'go_to_homepage') . "</a>\n";
 		echo "</p>\n";
 		echo "</body>\n";
-		echo "</html>";	
+		echo "</html>";
 		exit;
 	} else {
 		Pnl::error(core::getLanguage('error', 'subscribe'));
-	}	
+	}
 }
 
 //require temlate class

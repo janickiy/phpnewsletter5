@@ -94,7 +94,6 @@ switch (Core_Array::getGet('action'))
 	case 'start_update':
 
 		$path = SYS_ROOT . 'tmp/update.zip';
-
 		$update = new Update(core::getSetting("language"), VERSION);
 		$newversion = $update->getVersion();
 		$content = array();
@@ -131,6 +130,7 @@ switch (Core_Array::getGet('action'))
 		}
 
 		if (Core_Array::getRequest('p') == 'update_bd') {
+
 			$current_version_code = Pnl::get_current_version_code($currentversion);
 			$version_code_detect = $data->version_code_detect();
 
@@ -140,7 +140,7 @@ switch (Core_Array::getGet('action'))
 				}
 
 				if (is_file($path_update)) {
-					if ($data->updateDB($path_update, $ConfigDB)) {
+					if ($data->updateDB($path_update)) {
 						$content['status'] = core::getLanguage('msg', 'update_completed');
 						$content['result'] = 'yes';
 					} else {
