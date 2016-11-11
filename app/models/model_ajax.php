@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.2
+ * PHP Newsletter 5.0.3
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -113,8 +113,13 @@ class Model_ajax extends Model
 		return $result;
 	}
 
-	public function updateDB($path, $configdb)
+	public function updateDB($path)
 	{
+		global $ConfigDB;
+
+		echo 'rrr';
+		exit;
+
 		$result = true;
 
 		$queries = @file($path);
@@ -136,8 +141,10 @@ class Model_ajax extends Model
 		return $result;
 	}
 
-	public function version_code_detect($configdb)
+	public function version_code_detect()
 	{
+		global $ConfigDB;
+
 		$tables_list = array(
 			'attach',
 			'aut',
@@ -155,13 +162,13 @@ class Model_ajax extends Model
 
 		$tables = array();
 
-		if ($res1 = core::database()->querySQL("SHOW TABLES FROM `" . $configdb["name"] . "` LIKE '" . $configdb["prefix"] . "%'")) {
+		if ($res1 = core::database()->querySQL("SHOW TABLES FROM `" . $ConfigDB["name"] . "` LIKE '" . $ConfigDB["prefix"] . "%'")) {
 			while ($row1 = core::database()->getRow($res1)){
 				$res2 = core::database()->querySQL("DESCRIBE `".$row1[0]."`");
-				$tables[substr($row1[0], strlen($configdb["prefix"]))] = array();
+				$tables[substr($row1[0], strlen($ConfigDB["prefix"]))] = array();
 
 				while($row2 = core::database()->getRow($res2)) {
-					$tables[substr($row1[0], strlen($configdb["prefix"]))][] = $row2[0];
+					$tables[substr($row1[0], strlen($ConfigDB["prefix"]))][] = $row2[0];
 				}
 			}
 		}
