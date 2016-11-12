@@ -65,14 +65,12 @@ function PnumberChange()
 </div>
 <div class="row">
   <div class="col-lg-12">
-    <form class="form-inline" style="margin-bottom: 20px; margin-top: 20px;"  id="searchform" method="GET" name="searchform" action="${ACTION}">
+    <form class="form-inline" style="margin-bottom: 20px; margin-top: 20px;" method="GET" name="searchform" action="${ACTION}">
      <input type="hidden" name="t" value="subscribers">
        <div class="form-group">
-       <input class="form-control form-warning input-sm" type="text" onfocus="if (this.value == '${FORM_SEARCH_NAME}')
-        {this.value = '';}" onblur="if (this.value == '')
-        {this.value = '${FORM_SEARCH_NAME}';}" id="story" name="search" value="${FORM_SEARCH_NAME}">
+       <input class="form-control form-warning input-sm" type="text" name="search" value="${SEARCH}" placeholder="${FORM_SEARCH_NAME}">
        </div>
-      <input class="btn btn-info" type="submit" value="${BUTTON_FIND}" id="searchsubmit">
+      <input class="btn btn-info" type="submit" value="${BUTTON_FIND}">
     </form>
   </div>
 </div>
