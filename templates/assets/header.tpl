@@ -56,6 +56,8 @@
 				}
 			});
 		}, 5000);
+		
+		
 	});
 
 	$(document).on( "click", ".startmailing", function() {
@@ -68,6 +70,18 @@
 			}
 		});
 	});
+	
+	$(document).on( "click", "a.opislink:not(.active)", function() {
+	$(this).addClass('active');
+			$(this).parent().find('div.opis').slideDown(760);
+			return false;	
+	});
+	
+	$(document).on( "click", "a.opislink.active", function() {
+	$(this).removeClass('active');
+			$(this).parent().find('div.opis').slideUp(760);
+			return false;	
+	});	
 
 </script>
 <div id="wrapper">
