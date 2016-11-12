@@ -226,6 +226,7 @@
 		$("#process").removeClass();
 		$("#timer2").text('00:00:00');
 		$('#leftsend').text(100);
+		$('.progress-bar').css('width', '100%');
 
 		show = false;
 		getcoutprocess();
