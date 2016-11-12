@@ -392,3 +392,12 @@ background: url("../images/sort_asc.png") no-repeat scroll right center rgba(0, 
 #onlinelog {
     padding-bottom: 25px;
 }
+
+div.opis{
+   display:none;
+}
+
+a.opislink {
+    margin-top:12px;
+    display:block;
+}
