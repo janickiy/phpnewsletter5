@@ -134,7 +134,8 @@
 						var successful = data.success;
 						var unsuccessful = data.unsuccessful;
 						var timeleft = data.time;
-						var leftsend = Math.round(parseFloat((successful + unsuccessful)/ totalmail * 100) * 100) / 100;
+						var leftsend = data.leftsend;
+
 						$('#totalsendlog').text(totalmail);
 						$('#unsuccessful').text(unsuccessful);
 						$('#successful').text(successful);
@@ -224,6 +225,7 @@
 		$("#refreshemail").removeClass('disabled').removeAttr('disabled');
 		$("#process").removeClass();
 		$("#timer2").text('00:00:00');
+		$('#leftsend').text(100);
 
 		show = false;
 		getcoutprocess();

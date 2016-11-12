@@ -60,6 +60,7 @@ switch (Core_Array::getGet('action'))
 		$content['success'] = $successmails;
 		$content['unsuccessful'] = $unsuccessfulmails;
 		$content['time'] = $datetime->format('H:i:s');
+		$content['leftsend'] = ($successmails + $unsuccessfulmails) / $totalmails * 100;
 
 		Pnl::showJSONContent(json_encode($content));
 
