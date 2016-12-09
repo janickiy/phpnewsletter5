@@ -21,6 +21,7 @@
 	<script src="./templates/js/jquery.min.js"></script>
 	<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="./templates/js/jquery.hide_alertblock.js"></script>
+	<script src="./templates/js/jquery.cookie.js"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -30,7 +31,7 @@
 			url: './?t=ajax&action=alert_update',
 			dataType: "json",
 			success: function(data){
-				if (data.msg != ''){
+				if (data.msg != '' && $.cookie('alertshow') != 'no'){
 					$('#alert_msg_block').fadeIn('700');
 					$("#alert_warning_msg").append(data.msg);
 				}
@@ -55,6 +56,8 @@
 				}
 			});
 		}, 5000);
+		
+		
 	});
 
 	$(document).on( "click", ".startmailing", function() {
@@ -67,6 +70,18 @@
 			}
 		});
 	});
+	
+	$(document).on( "click", "a.opislink:not(.active)", function() {
+	$(this).addClass('active');
+			$(this).parent().find('div.opis').slideDown(760);
+			return false;	
+	});
+	
+	$(document).on( "click", "a.opislink.active", function() {
+	$(this).removeClass('active');
+			$(this).parent().find('div.opis').slideUp(760);
+			return false;	
+	});	
 
 </script>
 <div id="wrapper">
@@ -152,7 +167,7 @@
 				</div>
 				<!-- END IF -->
 				<div class="alert alert-warning alert-dismissable" id="alert_msg_block" style="display:none;">
-					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+					<button class="close" aria-hidden="true" data-dismiss="alert" onClick="$.cookie('alertshow', 'no');" type="button">×</button>
 					<h4 class="alert-heading">${STR_WARNING}!</h4>
 					<span id="alert_warning_msg">${PAGE_ALERT_WARNING_MSG}</span>
 				</div>

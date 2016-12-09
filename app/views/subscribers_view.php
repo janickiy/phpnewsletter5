@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.2
+ * PHP Newsletter 5.0.3
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -158,11 +158,11 @@ $arr = $data->getSubersArr($strtmp, $search, Core_Array::getRequest('category'),
 if ($arr){
 	$return_backBlock = $tpl->fetch('show_return_back');	
 	$return_backBlock->assign('STR_BACK',  core::getLanguage('str', 'return_back'));
-	
-	if (empty($search)){
-		$number = $data->getTotal();
-		$page = $data->getPageNumber();
 
+	$number = $data->getTotal();
+	$page = $data->getPageNumber();
+
+	if (empty($search)){
 		if ($page != 1) {
 			$pervpage = '<a href="./?t=subscribers&page=1' . $sort . '">&lt;&lt;</a>';
 			$perv = '<a href="./?t=subscribers&page=' . ($page - 1) . '' . $sort . '">&lt;</a>';
@@ -178,9 +178,6 @@ if ($arr){
 		if ($page + 2 <= $number) $page2right = '<a href="./?t=subscribers&page=' . ($page + 2) . '' . $sort . '">' . ($page + 2) . '...</a>';
 		if ($page + 1 <= $number) $page1right = '<a href="./?t=subscribers&page=' . ($page + 1) . '' . $sort . '">' . ($page + 1) . '</a>';
 	} else {
-		$number = $data->getTotal();
-		$page = $data->getPageNumber();
-
 		if ($page != 1) {
 			$pervpage = '<a href="./?t=subscribers&search=' . urlencode($search) . '&page=1' . $sort . '">&lt;&lt;</a>';
 			$perv = '<a href="./?t=subscribers&search=' . urlencode($search) . '&page=' . ($page - 1) . '' . $sort . '">&lt;</a>';

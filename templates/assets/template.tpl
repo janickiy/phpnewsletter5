@@ -1,99 +1,6 @@
 <!-- INCLUDE header.tpl -->
 <script type="text/javascript" src="./templates/js/jquery.paulund_modal_box.js"></script>
 <script type="text/javascript">
-	var base = 60;
-	pausesend = false;
-	var clocktimer,dateObj,dh,dm,ds,ms;
-	var readout = '';
-	var h = 1;
-	var m = 1;
-	var tm = 1;
-	var s = 0;
-	var ts = 0;
-	var ms = 0;
-	var show = true;
-	var init = 0;
-	var ii = 0;
-	var parselimit = 0;
-	var st = 0;
-	var limit,curhour,curmin,cursec;
-
-	function clearALL() {
-		clearTimeout(clocktimer);
-		h = 1;
-		m = 1;
-		tm = 1;
-		s = 0;
-		ts = 0;
-		ms = 0;
-		init = 0;
-		show = true;
-		readout = '00:00:00';
-		var Elemetstags = document.getElementsByTagName('span');
-
-		for(var i=0; i<Elemetstags.length; i++){
-			if(Elemetstags[i].id == 'timer1') { readout = Elemetstags[i].firstChild.data; }
-		}
-
-		document.getElementById("timer1").innerHTML = readout;
-		ii = 0;
-	}
-
-	function startTIME() {
-
-		var cdateObj = new Date();
-		var t = (cdateObj.getTime() - dateObj.getTime())-(s*1000);
-
-		if(t>999) { s++; }
-
-		if(s>=(m*base)) {
-			ts = 0;
-			m++;
-		} else {
-			ts = parseInt((ms/100)+s);
-			if(ts>=base) { ts = ts-((m-1)*base); }
-		}
-
-		if (m>(h*base)) {
-			tm = 1;
-			h++;
-		} else {
-			tm = parseInt((ms/100)+m);
-			if(tm>=base) { tm = tm-((h-1)*base); }
-		}
-
-		if (ts>0) {
-			ds = ts;
-			if (ts<10) { ds = '0'+ts; }
-		} else {
-			ds = '00';
-		}
-
-		dm = tm-1;
-
-		if(dm>0) {
-			if(dm<10) { dm = '0'+dm; }
-		}
-		else { dm = '00'; }
-		dh = h-1;
-		if(dh>0) {
-			if (dh<10) { dh = '0'+dh; }}
-		else { dh = '00'; }
-		readout = dh + ':' + dm + ':' + ds;
-		if (show == true) { document.getElementById("timer1").innerHTML = readout; }
-		clocktimer = setTimeout("startTIME()",1);
-	}
-
-	function findTIME() {
-		if (init == 0) {
-			dateObj = new Date();
-			startTIME();
-			init = 1;
-		} else {
-			if(show == true) { show = false;}
-			else { show = true; }
-		}
-	}
 
 	var DOM = (typeof(document.getElementById) != 'undefined');
 
@@ -143,7 +50,7 @@
 		var All = document.forms[0];
 
 		for(var i = 0; i < All.elements.length; ++i){
-			if(All.elements[i].checked) { m++; }
+			if (All.elements[i].checked) { m++; }
 		}
 
 		typesend = 1;
@@ -152,18 +59,14 @@
 		unsuccessful = 0;
 		totalmail = 0;
 
-		findTIME();
-
 		if (m == 0) {
 			saveResult('${ALERT_MALING_NOT_SELECTED}');
 		} else {
-			if(show == false) $('#timer1').text('00:00:00');
-
 			$('#timer2').text('00:00:00');
-			$("#pausesendout").removeClass().addClass('pausesendout_active');
-			$("#stopsendout").removeClass().addClass('stopsendout_active');
-			$("#refreshemail").removeClass().addClass('refreshemail_noactive');
-			$("#sendout").removeClass().addClass('sendout_noactive');
+			$("#pausesendout").removeClass('disabled').removeAttr('disabled');
+			$("#stopsendout").removeClass('disabled').removeAttr('disabled');
+			$("#refreshemail").addClass('disabled').attr('disabled','disabled');
+			$("#sendout").addClass('disabled').attr('disabled','disabled');
 			$("#process").removeClass().addClass('showprocess');
 
 			getcoutprocess();
@@ -183,10 +86,10 @@
 
 		$('#timer2').text('00:00:00');
 		$("#process").removeClass().addClass('showprocess');
-		$("#refreshemail").removeClass().addClass('refreshemail_noactive');
-		$("#sendout").removeClass().addClass('sendout_noactive');
+		$("#refreshemail").addClass('disabled').attr('disabled','disabled');
+		$("#sendout").addClass('disabled').attr('disabled','disabled');
+		$("#stopsendout").removeClass('disabled').removeAttr('disabled');
 
-		findTIME();
 		getcoutprocess();
 		onlinelogprocess();
 		process();
@@ -199,23 +102,21 @@
 			url:'./?t=ajax&action=process&status=' + str,
 			dataType : "json",
 			success:function(data){
-				$("#pause").val(1);
 				pausesend = true;
 				show = false;
 				$("#process").removeClass();
-				$("#pausesendout").removeClass().addClass('pausesendout_noactive');
-				$("#stopsendout").removeClass().addClass('stopsendout_noactive');
-				$("#sendout").removeClass().addClass('sendout_active');
-				$("#refreshemail").removeClass().addClass('refreshemail_noactive');
+				$("#pausesendout").addClass('disabled').attr('disabled','disabled');
+				$("#stopsendout").addClass('disabled').attr('disabled','disabled');
+				$("#sendout").removeClass('disabled').removeAttr('disabled');
+				$("#refreshemail").addClass('disabled').attr('disabled','disabled');
+
 				if (str == 'stop'){
 					$('#timer2').text('00:00:00');
-					clearALL();
+					$('.progress-bar').css('width', '0%');
+					$('#leftsend').text(0);
 				}
 			},
 			error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + data.error); },
-			complete: function() {
-				if (data.status == 'stop') { window.location="./"; }
-			}
 		});
 	}
 
@@ -233,14 +134,17 @@
 						var successful = data.success;
 						var unsuccessful = data.unsuccessful;
 						var timeleft = data.time;
+						var leftsend = data.leftsend;
 
 						$('#totalsendlog').text(totalmail);
 						$('#unsuccessful').text(unsuccessful);
 						$('#successful').text(successful);
 						$('#timer2').text(timeleft);
 						onlinelogprocess();
+						$('.progress-bar').css('width', leftsend + '%');
+						$('#leftsend').text(leftsend);
 						setTimeout('getcoutprocess(id_log)', 2000);
-					} else{ setTimeout('getcoutprocess()', 1000); }
+					} else { setTimeout('getcoutprocess()', 1000); }
 				}
 			});
 		}
@@ -274,7 +178,6 @@
 						$('#onlinelog').html(msg);
 					}
 				},
-				//error: function(error) { saveResult("${ALERT_ERROR_SERVER}: " + data.error); }
 			});
 		}
 	}
@@ -289,6 +192,10 @@
 				var url = "./?t=ajax&action=send&typesend=1";
 			} else {
 				var url = "./?t=ajax&action=send&typesend=2";
+			}
+
+			if (completed != 'yes') {
+				setTimeout('process()', 90000);
 			}
 
 			$.ajax({
@@ -312,18 +219,18 @@
 
 	function completeProcess()
 	{
-		$("#pausesendout").removeClass().addClass('pausesendout_noactive');
-		$("#stopsendout").removeClass().addClass('stopsendout_noactive');
-		$("#sendout").removeClass().addClass('sendout_active');
-		$("#refreshemail").removeClass().addClass('refreshemail_active');
+		$("#pausesendout").addClass('disabled').attr('disabled','disabled');
+		$("#stopsendout").addClass('disabled').attr('disabled','disabled');
+		$("#sendout").removeClass('disabled').removeAttr('disabled');
+		$("#refreshemail").removeClass('disabled').removeAttr('disabled');
 		$("#process").removeClass();
 		$("#timer2").text('00:00:00');
+		$('#leftsend').text(100);
+		$('.progress-bar').css('width', '100%');
 
 		show = false;
-		clearALL();
 		getcoutprocess();
 	}
-
 
 	function saveResult(sText){
 		var sElem = document.getElementById("divStatus");
@@ -486,19 +393,17 @@
 </form>
 <script type="text/javascript">
 
-	var modalform = '<span id="onlinelog"></span>';
-	modalform += '<h4>${STR_TIME}</h4>';
-	modalform += '<input id="pause" type="hidden" value="0">';
+	var modalform = '<div id="onlinelog"></div>';
+	modalform += '<p><span id="leftsend">0</span>% ${STR_TIME_LEFT}: <span id="timer2">00:00:00</span></p>';
+	modalform += '<div class="progress progress-striped active"><div id="progressbarsend" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">';
+	modalform += '</div></div>';
 	modalform += '<input id="id_log" type="hidden" value="0">';
-	modalform += '<input id="lefttime" type="hidden" value="00:00:00">';
-	modalform += '${STR_TIME_PASSED}: <span id="timer1">00:00:00</span> ';
-	modalform += '${STR_TIME_LEFT}: <span id="timer2">00:00:00</span>';
 	modalform += '<div class="online_statistics">${STR_TOTAL}: <span id="totalsendlog">0</span> ';
 	modalform += '<span style="color: green">${STR_GOOD}: </span><span style="color: green" id="successful">0</span> <span style="color: red">${STR_BAD}: </span><span style="color: red" id="unsuccessful">0</span><br><br>';
-	modalform += '<span onClick="sendout();" id="sendout" title="${STR_SENDOUT_TO_SUBSCRIBERS}" class="sendout_active"></span>';
-	modalform += '<span onClick="stopsend(\'pause\');" id="pausesendout" title="${STR_PAUSE_SENDING}" class="pausesendout_noactive"></span>';
-	modalform += '<span onClick="refreshsend();" id="refreshemail" title="${STR_REFRESH_SENDING}" class="refreshemail_noactive"></span>';
-	modalform += '<span onClick="stopsend(\'stop\');" id="stopsendout" title="${STR_STOP_SENDING}" class="stopsendout_noactive"></span></div>';
+	modalform += '<button onClick="sendout();" id="sendout" class="btn btn-default btn-circle btn-modal btn-lg" title="${STR_SENDOUT_TO_SUBSCRIBERS}"><i class="fa fa-play"></i></button>';
+	modalform += '<button onClick="stopsend(\'pause\');" id="pausesendout" class="btn btn-warning btn-circle btn-lg btn-modal disabled" disabled="disabled" title="${STR_PAUSE_SENDING}"><i class="fa fa-pause"></i></button>';
+	modalform += '<button onClick="refreshsend();" id="refreshemail" class="btn btn-info btn-circle btn-lg btn-modal disabled" disabled="disabled" title="${STR_REFRESH_SENDING}"><i class="fa fa-undo"></i></button>';
+	modalform += '<button onClick="stopsend(\'stop\');" id="stopsendout" class="btn btn-danger btn-circle btn-lg disabled" disabled="disabled" title="${STR_STOP_SENDING}"><i class="fa fa-stop"></i></button></div>';
 	modalform += '<span id="divStatus" class="error"></span>';
 
 	$(document).ready(function(){
