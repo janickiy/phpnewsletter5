@@ -11,7 +11,7 @@ $INSTALL["lang"]["str"]["no"] = "No";
 $INSTALL["lang"]["str"]["check_result"] = "Check Results";
 $INSTALL["lang"]["str"]["can_continue_install"] = "You can continue installation.";
 $INSTALL["lang"]["str"]["error_after_process"] = "The following errors have occurred while processing the data";
-$INSTALL["lang"]["str"]["logo"]   = '© 2006-2016 <a href="http://janicky.com/">PHP Newsletter</a>';
+$INSTALL["lang"]["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
 $INSTALL["lang"]["str"]["author"] = "Alexander Yanitsky";
 $INSTALL["lang"]["str"]["system_req"] = "Check for conformity with the system requirements";
 $INSTALL["lang"]["str"]["db_and_product_settings"] = "Database and Product Parameters";

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.2
- * Copyright (c) 2006-2016 Alexander Yanitsky
+ * PHP Newsletter 5.0.4
+ * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -60,7 +60,7 @@ switch (Core_Array::getGet('action'))
 		$content['success'] = $successmails;
 		$content['unsuccessful'] = $unsuccessfulmails;
 		$content['time'] = $datetime->format('H:i:s');
-		$content['leftsend'] = ($successmails + $unsuccessfulmails) / $totalmails * 100;
+		$content['leftsend'] = round(($successmails + $unsuccessfulmails) / $totalmails * 100, 2);
 
 		Pnl::showJSONContent(json_encode($content));
 
