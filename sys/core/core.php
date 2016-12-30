@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.3
- * Copyright (c) 2006-2016 Alexander Yanitsky
+ * PHP Newsletter 5.0.4
+ * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -243,7 +243,7 @@ class core
 					self::makeLicensekey();
 				}
 
-				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && (isset($_REQUEST['t']) and $_REQUEST['t'] != 'expired')) {
+				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && $_REQUEST['t'] != 'expired') {
 					if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
 						return false;
 					}

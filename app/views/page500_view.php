@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.3
- * Copyright (c) 2006-2016 Alexander Yanitsky
+ * PHP Newsletter 5.0.4
+ * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
