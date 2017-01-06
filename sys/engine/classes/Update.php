@@ -58,7 +58,7 @@ class Update
 
         curl_close($ch);
 
-		preg_match('/\{([^\}])+\}/U',$data, $out);
+		preg_match('/\{([^\}])+\}/U', $data, $out);
 
 		return json_decode($out[0], true);
 	}
@@ -109,14 +109,17 @@ class Update
 		return $out['message'];
 	}
 	
-	public function getIP() {
-        if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
-            $ip = getenv("HTTP_CLIENT_IP");
-        elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
-            $ip = getenv("HTTP_X_FORWARDED_FOR");
-        elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
-            $ip = getenv("REMOTE_ADDR");
-        elseif (! empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
-            $ip = $_SERVER['REMOTE_ADDR'];
-        else
-            $ip = "unknown";
+	public function getIP()
+	{
+		if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+			$ip = getenv("HTTP_CLIENT_IP");
+		elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+			$ip = getenv("HTTP_X_FORWARDED_FOR");
+		elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+			$ip = getenv("REMOTE_ADDR");
+		elseif (!empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+			$ip = $_SERVER['REMOTE_ADDR'];
+		else
+			$ip = "unknown";
+	}
+}
