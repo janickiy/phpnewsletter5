@@ -184,7 +184,7 @@ $language["str"]["user_email"] = "E-mail получателя";
 $language["str"]["name"]      = "Имя";
 $language["str"]["charset"]   = "Кодировка";
 $language["str"]["clear_log"] = "Очистить журнал";
-$language["str"]["logo"]   = '© 2006-2016 <a href="http://janicky.com/">PHP Newsletter</a>';
+$language["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
 $language["str"]["author"] = "Яницкий Александр";
 $language["str"]["current_password"] = 'Текущий пароль';
 $language["str"]["password"] = "Пароль";

@@ -184,7 +184,7 @@ $language["str"]["user_email"] = "E-mail of recipient";
 $language["str"]["name"]      = "Name";
 $language["str"]["charset"]   = "Charset";
 $language["str"]["clear_log"] = "Clear log";
-$language["str"]["logo"]   = '© 2006-2016 <a href="http://janicky.com/">PHP Newsletter</a>';
+$language["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
 $language["str"]["author"] = "Alexander Yanitsky";
 $language["str"]["current_password"] = 'Current Password';
 $language["str"]["password"] = "Password";
