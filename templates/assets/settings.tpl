@@ -191,6 +191,26 @@
           </div>
         </div>
       </div>
+	  <div class="form-group">
+        <label class="col-lg-3 control-label" for="interval_number">${SET_INTERVAL_TYPE}</label>
+        <div class="col-lg-7">
+          <div class="row">
+            <div class="col-xs-2">
+              <input type="text" class="form-control" name="interval_number" value="${INTERVAL_NUMBER}">
+            </div>
+            <div class="col-xs-9">
+              <select class="form-control form-primary" name="interval_type">
+                <option value="0" <!-- IF '${INTERVAL_TYPE}' == 'no' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_NO} </option>
+                <option value="1" <!-- IF '${INTERVAL_TYPE}' == 'm' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_M} </option>
+                <option value="2" <!-- IF '${INTERVAL_TYPE}' == 'h' -->selected="selected" <!-- END IF -->>${SET_INTERVAL_TYPE_H} </option>
+                <option value="3" <!-- IF '${INTERVAL_TYPE}' == 'd' -->selected="selected"
+                <!-- END IF -->>${SET_INTERVAL_TYPE_D}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="re_send">${SET_RE_SEND}</label>
         <div class="col-lg-7">
