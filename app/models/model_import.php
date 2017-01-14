@@ -12,6 +12,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_import extends Model
 {
+	/**
+	 * @return mixed
+	 */
 	public function getCategoryList()
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat
@@ -23,6 +26,10 @@ class Model_import extends Model
 		return core::database()->getColumnArray($result);
 	}
 
+	/**
+	 * @param $email
+	 * @return bool
+	 */
 	public function checkExistEmail($email)
 	{		
 		$email = core::database()->escape($email);
@@ -34,7 +41,11 @@ class Model_import extends Model
 		else
 			return false;	
 	}
-	
+
+	/**
+	 * @param $id_cat
+	 * @return int
+	 */
 	public function importFromExcel($id_cat)
 	{
 		core::requireEx('libs', "PHPExcel/PHPExcel/IOFactory.php");
@@ -101,7 +112,11 @@ class Model_import extends Model
 
 		return $count;	
 	}
-	
+
+	/**
+	 * @param $id_cat
+	 * @return bool|int
+	 */
 	public function importFromText($id_cat)
 	{
 		core::requireEx('libs', "ConvertCharset/ConvertCharset.class.php");

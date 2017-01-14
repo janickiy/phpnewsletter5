@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_add_account extends Model
 {
+	/**
+	 * @param $login
+	 * @return bool
+	 */
 	public function checkExistLogin($login)
 	{
 		$login = core::database()->escape($login);
@@ -23,7 +27,11 @@ class Model_add_account extends Model
 		else
 			return true;
 	}
-	
+
+	/**
+	 * @param $fields
+	 * @return mixed
+	 */
 	public function createAccount($fields)
 	{
 		return core::database()->insert($fields, core::database()->getTableName('aut'));

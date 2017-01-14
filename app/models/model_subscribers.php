@@ -13,6 +13,14 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_subscribers extends Model
 {
+    /**
+     * @param $strtmp
+     * @param $search
+     * @param $category
+     * @param $page
+     * @param $pnumber
+     * @return mixed
+     */
     public function getSubersArr($strtmp, $search, $category, $page, $pnumber)
     {
         core::database()->tablename = core::database()->getTableName('users');
@@ -55,6 +63,9 @@ class Model_subscribers extends Model
         return core::database()->get_page();
     }
 
+    /**
+     * @return mixed
+     */
     public function countSubscribers()
     {
         if (Core_Array::getRequest('search')) {
@@ -89,6 +100,9 @@ class Model_subscribers extends Model
         return core::database()->getRecordCount($result);
     }
 
+    /**
+     * @return int
+     */
     public function getTotal()
     {
         if (Core_Array::getRequest('category')) {
@@ -103,11 +117,19 @@ class Model_subscribers extends Model
         return $number;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPageNumber()
     {
         return core::database()->page;
     }
 
+    /**
+     * @param $activate
+     * @param string $action
+     * @return mixed
+     */
     public function updateUsers($activate, $action = 'active')
     {
         $temp = array();
@@ -127,6 +149,10 @@ class Model_subscribers extends Model
         return $result;
     }
 
+    /**
+     * @param $activate
+     * @return bool
+     */
     public function deleteUsers($activate)
     {
         $temp = array();
@@ -147,6 +173,9 @@ class Model_subscribers extends Model
             return false;
     }
 
+    /**
+     * @return bool
+     */
     public function removeAllUsers()
     {
         $delete1 = core::database()->delete(core::database()->getTableName('users'));
@@ -158,6 +187,10 @@ class Model_subscribers extends Model
             return false;
     }
 
+    /**
+     * @param $id_user
+     * @return bool
+     */
     public function removeUser($id_user)
     {
         if (is_numeric($id_user)) {

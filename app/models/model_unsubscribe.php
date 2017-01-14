@@ -12,7 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_unsubscribe extends Model
 {
-
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function getToken($id_user)
     {
         if (is_numeric($id_user)){
@@ -24,6 +27,10 @@ class Model_unsubscribe extends Model
 
     }
 
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function makeUnsubscribe($id_user)
     {
         if (is_numeric($id_user)){

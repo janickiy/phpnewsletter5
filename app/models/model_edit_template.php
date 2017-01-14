@@ -12,6 +12,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_edit_template extends Model
 {
+    /**
+     * @param $fields
+     * @param $id_template
+     * @return bool
+     */
     public function editTemplate($fields, $id_template)
     {
         if (is_numeric($id_template)) {
@@ -43,6 +48,10 @@ class Model_edit_template extends Model
        }
     }
 
+    /**
+     * @param $id_template
+     * @return mixed
+     */
     public function getAttachmentsList($id_template)
     {
         $query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_template=" . $id_template . " ORDER by name";
@@ -51,6 +60,9 @@ class Model_edit_template extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @return mixed
+     */
     public function getCategoryOptionList()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER by name";
@@ -59,6 +71,10 @@ class Model_edit_template extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $id_template
+     * @return mixed
+     */
     public function getTemplate($id_template)
     {
         if (is_numeric($id_template)) {

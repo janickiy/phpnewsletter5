@@ -13,6 +13,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Model_edit_category extends Model
 {
 
+	/**
+	 * @param $id_cat
+	 * @return mixed
+	 */
 	public function getCategoryRow($id_cat)
 	{
 		if (is_numeric($id_cat)) {
@@ -21,7 +25,12 @@ class Model_edit_category extends Model
 			return core::database()->getRow($result);
 		}
 	}
-	
+
+	/**
+	 * @param $fields
+	 * @param $id_cat
+	 * @return mixed
+	 */
 	public function editCategoryRow($fields, $id_cat)
 	{
 		if (is_numeric($id_cat)){

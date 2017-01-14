@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_logstatxls extends Model
 {
+	/**
+	 * @param $id_log
+	 * @return mixed
+	 */
 	public function getTimelog($id_log)
 	{
 		if (is_numeric($id_log)) {
@@ -21,7 +25,11 @@ class Model_logstatxls extends Model
 			return $row['time'];
 		}
 	}
-	
+
+	/**
+	 * @param $id_log
+	 * @return mixed
+	 */
 	public function getTotalfaild($id_log)
 	{
 		if (is_numeric($id_log)) {
@@ -31,7 +39,11 @@ class Model_logstatxls extends Model
 			return $row['COUNT(*)'];
 		}
 	}
-	
+
+	/**
+	 * @param $id_log
+	 * @return mixed
+	 */
 	public function getTotaltime($id_log)
 	{
 		if (is_numeric($id_log)) {
@@ -41,7 +53,11 @@ class Model_logstatxls extends Model
 			return $row['totaltime'];
 		}
 	}
-	
+
+	/**
+	 * @param $id_log
+	 * @return mixed
+	 */
 	public function getLogList($id_log)
 	{
 		if (is_numeric($id_log)) {
@@ -54,6 +70,10 @@ class Model_logstatxls extends Model
 		}
 	}
 
+	/**
+	 * @param $id_log
+	 * @return mixed
+	 */
 	public function getTotalread($id_log)
 	{
 		if (is_numeric($id_log)) {

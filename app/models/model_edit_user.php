@@ -12,7 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_edit_user extends Model
 {
-
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function getUserEdit($id_user)
     {
         if (is_numeric($id_user)) {
@@ -22,6 +25,9 @@ class Model_edit_user extends Model
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getGategoryList()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER BY name";
@@ -29,6 +35,11 @@ class Model_edit_user extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $id_cat
+     * @param $id_user
+     * @return mixed
+     */
     public function checkUserSub($id_cat, $id_user)
     {
         if (is_numeric($id_cat) && is_numeric($id_user)) {
@@ -39,6 +50,12 @@ class Model_edit_user extends Model
         }
     }
 
+    /**
+     * @param $fields
+     * @param $id_user
+     * @param array $id_cat
+     * @return bool
+     */
     public function editUser($fields, $id_user, $id_cat = array())
     {
         if (is_numeric($id_user)) {

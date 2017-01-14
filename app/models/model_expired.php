@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_expired extends Model
 {
+    /**
+     * @param $licensekey
+     * @return mixed
+     */
     public function addLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
@@ -21,6 +25,10 @@ class Model_expired extends Model
         return core::database()->insert($data, core::database()->getTableName('licensekey'));
     }
 
+    /**
+     * @param $licensekey
+     * @return mixed
+     */
     public function updateLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
@@ -30,6 +38,9 @@ class Model_expired extends Model
         return core::database()->update($fields, core::database()->getTableName('licensekey'), '');
     }
 
+    /**
+     * @return mixed
+     */
     public function getLicenseKey()
     {
         $query = "SELECT * FROM ".core::database()->getTableName('licensekey')."";

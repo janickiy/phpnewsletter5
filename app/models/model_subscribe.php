@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_subscribe extends Model
 {
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function getToken($id_user)
     {
         if (is_numeric($id_user)) {
@@ -22,6 +26,10 @@ class Model_subscribe extends Model
         }
     }
 
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function makeActivateSub($id_user)
     {
         if (is_numeric($id_user)) {

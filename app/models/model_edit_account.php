@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_edit_account extends Model
 {
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
 	public function getAccountInfo($id)
 	{
 		if (is_numeric($id)){
@@ -21,6 +25,11 @@ class Model_edit_account extends Model
 		}
 	}
 
+	/**
+	 * @param $fields
+	 * @param $id
+	 * @return mixed
+	 */
 	public function editAccount($fields, $id)
 	{
 		if (is_numeric($id)) {

@@ -12,6 +12,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_create_template extends Model
 {
+	/**
+	 * @return mixed
+	 */
 	public function getCategoryOptionList()
 	{
  		$query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER BY name";
@@ -20,6 +23,10 @@ class Model_create_template extends Model
 		return core::database()->getColumnArray($result);
 	}
 
+	/**
+	 * @param $fields
+	 * @return bool
+	 */
 	public function addNewTemplate($fields)
 	{
 		$parameters = 'MAX(pos)';

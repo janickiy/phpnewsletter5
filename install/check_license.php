@@ -35,7 +35,7 @@ $data = curl_exec($ch);
 
 curl_close($ch);
 
-preg_match('/\{([^\}])+\}/',$data, $out);
+preg_match('/\{([^\}])+\}/U',$data, $out);
 
 $content = array();
 
@@ -49,7 +49,10 @@ if ($out[0]) {
 		$content = array('result' => 'yes');
 	else
 		$content = array('result' => 'no', 'error' => $arr['error']);
-} else $content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+} else {
+	$content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+}
+
 
 
 header('Cache-Control: no-store, no-cache, must-revalidate');

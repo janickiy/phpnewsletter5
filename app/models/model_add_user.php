@@ -13,6 +13,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Model_add_user extends Model
 {
 
+    /**
+     * @return mixed
+     */
     public function getCategoryList()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER BY name";
@@ -21,6 +24,9 @@ class Model_add_user extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @return bool
+     */
     public function checkExistEmail()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $_POST['email'] . "'";
@@ -29,6 +35,11 @@ class Model_add_user extends Model
         return (core::database()->getRecordCount($result) == 0) ? false : true;
     }
 
+    /**
+     * @param $arrs
+     * @param $id_cat
+     * @return bool
+     */
     public function checkSub($arrs, $id_cat)
     {
         if ($arrs) {
@@ -41,6 +52,11 @@ class Model_add_user extends Model
         }
     }
 
+    /**
+     * @param $fields
+     * @param $id_cat
+     * @return bool
+     */
     public function addUser($fields, $id_cat)
     {
         $id_user = core::database()->insert($fields, core::database()->getTableName('users'));

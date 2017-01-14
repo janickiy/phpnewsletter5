@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_export extends Model
 {
+	/**
+	 * @param $id_cat
+	 * @return mixed
+	 */
 	public function getUserList($id_cat){
 		if ($id_cat) {
 			$temp = array();
@@ -34,6 +38,9 @@ class Model_export extends Model
 		return core::database()->getColumnArray($result);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getCategoryList()
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat

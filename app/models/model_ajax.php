@@ -12,6 +12,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_ajax extends Model
 {
+	/**
+	 * @param $status
+	 * @param $id_user
+	 * @return bool
+	 */
 	public function updateProcess($status, $id_user)
 	{
 		if ($status && is_numeric($id_user)){
@@ -41,6 +46,9 @@ class Model_ajax extends Model
 		} else return false;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getTotalMails()
 	{
 		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
@@ -52,6 +60,10 @@ class Model_ajax extends Model
 		return $total;
 	}
 
+	/**
+	 * @param $id_log
+	 * @return int
+	 */
 	public function getSuccessMails($id_log)
 	{
 		if (is_numeric($id_log)){
@@ -63,6 +75,10 @@ class Model_ajax extends Model
 		} else return 0;
 	}
 
+	/**
+	 * @param $id_log
+	 * @return int
+	 */
 	public function getUnsuccessfulMails($id_log)
 	{
 		if (is_numeric($id_log)){
@@ -74,6 +90,10 @@ class Model_ajax extends Model
 		}  else return 0;
 	}
 
+	/**
+	 * @param $id_user
+	 * @return mixed
+	 */
 	public function getMailingStatus($id_user)
 	{
 		if ($id_user) {
@@ -85,6 +105,10 @@ class Model_ajax extends Model
 		}
 	}
 
+	/**
+	 * @param int $limit
+	 * @return mixed
+	 */
 	public function getCurrentUserLog($limit = 10)
 	{
 		$query = "SELECT * FROM " . core::database()->getTableName('ready_send') . " a LEFT JOIN " . core::database()->getTableName('users') . " b ON b.id_user=a.id_user ORDER by id_ready_send DESC LIMIT " . $limit;
@@ -93,6 +117,11 @@ class Model_ajax extends Model
 		return core::database()->getColumnArray($result);
 	}
 
+	/**
+	 * @param $path
+	 * @param null $getfile
+	 * @return bool
+	 */
 	public function DownloadUpdate($path, $getfile = null)
 	{
 		$result = true;
@@ -113,6 +142,10 @@ class Model_ajax extends Model
 		return $result;
 	}
 
+	/**
+	 * @param $path
+	 * @return bool
+	 */
 	public function updateDB($path)
 	{
 		global $ConfigDB;
@@ -141,6 +174,9 @@ class Model_ajax extends Model
 		return $result;
 	}
 
+	/**
+	 * @return int|null
+	 */
 	public function version_code_detect()
 	{
 		global $ConfigDB;
@@ -194,6 +230,15 @@ class Model_ajax extends Model
 		return $version_code_detect;
 	}
 
+	/**
+	 * @param $email
+	 * @param $subject
+	 * @param $body
+	 * @param $prior
+	 * @return bool
+	 * @throws Exception
+	 * @throws phpmailerException
+	 */
 	public function sendTestEmail($email, $subject, $body, $prior)
 	{
 		$user = 'USERNAME';
@@ -324,6 +369,12 @@ class Model_ajax extends Model
 		}
 	}
 
+	/**
+	 * @param null $activate
+	 * @return int
+	 * @throws Exception
+	 * @throws phpmailerException
+	 */
 	public function SendEmails($activate = NULL)
 	{
 		$mailcountno = 0;
@@ -641,6 +692,10 @@ class Model_ajax extends Model
 		return $mailcount;
 	}
 
+	/**
+	 * @param $id_user
+	 * @return mixed
+	 */
 	public function getStatusProcess($id_user)
 	{
 		if (is_numeric($id_user)){
@@ -652,6 +707,13 @@ class Model_ajax extends Model
 		}
 	}
 
+	/**
+	 * @param $offset
+	 * @param $number
+	 * @param $id_log
+	 * @param $strtmp
+	 * @return mixed
+	 */
 	public function getDetaillog($offset, $number, $id_log, $strtmp)
 	{
 		if(is_numeric($offset) && is_numeric($number) && is_numeric($id_log)) {
@@ -672,6 +734,10 @@ class Model_ajax extends Model
 		}
 	}
 
+	/**
+	 * @param $id_attachment
+	 * @return mixed
+	 */
 	public function removeAttach($id_attachment)
 	{
 		if (is_numeric($id_attachment)) {

@@ -12,6 +12,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_pic extends Model
 {
+    /**
+     * @param $id_template
+     * @param $id_user
+     * @return mixed
+     */
     public function countUser($id_template, $id_user)
     {
         if (is_numeric($id_template) && is_numeric($id_user)) {

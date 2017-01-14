@@ -13,6 +13,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Model_subform extends Model
 {
 
+    /**
+     * @return mixed
+     */
     public function getCategoryList()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER BY name";
@@ -20,11 +23,19 @@ class Model_subform extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $fields
+     * @return mixed
+     */
     public function makeSubscribe($fields)
     {
         return core::database()->insert($fields, core::database()->getTableName('users'));
     }
 
+    /**
+     * @param $email
+     * @return mixed
+     */
     public function checkExistEmail($email)
     {
         $email = core::database()->escape($email);
@@ -33,6 +44,10 @@ class Model_subform extends Model
         return core::database()->getRecordCount($result);
     }
 
+    /**
+     * @param $id_user
+     * @param $id_cat
+     */
     public function insertSubs($id_user, $id_cat)
     {
         if (is_numeric($id_user)) {
@@ -48,6 +63,12 @@ class Model_subform extends Model
         }
     }
 
+    /**
+     * @param $id_user
+     * @return bool
+     * @throws Exception
+     * @throws phpmailerException
+     */
     public function sendNotification($id_user)
     {
         if (is_numeric($id_user)) {
@@ -156,6 +177,10 @@ class Model_subform extends Model
             return FALSE;
     }
 
+    /**
+     * @param $id_user
+     * @return mixed
+     */
     public function getUserInfo($id_user)
     {
         if (is_numeric($id_user)){
