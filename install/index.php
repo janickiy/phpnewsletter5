@@ -487,8 +487,7 @@ if ($INSTALL['step'] == 1){
       </form>
 <?php
 
-}
-else if($INSTALL['step'] == 2){
+} elseif ($INSTALL['step'] == 2){
 
 	/*********
 	  Step 2
@@ -506,10 +505,12 @@ $(document).on('change','#license_key',function(){
 		dataType: "json",
 		success: function(data) {
 			if (data.result == 'no') {
+				$("#error_msg").css('display', 'block');
 				$("#error_msg").text(data.error);
 				$(".btn-primary").attr("disabled", "disabled");
 			} else {
 				$("#error_msg").text('');
+				$("#error_msg").css('display', 'none');
 				$('.btn-primary').removeAttr("disabled");
 			}
 		}
@@ -517,13 +518,14 @@ $(document).on('change','#license_key',function(){
 });
 	
 </script>
+<div class="alert alert-danger" style="display: none;" id="error_msg"></div>
 <form role="form" action="?" method="post">
 	<input type="hidden" name="step" value="2" />
 	<fieldset>
 		<legend><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></legend>
 		<div class="form-group">
 				<label class="radio-inline">
-					<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked;" name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
+					<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked; " name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
 				</label>
 				<label class="radio-inline">
 					<input type="radio" onclick="document.getElementById('license_key').disabled=''; this.form.forward.disabled=this.checked;" name="license_key_type" value="license_key"> <?php echo $INSTALL["lang"]["str"]["commercial_version"]; ?>
@@ -531,9 +533,7 @@ $(document).on('change','#license_key',function(){
 			</div>
 			<div class="form-group">
 				<label for="license_key"><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></label>
-
-					<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO"><span id="error_msg"></span>
-
+				<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO">
 			</div>			
 	</fieldset>
 	<div class="form-actions">
@@ -661,8 +661,7 @@ if (ini_get('register_globals') == 1) {
       </form>
 <?php
 
-}
-else if ($INSTALL['step'] == 5){
+} elseif ($INSTALL['step'] == 5){
 
 	/*********
 	  Step 5
@@ -768,7 +767,7 @@ else if ($INSTALL['step'] == 5){
       </form>
       <?php
 
-} else if($INSTALL['step'] == 6) {
+} elseif ($INSTALL['step'] == 6) {
  
 	/*********
 	  Step 6
@@ -779,7 +778,7 @@ else if ($INSTALL['step'] == 5){
         <input type="hidden" name="step" value="6" />
 <?php
 
-    if(count($INSTALL['errors']) > 0){
+    if (count($INSTALL['errors']) > 0) {
 ?>
         <div class="alert alert-danger">
           <h4><?php echo $INSTALL["lang"]["str"]["error_after_process"]; ?>:</h4>
