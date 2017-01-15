@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -321,7 +321,7 @@ class core
 
         curl_close($ch);
 
-        preg_match('/\{([^\}])+\}/',$data, $out);
+        preg_match('/\{([^\}])+\}/U',$data, $out);
         return $out[0];
     }
 

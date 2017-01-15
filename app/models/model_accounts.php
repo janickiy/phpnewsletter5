@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,6 +12,10 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_accounts extends Model
 {
+    /**
+     * @param $password
+     * @return mixed
+     */
     public function changePassword($password)
     {
         $password = md5(trim($password));
@@ -20,6 +24,9 @@ class Model_accounts extends Model
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAccountList()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('aut') . "";
@@ -27,6 +34,10 @@ class Model_accounts extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function removeAccount($id)
     {
         if (is_numeric($id)) {

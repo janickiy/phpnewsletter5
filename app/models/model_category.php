@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -13,6 +13,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 class Model_category extends Model
 {
 
+    /**
+     * @return mixed
+     */
     public function getCategoryArr()
     {
         $query = "SELECT * FROM " . core::database()->getTableName('category') . " ORDER BY name";
@@ -20,6 +23,10 @@ class Model_category extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $id_cat
+     * @return int
+     */
     public function getCountSubscription($id_cat)
     {
         if (is_numeric($id_cat)) {
@@ -32,6 +39,10 @@ class Model_category extends Model
         }
     }
 
+    /**
+     * @param $id_cat
+     * @return bool
+     */
     public function removeCategory($id_cat)
     {
         if (is_numeric($id_cat)) {

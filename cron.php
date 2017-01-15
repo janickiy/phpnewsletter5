@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -199,7 +199,8 @@ if ($result_send->num_rows > 0){
 			elseif ($settings['precedence'] == 'list')
 				$m->addCustomHeader("Precedence: list");				
 				
-			$UNSUB = "http://".$_SERVER["SERVER_NAME"]. Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+			if (!empty($settings['path'])) $UNSUB = $settings['path'] . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+
 			$unsublink = str_replace('%UNSUB%', $UNSUB, $settings['unsublink']);
 
 			if ($settings['show_unsubscribe_link'] == "yes" && !empty($settings['unsublink'])) {
@@ -208,9 +209,11 @@ if ($result_send->num_rows > 0){
 			} else
 				$msg = $send['body'];
 
+			$url_info = parse_url($settings['path']);
+
 			$msg = str_replace('%NAME%', $user['name'], $msg);
 			$msg = str_replace('%UNSUB%', $UNSUB, $msg);
-			$msg = str_replace('%SERVER_NAME%', $_SERVER['SERVER_NAME'], $msg);
+			$msg = str_replace('%SERVER_NAME%', $url_info['host'], $msg);
 			$msg = str_replace('%USERID%', $user['id'], $msg);				
 				
 			$query = "SELECT * FROM " . $ConfigDB["prefix"] . "attach WHERE id_template=" . $send['id_template'];
