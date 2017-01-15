@@ -13,8 +13,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 // authorization
 Auth::authorization();
 
-session_write_close();
-
 $autInfo = Auth::getAutInfo(Auth::getAutId());
 
 if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception403(core::getLanguage('str', 'dont_have_permission_to_access'));
