@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,6 +12,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_pic extends Model
 {
+    /**
+     * @param $id_template
+     * @param $id_user
+     * @return mixed
+     */
     public function countUser($id_template, $id_user)
     {
         if (is_numeric($id_template) && is_numeric($id_user)) {

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -13,6 +13,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_log extends Model
 {
+    /**
+     * @param int $pnumber
+     * @param $page
+     * @return mixed
+     */
     public function getLogArr($pnumber = 10, $page)
     {
         $table = core::database()->getTableName('log');
@@ -24,6 +29,9 @@ class Model_log extends Model
         return core::database()->get_page();
     }
 
+    /**
+     * @return int
+     */
     public function getTotal()
     {
         core::database()->tablename = core::database()->getTableName('log');
@@ -31,11 +39,20 @@ class Model_log extends Model
         return $number;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPageNumber()
     {
         return core::database()->page;
     }
 
+    /**
+     * @param $strtmp
+     * @param $id_log
+     * @param int $number
+     * @return mixed
+     */
     public function getDetaillog($strtmp, $id_log, $number = 10)
     {
         if (is_numeric($id_log)) {
@@ -51,6 +68,10 @@ class Model_log extends Model
         }
     }
 
+    /**
+     * @param $id_log
+     * @return mixed
+     */
     public function countLetters($id_log)
     {
         if (is_numeric($id_log)) {
@@ -60,6 +81,10 @@ class Model_log extends Model
         }
     }
 
+    /**
+     * @param $id_log
+     * @return mixed
+     */
     public function countSent($id_log)
     {
         if(is_numeric($id_log)) {
@@ -69,6 +94,10 @@ class Model_log extends Model
         }
     }
 
+    /**
+     * @param $id_log
+     * @return mixed
+     */
     public function countRead($id_log)
     {
         $id_log = core::database()->escape($id_log);
@@ -77,6 +106,9 @@ class Model_log extends Model
         return core::database()->getRecordCount($result);
     }
 
+    /**
+     * @return bool
+     */
     public function clearLog()
     {
         core::session()->start();

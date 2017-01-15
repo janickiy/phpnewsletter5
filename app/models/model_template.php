@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,11 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_template extends Model
 {
-
+    /**
+     * @param $pnumber
+     * @param $page
+     * @return mixed
+     */
     public function getListArr($pnumber, $page)
     {
         $table = "" . core::database()->getTableName('template') . " tmpl LEFT JOIN " . core::database()->getTableName('category') . " cat ON cat.id_cat=tmpl.id_cat";
@@ -24,17 +28,28 @@ class Model_template extends Model
         return core::database()->get_page();
     }
 
+    /**
+     * @return int
+     */
     public function getTotal()
     {
         core::database()->tablename = core::database()->getTableName('template');
         return intval((core::database()->get_total() - 1) / core::database()->pnumber) + 1;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPageNumber()
     {
         return core::database()->page;
     }
 
+    /**
+     * @param $fields
+     * @param $activate
+     * @return mixed
+     */
     public function changeStatusNewsLetter($fields, $activate)
     {
         $temp = array();
@@ -50,6 +65,10 @@ class Model_template extends Model
         return $result;
     }
 
+    /**
+     * @param $activate
+     * @return bool
+     */
     public function removeTemplate($activate)
     {
         if (!empty($activate)) {
@@ -78,6 +97,10 @@ class Model_template extends Model
             return false;
     }
 
+    /**
+     * @param $id_template
+     * @return bool
+     */
     public function upPosition($id_template)
     {
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos";
@@ -104,7 +127,10 @@ class Model_template extends Model
         else return true;
     }
 
-
+    /**
+     * @param $id_template
+     * @return bool
+     */
     public function downPosition($id_template)
     {
         $query = "SELECT * FROM " . core::database()->getTableName('template') . " ORDER BY pos DESC";

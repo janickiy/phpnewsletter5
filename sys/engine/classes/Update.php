@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -45,27 +45,27 @@ class Update
 
 	public function getDataNewVersion($url)
 	{
-		$ch = curl_init();
+        $ch = curl_init($url);
 
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0); 
-		curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-		$data = curl_exec($ch);
-		curl_close($ch);
+        $data = curl_exec($ch);
 
-		return json_decode($data, true);
+        curl_close($ch);
+
+		preg_match('/\{([^\}])+\}/U', $data, $out);
+
+		return json_decode($out[0], true);
 	}
 
 	public function checkTree()
 	{
-		$newversion = $this->getVersion();
-
 		preg_match("/(\d+)\.(\d+)\.(\d+)/", $this->currenversion, $out1);
-		preg_match("/(\d+)\.(\d+)\.(\d+)/", $newversion, $out2);
 
 		if($out1[1] < $out1[2])
 			return false;
@@ -109,18 +109,17 @@ class Update
 		return $out['message'];
 	}
 	
-	public function getIP() {
-        if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
-            $ip = getenv("HTTP_CLIENT_IP");
-        elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
-            $ip = getenv("HTTP_X_FORWARDED_FOR");
-        elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
-            $ip = getenv("REMOTE_ADDR");
-        elseif (! empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
-            $ip = $_SERVER['REMOTE_ADDR'];
-        else
-            $ip = "unknown";
-
-        return ($ip);
-    }
+	public function getIP()
+	{
+		if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+			$ip = getenv("HTTP_CLIENT_IP");
+		elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+			$ip = getenv("HTTP_X_FORWARDED_FOR");
+		elseif (getenv("REMOTE_ADDR") and strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+			$ip = getenv("REMOTE_ADDR");
+		elseif (!empty($_SERVER['REMOTE_ADDR']) and strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+			$ip = $_SERVER['REMOTE_ADDR'];
+		else
+			$ip = "unknown";
+	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,6 +12,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_settings extends Model
 {
+    /**
+     * @return array
+     */
     public function getCharsetList()
     {
         $temp = Array();
@@ -23,6 +26,10 @@ class Model_settings extends Model
         return $temp;
     }
 
+    /**
+     * @param $fields
+     * @return bool
+     */
     public function updateSettings($fields)
     {
         $result = core::database()->update($fields, core::database()->getTableName('settings'), '');

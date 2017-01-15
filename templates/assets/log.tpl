@@ -185,50 +185,54 @@
   </tbody>
 </table>
 <!-- BEGIN pagination -->
-<div class="form-inline">
-  <div class="control-group"> ${STR_PNUMBER}:
-    <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">
-      <option value="10" <!-- IF '${PNUMBER}' == 10 -->selected="selected"<!-- END IF -->> 10 </option>
-      <option value="20" <!-- IF '${PNUMBER}' == 20 -->selected="selected"<!-- END IF -->> 20 </option>
-      <option value="50" <!-- IF '${PNUMBER}' == 50 -->selected="selected"<!-- END IF -->> 50 </option>
-      <option value="100" <!-- IF '${PNUMBER}' == 100 -->selected="selected"<!-- END IF -->> 100 </option>
-    </select>
-    <span class="help-inline">
-    <div class="pagination">
-      <div class="pagination">
-        <ul>
-          <!-- IF '${PERVPAGE}' != '' -->
-          <li>${PERVPAGE}</li>
-          <!-- END IF -->
-          <!-- IF '${PERV}' != '' -->
-          <li>${PERV}</li>
-          <!-- END IF -->
-          <!-- IF '${PAGE2LEFT}' != '' -->
-          <li>${PAGE2LEFT}</li>
-          <!-- END IF -->
-          <!-- IF '${PAGE1LEFT}' != '' -->
-          <li>${PAGE1LEFT}</li>
-          <!-- END IF -->
-          <!-- IF '${CURRENT_PAGE}' != '' -->
-          <li class="prev disabled">${CURRENT_PAGE}</li>
-          <!-- END IF -->
-          <!-- IF '${PAGE1RIGHT}' != '' -->
-          <li>${PAGE1RIGHT}</li>
-          <!-- END IF -->
-          <!-- IF '${PAGE2RIGHT}' != '' -->
-          <li>${PAGE2RIGHT}</li>
-          <!-- END IF -->
-          <!-- IF '${NEXTPAGE}' != '' -->
-          <li>${NEXTPAGE}</li>
-          <!-- END IF -->
-          <!-- IF '${NEXT}' != '' -->
-          <li>${NEXT}</li>
-          <!-- END IF -->
-        </ul>
-      </div>
-      </span> </div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="dataTables_length">
+      <label>
+        ${STR_PNUMBER}: <select onchange="PnumberChange(this);" class="span1 form-control" id="pnumber" name="pnumber">
+          <option value="10"<!-- IF '${PNUMBER}' == 10 --> selected="selected"<!-- END IF -->> 10 </option>
+          <option value="20"<!-- IF '${PNUMBER}' == 20 --> selected="selected"<!-- END IF -->> 20 </option>
+          <option value="50"<!-- IF '${PNUMBER}' == 50 --> selected="selected"<!-- END IF -->> 50 </option>
+          <option value="100"<!-- IF '${PNUMBER}' == 100 --> selected="selected"<!-- END IF -->> 100 </option>
+        </select>
+      </label>
+    </div>
   </div>
-  <!-- END pagination -->
+  <div class="col-sm-6">
+    <div class="dataTables_paginate paging_simple_numbers">
+      <ul class="pagination">
+        <!-- IF '${PERVPAGE}' != '' -->
+        <li class="paginate_button previous">${PERVPAGE}</li>
+        <!-- END IF -->
+        <!-- IF '${PERV}' != '' -->
+        <li class="paginate_button previous">${PERV}</li>
+        <!-- END IF -->
+        <!-- IF '${PAGE2LEFT}' != '' -->
+        <li class="paginate_button ">${PAGE2LEFT}</li>
+        <!-- END IF -->
+        <!-- IF '${PAGE1LEFT}' != '' -->
+        <li class="paginate_button ">${PAGE1LEFT}</li>
+        <!-- END IF -->
+        <!-- IF '${CURRENT_PAGE}' != '' -->
+        <li class="paginate_button active">${CURRENT_PAGE}</li>
+        <!-- END IF -->
+        <!-- IF '${PAGE1RIGHT}' != '' -->
+        <li class="paginate_button ">${PAGE1RIGHT}</li>
+        <!-- END IF -->
+        <!-- IF '${PAGE2RIGHT}' != '' -->
+        <li class="paginate_button ">${PAGE2RIGHT}</li>
+        <!-- END IF -->
+        <!-- IF '${NEXTPAGE}' != '' -->
+        <li class="paginate_button next">${NEXTPAGE}</li>
+        <!-- END IF -->
+        <!-- IF '${NEXT}' != '' -->
+        <li class="paginate_button next">${NEXT}</li>
+        <!-- END IF -->
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END pagination -->
   <!-- END LogList -->
   <!-- BEGIN DetailLog -->
   <p>« <a href="./?t=log">${STR_BACK}</a></p>

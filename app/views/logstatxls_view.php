@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.4
+ * PHP Newsletter 5.0.5
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,8 +12,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 // authorization
 Auth::authorization();
-
-session_write_close();
 
 $autInfo = Auth::getAutInfo(Auth::getAutId());
 
