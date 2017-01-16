@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.0.6
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -50,7 +50,7 @@ if ($out[0]) {
 	else
 		$content = array('result' => 'no', 'error' => $arr['error']);
 } else {
-	$content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+	$content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["error_checking_license"]);
 }
 
 

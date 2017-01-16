@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.0.6
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,7 @@ error_reporting(0);
 session_start();
 
 $INSTALL = array();
-$INSTALL["version"] = '5.0.5';
+$INSTALL["version"] = '5.0.6';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
