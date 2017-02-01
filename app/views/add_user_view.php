@@ -46,6 +46,7 @@ if (Core_Array::getRequest('action')) {
 		$fields['token']     = Pnl::getRandomCode();
 		$fields['time']      = date("Y-m-d H:i:s");	
 		$fields['status']    = 'active';
+		$fields['time_send'] = '0000-00-00 00:00:00';
 		
 		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");
