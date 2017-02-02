@@ -1,4 +1,4 @@
-<?php
+Отправлять письма<?php
 
 $language["title_page"]["template"] = "Шаблоны";
 $language["title"]["template"] = "Шаблоны";
@@ -262,7 +262,7 @@ $language["str"]["set_smtp_aut_cram"]  = "CRAM-MD5 (Высокая секрет�
 $language["str"]["set_send_parameters"]       = "Параметры рассылки";
 $language["str"]["set_show_unsubscribe_link"] = "Показывать форму отписки от рассылки";
 $language["str"]["set_request_reply"]    = "Запрашивать уведомления о прочтении писем";
-$language["str"]["set_interval_type"]    = "Отправлять письма подписчику в инетервале";
+$language["str"]["set_interval_type"]    = "Отправлять письма подписчику в интервале";
 $language["str"]["set_interval_type_no"] = "нет";
 $language["str"]["set_interval_type_m"] = "минут";
 $language["str"]["set_interval_type_h"] = "часов";

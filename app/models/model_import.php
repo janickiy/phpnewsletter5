@@ -190,6 +190,7 @@ class Model_import extends Model
 						$fields['token'] = Pnl::getRandomCode();
 						$fields['time'] = date("Y-m-d H:i:s");
 						$fields['status'] = 'active';
+						$fields['time_send'] = '0000-00-00 00:00:00';
 
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 
