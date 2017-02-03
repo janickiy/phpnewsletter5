@@ -26,6 +26,7 @@ if (Core_Array::getRequest('action')){
 	$fields['token']     = Pnl::getRandomCode();
 	$fields['time']      = date("Y-m-d H:i:s");
  	$fields['status']    = core::getSetting("require_confirmation") == 'yes' ? 'noactive' : 'active';
+	$fields['time_send'] = '0000-00-00 00:00:00';
 
 	$insert_id = $data->makeSubscribe($fields);
 
