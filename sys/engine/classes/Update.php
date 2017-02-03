@@ -123,5 +123,7 @@ class Update
 			$ip = $_SERVER['REMOTE_ADDR'];
 		else
 			$ip = "unknown";
+
+		return $ip;
 	}
 }
