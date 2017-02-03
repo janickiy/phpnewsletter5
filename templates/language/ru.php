@@ -1,4 +1,4 @@
-Отправлять письма<?php
+<?php
 
 $language["title_page"]["template"] = "Шаблоны";
 $language["title"]["template"] = "Шаблоны";
