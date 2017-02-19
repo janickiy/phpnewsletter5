@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.8
+ * PHP Newsletter 5.0.9
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -26,6 +26,7 @@ if (Core_Array::getRequest('action')){
 	$fields['token']     = Pnl::getRandomCode();
 	$fields['time']      = date("Y-m-d H:i:s");
  	$fields['status']    = core::getSetting("require_confirmation") == 'yes' ? 'noactive' : 'active';
+	$fields['time_send'] = '0000-00-00 00:00:00';
 
 	$insert_id = $data->makeSubscribe($fields);
 

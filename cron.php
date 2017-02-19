@@ -150,15 +150,14 @@ if ($result_send->num_rows > 0){
 		if ($settings['re_send'] == "no") {
 			if ($send['id_cat'] == 0)
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
-								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
+								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
 								WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 			else 
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "subscription s ON u.id_user=s.id_user
-								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
+								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
 								WHERE (r.id_user IS NULL) AND (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
-		}
-		else{
+		} else {
 			if ($send['id_cat'] == 0)
 				$query_users = "SELECT *,id_user AS id FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
 			else 
