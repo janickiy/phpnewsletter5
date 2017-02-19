@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.9
+ * PHP Newsletter 5.0.10
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -85,46 +85,6 @@ class Pnl
         $str = preg_replace("/^ks_c_5601\-1987$/i", core::getLanguage('str', 'ksc56011987'), $str);
         $str = preg_replace("/^euc\-kr$/i", core::getLanguage('str', 'euckr'), $str);
         $str = preg_replace("/^windows\-874$/i", core::getLanguage('str', 'windows874'), $str);
-
-        return $str;
-    }
-
-    public static function remove_html_tags($str) {
-        $tags = array(
-            "/<script[^>]*?>.*?<\/script>/si",
-            "/<[\/\!]*?[^<>]*?>/si",
-            "/&(quot|#34);/i",
-            "/&(laquo|#171);/i",
-            "/&(raquo|#187);/i",
-            "/&(hellip|#8230);/i",
-            "/&(amp|#38);/i",
-            "/&(lt|#60);/i",
-            "/&(gt|#62);/i",
-            "/&(nbsp|#160);/i",
-            "/&(iexcl|#161);/i",
-            "/&(cent|#162);/i",
-            "/&(pound|#163);/i",
-            "/&(copy|#169);/i"
-        );
-
-        $replace = array(
-            "",
-            "",
-            "\"",
-            "\"",
-            "\"",
-            "...",
-            "&",
-            "<",
-            ">",
-            " ",
-            chr(161),
-            chr(162),
-            chr(163),
-            chr(169)
-        );
-
-        $str = preg_replace($tags, $replace, $str);
 
         return $str;
     }

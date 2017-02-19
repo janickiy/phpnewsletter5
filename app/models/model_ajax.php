@@ -355,7 +355,7 @@ class Model_ajax extends Model
 		if ($charset != 'utf-8') $msg = iconv('utf-8', $charset, $msg);
 		if (core::getSetting('content_type') == 1){
 			$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-			$msg = Pnl::remove_html_tags($msg);
+			$msg = strip_tags($msg);
 		}
 
 		$m->Body = $msg;
@@ -609,7 +609,7 @@ class Model_ajax extends Model
 							$msg .= $IMG;
 						} else {
 							$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-							$msg = Pnl::remove_html_tags($msg);
+							$msg = strip_tags($msg);
 						}
 
 						$m->Body = $msg;

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.8
+ * PHP Newsletter 5.0.10
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -242,7 +242,7 @@ if ($result_send->num_rows > 0){
 				$msg .= $IMG;
 			} else {
 				$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-				$msg = Pnl::remove_html_tags($msg);
+				$msg = strip_tags($msg);
 			}	
 				
 			$m->Body = $msg;	
