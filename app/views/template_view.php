@@ -120,7 +120,7 @@ if ($arr){
 		if($row['id_cat'] == 0) { $row['catname'] = core::getLanguage('str', 'general'); }
 
 		$row['body'] = preg_replace('/<br(\s\/)?>/siU', "", $row['body']);
-		$row['body'] = strip_tags($row['body']);
+		$row['body'] = Pnl::remove_html_tags($row['body']);
 		$row['body'] = preg_replace('/\n/sU', "", $row['body']);
 		$pos = strpos(substr($row['body'], 500), " ");
 		$srttmpend = strlen($row['body']) > 500 ? '...' : '';

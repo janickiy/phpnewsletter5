@@ -242,7 +242,7 @@ if ($result_send->num_rows > 0){
 				$msg .= $IMG;
 			} else {
 				$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
-				$msg = strip_tags($msg);
+				$msg = Pnl::remove_html_tags($msg);
 			}	
 				
 			$m->Body = $msg;	

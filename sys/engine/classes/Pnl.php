@@ -89,6 +89,13 @@ class Pnl
         return $str;
     }
 
+    public static function remove_html_tags($str) {
+        $str = strip_tags($str);
+        $str = html_entity_decode($str);
+
+        return $str;
+    }
+
     public static function get_mime_type($ext) {
         $mimetypes = Array(
             "123" => "application/vnd.lotus-1-2-3",
