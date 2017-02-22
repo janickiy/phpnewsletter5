@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.9
+ * PHP Newsletter 5.0.10
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -149,9 +149,6 @@ class Model_ajax extends Model
 	public function updateDB($path)
 	{
 		global $ConfigDB;
-
-		echo 'rrr';
-		exit;
 
 		$result = true;
 
@@ -506,17 +503,18 @@ class Model_ajax extends Model
 						$interval = '';
 
 					$limit = core::getSetting('make_limit_send') == "yes" ? "LIMIT " . core::getSetting('limit_number') . "" : "";
+                    $order = core::getSetting('random') == "yes" ? 'ORDER BY RAND()' : '';
 
-					if (Core_Array::getRequest('typesend') == 2) {
+                    if (Core_Array::getRequest('typesend') == 2) {
 						if ($send['id_cat'] == 0)
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-											WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
+											WHERE (r.id_user IS NULL) AND (status='active') " . $order . " " . $limit . "";
 						else
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 											LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
 											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
+											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $order . " " . $limit;
 					} else {
 						if (core::getSetting('re_send') == "no") {
 							if ($send['id_cat'] == 0)
@@ -527,14 +525,14 @@ class Model_ajax extends Model
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
 												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $limit;
+												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $order . " " . $limit;
 						} else {
 							if ($send['id_cat'] == 0)
-								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
+								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $order . " " . $limit . "";
 							else
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $limit;
+												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $order . " " . $limit;
 						}
 					}
 

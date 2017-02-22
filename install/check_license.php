@@ -55,8 +55,6 @@ if ($out[0]) {
 	$content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["error_checking_license"]);
 }
 
-
-
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Content-Type: application/json');
 echo json_encode($content);
