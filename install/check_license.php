@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.9
+ * PHP Newsletter 5.0.10
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -54,8 +54,6 @@ if ($out[0]) {
 } else {
 	$content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["error_checking_license"]);
 }
-
-
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Content-Type: application/json');
