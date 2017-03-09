@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -27,11 +27,7 @@ class Model_add_account extends Model
 		else
 			return true;
 	}
-
-	/**
-	 * @param $fields
-	 * @return mixed
-	 */
+	
 	public function createAccount($fields)
 	{
 		return core::database()->insert($fields, core::database()->getTableName('aut'));

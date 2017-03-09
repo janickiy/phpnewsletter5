@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -20,10 +20,16 @@ class Session {
         $this->lifetime = $lifetime;
     }
 
+    /**
+     * @return bool
+     */
     public function isCreated () {
         return (!empty($_COOKIE[$this->cookieName]) && ctype_alnum($_COOKIE[$this->cookieName])) ? true : false;
     }
 
+    /**
+     * @param null $name
+     */
     public function setCookieName ($name = null)
     {
         if (!empty($name)) $this->cookieName = $name;
@@ -41,6 +47,10 @@ class Session {
         }
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function set ($name, $value) {
         if ($this->started) {
             $_SESSION[$name] = $value;
@@ -49,6 +59,10 @@ class Session {
         }
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function issetName ($name) {
         if ($this->started) {
             if( isset($_SESSION[$name]))
@@ -60,6 +74,10 @@ class Session {
         }
     }
 
+    /**
+     * @param $name
+     * @return null
+     */
     public function get ($name) {
         if ($this->started) {
             return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
@@ -68,6 +86,9 @@ class Session {
         }
     }
 
+    /**
+     * @param $name
+     */
     public function delete ($name) {
         if ($this->started) {
             if (isset($_SESSION[$name])) unset($_SESSION[$name]);

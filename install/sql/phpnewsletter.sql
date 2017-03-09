@@ -58,6 +58,14 @@ CREATE TABLE `%prefix%ready_send` (
   KEY `id_send` (`id_template`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+CREATE TABLE `%prefix%redirect_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 CREATE TABLE `%prefix%settings` (
   `language` varchar(10) DEFAULT NULL,  
   `path` varchar(255) DEFAULT NULL,  

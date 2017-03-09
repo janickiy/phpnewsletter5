@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -59,7 +59,7 @@ class Model_create_template extends Model
 			}
 			
 			return $id_insert;
-		}
-		else return false;
+		} else
+			return false;
 	}
 }

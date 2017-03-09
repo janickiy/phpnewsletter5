@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -212,12 +212,12 @@ switch (Core_Array::getGet('action'))
 		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
 		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
 		$id_log = isset($_REQUEST['id_log']) && is_numeric($_REQUEST['id_log']) ? $_REQUEST['id_log'] : exit();
-		$strtmp = !empty($_REQUEST['strtmp']) ? $_REQUEST['strtmp'] : exit();
+		$strtmp = !empty($_REQUEST['strtmp']) ? $id_log : exit();
 
-		$arr = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
+		$arrs = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
 
-		if (is_array($arr)) {
-			foreach($arr as $row) {
+		if (is_array($arrs)) {
+			foreach($arrs as $row) {
 				$catname = $row['id_cat'] == 0 ? core::getLanguage('str', 'general') : $row['catname'];
 				$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
 				$read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
@@ -271,6 +271,32 @@ switch (Core_Array::getGet('action'))
 			}
 
 			Pnl::showJSONContent(json_encode($content));
+		}
+
+		break;
+
+	case 'showredirectlogs':
+
+		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
+		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
+		$strtmp = !empty($_REQUEST['strtmp']) ? $_REQUEST['strtmp'] : exit();
+		$url = !empty($_REQUEST['url']) ? $_REQUEST['url'] : exit();
+
+		$arrs = $data->getDetailRedirectLog($offset, $number, $url, $strtmp);
+
+		if (is_array($arrs)) {
+			foreach($arrs as $row) {
+				$rows[] = array(
+					"id" => $row['id'],
+					"email" => $row['email'],
+					"time" => $row['time'],
+				);
+			}
+
+			if (isset($rows)) {
+				$content = '{"item":' . json_encode($rows) . '}';
+				Pnl::showJSONContent($content);
+			}
 		}
 
 		break;

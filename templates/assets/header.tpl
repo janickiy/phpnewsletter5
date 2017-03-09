@@ -22,10 +22,14 @@
 	<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="./templates/js/jquery.hide_alertblock.js"></script>
 	<script src="./templates/js/jquery.cookie.js"></script>
+	<script src="./templates/assets/vendor/metisMenu/metisMenu.js"></script>
 </head>
 <body>
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
+
 		$.ajax({
 			cache: false,
 			url: './?t=ajax&action=alert_update',
@@ -48,15 +52,13 @@
 					if (data.status != ''){
 						if (data.status == 'start'){
 							$("#mailing_status").html('<span title="${STR_LAUNCHEDMAILING}" id="startmailing" class="startmailing"></span>');
-						}
-						else{
+						} else {
 							$("#mailing_status").html('<span title="${STR_STOPMAILING}" class="stopmailing"></span>');
 						}
 					}
 				}
 			});
 		}, 5000);
-		
 		
 	});
 
@@ -120,7 +122,18 @@
 					<!-- IF '${ACCOUNT_ROLE}' == 'admin' || '${ACCOUNT_ROLE}' == 'moderator' -->
 					<li><a	<!-- IF '${ACTIVE_MENU}' == 'category' -->class="active"<!-- END IF -->	href="./?t=category" title="${MENU_CATEGORY_TITLE}"><i class="fa fa-list"></i> ${MENU_CATEGORY}</a></li>
 					<!-- END IF -->
-					<li><a	<!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->	href="./?t=log" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG}</a></li>
+					<li>
+						<a	class="community_group_button"	href="#" title="${MENU_LOG_TITLE}"><i class="fa fa-area-chart"></i> ${MENU_LOG} <span class="fa arrow"></span></a>
+						<ul class="nav nav-list collapse nav-second-level">
+							<li>
+								<a <!-- IF '${ACTIVE_MENU}' == 'log' -->class="active"<!-- END IF -->	href="./?t=log" title="${MENU_REDIRECT_LOG_TITLE}">${MENU_LOG}</a>
+							</li>
+							<li>
+								<a <!-- IF '${ACTIVE_MENU}' == 'redirect_log' -->class="active"<!-- END IF -->	href="./?t=redirect_log" title="${MENU_REDIRECT_LOG_TITLE}">${MENU_REDIRECT_LOG}</a>
+							</li>
+						</ul>
+					</li>
+
 					<!-- IF '${ACCOUNT_ROLE}' == 'admin' -->
 					<li><a	<!-- IF '${ACTIVE_MENU}' == 'settings' -->class="active"<!-- END IF -->	href="./?t=settings" title="${MENU_SETTINGS_TITLE}"><i class="fa fa-gear"></i> ${MENU_SETTINGS}</a></li>
 					<!-- END IF -->

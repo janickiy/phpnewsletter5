@@ -98,6 +98,10 @@ $language["title_page"]["add_account"] = 'Adding account';
 $language["title"]["add_account"] = 'Adding account';
 $language["info"]["add_account"] = "";
 
+$language["title_page"]["redirect_log"] = 'Referrals log';
+$language["title"]["redirect_log"] = 'Referrals log';
+$language["info"]["redirect_log"] = "Here you can see the statistics of clicks on the links, the number of users who click links in the newsletter.";
+
 $language["str"]["action"] = "Action";
 $language["str"]["activity"] = "Activity";
 $language["str"]["category"] = "Category";
@@ -244,7 +248,7 @@ $language["str"]["set_subject_textconfirm"] = "Subject of subscription confirmat
 $language["str"]["set_text_confirmation"]   = "Text of subscription confirmation";
 $language["str"]["set_require_confirmation"] = "Require confirmation of subscription";
 $language["str"]["set_unsublink"] = "Text of link of unsubscribing from a mailing list";
-$language["str"]["set_hint"]      = "Supported tags: %NAME% is username, %CONFIRM% is link to confirm mailing, %UNSUB% is link to remove mailing, %SERVER_NAME% is server name";
+$language["str"]["set_hint"]      = "Supported tags: %NAME% is username, %CONFIRM% is link to confirm mailing, %UNSUB% is link to remove mailing, %SERVER_NAME% is server name, %REFERRAL:http://url address% - reference for statistics of links clicks";
 $language["str"]["set_smtp_settings"] = "SMTP server settings";
 $language["str"]["set_smtp_host"]     = "SMTP server";
 $language["str"]["set_username"] = "LOGIN";
@@ -283,6 +287,7 @@ $language["str"]["set_sleep"] = "The delay between the sending (sec.)";
 $language["str"]["set_theme"] = "Theme";
 $language["str"]["set_random"] = "Randomization of subscribers";
 $language["str"]["set_return_path"] = "Return-path";
+$language["str"]["remove_subscriber"] = "Remove subscribers who did not confirm their subscription within days";
 $language["str"]["list_owner"] = "List-Owner";
 $language["str"]["set_path"] = "URL path";
 $language["str"]["script_name"] = "PHP Newsletter";
@@ -329,7 +334,7 @@ $language["str"]['required_fields'] = "Required fields";
 $language["str"]["dont_have_permission_to_access"] = "You don't have permission to access";
 $language["str"]["demo_version_has_expired"] = '<p>The validity of the demo version has expired. To use the application buy the license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 $language["str"]["licensekey_has_expired"] = '<p>The validity of a license key has expired. To use the application buy a new license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
-
+$language["str"]["number_redirect"] = "Number of redirects";
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";
@@ -455,6 +460,8 @@ $language["menu"]["update_title"] = "Update";
 $language["menu"]["update"]       = "Update";
 $language["menu"]["mailing_options_title"]    = "Mailing options";
 $language["menu"]["mailing_options"]          = "Mailing options";
+$language["menu"]["menu_redirect_log"] = "Referrals log";
+$language["menu"]["menu_redirect_log_title"] = "Referrals log";
 
 $language["prompt"]["add_user"] = "Add new subscriber";
 $language["prompt"]["remove_subscribers"] = "Remove selected subscribers";

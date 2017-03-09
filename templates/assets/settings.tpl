@@ -68,14 +68,6 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="newsubscribernotify">${SET_SUBSCRIBER_NOTIFY}</label>
-        <div class="col-lg-7">
-          <div class="checkbox">
-            <label> <input  type="checkbox" name="newsubscribernotify"  <!-- IF '${SUBSCRIBER_NOTIFY}' == 'yes' -->checked="checked" <!-- END IF -->> </label>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
         <label class="col-lg-3 control-label" for="email_name">${SET_EMAIL_NAME}</label>
         <div class="col-lg-7">
           <input class="form-control" type="text" value="${EMAIL_NAME}" name="email_name">
@@ -190,7 +182,7 @@
             <label> <input type=checkbox name="request_reply"  <!-- IF '${REQUEST_REPLY}' == 'yes' -->checked="checked"<!-- END IF -->> </label>
           </div>
         </div>
-      </div>
+      </div>	  
 	  <div class="form-group">
         <label class="col-lg-3 control-label" for="interval_number">${SET_INTERVAL_TYPE}</label>
         <div class="col-lg-7">
@@ -210,12 +202,20 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>  
       <div class="form-group">
         <label class="col-lg-3 control-label" for="re_send">${SET_RE_SEND}</label>
         <div class="col-lg-7">
           <div class="checkbox">
             <label> <input  type="checkbox" name="re_send" <!-- IF '${RE_SEND}' == 'yes' -->checked="checked"<!-- END IF -->> </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="newsubscribernotify">${SET_SUBSCRIBER_NOTIFY}</label>
+        <div class="col-lg-7">
+          <div class="checkbox">
+            <label> <input  type="checkbox" name="newsubscribernotify"  <!-- IF '${SUBSCRIBER_NOTIFY}' == 'yes' -->checked="checked" <!-- END IF -->> </label>
           </div>
         </div>
       </div>
@@ -236,6 +236,19 @@
         <label class="col-lg-3 control-label" for="sleep">${SET_SLEEP}</label>
         <div class="col-lg-7">
           <input class="form-control" type="text" value="${SLEEP}" name="sleep">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="limit_number">${SET_REMOVE_SUBSCRIBER}</label>
+        <div class="col-lg-7">
+          <div class="row">
+            <div class="col-xs-9">
+              <input class="form-control" type="text" value="${REMOVE_SUBSCRIBER_DAYS}" name="remove_subscriber_days">
+            </div>
+            <div class="col-xs-2">
+              <div class="checkbox"> <input class="flat-checkbox" type="checkbox" <!-- IF '${REMOVE_SUBSCRIBER}' == 'yes' -->checked="checked"<!-- END IF -->name="remove_subscriber"> </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="form-group">

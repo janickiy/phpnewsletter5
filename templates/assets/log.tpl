@@ -6,8 +6,8 @@
     $.fn.scrollPagination = function(options) {
 
       var settings = {
-        nop     : 50,
-        offset  : 50,
+        nop     : 25,
+        offset  : 25,
         error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
         delay   : 500,
         scroll  : true
@@ -112,10 +112,9 @@
   })(jQuery);
 
   $(document).ready(function() {
-
     $('#page-wrapper').scrollPagination({
-      nop     : 50,
-      offset  : 50,
+      nop     : 25,
+      offset  : 25,
       error   : '${STR_THERE_ARE_NO_MORE_ENTRIES}',
       delay   : 500,
       scroll  : true
@@ -233,6 +232,7 @@
   </div>
 </div>
 <!-- END pagination -->
+
   <!-- END LogList -->
   <!-- BEGIN DetailLog -->
   <p>« <a href="./?t=log">${STR_BACK}</a></p>

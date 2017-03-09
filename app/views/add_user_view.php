@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.1.0
+ * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -46,6 +46,7 @@ if (Core_Array::getRequest('action')) {
 		$fields['token']     = Pnl::getRandomCode();
 		$fields['time']      = date("Y-m-d H:i:s");	
 		$fields['status']    = 'active';
+		$fields['time_send'] = '0000-00-00 00:00:00';
 		
 		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");

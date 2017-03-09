@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -38,12 +38,12 @@ class Model_ajax extends Model
 				else
 					return false;
 			} else {
-				$query = "UPDATE " . core::database()->getTableName('process') . " SET process='" . $status . "'
-							WHERE id_user=" . $id_user;
+				$query = "UPDATE " . core::database()->getTableName('process') . " SET process='" . $status . "' WHERE id_user=" . $id_user;
 				return core::database()->querySQL($query);
 			}
 
-		} else return false;
+		} else
+			return false;
 	}
 
 	/**
@@ -72,7 +72,8 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		} else return 0;
+		} else
+			return 0;
 	}
 
 	/**
@@ -87,7 +88,8 @@ class Model_ajax extends Model
 			$count = core::database()->getRow($result, 'assoc');
 
 			return $count['COUNT(*)'];
-		}  else return 0;
+		}  else
+			return 0;
 	}
 
 	/**
@@ -150,15 +152,12 @@ class Model_ajax extends Model
 	{
 		global $ConfigDB;
 
-		echo 'rrr';
-		exit;
-
 		$result = true;
 
 		$queries = @file($path);
 
 		foreach ($queries as $query){
-			$query = str_replace('%prefix%', $configdb["prefix"], $query);
+			$query = str_replace('%prefix%', $ConfigDB["prefix"], $query);
 			$query = trim($query);
 
 			if (empty($query)){
@@ -190,6 +189,7 @@ class Model_ajax extends Model
 			'log',
 			'process',
 			'ready_send',
+			'redirect_log',
 			'settings',
 			'subscription',
 			'template',
@@ -222,9 +222,9 @@ class Model_ajax extends Model
 		if ($exists_tables) {
 			$version_code_detect = 50000;
 
-			//if (in_array('require_confirmation', $tables['settings'])) {
-			//	$version_code_detect = 50100;
-			//	}
+			if (in_array('remove_subscriber', $tables['settings'])) {
+				$version_code_detect = 50100;
+			}
 		}
 
 		return $version_code_detect;
@@ -277,7 +277,7 @@ class Model_ajax extends Model
 		} elseif (core::getSetting('how_to_send') == 3 && core::getSetting('sendmail') != ''){
 			$m->IsSendmail();
 			$m->Sendmail = core::getSetting('sendmail');
-		} else{
+		} else {
 			$m->IsMail();
 		}
 
@@ -345,15 +345,18 @@ class Model_ajax extends Model
 		if (core::getSetting('show_unsubscribe_link') == "yes" && core::getSetting('unsublink') != '') {
 			$msg = "" . $body . "<br><br>" . $unsublink;
 			$m->addCustomHeader("List-Unsubscribe: " . $UNSUB);
-		} else $msg = $body;
+		} else
+			$msg = $body;
 
+		$msg = preg_replace_callback("/%REFERRAL\:(.+)%/isU", function($matches) { return "http://%URL_PATH%?t=referral&ref=" . base64_encode($matches[1]) . "&id=%USERID%"; }, $msg);
 		$msg = str_replace('%NAME%', $user, $msg);
 		$msg = str_replace('%UNSUB%', $UNSUB, $msg);
 		$msg = str_replace('%SERVER_NAME%', $_SERVER['SERVER_NAME'], $msg);
 		$msg = str_replace('%USERID%', 0, $msg);
+		$msg = str_replace('%URL_PATH%', $_SERVER["SERVER_NAME"] . Pnl::root(), $msg);
 
 		if ($charset != 'utf-8') $msg = iconv('utf-8', $charset, $msg);
-		if (core::getSetting('content_type') == 1){
+		if (core::getSetting('content_type') == 1) {
 			$msg = preg_replace('/<br(\s\/)?>/i', "\n", $msg);
 			$msg = Pnl::remove_html_tags($msg);
 		}
@@ -381,7 +384,6 @@ class Model_ajax extends Model
 		$mailcount = 0;
 
 		if (isset($activate) && is_array($activate)) {
-
 			$fh = fopen(__FILE__, 'r');
 
 			if (! flock($fh, LOCK_EX | LOCK_NB)) {
@@ -476,10 +478,10 @@ class Model_ajax extends Model
 
 					$m->Subject = $subject;
 
-					if ($send['prior'] == "1")
+					if ($send['prior'] == 1)
 						$m->Priority = 1;
 					else
-						if ($send['prior'] == "2")
+						if ($send['prior'] == 2)
 							$m->Priority = 5;
 						else
 							$m->Priority = 3;
@@ -506,17 +508,18 @@ class Model_ajax extends Model
 						$interval = '';
 
 					$limit = core::getSetting('make_limit_send') == "yes" ? "LIMIT " . core::getSetting('limit_number') . "" : "";
+                    $order = core::getSetting('random') == "yes" ? 'ORDER BY RAND()' : '';
 
-					if (Core_Array::getRequest('typesend') == 2) {
+                    if (Core_Array::getRequest('typesend') == 2) {
 						if ($send['id_cat'] == 0)
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-											WHERE (r.id_user IS NULL) AND (status='active') " . $limit . "";
+											WHERE (r.id_user IS NULL) AND (status='active') " . $order . " " . $limit . "";
 						else
 							$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 											LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
 											LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON (u.id_user=r.id_user) AND (r.success='yes') AND (r.id_template=" . $send['id_template'] . ")
-											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $limit;
+											WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $order . " " . $limit;
 					} else {
 						if (core::getSetting('re_send') == "no") {
 							if ($send['id_cat'] == 0)
@@ -527,14 +530,14 @@ class Model_ajax extends Model
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
 												LEFT JOIN " . core::database()->getTableName('ready_send') . " r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template'] . "
-												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $limit;
+												WHERE (r.id_user IS NULL) AND (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . "	" . $order . " " . $limit;
 						} else {
 							if ($send['id_cat'] == 0)
-								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $limit . "";
+								$query_users = "SELECT *,id_user AS id FROM " . core::database()->getTableName('users') . " WHERE status='active' " . $interval . " " . $order . " " . $limit . "";
 							else
 								$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . core::database()->getTableName('users') . " u
 												LEFT JOIN " . core::database()->getTableName('subscription') . " s ON u.id_user=s.id_user
-												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $limit;
+												WHERE (id_cat=" . $send['id_cat'] . ") AND (status='active') " . $interval . " " . $order . " " . $limit;
 						}
 					}
 
@@ -579,10 +582,12 @@ class Model_ajax extends Model
 						} else
 							$msg = $send['body'];
 
+						$msg = preg_replace_callback("/%REFERRAL\:(.+)%/isU", function($matches) { return "http://%URL_PATH%?t=referral&ref=" . base64_encode($matches[1]) . "&id=%USERID%"; }, $msg);
 						$msg = str_replace('%NAME%', $user['name'], $msg);
 						$msg = str_replace('%UNSUB%', $UNSUB, $msg);
 						$msg = str_replace('%SERVER_NAME%', $_SERVER['SERVER_NAME'], $msg);
 						$msg = str_replace('%USERID%', $user['id'], $msg);
+						$msg = str_replace('%URL_PATH%', $_SERVER["SERVER_NAME"] . Pnl::root(), $msg);
 
 						$query = "SELECT * FROM " . core::database()->getTableName('attach') . " WHERE id_template=" . $send['id_template'];
 						$result_attach = core::database()->querySQL($query);
@@ -716,7 +721,7 @@ class Model_ajax extends Model
 	 */
 	public function getDetaillog($offset, $number, $id_log, $strtmp)
 	{
-		if(is_numeric($offset) && is_numeric($number) && is_numeric($id_log)) {
+		if (is_numeric($offset) && is_numeric($number) && is_numeric($id_log)) {
 			$strtmp = core::database()->escape($strtmp);
 
 			$query = "SELECT *, a.time AS time, c.name AS catname, s.name AS name FROM " . core::database()->getTableName('ready_send') . " a
@@ -727,6 +732,32 @@ class Model_ajax extends Model
 					LIMIT " . $number . "
 					OFFSET " . $offset . "
 					";
+
+			$result = core::database()->querySQL($query);
+
+			return core::database()->getColumnArray($result);
+		}
+	}
+
+	/**
+	 * @param $offset
+	 * @param $number
+	 * @param $url
+	 * @param $strtmp
+	 * @return mixed
+	 */
+	public function getDetailRedirectLog($offset, $number, $url, $strtmp)
+	{
+		if (is_numeric($offset) && is_numeric($number)) {
+			$strtmp = core::database()->escape($strtmp);
+			$url = trim(core::database()->escape($url));
+
+			$query = "SELECT * FROM " . core::database()->getTableName('redirect_log') . "
+                        WHERE url LIKE '" . $url . "'
+					    ORDER BY " . $strtmp . "
+					    LIMIT " . $number . "
+					    OFFSET " . $offset . "
+					    ";
 
 			$result = core::database()->querySQL($query);
 

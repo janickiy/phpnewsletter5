@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -100,6 +100,10 @@ class core
         }
     }
 
+    /**
+     * @return mixed
+     * @throws ExceptionSQL
+     */
     static public function getLicensekey()
     {
         global $ConfigDB;
@@ -112,11 +116,17 @@ class core
         return $row['licensekey'];
     }
 
+    /**
+     * @return null
+     */
     static public function getTemplate()
     {
         return self::$tpl;
     }
 
+    /**
+     * @param $tpl
+     */
     static public function setTemplate($tpl)
     {
         self::$tpl = SYS_ROOT . self::$paths['templates'] . DIRECTORY_SEPARATOR . $tpl;
@@ -128,11 +138,19 @@ class core
         self::$mainConfig = (is_array(self::$mainConfig)) ? array_merge(self::$mainConfig, $set) : $set;
     }
 
+    /**
+     * @param $index
+     * @param $value
+     */
     static public function setSetting($index, $value)
     {
         self::$mainConfig[$index] = $value;
     }
 
+    /**
+     * @param string $name
+     * @return null
+     */
     static public function getSetting($name = '')
     {
         // Main config
@@ -146,21 +164,41 @@ class core
         self::$language = $lng;
     }
 
+    /**
+     * @param $section
+     * @param $item
+     * @return string
+     */
     static public function getLanguage($section, $item)
     {
         return (isset(self::$language[$section][$item])) ? self::$language[$section][$item] : '';
     }
 
+    /**
+     * @param $section
+     * @param $item
+     * @param $value
+     */
     static public function setLanguage($section, $item, $value)
     {
         self::$language[$section][$item] = $value;
     }
 
+    /**
+     * @param $engine
+     * @param $data
+     * @return string
+     */
     static public function pathTo($engine, $data)
     {
         return SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $data;
     }
 
+    /**
+     * @param $engine
+     * @param $name
+     * @return bool
+     */
     static public function requireEx($engine, $name)
     {
         $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
@@ -171,6 +209,11 @@ class core
             return false;
     }
 
+    /**
+     * @param $engine
+     * @param $name
+     * @return bool
+     */
     static public function includeEx($engine, $name)
     {
         $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
@@ -181,11 +224,19 @@ class core
             return false;
     }
 
+    /**
+     * @param $path
+     * @return mixed
+     */
     static public function getPath($path)
     {
         return self::$paths[$path];
     }
 
+    /**
+     * @param null $text
+     * @return string
+     */
     static public function encodeStr($text = null)
     {
         $td = mcrypt_module_open("tripledes", '', 'cfb', '');
@@ -198,6 +249,10 @@ class core
         }
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     static public function strToHex($string)
     {
         $hex = '';
@@ -208,6 +263,10 @@ class core
         return $hex;
     }
 
+    /**
+     * @param $text
+     * @return string
+     */
     static public function decodeStr($text)
     {
         $td = mcrypt_module_open("tripledes", '', 'cfb', '');
@@ -221,6 +280,10 @@ class core
         }
     }
 
+    /**
+     * @param $hex
+     * @return string
+     */
     static public function hexToStr($hex)
     {
         $string = '';
@@ -230,6 +293,9 @@ class core
         return $string;
     }
 
+    /**
+     * @return bool
+     */
     static public function checkLicense()
     {
         $result = true;
@@ -243,7 +309,7 @@ class core
 					self::makeLicensekey();
 				}
 
-				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && $_REQUEST['t'] != 'expired') {
+				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] &&  $_REQUEST['t'] != 'expired') {
 					if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
 						return false;
 					}
@@ -256,6 +322,9 @@ class core
         return $result;
     }
 
+    /**
+     * @param $licensekey
+     */
     static public function updateLicensekey($licensekey)
     {
         $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
@@ -265,6 +334,9 @@ class core
         }
     }
 
+    /**
+     *
+     */
     static public function makeLicensekey()
     {
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
@@ -293,6 +365,9 @@ class core
         }
     }
 
+    /**
+     * @return mixed
+     */
     static public function getLicenseInfo()
     {
         if (file_exists(SYS_ROOT . self::$license_path)) {
@@ -306,6 +381,10 @@ class core
         }
     }
 
+    /**
+     * @param $url
+     * @return mixed
+     */
     static public function file_get_contents_curl($url)
     {
         $ch = curl_init($url);
@@ -313,6 +392,8 @@ class core
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0);
+        curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 20);
@@ -325,6 +406,9 @@ class core
         return $out[0];
     }
 
+    /**
+     * @return float
+     */
     static public function expired_day_count()
     {
         $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);

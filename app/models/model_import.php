@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.1.0
+ * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -81,8 +81,7 @@ class Model_import extends Model
 								$insert_id = core::database()->insert($fields, core::database()->getTableName('subscription'));
 							}
 						}
-					}
-					else{
+					} else {
 						$fields = array();
 						$fields['id_user'] = 0;
 						$fields['name'] = $name;
@@ -90,6 +89,7 @@ class Model_import extends Model
 						$fields['token'] = Pnl::getRandomCode();
 						$fields['time'] = date("Y-m-d H:i:s");
 						$fields['status'] = 'active';
+						$fields['time_send'] = '0000-00-00 00:00:00';
 						
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 						
@@ -190,6 +190,7 @@ class Model_import extends Model
 						$fields['token'] = Pnl::getRandomCode();
 						$fields['time'] = date("Y-m-d H:i:s");
 						$fields['status'] = 'active';
+						$fields['time_send'] = '0000-00-00 00:00:00';
 
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 

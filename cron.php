@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.5
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -77,7 +77,7 @@ if (!$result_send) exit('Error executing SQL query!');
 if ($result_send->num_rows > 0){
 	$m = new PHPMailer();	
 
-	if($settings['add_dkim'] == 'yes' && file_exists($settings['dkim_private'])){
+	if ($settings['add_dkim'] == 'yes' && file_exists($settings['dkim_private'])){
 		$m->DKIM_domain = $settings['dkim_domain'];
 		$m->DKIM_private = $settings['dkim_private'];
 		$m->DKIM_selector = $settings['dkim_selector'];
@@ -150,12 +150,12 @@ if ($result_send->num_rows > 0){
 		if ($settings['re_send'] == "no") {
 			if ($send['id_cat'] == 0)
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
-								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
+								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
 								WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 			else 
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "subscription s ON u.id_user=s.id_user
-								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND r.id_template=" . $send['id_template']."
+								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
 								WHERE (r.id_user IS NULL) AND (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
 		}
 		else{
@@ -197,10 +197,9 @@ if ($result_send->num_rows > 0){
 			elseif ($settings['precedence'] == 'junk')
 				$m->addCustomHeader("Precedence: junk");
 			elseif ($settings['precedence'] == 'list')
-				$m->addCustomHeader("Precedence: list");				
-				
-			if (!empty($settings['path'])) $UNSUB = $settings['path'] . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+				$m->addCustomHeader("Precedence: list");
 
+			if (!empty($settings['path'])) $UNSUB = $settings['path'] . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
 			$unsublink = str_replace('%UNSUB%', $UNSUB, $settings['unsublink']);
 
 			if ($settings['show_unsubscribe_link'] == "yes" && !empty($settings['unsublink'])) {
@@ -210,7 +209,7 @@ if ($result_send->num_rows > 0){
 				$msg = $send['body'];
 
 			$url_info = parse_url($settings['path']);
-
+			$msg = preg_replace_callback("/%REFERRAL\:(.+)%/isU", function($matches) { return "http://%URL_PATH%?t=referral&ref=" . base64_encode($matches[1]) . "&id=%USERID%"; }, $msg);
 			$msg = str_replace('%NAME%', $user['name'], $msg);
 			$msg = str_replace('%UNSUB%', $UNSUB, $msg);
 			$msg = str_replace('%SERVER_NAME%', $url_info['host'], $msg);
