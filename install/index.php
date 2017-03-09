@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,7 @@ error_reporting(0);
 session_start();
 
 $INSTALL = array();
-$INSTALL["version"] = '5.0.10';
+$INSTALL["version"] = '5.1.0';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
@@ -103,6 +103,7 @@ $INSTALL['tables'] = array(
 	'log',
 	'process',
 	'ready_send',
+	'redirect_log',
 	'settings',
 	'subscription',
 	'template',
@@ -206,6 +207,11 @@ if ($INSTALL['step'] == 5){
 			if ($exists_tables) {
 				$INSTALL['version_detect'] = '5.0.0';
                 $INSTALL['version_code'] = 50000;
+
+				if (in_array('remove_subscriber', $tables['settings'])) {
+					$INSTALL['version_detect'] = '5.1.0';
+					$INSTALL['version_code'] = 50100;
+				}
 			}
 			
 			$INSTALL['type'] = 'install';
@@ -226,6 +232,10 @@ if ($INSTALL['step'] == 5){
 			
 			if ($INSTALL['type'] == 'update'){
 				if ($_POST['action'] == 'update') {
+					if ($INSTALL['version_code'] == 50000) {
+						import_data('update/update_5_0_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
+					}
+
 					if (count($INSTALL['errors']) == 0){
 						$_SESSION['name'] = $_POST["name"];
 						$_SESSION['host'] = $_POST['host'];
@@ -240,7 +250,7 @@ if ($INSTALL['step'] == 5){
 					$tables_drop = array();
         
 					foreach($INSTALL['tables'] as $table) {
-						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
+						$tables_drop[] = '`' . $_POST['prefix'].$table . '`';
 					}
 
 					if (count($tables_drop) > 0) {
@@ -248,7 +258,7 @@ if ($INSTALL['step'] == 5){
 					}
 
 					import_scheme('sql/phpnewsletter.sql', $_POST['prefix']);
-					import_data('sql/phpnewsletter_data_'.$INSTALL['language'].'.sql', $_POST['prefix']);
+					import_data('sql/phpnewsletter_data_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
             
 					if (count($INSTALL['errors']) == 0){
 						$_SESSION['name'] = $_POST["name"];
@@ -266,7 +276,7 @@ if ($INSTALL['step'] == 5){
 					$tables_drop = array();
 					 
 					foreach ($INSTALL['tables'] as $table){
-						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
+						$tables_drop[] = '`' . $_POST['prefix'].$table . '`';
 					}
 					
 					if (count($tables_drop) > 0){
@@ -274,7 +284,7 @@ if ($INSTALL['step'] == 5){
                     }
 					
 					import_scheme('sql/phpnewsletter.sql', $_POST['prefix']);
-					import_data('sql/phpnewsletter_data_'.$INSTALL['language'].'.sql', $_POST['prefix']);
+					import_data('sql/phpnewsletter_data_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
 					
 					if (count($INSTALL['errors']) == 0){
 						$_SESSION['name'] = $_POST["name"];
@@ -290,7 +300,7 @@ if ($INSTALL['step'] == 5){
 					$tables_drop = array();
         
 					foreach($INSTALL['tables'] as $table) {
-						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
+						$tables_drop[] = '`' . $_POST['prefix'].$table . '`';
 					}
 
 					if (count($tables_drop) > 0) {
@@ -525,7 +535,7 @@ $(document).on('change','#license_key',function(){
 		<legend><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></legend>
 		<div class="form-group">
 				<label class="radio-inline">
-					<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked; " name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
+					<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked;" name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
 				</label>
 				<label class="radio-inline">
 					<input type="radio" onclick="document.getElementById('license_key').disabled=''; this.form.forward.disabled=this.checked;" name="license_key_type" value="license_key"> <?php echo $INSTALL["lang"]["str"]["commercial_version"]; ?>
@@ -533,7 +543,9 @@ $(document).on('change','#license_key',function(){
 			</div>
 			<div class="form-group">
 				<label for="license_key"><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></label>
-				<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO">
+
+					<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO">
+
 			</div>			
 	</fieldset>
 	<div class="form-actions">
@@ -767,7 +779,7 @@ if (ini_get('register_globals') == 1) {
       </form>
       <?php
 
-} elseif ($INSTALL['step'] == 6) {
+} else if($INSTALL['step'] == 6) {
  
 	/*********
 	  Step 6
@@ -778,7 +790,7 @@ if (ini_get('register_globals') == 1) {
         <input type="hidden" name="step" value="6" />
 <?php
 
-    if (count($INSTALL['errors']) > 0) {
+    if(count($INSTALL['errors']) > 0){
 ?>
         <div class="alert alert-danger">
           <h4><?php echo $INSTALL["lang"]["str"]["error_after_process"]; ?>:</h4>

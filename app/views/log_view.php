@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -66,6 +66,25 @@ include_once core::pathTo('extra', 'top.php');
 //menu
 include_once core::pathTo('extra', 'menu.php');
 
+//alert error
+if (!empty($errors)) {
+	$errorBlock = $tpl->fetch('show_errors');
+	$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
+
+	foreach($errors as $row){
+		$rowBlock = $errorBlock->fetch('row');
+		$rowBlock->assign('ERROR', $row);
+		$errorBlock->assign('row', $rowBlock);
+	}
+
+	$tpl->assign('show_errors', $errorBlock);
+}
+
+//alert success
+if (isset($alert_success)){
+	$tpl->assign('MSG_ALERT', $alert_success);
+}
+
 //pagination
 if (isset($_COOKIE['pnumber_log']))
 	$pnumber = (int)$_COOKIE['pnumber_log'];
@@ -89,9 +108,9 @@ if (Core_Array::getRequest('id_log')){
 	$blockDetailLog->assign('THCLASS_SUCCESS', $thclass["success"]);
 	$blockDetailLog->assign('THCLASS_READMAIL', $thclass["readmail"]);
 
-	$arr = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 50);
+	$arrs = $data->getDetaillog($strtmp, Core_Array::getRequest('id_log'), 25);
 
-	if (is_array($arr)){
+	if (is_array($arrs)){
 		$blockDetailLog->assign('ID_LOG', $_GET['id_log']);
 		$blockDetailLog->assign('GET_NAME', $_GET['name']);
 		$blockDetailLog->assign('GET_EMAIL', $_GET['email']);
@@ -100,7 +119,7 @@ if (Core_Array::getRequest('id_log')){
 		$blockDetailLog->assign('GET_SUCCESS', $_GET['success']);
 		$blockDetailLog->assign('GET_READMAIL', $_GET['readmail']);
 
-		foreach($arr as $row){
+		foreach($arrs as $row){
 			$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');  
 			$read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no'); 
 			$catname = $row['id_cat'] == 0 ? core::getLanguage('str', 'general') : $row['catname'];		
@@ -120,27 +139,7 @@ if (Core_Array::getRequest('id_log')){
 	
 	$tpl->assign('DetailLog', $blockDetailLog);
 } else {
-	$blockLogList = $tpl->fetch('LogList');	
-	
-	//alert error
-	if (!empty($errors)) {
-		$errorBlock = $tpl->fetch('show_errors');
-		$errorBlock->assign('STR_IDENTIFIED_FOLLOWING_ERRORS', core::getLanguage('str', 'identified_following_errors'));
-
-		foreach($errors as $row){
-			$rowBlock = $errorBlock->fetch('row');
-			$rowBlock->assign('ERROR', $row);
-			$errorBlock->assign('row', $rowBlock);
-		}
-
-		$tpl->assign('show_errors', $errorBlock);
-	}
-
-	//alert success
-	if (isset($alert_success)){
-		$blockLogList->assign('MSG_ALERT', $alert_success);
-	}
-	
+	$blockLogList = $tpl->fetch('LogList');
 	$blockLogList->assign('STR_CLEAR_LOG', core::getLanguage('str', 'clear_log'));
 	$blockLogList->assign('TH_TABLE_TIME', core::getLanguage('str', 'time'));
 	$blockLogList->assign('TH_TABLE_TOTAL', core::getLanguage('str', 'total'));
@@ -149,10 +148,10 @@ if (Core_Array::getRequest('id_log')){
 	$blockLogList->assign('TH_TABLE_READ', core::getLanguage('str', 'read'));
 	$blockLogList->assign('TH_TABLE_DOWNLOAD_REPORT', core::getLanguage('str', 'download_report'));
 
-	$arr = $data->getLogArr($pnumber, Core_Array::getRequest('page'));
+	$arrs = $data->getLogArr($pnumber, Core_Array::getRequest('page'));
 
-	if (is_array($arr)) {
-		foreach ($arr as $row) {
+	if (is_array($arrs)) {
+		foreach ($arrs as $row) {
 			$rowBlock = $blockLogList->fetch('row');
 			$rowBlock->assign('TIME', $row['time']);
 			$rowBlock->assign('ID_LOG', $row['id_log']);

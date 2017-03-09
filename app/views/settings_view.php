@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -57,6 +57,8 @@ if (Core_Array::getRequest('action')){
 	$fields['require_confirmation'] = Core_Array::getRequest('require_confirmation') == 'on' ? "yes" : "no";
 	$fields['unsublink'] = trim(Core_Array::getRequest('unsublink'));
 	$fields['limit_number'] = trim((int)Core_Array::getRequest('limit_number'));
+	$fields['remove_subscriber'] = Core_Array::getRequest('remove_subscriber') == 'on' ? "yes" : "no";
+	$fields['remove_subscriber_days'] = trim((int)Core_Array::getRequest('remove_subscriber_days'));
 
 	if (Core_Array::getRequest('interval_type') == '1') {
 		$fields['interval_type'] = 'm';
@@ -154,6 +156,8 @@ $tpl->assign('DKIM_PRIVATE', core::getSetting('dkim_private'));
 $tpl->assign('DKIM_SELECTOR', core::getSetting('dkim_selector'));
 $tpl->assign('DKIM_PASSPHRASE', core::getSetting('dkim_passphrase'));
 $tpl->assign('DKIM_IDENTITY', core::getSetting('dkim_identity'));
+$tpl->assign('REMOVE_SUBSCRIBER_DAYS', core::getSetting('remove_subscriber_days') == NULL ? 0 : core::getSetting('remove_subscriber_days'));
+$tpl->assign('REMOVE_SUBSCRIBER', core::getSetting('remove_subscriber'));
 
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
@@ -174,6 +178,7 @@ if (empty($email_name))
 else
     $tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
+$tpl->assign('SET_REMOVE_SUBSCRIBER', core::getLanguage('str', 'set_remove_subscriber'));
 $tpl->assign('SET_ORGANIZATION', core::getLanguage('str', 'set_organization'));
 $tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('organization')));
 $tpl->assign('SET_SUBJECT_TEXTCONFIRM', core::getLanguage('str', 'set_subject_textconfirm'));

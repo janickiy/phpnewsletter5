@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -23,6 +23,9 @@ class Pnl
         return $RandCode;
     }
 
+    /**
+     * @param $msg
+     */
     public static function error($msg)
     {
         echo "<!DOCTYPE html>\n";
@@ -37,6 +40,9 @@ class Pnl
         exit();
     }
 
+    /**
+     * @return string
+     */
     public static function root() {
         if (dirname($_SERVER['SCRIPT_NAME']) == '/' | dirname($_SERVER['SCRIPT_NAME']) == '\\')
             return '/';
@@ -44,6 +50,10 @@ class Pnl
             return dirname($_SERVER['SCRIPT_NAME']) . '/';
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     public static function check_email($email) {
         if (preg_match("/^([a-z0-9_\.\-]{1,70})@([a-z0-9\.\-]{1,70})\.([a-z]{2,6})$/i", $email))
             return false;
@@ -51,6 +61,10 @@ class Pnl
             return true;
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public static function charsetlist($str)
     {
         $str = preg_replace("/^utf\-8$/i", core::getLanguage('str', 'charutf8'), $str);
@@ -88,14 +102,18 @@ class Pnl
 
         return $str;
     }
-
-    public static function remove_html_tags($str) {
-        $str = strip_tags($str);
-        $str = html_entity_decode($str);
+	
+	public static function remove_html_tags($str) {
+		$str = strip_tags($str);
+		$str = html_entity_decode($str);
 
         return $str;
-    }
+    }	
 
+    /**
+     * @param $ext
+     * @return string
+     */
     public static function get_mime_type($ext) {
         $mimetypes = Array(
             "123" => "application/vnd.lotus-1-2-3",
@@ -490,6 +508,9 @@ class Pnl
         }
     }
 
+    /**
+     * @return string
+     */
     public static function getIP() {
         if (getenv("HTTP_CLIENT_IP") and strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
             $ip = getenv("HTTP_CLIENT_IP");
@@ -505,13 +526,20 @@ class Pnl
         return ($ip);
     }
 
+    /**
+     * @param $content
+     */
     public static function showJSONContent($content) {
         header('Cache-Control: no-store, no-cache, must-revalidate');
         header('Content-Type: application/json');
         echo $content;
         exit();
     }
-	
+
+    /**
+     * @param $version
+     * @return mixed
+     */
 	public function get_current_version_code($version)
 	{
 		preg_match("/(\d+)\.(\d+)\./", $version, $out);
@@ -521,6 +549,11 @@ class Pnl
 		return $current_version_code;
 	}
 
+    /**
+     * @param $role
+     * @param $str
+     * @return bool
+     */
     public static function CheckAccess($role, $str)
     {
         $arr = explode(",", $str);
@@ -535,6 +568,11 @@ class Pnl
             return TRUE;
     }
 
+    /**
+     * @param $url
+     * @param int $timeout
+     * @return mixed
+     */
     static public function file_get_contents_curl($url, $timeout = 10)
     {
         $ch = curl_init($url);
@@ -552,10 +590,14 @@ class Pnl
 
         curl_close($ch);
 
-        preg_match('/\{([^\}])+\}/U',$data, $out);
+        preg_match('/\{([^\}])+\}/',$data, $out);
         return $out[0];
     }
 
+    /**
+     * @param $msg
+     * @return mixed
+     */
     static public function sys_error_msg($msg)
     {
         $msg = str_replace('CANNT_CREATE_LICENSEKEY_FILE', core::getLanguage('msg', 'cannt_create_licensekey_file'), $msg);
@@ -564,6 +606,10 @@ class Pnl
         return $msg;
     }
 
+    /**
+     * @param $licensekey
+     * @return array|mixed
+     */
     static public function checkLicensekey($licensekey)
     {
         $domain = (substr($_SERVER['SERVER_NAME'], 0, 4)) == "www." ? str_replace('www.','', $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
