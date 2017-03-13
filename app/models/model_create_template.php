@@ -38,8 +38,7 @@ class Model_create_template extends Model
 		$id_insert = core::database()->insert($fields, core::database()->getTableName('template'));
 		
 		if ($id_insert){
-			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++){
-		
+			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++) {
 				if (!empty($_FILES["attachfile"]["name"][$i])){
 					$ext = strrchr($_FILES['attachfile']['name'][$i], ".");
 					$attachfile = core::pathTo(core::getPath('attach'), date("YmdHis", time()) . $i . $ext);

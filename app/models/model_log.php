@@ -20,7 +20,6 @@ class Model_log extends Model
      */
     public function getLogArr($pnumber = 10, $page)
     {
-        $table = core::database()->getTableName('log');
         core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%Y %H:%i') as send_time";
         core::database()->tablename = core::database()->getTableName('log');
         core::database()->order = 'ORDER BY id_log desc';
@@ -87,7 +86,7 @@ class Model_log extends Model
      */
     public function countSent($id_log)
     {
-        if(is_numeric($id_log)) {
+        if (is_numeric($id_log)) {
             $query = "SELECT * FROM " . core::database()->getTableName('ready_send') . " WHERE success='yes' and id_log=" . $id_log;
             $result = core::database()->querySQL($query);
             return core::database()->getRecordCount($result);

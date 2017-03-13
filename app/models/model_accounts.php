@@ -19,7 +19,7 @@ class Model_accounts extends Model
     public function changePassword($password)
     {
         $password = md5(trim($password));
-        $query = "UPDATE " . core::database()->getTableName('aut') . " SET password='".$password."'";
+        $query = "UPDATE " . core::database()->getTableName('aut') . " SET password='" . $password . "'";
         $result = core::database()->querySQL($query);
         return $result;
     }
@@ -31,6 +31,10 @@ class Model_accounts extends Model
         return core::database()->getColumnArray($result);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function removeAccount($id)
     {
         if (is_numeric($id)) {

@@ -46,7 +46,7 @@ class Model_export extends Model
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat
 					LEFT JOIN ".core::database()->getTableName('subscription')." subs ON cat.id_cat=subs.id_cat
-					GROUP by id
+					GROUP by cat.id_cat
 					ORDER BY name";
 
 		$result = core::database()->querySQL($query);

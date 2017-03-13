@@ -27,9 +27,10 @@ class Model_add_user extends Model
     /**
      * @return bool
      */
-    public function checkExistEmail()
+    public function checkExistEmail($email)
     {
-        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $_POST['email'] . "'";
+        $email = core::database()->escape($email);
+        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
         $result = core::database()->querySQL($query);
 
         return (core::database()->getRecordCount($result) == 0) ? false : true;

@@ -27,7 +27,11 @@ class Model_add_account extends Model
 		else
 			return true;
 	}
-	
+
+	/**
+	 * @param $fields
+	 * @return mixed
+	 */
 	public function createAccount($fields)
 	{
 		return core::database()->insert($fields, core::database()->getTableName('aut'));

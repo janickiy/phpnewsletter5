@@ -10,7 +10,7 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-Error_Reporting(0); // set error reporting level
+Error_Reporting(1); // set error reporting level
 define("DEBUG", true);
 define('VERSION', '5.1.0');
 

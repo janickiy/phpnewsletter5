@@ -34,7 +34,7 @@ class Model_unsubscribe extends Model
     public function makeUnsubscribe($id_user)
     {
         if (is_numeric($id_user)){
-            $query = "UPDATE " . core::database()->getTableName('users') . " set status='noactive' WHERE id_user=" . $id_user;
+            $query = "UPDATE " . core::database()->getTableName('users') . " SET status='noactive' WHERE id_user=" . $id_user;
             return core::database()->querySQL($query);
         }
     }

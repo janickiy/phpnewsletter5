@@ -40,7 +40,8 @@ class DB {
 		$config = $this->config;
 		
 		if (is_null($this->dbh)) {
-            $this->dbh = new mysqli($config["host"], $config["user"], $config["passwd"], $config["name"]);
+			
+            $this->dbh = new mysqli($config["host"], $config["user"], $config["passwd"], $config["name"], isset($config['port']) && !empty($config['port']) ? $config['port'] : 3306);
 			
             if (mysqli_connect_errno()) {
                 $this->dbh = null;
@@ -53,6 +54,10 @@ class DB {
 			if ($config["charset"] != '') { 
 				$this->dbh->query("SET NAMES ".$config["charset"]."");
 			}
+			
+			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			
+			
         }
         return $this->dbh;
 	}

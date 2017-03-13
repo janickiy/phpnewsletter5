@@ -29,8 +29,8 @@ if (Core_Array::getRequest('action')){
 	$role = Core_Array::getPost('user_role');
 	$id = (int)Core_Array::getPost('id');
 
-	if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
-	if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
+	//if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
+	//if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
 
 	if (!empty($password) && !empty($password_again)){
 		if ($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
@@ -38,7 +38,7 @@ if (Core_Array::getRequest('action')){
 	
 	if (empty($errors)){
 		$fields = array();
-		$fields['password'] = md5($password);
+		if (!empty($password)) $fields['password'] = md5($password);
 		$fields['role'] = $role;
 
 		if ($result = $data->editAccount($fields, $id)){

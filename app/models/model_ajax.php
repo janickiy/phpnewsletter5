@@ -19,8 +19,7 @@ class Model_ajax extends Model
 	 */
 	public function updateProcess($status, $id_user)
 	{
-		if ($status && is_numeric($id_user)){
-
+		if ($status && is_numeric($id_user)) {
 			$status = core::database()->escape($status);
 			$query = "SELECT * FROM " . core::database()->getTableName('process') . "  WHERE id_user=" . $id_user;
 			$result = core::database()->querySQL($query);
@@ -52,7 +51,6 @@ class Model_ajax extends Model
 	public function getTotalMails()
 	{
 		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
-
 		$result = core::database()->querySQL($query);
 		$count = core::database()->getRow($result, 'assoc');
 		$total = core::getSetting('make_limit_send') == "yes" ? core::getSetting('limit_number') : $count['COUNT(*)'];
@@ -242,7 +240,6 @@ class Model_ajax extends Model
 	public function sendTestEmail($email, $subject, $body, $prior)
 	{
 		$user = 'USERNAME';
-
 		$subject = str_replace('%NAME%', $user, $subject);
 
 		core::requireEx('libs', "PHPMailer/class.phpmailer.php");
@@ -594,7 +591,7 @@ class Model_ajax extends Model
 
 						while ($row = core::database()->getRow($result_attach)) {
 							if ($fp = @fopen($row['path'], "rb")) {
-								$file = fread($fp, filesize($row['path']));
+								fread($fp, filesize($row['path']));
 
 								fclose($fp);
 
@@ -631,7 +628,7 @@ class Model_ajax extends Model
 							$fields['time'] = date("Y-m-d H:i:s");
 							$fields['id_log'] = $insert_id;
 
-							$insert = core::database()->insert($fields, core::database()->getTableName("ready_send"));
+							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 							$mailcountno = $mailcountno + 1;
 						} else {
 							$fields = array();
@@ -644,10 +641,10 @@ class Model_ajax extends Model
 							$fields['time'] = date("Y-m-d H:i:s");
 							$fields['id_log'] = $insert_id;
 
-							$insert = core::database()->insert($fields, core::database()->getTableName("ready_send"));
+							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 
 							$query = "UPDATE " . core::database()->getTableName("users") . " SET time_send = NOW() WHERE id_user=" . $user['id'];
-							$update = core::database()->querySQL($query);
+							core::database()->querySQL($query);
 
 							$mailcount = $mailcount + 1;
 						}

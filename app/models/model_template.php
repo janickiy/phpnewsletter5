@@ -123,8 +123,8 @@ class Model_template extends Model
                 return true;
             else
                 return false;
-        }
-        else return true;
+        } else
+            return true;
     }
 
     /**
@@ -153,7 +153,7 @@ class Model_template extends Model
                 return true;
             else
                 return false;
-        }
-        else return true;
+        } else
+            return true;
     }
 }
