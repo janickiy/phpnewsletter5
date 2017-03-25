@@ -201,7 +201,7 @@ $language["str"]["remove_user"] = "Remove";
 $language["str"]["import_user"] = "Import";
 $language["str"]["export_user"] = "Export";
 $language["str"]["update_warning"] = 'A new version of %SCRIPTNAME% is already available and you can use it. The newest version is %VERSION%, created %CREATED% <a href="%DOWNLOADLINK%">Download</a> %MESSAGE%';
-$language["str"]["supported_tags_list"] = "%NAME% is username, %UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name";
+$language["str"]["supported_tags_list"] = "%NAME% is username, %UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name, %REFERRAL:http://mywebsite.com% - url link for referrers statistics";
 $language["str"]["warning"] = 'Warning';
 $language["str"]["install_msg"] = 'If PHP Newsletter has been already installed, then you should delete <strong>install</strong> folder; otherwise launch the <a href="%URL%">installation wizard</a>.';
 $language["str"]["url_info"] = 'http://janicky.com/en/php-scripts/php-newsletter';
