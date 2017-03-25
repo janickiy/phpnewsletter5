@@ -25,7 +25,6 @@
 
 <form method="POST" action="${ACTION}">
 <input type="hidden" name="id" value="${ID}">
-<p>* - ${STR_REQUIRED_FIELDS}</p>
 
 <div class="form-group">
 <label for="password">${STR_PASSWORD}</label>

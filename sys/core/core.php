@@ -1,9 +1,338 @@
-<?php function UEgzZf($YycN)
-{ 
-$YycN=gzinflate(base64_decode($YycN));
- for($i=0;$i<strlen($YycN);$i++)
- {
-$YycN[$i] = chr(ord($YycN[$i])-1);
- }
- return $YycN;
- }eval(UEgzZf("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"));?>
+<?php
+
+/********************************************
+ * PHP Newsletter 5.1.0
+ * Copyright (c) 2006-2017 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+
+defined('LETTER') || exit('NewsLetter: access denied.');
+
+class core
+{
+    protected static $_init = NULL;
+    protected static $paths = array();
+    protected static $mainConfig = NULL;
+    protected static $language = NULL;
+    protected static $key = 'Rii73dg=4&8#!@9';
+    protected static $licensekey_url = 'http://license.janicky.com/';
+    protected static $license_path = 'sys/license_key';
+    public static $db = NULL;
+    public static $tpl = NULL;
+    public static $path = NULL;
+    public static $session = NULL;
+    protected static $licensekey = NULL;
+    public static $system_error = NULL;
+
+    /**
+     * Check if self::init() has been called
+     *
+     * @return boolean
+     */
+
+    static public function isInit()
+    {
+        return self::$_init;
+    }
+
+    /**
+     * Initialization
+     *
+     * @return boolean
+     */
+
+    static public function init($paths)
+    {
+        if (self::isInit())
+            return TRUE;
+        self::$paths = $paths;
+        self::$path = str_replace("//", "/", "/" . trim(str_replace(chr(92), "/", substr(SYS_ROOT, strlen($_SERVER["DOCUMENT_ROOT"]))), "/") . "/");
+        self::_loadEngines();
+        self::$_init = TRUE;
+    }
+
+    /**
+     * Create class $className
+     *
+     * @param string $className
+     *            class name
+     * @return mixed
+     */
+
+    static public function factory($className)
+    {
+        return new $className();
+    }
+
+    static public function database()
+    {
+        return self::$db;
+    }
+
+    static public function session()
+    {
+        return self::$session;
+    }
+
+    /**
+     * AUTOLOAD modules
+     */
+
+    static protected function _loadEngines()
+    {
+        require_once 'folders.php';
+        $folders = array(
+            self::$paths['engine']
+        );
+        $autoload = array_reverse(folders::scan($folders, 'php', TRUE));
+        foreach ($autoload as $lib) {
+            if (is_file($lib))
+                require_once $lib;
+        }
+
+        self::$licensekey = self::getLicensekey();
+
+        if (self::checkLicense() == false && $_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+            header('Location: ./?t=expired');
+            exit();
+        }
+    }
+
+    static public function getLicensekey()
+    {
+        global $ConfigDB;
+
+        $db = new DB($ConfigDB);
+        $query = "SELECT * FROM " . $db->getTableName('licensekey') . "";
+        $result = $db->querySQL($query);
+        $row = $db->getRow($result);
+
+        return $row['licensekey'];
+    }
+
+    static public function getTemplate()
+    {
+        return self::$tpl;
+    }
+
+    static public function setTemplate($tpl)
+    {
+        self::$tpl = SYS_ROOT . self::$paths['templates'] . DIRECTORY_SEPARATOR . $tpl;
+    }
+
+    // --------- SETTINGS -------------------------------
+    static public function addSetting($set = array())
+    {
+        self::$mainConfig = (is_array(self::$mainConfig)) ? array_merge(self::$mainConfig, $set) : $set;
+    }
+
+    static public function setSetting($index, $value)
+    {
+        self::$mainConfig[$index] = $value;
+    }
+
+    static public function getSetting($name = '')
+    {
+        // Main config
+        return ($name == '') ? self::$mainConfig : self::$mainConfig[$name];
+    }
+    // --------- SETTINGS -------------------------------
+
+    // --------- language -------------------------------
+    static public function addLanguage($lng = array())
+    {
+        self::$language = $lng;
+    }
+
+    static public function getLanguage($section, $item)
+    {
+        return (isset(self::$language[$section][$item])) ? self::$language[$section][$item] : '';
+    }
+
+    static public function setLanguage($section, $item, $value)
+    {
+        self::$language[$section][$item] = $value;
+    }
+
+    static public function pathTo($engine, $data)
+    {
+        return SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $data;
+    }
+
+    static public function requireEx($engine, $name)
+    {
+        $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
+        if (file_exists($file)) {
+            require_once $file;
+            return true;
+        } else
+            return false;
+    }
+
+    static public function includeEx($engine, $name)
+    {
+        $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
+        if (file_exists($file)) {
+            include_once $file;
+            return true;
+        } else
+            return false;
+    }
+
+    static public function getPath($path)
+    {
+        return self::$paths[$path];
+    }
+
+    static public function encodeStr($text = null)
+    {
+        $td = mcrypt_module_open("tripledes", '', 'cfb', '');
+        $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+        if (mcrypt_generic_init($td, self::$key, $iv) != -1) {
+            $enc_text = base64_encode(mcrypt_generic($td, $iv . $text));
+            mcrypt_generic_deinit($td);
+            mcrypt_module_close($td);
+            return $enc_text;
+        }
+    }
+
+    static public function strToHex($string)
+    {
+        $hex = '';
+        for ($i = 0; $i < strlen($string); $i++) {
+            $hex .= dechex(ord($string[$i]));
+        }
+
+        return $hex;
+    }
+
+    static public function decodeStr($text)
+    {
+        $td = mcrypt_module_open("tripledes", '', 'cfb', '');
+        $iv_size = mcrypt_enc_get_iv_size($td);
+        $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+        if (mcrypt_generic_init($td, self::$key, $iv) != -1) {
+            $decode_text = substr(mdecrypt_generic($td, base64_decode($text)), $iv_size);
+            mcrypt_generic_deinit($td);
+            mcrypt_module_close($td);
+            return $decode_text;
+        }
+    }
+
+    static public function hexToStr($hex)
+    {
+        $string = '';
+        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
+            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
+        }
+        return $string;
+    }
+
+    static public function checkLicense()
+    {
+        $result = true;
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+
+		if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+			if (file_exists(SYS_ROOT . self::$license_path)) {
+				$lisense_info = self::getLicenseInfo();
+
+				if ($lisense_info['domain'] != $domain) {
+					self::makeLicensekey();
+				}
+
+				if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] && $_REQUEST['t'] != 'expired') {
+					if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
+						return false;
+					}
+				}
+			} else {
+				self::makeLicensekey();
+			}			
+		}       
+
+        return $result;
+    }
+
+    static public function updateLicensekey($licensekey)
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+
+        if (file_exists(SYS_ROOT . self::$license_path) || $lisense_info['licensekey'] != $licensekey) {
+           self::makeLicensekey();
+        }
+    }
+
+    static public function makeLicensekey()
+    {
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?t=licensekey&licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
+
+        if (!isset($lisense_info['error'])) {
+            $arr = array();
+            $arr['domain'] = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+            $arr['license_type'] = $lisense_info['license_type'];
+            $arr['licensekey'] = self::$licensekey;
+            $arr['created'] = $lisense_info['date_created'];
+            $arr['date_from'] = $lisense_info['date_active_from'];
+            $arr['date_to'] = $lisense_info['date_active_to'];
+
+            $encodeStr = self::encodeStr(json_encode($arr));
+
+            $f = fopen(SYS_ROOT . self::$license_path, "w");
+
+            if (fwrite($f, $encodeStr) === false) {
+                self::$system_error = 'CANNT_CREATE_LICENSEKEY_FILE';
+            }
+
+            fclose($f);
+        } else {
+            self::$system_error = 'ERROR_CHECK_LICENSEKEY';
+        }
+    }
+
+    static public function getLicenseInfo()
+    {
+        if (file_exists(SYS_ROOT . self::$license_path)) {
+            $handle = fopen(SYS_ROOT . self::$license_path, "r");
+            $contents = fread($handle, filesize(SYS_ROOT . self::$license_path));
+            fclose($handle);
+
+            return json_decode(self::decodeStr($contents), true);
+        } else {
+            self::makeLicensekey();
+        }
+    }
+
+    static public function file_get_contents_curl($url)
+    {
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0);
+        curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+
+        $data = curl_exec($ch);
+
+        curl_close($ch);
+
+        preg_match('/\{([^\}])+\}/U',$data, $out);
+        return $out[0];
+    }
+
+    static public function expired_day_count()
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+
+        if ($lisense_info['license_type'] == 'demo') {
+            return round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24);
+        }
+    }
+}
