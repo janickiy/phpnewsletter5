@@ -45,8 +45,18 @@ class DB {
 			
             if (mysqli_connect_errno()) {
                 $this->dbh = null;
-				throw new Exception("Error connect: " . mysqli_connect_error());
-				
+				echo "<!DOCTYPE html>";
+				echo "<html>";
+				echo "<head>";
+				echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
+				echo "<title>SQL error</title>";
+				echo "</head>";
+				echo "<body>";
+				echo "<p>An error occurred while accessing SQL database!</p>";
+				echo "<p>" . mysqli_connect_error() . "</p>";
+				echo "</body>";
+				echo "</html>";
+				exit;
             } else {
                 mysqli_report(MYSQLI_REPORT_ERROR);
             }
