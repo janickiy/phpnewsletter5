@@ -201,7 +201,7 @@ $language["str"]["remove_user"] = "Удалить";
 $language["str"]["import_user"] = "Импорт";
 $language["str"]["export_user"] = "Экспорт";
 $language["str"]["send_test_email"] = "Отправить себе тестовое письмо";
-$language["str"]["supported_tags_list"] = "%NAME% - имя подписчика, %UNSUB% - ссылка для удаления рассылки, %SERVER_NAME% - адрес сайта, %REFERRAL:http://mywebsite.com% - ссылка для статистика переходов по ссылкам";
+$language["str"]["supported_tags_list"] = "%NAME% - имя подписчика, %UNSUB% - ссылка для удаления рассылки, %SERVER_NAME% - адрес сайта";
 $language["str"]["update_warning"] = 'Доступна более новая версия %SCRIPTNAME% и вам предлагается её использовать. Новейшая версия %VERSION%, выпущена %CREATED%. <a href="%DOWNLOADLINK%">Скачать</a> %MESSAGE%';
 $language["str"]["warning"] = 'Внимание';
 $language["str"]["install_msg"] = 'Если PHP Newsletter уже установлен, то удалите папку <strong>install</strong>, иначе запустите <a href="%URL%">мастер установки</a>.';
