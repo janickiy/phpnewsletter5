@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -32,16 +32,31 @@ class DB {
         }
     }
 
+	/**
+	 * @return mysqli|null
+	 * @throws Exception
+	 */
 	public function openConnection(){
 		$config = $this->config;
 		
 		if (is_null($this->dbh)) {
-            $this->dbh = new mysqli($config["host"], $config["user"], $config["passwd"], $config["name"]);
+			
+            $this->dbh = new mysqli($config["host"], $config["user"], $config["passwd"], $config["name"], isset($config['port']) && !empty($config['port']) ? $config['port'] : 3306);
 			
             if (mysqli_connect_errno()) {
-                $this->dbh = null;
-				throw new Exception("Error connect: " . mysqli_connect_error());
-				
+                $this->dbh = null;				
+				echo "<!DOCTYPE html>";
+                echo "<html>";
+                echo "<head>";
+                echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
+                echo "<title>SQL error</title>";
+                echo "</head>";
+                echo "<body>";
+                echo "<p>An error occurred while accessing SQL database!</p>";
+                echo "<p>" . mysqli_connect_error() . "</p>";
+                echo "</body>";
+                echo "</html>";
+				exit;			
             } else {
                 mysqli_report(MYSQLI_REPORT_ERROR);
             }
@@ -49,21 +64,33 @@ class DB {
 			if ($config["charset"] != '') { 
 				$this->dbh->query("SET NAMES ".$config["charset"]."");
 			}
+			
+			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			
+			
         }
         return $this->dbh;
 	}
-	
+
 	public function closeConnection() {
 		if (!is_null($this->dbh)) {
 			$this->dbh->close();
 		}
 	}
-	
+
+	/**
+	 * @param $tbl
+	 * @return string
+	 */
 	public function getTableName($tbl) {
 		$config = $this->config;
         return ".`" . $config["prefix"] . $tbl . "`";
     }
-	
+
+	/**
+	 * @return array|int
+	 * @throws ExceptionSQL
+	 */
 	public function get_page()
 	{
 		if (empty($this->page)) $this->page = 1;
@@ -97,10 +124,15 @@ class DB {
 
 		return $arr;
 	}
-	
-	public function get_total()
+
+	/**
+	 * @param string $parameters
+	 * @return mixed
+	 * @throws ExceptionSQL
+	 */
+	public function get_total($parameters = '*')
 	{
-		$query = "SELECT COUNT(*) FROM " . $this->tablename . "
+		$query = "SELECT COUNT($parameters) FROM " . $this->tablename . "
 									   " . $this->where . "
 									   " . $this->order . "";
 
@@ -114,16 +146,29 @@ class DB {
 
 		return $count[0];
 	}
-	
+
+	/**
+	 * @param $str
+	 * @return mixed
+	 */
 	public function escape($str)
 	{
 		return $this->dbh->real_escape_string($str);
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return mixed
+	 */
 	public function getRecordCount($result){
 		return $result->num_rows;
 	}
-	
+
+	/**
+	 * @param $result
+	 * @param string $mode
+	 * @return bool
+	 */
 	public function getRow($result, $mode = 'array') {
 		if ($result) {
 			if ($mode == 'array') {
@@ -139,7 +184,17 @@ class DB {
 			}
 		}
 	}
-	
+
+	/**
+	 * @param string $parameters
+	 * @param $from
+	 * @param string $where
+	 * @param string $group
+	 * @param string $order
+	 * @param string $limit
+	 * @return mixed
+	 * @throws ExceptionSQL
+	 */
 	public function select($parameters = '*', $from, $where = '', $group = '', $order = '', $limit = '') {
 		$query = "SELECT " . $parameters . " FROM " . $from . " 
 					" . $where . "
@@ -155,7 +210,11 @@ class DB {
 		
 		return $result;
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return array
+	 */
 	public function getColumnArray($result)	{
 		$arr = array();
 		
@@ -167,7 +226,14 @@ class DB {
 		
 		return $arr;
 	}
-		
+
+	/**
+	 * @param $fields
+	 * @param $table
+	 * @param string $where
+	 * @return bool
+	 * @throws ExceptionSQL
+	 */
 	public function update($fields, $table, $where = "") {
 	
 		if (!$table && !is_null($this->dbh))
@@ -196,7 +262,12 @@ class DB {
 				throw new ExceptionSQL($this->dbh->error, $query, "Error executing SQL query!");
 		}
 	}
-	
+
+	/**
+	 * @param $query
+	 * @return bool
+	 * @throws ExceptionSQL
+	 */
 	public function querySQL($query) {
 		if ($query) {
 			$result = $this->dbh->query($query);
@@ -208,7 +279,13 @@ class DB {
 		else
 			return false;
 	}
-	
+
+	/**
+	 * @param $data
+	 * @param $table
+	 * @return mixed
+	 * @throws ExceptionSQL
+	 */
 	public function insert($data, $table) {
         $columns = "";
         $values = "";
@@ -226,7 +303,14 @@ class DB {
 
         return $this->dbh->insert_id;
     }
-	
+
+	/**
+	 * @param $table
+	 * @param string $where
+	 * @param string $fields
+	 * @return bool
+	 * @throws ExceptionSQL
+	 */
 	public function delete($table, $where = '', $fields = '') {
 		if (!$table)
 			return false;

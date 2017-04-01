@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -10,9 +10,9 @@
 
 defined('LETTER') || exit('NewsLetter: access denied.');
 
-Error_Reporting(0); // set error reporting level
+Error_Reporting(1); // set error reporting level
 define("DEBUG", true);
-define('VERSION', '5.0.10');
+define('VERSION', '5.1.0');
 
 $cmspaths = array(
     'core' => 'sys/core',
