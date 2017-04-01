@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.1
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,7 @@ error_reporting(0);
 session_start();
 
 $INSTALL = array();
-$INSTALL["version"] = '5.1.0';
+$INSTALL["version"] = '5.1.1';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
@@ -645,27 +645,27 @@ if (ini_get('register_globals') == 1) {
             <tbody>
               <tr>
                 <td width="250">PHP 5.3 + </td>
-                <td><strong><?php echo $check["php_version"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_version"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">MySQL</td>
-                <td><strong><?php echo $check["php_mysql"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_mysql"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">MB String</td>
-                <td><strong><?php echo $check["php_mbstring"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_mbstring"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">Iconv</td>
-                <td><strong><?php echo $check["php_iconv"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_iconv"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
 			   <tr>
 				  <td width="250">Zip</td>
-				  <td><strong><?php echo $check["php_zip"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+				  <td><strong><?php echo $check["php_zip"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
 			  </tr>
 			  <tr>
 				  <td width="250">cURL</td>
-				  <td><strong><?php echo $check["php_curl"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+				  <td><strong><?php echo $check["php_curl"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
 			  </tr>
 			</tbody>
           </table>

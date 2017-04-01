@@ -335,6 +335,7 @@ $language["str"]["dont_have_permission_to_access"] = "You don't have permission 
 $language["str"]["demo_version_has_expired"] = '<p>The validity of the demo version has expired. To use the application buy the license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 $language["str"]["licensekey_has_expired"] = '<p>The validity of a license key has expired. To use the application buy a new license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 $language["str"]["number_redirect"] = "Number of redirects";
+$language["str"]["accounts"] = "Accounts";
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.1
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -66,7 +66,7 @@ class DB {
 			}
 			
 			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-			
+			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'NO_ZERO_DATE',''))");
 			
         }
         return $this->dbh;
