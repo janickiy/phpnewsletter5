@@ -183,11 +183,12 @@ function PnumberChange()
 <p>${STR_NUMBER_OF_SUBSCRIBERS}: ${NUMBER_OF_SUBSCRIBERS}</p>
 <!-- END row -->
 <!-- IF '${EMPTY_LIST}' != '' -->
-<div class="warning_msg">${EMPTY_LIST}</div>
+<p class="text-center text-danger">${EMPTY_LIST}</p>
 <!-- END IF -->
 <!-- BEGIN notfound -->
 <div class="alert">
   <button class="close" data-dismiss="alert">×</button>
-  ${MSG_NOTFOUND} </div>
+  ${MSG_NOTFOUND} 
+</div>
 <!-- END notfound -->
 <!-- INCLUDE footer.tpl -->
