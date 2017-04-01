@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -118,22 +118,24 @@ switch (Core_Array::getGet('action'))
 				if (is_writeable($destination)) {
 					$zip->extractTo($destination);
 					$zip->close();
-					$status = core::getLanguage('msg', 'files_unzipped_successfully');
-					$result = 'yes';
+					$content['status'] = core::getLanguage('msg', 'files_unzipped_successfully');
+					$content['result'] = 'yes';
 				} else {
-					$status = core::getLanguage('msg', 'directory_not_writeable');
-					$result = 'no';
+					$content['status'] = core::getLanguage('msg', 'directory_not_writeable');
+					$content['result'] = 'no';
 				}
 			} else {
-				$status = core::getLanguage('msg', 'cannot_read_zip_archive');
-				$result = 'no';
+				$content['status'] = core::getLanguage('msg', 'cannot_read_zip_archive');
+				$content['result'] = 'no';
 			}
 		}
 
 		if (Core_Array::getRequest('p') == 'update_bd') {
 
-			$current_version_code = Pnl::get_current_version_code($currentversion);
+			$current_version_code = Pnl::get_current_version_code(VERSION);
 			$version_code_detect = $data->version_code_detect();
+
+			$result = false;
 
 			if ($version_code_detect < $current_version_code) {
 				if ($version_code_detect == 50000) {
@@ -142,16 +144,19 @@ switch (Core_Array::getGet('action'))
 
 				if (is_file($path_update)) {
 					if ($data->updateDB($path_update)) {
-						$content['status'] = core::getLanguage('msg', 'update_completed');
-						$content['result'] = 'yes';
-					} else {
-						$content['status'] = core::getLanguage('error', 'failed_to_update');
-						$content['result'] = 'no';
+						$result = true;
 					}
 				}
 			} else {
+				$result = true;
+			}
+
+			if ($result === true) {
 				$content['status'] = core::getLanguage('msg', 'update_completed');
 				$content['result'] = 'yes';
+			} else {
+				$content['status'] = core::getLanguage('error', 'failed_to_update');
+				$content['result'] = 'no';
 			}
 		}
 
@@ -212,12 +217,12 @@ switch (Core_Array::getGet('action'))
 		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
 		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
 		$id_log = isset($_REQUEST['id_log']) && is_numeric($_REQUEST['id_log']) ? $_REQUEST['id_log'] : exit();
-		$strtmp = !empty($_REQUEST['strtmp']) ? $_REQUEST['strtmp'] : exit();
+		$strtmp = !empty($_REQUEST['strtmp']) ? $id_log : exit();
 
-		$arr = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
+		$arrs = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
 
-		if (is_array($arr)) {
-			foreach($arr as $row) {
+		if (is_array($arrs)) {
+			foreach($arrs as $row) {
 				$catname = $row['id_cat'] == 0 ? core::getLanguage('str', 'general') : $row['catname'];
 				$status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
 				$read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
@@ -271,6 +276,32 @@ switch (Core_Array::getGet('action'))
 			}
 
 			Pnl::showJSONContent(json_encode($content));
+		}
+
+		break;
+
+	case 'showredirectlogs':
+
+		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
+		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
+		$strtmp = !empty($_REQUEST['strtmp']) ? $_REQUEST['strtmp'] : exit();
+		$url = !empty($_REQUEST['url']) ? $_REQUEST['url'] : exit();
+
+		$arrs = $data->getDetailRedirectLog($offset, $number, $url, $strtmp);
+
+		if (is_array($arrs)) {
+			foreach($arrs as $row) {
+				$rows[] = array(
+					"id" => $row['id'],
+					"email" => $row['email'],
+					"time" => $row['time'],
+				);
+			}
+
+			if (isset($rows)) {
+				$content = '{"item":' . json_encode($rows) . '}';
+				Pnl::showJSONContent($content);
+			}
 		}
 
 		break;

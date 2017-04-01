@@ -53,6 +53,12 @@ function PnumberChange()
   ${MSG_ALERT}
 </div>
 <!-- END IF -->
+<!-- IF '${ERROR_ALERT}' != '' -->
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
+</div>
+<!-- END IF -->
 <div class="row">
   <div class="col-lg-12">
     <div class="BtnPanelIcon">
@@ -77,18 +83,6 @@ function PnumberChange()
 <!-- BEGIN show_return_back -->
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- END show_return_back -->
-<!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
-</div>
-<!-- END IF -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
-<!-- END IF -->
 <!-- BEGIN row -->
 <form class="form-horizontal" action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 3){return confirm('${ALERT_CONFIRM_REMOVE}');}" method="post">
   <table class="table table-bordered table-hover">

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -16,7 +16,8 @@ class Model_export extends Model
 	 * @param $id_cat
 	 * @return mixed
 	 */
-	public function getUserList($id_cat){
+	public function getUserList($id_cat)
+	{
 		if ($id_cat) {
 			$temp = array();
 			foreach ($id_cat as $id) {
@@ -45,7 +46,7 @@ class Model_export extends Model
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat
 					LEFT JOIN ".core::database()->getTableName('subscription')." subs ON cat.id_cat=subs.id_cat
-					GROUP by id
+					GROUP by cat.id_cat
 					ORDER BY name";
 
 		$result = core::database()->querySQL($query);

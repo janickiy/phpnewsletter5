@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -40,3 +40,5 @@ $tpl->assign('MENU_MAILING_OPTIONS_TITLE', core::getLanguage('menu', 'mailing_op
 $tpl->assign('MENU_MAILING_OPTIONS', core::getLanguage('menu', 'mailing_options'));
 $tpl->assign('MENU_UPDATE_TITLE', core::getLanguage('menu', 'update_title'));
 $tpl->assign('MENU_UPDATE', core::getLanguage('menu', 'update'));
+$tpl->assign('MENU_REDIRECT_LOG', core::getLanguage('menu', 'menu_redirect_log'));
+$tpl->assign('MENU_REDIRECT_LOG_TITLE', core::getLanguage('menu', 'menu_redirect_log_title'));

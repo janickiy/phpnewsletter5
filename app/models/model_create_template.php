@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.0.10
+ * PHP Newsletter 5.1.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -38,8 +38,7 @@ class Model_create_template extends Model
 		$id_insert = core::database()->insert($fields, core::database()->getTableName('template'));
 		
 		if ($id_insert){
-			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++){
-		
+			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++) {
 				if (!empty($_FILES["attachfile"]["name"][$i])){
 					$ext = strrchr($_FILES['attachfile']['name'][$i], ".");
 					$attachfile = core::pathTo(core::getPath('attach'), date("YmdHis", time()) . $i . $ext);
@@ -59,7 +58,7 @@ class Model_create_template extends Model
 			}
 			
 			return $id_insert;
-		}
-		else return false;
+		} else
+			return false;
 	}
 }
