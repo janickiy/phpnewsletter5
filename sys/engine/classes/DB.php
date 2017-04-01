@@ -67,7 +67,6 @@ class DB {
 			
 			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'NO_ZERO_DATE',''))");
-			
         }
         return $this->dbh;
 	}
