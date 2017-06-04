@@ -31,7 +31,7 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function(data){
   				if (data.result == 'yes') {
-					$('.bar').css('width', '20%');
+					$('.progress-bar').css('width', '20%');
 					$("#status_process").text(data.status);
 					updateFiles();
 				} else {
@@ -51,7 +51,7 @@ function updateFiles()
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {
-				$('.bar').css('width', '70%');
+				$('.progress-bar').css('width', '70%');
 				updateBD();
 			} else {
 				$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + data.status + '</span>');
@@ -69,7 +69,7 @@ function updateBD()
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {
-				$('.bar').css('width', '100%');
+				$('.progress-bar').css('width', '100%');
 				$('#progress_bar').delay(3000).fadeOut();
 				$('#status_process').delay(3000).text('${MSG_UPDATE_COMPLETED}');
 			} else {

@@ -148,7 +148,7 @@ class Model_ajax extends Model
 	 */
 	public function updateDB($path)
 	{
-		$ConfigDB["prefix"] = '';
+		global $ConfigDB;
 
 		$result = true;
 
