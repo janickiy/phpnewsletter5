@@ -1,39 +1,30 @@
 <!-- INCLUDE header.tpl -->
 <script type="text/javascript">
+$(document).ready(function() {
+    var checkbox = $(".checkbox"),
+            boxCnt = checkbox.length,
+            allcheckbox = $("#check_all");
+    allcheckbox.on('change',function () {
+            checkbox.prop("checked", $(this).is(":checked"));
+            countChecked(this.form)
+    });
+    checkbox.on('change', function(){
+        allcheckbox.prop("checked", $('.checkbox:checked').length == boxCnt);
+        countChecked(this.form)
+    });
+});
 
-var DOM = (typeof(document.getElementById) != 'undefined');
-
-function CheckAll_Activate(Element,Name)
+function countChecked(form)
 {
-	if(DOM){
-		thisCheckBoxes = Element.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('input');
+    var m = 0;
+    for(var i=0; i < form.elements.length; ++i){
+        if (form.elements[i].checked) { m++; }
+    }
 
-		var m = 0;
-
-		for(var i = 1; i < thisCheckBoxes.length; i++){
-			if (thisCheckBoxes[i].name == Name){
-				thisCheckBoxes[i].checked = Element.checked;
-				if (thisCheckBoxes[i].checked == true) m++;
-				if (thisCheckBoxes[i].checked == false) m--;
-			}
-		}
-
-		if (m > 0) { document.getElementById("apply").disabled = false; }
-		else { document.getElementById("apply").disabled = true;  }
-	}
-}
-
-function Count_checked()
-{
-	var All = document.forms[1];
-	var m = 0;
-
-	for(var i = 0; i < All.elements.length; ++i){
-		if (All.elements[i].checked) { m++; }
-	}
-
-	if (m > 0) { document.getElementById("apply").disabled = false; }
-	else { document.getElementById("apply").disabled = true; }
+    if (m > 0)
+        $('#apply').attr('disabled',false);
+    else
+        $('#apply').attr('disabled',true);
 }
 	
 function PnumberChange()
@@ -51,6 +42,12 @@ function PnumberChange()
 <div class="alert alert-success alert-dismissable">
   <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
   ${MSG_ALERT}
+</div>
+<!-- END IF -->
+<!-- IF '${ERROR_ALERT}' != '' -->
+<div class="alert alert-danger alert-dismissable">
+  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
+  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
 </div>
 <!-- END IF -->
 <div class="row">
@@ -77,24 +74,12 @@ function PnumberChange()
 <!-- BEGIN show_return_back -->
 <p>« <a href="./?t=subscribers">${STR_BACK}</a></p>
 <!-- END show_return_back -->
-<!-- IF '${ERROR_ALERT}' != '' -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <strong>${STR_ERROR}!</strong> ${ERROR_ALERT}
-</div>
-<!-- END IF -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
-<!-- END IF -->
 <!-- BEGIN row -->
 <form class="form-horizontal" action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 3){return confirm('${ALERT_CONFIRM_REMOVE}');}" method="post">
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th width="10px"><input type="checkbox" title="${STR_CHECK_ALLBOX}" onclick="CheckAll_Activate(this,'activate[]');"></th>
+        <th width="10px"><input type="checkbox" title="${STR_CHECK_ALLBOX}" id="check_all"></th>
         <th class="${TH_CLASS_NAME}"><a href="./?t=subscribers&name=${GET_NAME}<!-- IF '${SEARCH}' != '' -->&search=${SEARCH}<!-- END IF -->${PAGENAV}">${TABLE_NAME}</a></th>
         <th class="${TH_CLASS_EMAIL}"><a href="./?t=subscribers&email=${GET_EMAIL}${PAGENAV}<!-- IF '${SEARCH}' != '' -->&search=${SEARCH}<!-- END IF -->">${TABLE_EMAIL}</a></th>
         <th class="${TH_CLASS_TIME}"><a href="./?t=subscribers&time=${GET_TIME}${PAGENAV}<!-- IF '${SEARCH}' != '' -->&search=${SEARCH}<!-- END IF -->">${TABLE_ADDED}</a></th>
@@ -106,7 +91,7 @@ function PnumberChange()
     <tbody>
       <!-- BEGIN column -->
       <tr <!-- IF '${STATUS_CLASS}' == 'noactive' -->class="danger"<!-- END IF -->>
-        <td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${STR_CHECK_BOX}" value="${ID_USER}" name="activate[]"></td>
+        <td style="vertical-align: middle;"><input type="checkbox" class="checkbox" title="${STR_CHECK_BOX}" value="${ID_USER}" name="activate[]"></td>
         <td style="vertical-align: middle;">${NAME}</td>
         <td style="vertical-align: middle;">${EMAIL}</td>
         <td style="vertical-align: middle;">${PUTDATE_FORMAT}</td>
@@ -186,14 +171,15 @@ function PnumberChange()
     </div>
   </div>
 </form>
-<p>${STR_NUMBER_OF_SUBSCRIBERS}: ${NUMBER_OF_SUBSCRIBERS}</p>
+<p style="padding-top: 10px; padding-bottom: 10px;">${STR_NUMBER_OF_SUBSCRIBERS}: ${NUMBER_OF_SUBSCRIBERS}</p>
 <!-- END row -->
 <!-- IF '${EMPTY_LIST}' != '' -->
-<div class="warning_msg">${EMPTY_LIST}</div>
+<p class="text-center text-danger">${EMPTY_LIST}</p>
 <!-- END IF -->
 <!-- BEGIN notfound -->
 <div class="alert">
   <button class="close" data-dismiss="alert">×</button>
-  ${MSG_NOTFOUND} </div>
+  ${MSG_NOTFOUND} 
+</div>
 <!-- END notfound -->
 <!-- INCLUDE footer.tpl -->

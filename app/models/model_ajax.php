@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.2
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -148,11 +148,12 @@ class Model_ajax extends Model
 	 */
 	public function updateDB($path)
 	{
-		global $ConfigDB;
+		$ConfigDB["prefix"] = '';
 
 		$result = true;
 
-		$queries = @file($path);
+		$sql = file_get_contents($path);
+		$queries = explode(';', $sql);
 
 		foreach ($queries as $query){
 			$query = str_replace('%prefix%', $ConfigDB["prefix"], $query);

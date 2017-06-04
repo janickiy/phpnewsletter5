@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.2
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -90,6 +90,7 @@ if (isset($success_msg)) {
 
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
+$tpl->assign('STR_ACCOUNTS', core::getLanguage('str', 'accounts'));
 $tpl->assign('STR_CURRENT_PASSWORD', core::getLanguage('str', 'current_password'));
 $tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 $tpl->assign('STR_AGAIN_PASSWORD', core::getLanguage('str', 'again_password'));

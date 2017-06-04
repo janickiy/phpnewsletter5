@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 05 2016 г., 22:19
+-- Время создания: Июн 04 2017 г., 21:36
 -- Версия сервера: 10.1.13-MariaDB
 -- Версия PHP: 5.6.23
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `phpnewsletter5`
+-- База данных: `phpnewsletter`
 --
 
 -- --------------------------------------------------------
@@ -51,8 +51,7 @@ CREATE TABLE `pnl_aut` (
 --
 
 INSERT INTO `pnl_aut` (`id`, `login`, `password`, `role`) VALUES
-(1, 'admin', 'bb667203cdfc8cc96965669ed20a22ba', 'admin'),
-(3, 'editor', '934b535800b1cba8f96a5d72f72f1611', '');
+(1, 'admin', 'b59c67bf196a4758191e42f76670ceba', 'admin');
 
 -- --------------------------------------------------------
 
@@ -160,15 +159,8 @@ CREATE TABLE `pnl_log` (
 CREATE TABLE `pnl_process` (
   `id` int(10) NOT NULL,
   `process` enum('start','pause','stop') NOT NULL DEFAULT 'start',
-  `id_user` int(9) NOT NULL
+  `id_user` int(9) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `pnl_process`
---
-
-INSERT INTO `pnl_process` (`id`, `process`, `id_user`) VALUES
-(1, 'stop', 1);
 
 -- --------------------------------------------------------
 
@@ -186,6 +178,19 @@ CREATE TABLE `pnl_ready_send` (
   `readmail` enum('yes','no') DEFAULT 'no',
   `time` datetime DEFAULT NULL,
   `id_log` int(9) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `pnl_redirect_log`
+--
+
+CREATE TABLE `pnl_redirect_log` (
+  `id` int(11) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -237,15 +242,17 @@ CREATE TABLE `pnl_settings` (
   `dkim_private` varchar(255) DEFAULT NULL,
   `dkim_selector` varchar(255) DEFAULT NULL,
   `dkim_passphrase` varchar(255) DEFAULT NULL,
-  `dkim_identity` varchar(255) DEFAULT NULL
+  `dkim_identity` varchar(255) DEFAULT NULL,
+  `remove_subscriber` enum('yes','no') NOT NULL DEFAULT 'no',
+  `remove_subscriber_days` tinyint(4) NOT NULL DEFAULT '7'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `pnl_settings`
 --
 
-INSERT INTO `pnl_settings` (`language`, `path`, `email`, `list_owner`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `return_path`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`) VALUES
-('ru', 'http://site1.ru/phpnewsletter_5_0_alfa/', 'yanack@yandex.ru', '', 'yanack@yandex.ru', 'yes', '', '', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'yes', 'no', 'no', 'no', 'no', 'yes', 'Подписка на рассылку', 'Здравствуйте, %NAME%\r\n\r\nПолучение рассылки возможно после завершения этапа активации подписки. Чтобы активировать подписку, перейдите по следующей ссылке: %CONFIRM%\r\n\r\nЕсли Вы не производили подписку на данный email, просто проигнорируйте это письмо или перейдите по ссылке: %UNSUB%\r\n\r\nС уважением, \r\nадминистратор сайта %SERVER_NAME%', 'yes', 'Отписаться от рассылки: <a href=%UNSUB%>%UNSUB%</a>', 'no', 0, 100, 'bulk', '', 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '');
+INSERT INTO `pnl_settings` (`language`, `path`, `email`, `list_owner`, `email_name`, `show_email`, `organization`, `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_aut`, `smtp_secure`, `smtp_timeout`, `how_to_send`, `sendmail`, `id_charset`, `content_type`, `number_days`, `make_limit_send`, `re_send`, `delete_subs`, `newsubscribernotify`, `request_reply`, `email_reply`, `show_unsubscribe_link`, `subjecttextconfirm`, `textconfirmation`, `require_confirmation`, `unsublink`, `interval_type`, `interval_number`, `limit_number`, `precedence`, `return_path`, `sleep`, `random`, `add_dkim`, `dkim_domain`, `dkim_private`, `dkim_selector`, `dkim_passphrase`, `dkim_identity`, `remove_subscriber`, `remove_subscriber_days`) VALUES
+('ru', 'http://site1.ru/phpnewsletter_5_1_2_t/', 'vasya-pupkin@my-domain.com', '', 'my-domain.com', 'yes', '', 'smtp.gmail.com', '', '', 25, 'no', 'no', 5, 1, '/usr/sbin/sendmail', 1, 2, 0, 'no', 'yes', 'no', 'no', 'no', 'no', 'yes', 'Подписка на рассылку', 'Здравствуйте, %NAME%\r\n\r\nПолучение рассылки возможно после завершения этапа активации подписки. Чтобы активировать подписку, перейдите по следующей ссылке: %CONFIRM%\r\n\r\nЕсли Вы не производили подписку на данный email, просто проигнорируйте это письмо или перейдите по ссылке: %UNSUB%\r\n\r\nС уважением, \r\nадминистратор сайта %SERVER_NAME%', 'yes', 'Отписаться от рассылки: <a href=%UNSUB%>%UNSUB%</a>', 'no', 1, 100, 'bulk', '', 0, 'no', 'no', 'my-domain.com', 'keyprivate/.htkeyprivate', 'phpnewsletter', 'password', '', 'no', 7);
 
 -- --------------------------------------------------------
 
@@ -256,7 +263,7 @@ INSERT INTO `pnl_settings` (`language`, `path`, `email`, `list_owner`, `email_na
 CREATE TABLE `pnl_subscription` (
   `id_sub` int(9) NOT NULL,
   `id_user` int(9) DEFAULT NULL,
-  `id_cat` int(5) NOT NULL
+  `id_cat` int(5) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -267,20 +274,13 @@ CREATE TABLE `pnl_subscription` (
 
 CREATE TABLE `pnl_template` (
   `id_template` int(9) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `body` mediumtext NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `body` mediumtext,
   `prior` enum('1','2','3') NOT NULL DEFAULT '3',
-  `pos` int(7) NOT NULL,
-  `id_cat` int(7) NOT NULL,
+  `pos` int(7) DEFAULT NULL,
+  `id_cat` int(7) DEFAULT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `pnl_template`
---
-
-INSERT INTO `pnl_template` (`id_template`, `name`, `body`, `prior`, `pos`, `id_cat`, `active`) VALUES
-(1, 'шаблон 1 jjjjjjjjj', '<p>%NAME%</p>\r\n\r\n<p>цйуцйуйцйц fsafvdsadas <strong>sadsa</strong></p>', '1', 2, 5, 'no');
 
 -- --------------------------------------------------------
 
@@ -348,6 +348,12 @@ ALTER TABLE `pnl_ready_send`
   ADD KEY `id_send` (`id_template`);
 
 --
+-- Индексы таблицы `pnl_redirect_log`
+--
+ALTER TABLE `pnl_redirect_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `pnl_subscription`
 --
 ALTER TABLE `pnl_subscription`
@@ -380,12 +386,12 @@ ALTER TABLE `pnl_attach`
 -- AUTO_INCREMENT для таблицы `pnl_aut`
 --
 ALTER TABLE `pnl_aut`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `pnl_category`
 --
 ALTER TABLE `pnl_category`
-  MODIFY `id_cat` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_cat` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `pnl_charset`
 --
@@ -400,12 +406,17 @@ ALTER TABLE `pnl_log`
 -- AUTO_INCREMENT для таблицы `pnl_process`
 --
 ALTER TABLE `pnl_process`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `pnl_ready_send`
 --
 ALTER TABLE `pnl_ready_send`
   MODIFY `id_ready_send` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `pnl_redirect_log`
+--
+ALTER TABLE `pnl_redirect_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `pnl_subscription`
 --
@@ -415,7 +426,7 @@ ALTER TABLE `pnl_subscription`
 -- AUTO_INCREMENT для таблицы `pnl_template`
 --
 ALTER TABLE `pnl_template`
-  MODIFY `id_template` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_template` int(9) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `pnl_users`
 --

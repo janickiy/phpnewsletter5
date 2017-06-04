@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.2
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -44,19 +44,19 @@ class DB {
             $this->dbh = new mysqli($config["host"], $config["user"], $config["passwd"], $config["name"], isset($config['port']) && !empty($config['port']) ? $config['port'] : 3306);
 			
             if (mysqli_connect_errno()) {
-                $this->dbh = null;
+                $this->dbh = null;				
 				echo "<!DOCTYPE html>";
-				echo "<html>";
-				echo "<head>";
-				echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
-				echo "<title>SQL error</title>";
-				echo "</head>";
-				echo "<body>";
-				echo "<p>An error occurred while accessing SQL database!</p>";
-				echo "<p>" . mysqli_connect_error() . "</p>";
-				echo "</body>";
-				echo "</html>";
-				exit;
+                echo "<html>";
+                echo "<head>";
+                echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
+                echo "<title>SQL error</title>";
+                echo "</head>";
+                echo "<body>";
+                echo "<p>An error occurred while accessing SQL database!</p>";
+                echo "<p>" . mysqli_connect_error() . "</p>";
+                echo "</body>";
+                echo "</html>";
+				exit;			
             } else {
                 mysqli_report(MYSQLI_REPORT_ERROR);
             }
@@ -66,8 +66,7 @@ class DB {
 			}
 			
 			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-			
-			
+			$this->dbh->query("SET sql_mode = (SELECT REPLACE(@@sql_mode,'NO_ZERO_DATE',''))");
         }
         return $this->dbh;
 	}

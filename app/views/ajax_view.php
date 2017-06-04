@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.1.2
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -118,22 +118,24 @@ switch (Core_Array::getGet('action'))
 				if (is_writeable($destination)) {
 					$zip->extractTo($destination);
 					$zip->close();
-					$status = core::getLanguage('msg', 'files_unzipped_successfully');
-					$result = 'yes';
+					$content['status'] = core::getLanguage('msg', 'files_unzipped_successfully');
+					$content['result'] = 'yes';
 				} else {
-					$status = core::getLanguage('msg', 'directory_not_writeable');
-					$result = 'no';
+					$content['status'] = core::getLanguage('msg', 'directory_not_writeable');
+					$content['result'] = 'no';
 				}
 			} else {
-				$status = core::getLanguage('msg', 'cannot_read_zip_archive');
-				$result = 'no';
+				$content['status'] = core::getLanguage('msg', 'cannot_read_zip_archive');
+				$content['result'] = 'no';
 			}
 		}
 
 		if (Core_Array::getRequest('p') == 'update_bd') {
 
-			$current_version_code = Pnl::get_current_version_code($currentversion);
+			$current_version_code = Pnl::get_current_version_code(VERSION);
 			$version_code_detect = $data->version_code_detect();
+
+			$result = false;
 
 			if ($version_code_detect < $current_version_code) {
 				if ($version_code_detect == 50000) {
@@ -142,16 +144,19 @@ switch (Core_Array::getGet('action'))
 
 				if (is_file($path_update)) {
 					if ($data->updateDB($path_update)) {
-						$content['status'] = core::getLanguage('msg', 'update_completed');
-						$content['result'] = 'yes';
-					} else {
-						$content['status'] = core::getLanguage('error', 'failed_to_update');
-						$content['result'] = 'no';
+						$result = true;
 					}
 				}
 			} else {
+				$result = true;
+			}
+
+			if ($result === true) {
 				$content['status'] = core::getLanguage('msg', 'update_completed');
 				$content['result'] = 'yes';
+			} else {
+				$content['status'] = core::getLanguage('error', 'failed_to_update');
+				$content['result'] = 'no';
 			}
 		}
 
