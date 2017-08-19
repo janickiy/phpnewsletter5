@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -30,13 +30,14 @@ if (isset($_REQUEST['clear_log'])){
 		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
-$order = array();
-$order['name'] = "s.name";
-$order['email'] = "email";
-$order['time'] = "a.time";
-$order['success'] = "success";
-$order['readmail'] = "readmail";
-$order['catname'] = "c.name";
+$order = array(
+    'name' => "s.name",
+    'email'=> "email",
+    'time' => "a.time",
+    'success' => "success",
+    'readmail' => "readmail",
+    'catname' => "c.name",
+);
 	
 $strtmp = "id_log";
 

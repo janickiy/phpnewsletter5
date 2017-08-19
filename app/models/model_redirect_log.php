@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -77,7 +77,7 @@ class Model_redirect_log extends Model
         $url = trim(core::database()->escape($url));
 
         if (!empty($url)) {
-            $query = "SELECT * FROM " . core::database()->getTableName('redirect_log') . " WHERE url LIKE '" . $url . "'";
+            $query = "SELECT * FROM " . core::database()->getTableName('redirect_log') . " WHERE url='" . $url . "'";
             $result = core::database()->querySQL($query);
             return core::database()->getRecordCount($result);
         }

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -47,11 +47,12 @@ class Model_create_template extends Model
 						@unlink($_FILES['attachfile']['tmp_name'][$i]); 
 					}
 
-					$attachfields = array();
-					$attachfields['id_attachment'] = 0;
-					$attachfields['name'] = $_FILES['attachfile']['name'][$i];
-					$attachfields['path'] = $attachfile;
-					$attachfields['id_template'] = $id_insert;				
+					$attachfields = array(
+                        'id_attachment' => 0,
+                        'name' => $_FILES['attachfile']['name'][$i],
+                        'path' => $attachfile,
+                        'id_template' => $id_insert
+                    );
 				
 					core::database()->insert($attachfields, core::database()->getTableName('attach'));
 				}		

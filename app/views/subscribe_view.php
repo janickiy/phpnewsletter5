@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -27,5 +27,7 @@ if ($token == $_GET['token']) {
         echo "<p style=\"text-align: center\">" . core::getLanguage('msg', 'successful_activation') . "</p>\n";
         echo "</body>\n";
         echo "</html>";
-    } else Pnl::error(core::getLanguage('error', 'activate_subscription'));
-} else Pnl::error(core::getLanguage('error', 'activate_subscription'));
+    } else
+        Pnl::error(core::getLanguage('error', 'activate_subscription'));
+} else
+    Pnl::error(core::getLanguage('error', 'activate_subscription'));

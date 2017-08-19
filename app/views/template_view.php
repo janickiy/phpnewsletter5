@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -27,15 +27,15 @@ if (Core_Array::getRequest('action')){
 	switch($_REQUEST['action']){
 		case 2:
 		
-			$fields['active'] = 'yes';
+			$fields = array('active' => 'yes');
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
 			break;
 		
 		case 3:
-		
-			$fields['active'] = 'no';
+
+            $fields = array('active' => 'no');
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 

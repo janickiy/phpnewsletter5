@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -25,10 +25,11 @@ class Model_ajax extends Model
 			$result = core::database()->querySQL($query);
 
 			if (core::database()->getRecordCount($result) == 0) {
-				$fields = array();
-				$fields['id'] = 0;
-				$fields['process'] = $status;
-				$fields['id_user'] = $id_user;
+				$fields = array(
+                    'id' => 0,
+                    'process' => $status,
+                    'id_user' => $id_user,
+                );
 
 				$insert = core::database()->insert($fields, core::database()->getTableName("process"));
 
@@ -152,7 +153,8 @@ class Model_ajax extends Model
 
 		$result = true;
 
-		$queries = @file($path);
+		$sql = file_get_contents($path);
+		$queries = explode(';', $sql);
 
 		foreach ($queries as $query){
 			$query = str_replace('%prefix%', $ConfigDB["prefix"], $query);
@@ -183,6 +185,7 @@ class Model_ajax extends Model
 			'aut',
 			'category',
 			'charset',
+			'сustomheaders',
 			'licensekey',
 			'log',
 			'process',
@@ -222,7 +225,9 @@ class Model_ajax extends Model
 
 			if (in_array('remove_subscriber', $tables['settings'])) {
 				$version_code_detect = 50100;
-			}
+			} elseif (isset($tables['сustomheaders'])) {
+                $version_code_detect = 50200;
+            }
 		}
 
 		return $version_code_detect;
@@ -395,10 +400,7 @@ class Model_ajax extends Model
 				}
 			}
 
-			$fields = array();
-			$fields['id_log'] = 0;
-			$fields['time'] = date("Y-m-d H:i:s");
-
+			$fields = array('id_log' => 0, 'time' => date("Y-m-d H:i:s"));
 			core::session()->start();
 
 			if (core::session()->issetName('id_log') == true) {
@@ -617,29 +619,30 @@ class Model_ajax extends Model
 						$m->Body = $msg;
 
 						if (!$m->Send()) {
-							$fields = array();
-							$fields['id_ready_send'] = 0;
-							$fields['id_user'] = $user['id'];
-							$fields['email'] = $user['email'];
-							$fields['id_template'] = $send['id_template'];
-							$fields['success'] = 'no';
-							$fields['errormsg'] = $m->ErrorInfo;
-							$fields['readmail'] = 'no';
-							$fields['time'] = date("Y-m-d H:i:s");
-							$fields['id_log'] = $insert_id;
-
+							$fields = array(
+                                'id_ready_send' => 0,
+                                'id_user'       => $user['id'],
+                                'email'       => $user['email'],
+                                'id_template' => $send['id_template'],
+                                'success'     => 'no',
+                                'errormsg'    => $m->ErrorInfo,
+                                'readmail' => 'no',
+                                'time'     => date("Y-m-d H:i:s"),
+                                'id_log'   => $insert_id,
+                            );
 							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 							$mailcountno = $mailcountno + 1;
 						} else {
-							$fields = array();
-							$fields['id_ready_send'] = 0;
-							$fields['id_user'] = $user['id'];
-							$fields['email'] = $user['email'];
-							$fields['id_template'] = $send['id_template'];
-							$fields['success'] = 'yes';
-							$fields['readmail'] = 'no';
-							$fields['time'] = date("Y-m-d H:i:s");
-							$fields['id_log'] = $insert_id;
+							$fields = array(
+                                'id_ready_send' => 0,
+                                'id_user'       => $user['id'],
+                                'email'       => $user['email'],
+                                'id_template' => $send['id_template'],
+                                'success'     => 'yes',
+                                'readmail'    => 'no',
+                                'time'   => date("Y-m-d H:i:s"),
+                                'id_log' => $insert_id,
+                            );
 
 							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 

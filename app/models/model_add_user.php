@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -30,7 +30,7 @@ class Model_add_user extends Model
     public function checkExistEmail($email)
     {
         $email = core::database()->escape($email);
-        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
         $result = core::database()->querySQL($query);
 
         return (core::database()->getRecordCount($result) == 0) ? false : true;

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -33,7 +33,7 @@ class Model_import extends Model
 	public function checkExistEmail($email)
 	{		
 		$email = core::database()->escape($email);
-		$query =  "SELECT * FROM ".core::database()->getTableName('users')." WHERE email LIKE '".$email."'";
+		$query =  "SELECT * FROM ".core::database()->getTableName('users')." WHERE email='" . $email . "'";
 		$result = core::database()->querySQL($query);		
 				
 		if(core::database()->getRecordCount($result) == 0)
@@ -61,44 +61,44 @@ class Model_import extends Model
 				$name = trim($d['B']);
 
 				if (!Pnl::check_email($email)){
-					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
-					$result = core::database()->querySQL($query);
-					
-					if (core::database()->getRecordCount($result) > 0){
+					if ($this->checkExistEmail($email)){
 						$row = core::database()->getRow($result);
 
 						core::database()->delete(core::database()->getTableName('subscription'),"id_user=" . $row['id_user'],'');
 
-						foreach($id_cat as $id){
-							if (is_numeric($id))	{
-								$fields = array();
-								$fields['id_sub'] = 0;
-								$fields['id_user'] = $row['id_user'];
-								$fields['id_cat'] = $id;
-									
+						foreach($id_cat as $id) {
+							if (is_numeric($id)) {
+								$fields = array(
+                                    'id_sub'  => 0,
+                                    'id_user' => $row['id_user'],
+                                    'id_cat'  => $id,
+                                );
+
 								core::database()->insert($fields, core::database()->getTableName('subscription'));
 							}
 						}
 					} else {
-						$fields = array();
-						$fields['id_user'] = 0;
-						$fields['name'] = $name;
-						$fields['email'] = $email;
-						$fields['token'] = Pnl::getRandomCode();
-						$fields['time'] = date("Y-m-d H:i:s");
-						$fields['status'] = 'active';
-						$fields['time_send'] = '0000-00-00 00:00:00';
+						$fields = array(
+                            'id_user' => 0,
+                            'name'    => $name,
+                            'email'   => $email,
+                            'token'   => Pnl::getRandomCode(),
+                            'time'    => date("Y-m-d H:i:s"),
+                            'status'  => 'active',
+                            'time_send' => '0000-00-00 00:00:00',
+                        );
 						
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 						
 						if ($insert_id) $count++;
 						
 						foreach($id_cat as $id){
-							if(is_numeric($id)){
-								$subfields = array();
-								$subfields['id_sub'] = 0;
-								$subfields['id_user'] = $insert_id;
-								$subfields['id_cat'] = $id;
+							if (is_numeric($id)){
+								$subfields = array(
+                                    'id_sub'  => 0,
+                                    'id_user' => $insert_id,
+                                    'id_cat'  => $id,
+                                );
 									
 								core::database()->insert($subfields, core::database()->getTableName('subscription'));
 							}
@@ -164,25 +164,26 @@ class Model_import extends Model
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array();
-									$fields['id_sub'] = 0;
-									$fields['id_user'] = $row['id_user'];
-									$fields['id_cat'] = $id;
+									$fields = array(
+                                        'id_sub'  => 0,
+                                        'id_user' => $row['id_user'],
+                                        'id_cat'  => $id
+                                    );
 
 									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}
 							}
 						}
-
 					} else {
-						$fields = array();
-						$fields['id_user'] = 0;
-						$fields['name'] = $name;
-						$fields['email'] = $email;
-						$fields['token'] = Pnl::getRandomCode();
-						$fields['time'] = date("Y-m-d H:i:s");
-						$fields['status'] = 'active';
-						$fields['time_send'] = '0000-00-00 00:00:00';
+						$fields = array(
+                            'id_user' => 0,
+                            'name'    => $name,
+                            'email'   => $email,
+                            'token'   => Pnl::getRandomCode(),
+                            'time'    => date("Y-m-d H:i:s"),
+                            'status'  =>  'active',
+                            'time_send' => '0000-00-00 00:00:00'
+                        );
 
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 
@@ -191,10 +192,11 @@ class Model_import extends Model
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array();
-									$fields['id_sub'] = 0;
-									$fields['id_user'] = $insert_id;
-									$fields['id_cat'] = $id;
+									$fields = array(
+                                        'id_sub'  => 0,
+                                        'id_user' => $insert_id,
+                                        'id_cat'  => $id,
+                                    );
 
 									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}

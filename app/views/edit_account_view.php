@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -37,9 +37,9 @@ if (Core_Array::getRequest('action')){
 	}
 	
 	if (empty($errors)){
-		$fields = array();
 		if (!empty($password)) $fields['password'] = md5($password);
-		$fields['role'] = $role;
+
+        $fields = array('role' => $role);
 
 		if ($result = $data->editAccount($fields, $id)){
 			header("Location: ./?t=accounts");
