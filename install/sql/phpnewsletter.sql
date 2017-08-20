@@ -123,6 +123,13 @@ CREATE TABLE IF NOT EXISTS `%prefix%subscription` (
   KEY `id_user` (`id_user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `%prefix%сustomheaders` (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `%prefix%template` (
   `id_template` int(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,

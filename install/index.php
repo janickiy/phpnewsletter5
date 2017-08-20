@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -12,7 +12,7 @@ error_reporting(0);
 session_start();
 
 $INSTALL = array();
-$INSTALL["version"] = '5.1.0';
+$INSTALL["version"] = '5.2.0';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
@@ -99,6 +99,7 @@ $INSTALL['tables'] = array(
 	'aut',
 	'category',
 	'charset',
+    'сustomheaders',
 	'licensekey',
 	'log',
 	'process',
@@ -212,7 +213,12 @@ if ($INSTALL['step'] == 5){
 					$INSTALL['version_detect'] = '5.1.0';
 					$INSTALL['version_code'] = 50100;
 				}
-			}
+
+                if (isset($tables['сustomheaders'])) {
+                    $INSTALL['version_detect'] = '5.2.0';
+                    $INSTALL['version_code'] = 50200;
+                }
+            }
 			
 			$INSTALL['type'] = 'install';
 			
@@ -230,18 +236,20 @@ if ($INSTALL['step'] == 5){
 			
 			$_POST['action'] = isset($_POST['action']) ? $_POST['action'] : '';			
 			
-			if($INSTALL['type'] == 'update'){
+			if ($INSTALL['type'] == 'update'){
 				if ($_POST['action'] == 'update') {
 					if ($INSTALL['version_code'] == 50000) {
-                        import_data('update/update_5_0_'.$INSTALL['language'].'.sql', $_POST['prefix']);
-                    }			
+                        import_data('update/update_5_0_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
+                    } elseif ($INSTALL['version_code'] == 50100) {
+                        import_data('update/update_5_1_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
+                    }
 					
 					if (empty($INSTALL['errors'])) {
-					$_SESSION['name'] = $_POST["name"];
+					    $_SESSION['name'] = $_POST["name"];
 						$_SESSION['host'] = $_POST['host'];
 						$_SESSION['user'] = $_POST['user'];
 						$_SESSION['password'] = $_POST['password'];						
-						$_SESSION['prefix'] = $_POST['prefix'];
+						$_SESSION['prefix']   = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
 					
 						$_POST = array();
@@ -441,9 +449,9 @@ header('Content-Type: text/html; charset=utf-8');
 
 	<link href="../templates/assets/styles/styles.css" rel="stylesheet">
 
-	<script src="../templates/js/jquery.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
 	<script src="../templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../templates/js/jquery.hide_alertblock.js"></script>
+	<script src="../js/jquery.hide_alertblock.js"></script>
 
 </head>
 <body>
@@ -451,19 +459,18 @@ header('Content-Type: text/html; charset=utf-8');
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-				<div class="row" style="background-color: white">
-					<div class="col-lg-12">
-						<h2 class="page-header"><small><?php echo $step_name; ?></small></h2>
-					</div>
-					<div class="col-lg-12">
+			<div class="row" style="background-color: white">
+				<div class="col-lg-12">
+					<h2 class="page-header"><small><?php echo $step_name; ?></small></h2>
+				</div>
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a target="_blank" href="http://janicky.com/">PHP Newsletter</a> | <a target="_blank" href="<?php echo $INSTALL["lang"]["str"]["url_info"]; ?>"><?php echo $INSTALL["lang"]["str"]["install_manual"]; ?></a>
+						</div>
 
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<a target="_blank" href="http://janicky.com/">PHP Newsletter</a> | <a target="_blank" href="<?php echo $INSTALL["lang"]["str"]["url_info"]; ?>"><?php echo $INSTALL["lang"]["str"]["install_manual"]; ?></a>
-							</div>
-
-							<div class="panel-body">
-								<div class="table-responsive">
+						<div class="panel-body">
+							<div class="table-responsive">
 
 <?php
 
@@ -540,17 +547,17 @@ $(document).on('change','#license_key',function(){
 	<fieldset>
 		<legend><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></legend>
 		<div class="form-group">
-				<label class="radio-inline">
-					<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked;" name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
-				</label>
-				<label class="radio-inline">
-					<input type="radio" onclick="document.getElementById('license_key').disabled=''; this.form.forward.disabled=this.checked;" name="license_key_type" value="license_key"> <?php echo $INSTALL["lang"]["str"]["commercial_version"]; ?>
-				</label>
-			</div>
-			<div class="form-group">
-				<label for="license_key"><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></label>
-					<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO">
-			</div>			
+			<label class="radio-inline">
+				<input type="radio" onclick="document.getElementById('license_key').disabled='disabled'; this.form.forward.disabled=!this.checked;" name="license_key_type" value="demo" checked="checked"> <?php echo $INSTALL["lang"]["str"]["demo_version"]; ?>
+			</label>
+			<label class="radio-inline">
+				<input type="radio" onclick="document.getElementById('license_key').disabled=''; this.form.forward.disabled=this.checked;" name="license_key_type" value="license_key"> <?php echo $INSTALL["lang"]["str"]["commercial_version"]; ?>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="license_key"><?php echo $INSTALL["lang"]["str"]["license_key"]; ?></label>
+				<input id="license_key" class="form-control" type="text" name="license_key" disabled='disabled' value="DEMO">
+		</div>
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
@@ -578,17 +585,15 @@ $(document).on('change','#license_key',function(){
 	<fieldset>
 		<legend><?php echo $INSTALL["lang"]["str"]["license"]; ?></legend>
 		<div class="form-group">
-				<label><?php echo $INSTALL["lang"]["str"]["read_license"]; ?></label>
-				<textarea class="form-control" name="readonly" rows="15"><?php echo $contents; ?></textarea>
-			</div>
+			<label><?php echo $INSTALL["lang"]["str"]["read_license"]; ?></label>
+			<textarea class="form-control" name="readonly" rows="15"><?php echo $contents; ?></textarea>
+		</div>
 
-			<div class="form-group">
-				<label class="checkbox-inline" for="accept_license">
-
-					<input type="checkbox" id="accept_license" name="accept_license" onclick="this.form.forward.disabled=!this.checked;" /> <?php echo $INSTALL["lang"]["str"]["accept_license"]; ?>
-				</label>
-
-			</div>	
+		<div class="form-group">
+			<label class="checkbox-inline" for="accept_license">
+				<input type="checkbox" id="accept_license" name="accept_license" onclick="this.form.forward.disabled=!this.checked;" /> <?php echo $INSTALL["lang"]["str"]["accept_license"]; ?>
+			</label>
+		</div>
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary"  value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" disabled="disabled"/>
@@ -606,13 +611,13 @@ $(document).on('change','#license_key',function(){
 	$check = array();
     $info = array();
     
-    $check["php_version"] = version_compare(PHP_VERSION, "5.3", ">=");
-    $info["php_version"] = PHP_VERSION;
-    $check["php_mysql"] = extension_loaded("mysql");
+    $check["php_version"]  = version_compare(PHP_VERSION, "5.3", ">=");
+    $info["php_version"]   = PHP_VERSION;
+    $check["php_mysql"]    = extension_loaded("mysqli");
     $check["php_mbstring"] = extension_loaded("mbstring");
 	$check["php_iconv"] = extension_loaded("iconv");
-	$check["php_zip"] = extension_loaded("zip");
-	$check["php_curl"] = extension_loaded("curl");
+	$check["php_zip"]   = extension_loaded("zip");
+	$check["php_curl"]  = extension_loaded("curl");
 
 if (ini_get('register_globals') == 1) {
 	
@@ -645,27 +650,27 @@ if (ini_get('register_globals') == 1) {
             <tbody>
               <tr>
                 <td width="250">PHP 5.3 + </td>
-                <td><strong><?php echo $check["php_version"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_version"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">MySQL</td>
-                <td><strong><?php echo $check["php_mysql"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_mysql"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">MB String</td>
-                <td><strong><?php echo $check["php_mbstring"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_mbstring"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
                 <td width="250">Iconv</td>
-                <td><strong><?php echo $check["php_iconv"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+                <td><strong><?php echo $check["php_iconv"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
 			   <tr>
 				  <td width="250">Zip</td>
-				  <td><strong><?php echo $check["php_zip"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+				  <td><strong><?php echo $check["php_zip"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
 			  </tr>
 			  <tr>
 				  <td width="250">cURL</td>
-				  <td><strong><?php echo $check["php_curl"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="label label-important">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
+				  <td><strong><?php echo $check["php_curl"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
 			  </tr>
 			</tbody>
           </table>

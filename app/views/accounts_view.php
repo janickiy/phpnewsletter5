@@ -89,6 +89,7 @@ foreach ($data->getAccountList() as $row){
 }
 
 //form
+$tpl->assign('STR_CHANGE_PASSWORD', $language["str"]["change_password"]);
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('BUTTON_ADD', core::getLanguage('button', 'add_account'));
 

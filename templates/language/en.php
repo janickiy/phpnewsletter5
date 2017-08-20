@@ -201,7 +201,7 @@ $language["str"]["remove_user"] = "Remove";
 $language["str"]["import_user"] = "Import";
 $language["str"]["export_user"] = "Export";
 $language["str"]["update_warning"] = 'A new version of %SCRIPTNAME% is already available and you can use it. The newest version is %VERSION%, created %CREATED% <a href="%DOWNLOADLINK%">Download</a> %MESSAGE%';
-$language["str"]["supported_tags_list"] = "%NAME% is username, %UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name, %REFERRAL:http://mywebsite.com% - url link for referrers statistics";
+$language["str"]["supported_tags_list"] = "%NAME% is username, %UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name, %REFERRAL:http://my_website.com/% - url link for referrers statistics";
 $language["str"]["warning"] = 'Warning';
 $language["str"]["install_msg"] = 'If PHP Newsletter has been already installed, then you should delete <strong>install</strong> folder; otherwise launch the <a href="%URL%">installation wizard</a>.';
 $language["str"]["url_info"] = 'http://janicky.com/en/php-scripts/php-newsletter';
@@ -335,6 +335,9 @@ $language["str"]["dont_have_permission_to_access"] = "You don't have permission 
 $language["str"]["demo_version_has_expired"] = '<p>The validity of the demo version has expired. To use the application buy the license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 $language["str"]["licensekey_has_expired"] = '<p>The validity of a license key has expired. To use the application buy a new license key. <a href="http://janicky.com/en/php-scripts/php-newsletter">Buy a license key</a></p>';
 $language["str"]["number_redirect"] = "Number of redirects";
+$language["str"]["accounts"] = "Accounts";
+$language["str"]["value"] = "Value";
+$language["str"]["change_password"] = "Сhange password";
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";
@@ -348,6 +351,7 @@ $language["button"]["subscribe"]   = "subscribe";
 $language["button"]["send"] = "send";
 $language["button"]["update"] = "Update to %SCRIPT_NAME% %NEW_VERSION%";
 $language["button"]["add_account"] = "Add account";
+$language["button"]["add_field"] = "Add field";
 
 $language["alert"]["clear_all"]      = "Do you really want to remove all emails?";
 $language["alert"]["select_action"]  = "Please, choose action!";

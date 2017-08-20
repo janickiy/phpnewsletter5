@@ -332,6 +332,10 @@ class Model_ajax extends Model
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
 
+		foreach($this->getCustomHeaders() as $row) {
+			if (!empty($row['name']) && !empty($row['value'])) $m->addCustomHeader($row['name'] . ":" . $row['value']);
+		}
+
 		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
 		elseif (core::getSetting('precedence') == 'junk')
@@ -562,6 +566,10 @@ class Model_ajax extends Model
 							$m->ConfirmReadingTo = core::getSetting('email');
 						}
 
+						foreach($this->getCustomHeaders() as $row) {
+							if (!empty($row['name']) && !empty($row['value'])) $m->addCustomHeader($row['name'] . ":" . $row['value']);
+						}
+
 						if (core::getSetting('precedence') == 'bulk')
 							$m->addCustomHeader("Precedence: bulk");
 						elseif (core::getSetting('precedence') == 'junk')
@@ -781,5 +789,15 @@ class Model_ajax extends Model
 
 			return core::database()->delete(core::database()->getTableName('attach'), "id_attachment=" . $id_attachment, '');
 		}
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCustomHeaders()
+	{
+		$query = "SELECT * FROM " . core::database()->getTableName('сustomheaders');
+		$result = core::database()->querySQL($query);
+		return core::database()->getColumnArray($result);
 	}
 }

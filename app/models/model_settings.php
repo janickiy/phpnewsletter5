@@ -39,4 +39,56 @@ class Model_settings extends Model
         else
             return false;
     }
+
+    /**
+     *
+     */
+    public function addHeaders()
+    {
+        if (count(Core_Array::getPost('header_name')) > 0) {
+            for($i = 0; $i < count(Core_Array::getPost('header_name')); $i++) {
+                $name = Core_Array::getPost('header_name');
+                $value = Core_Array::getPost('header_value');
+                $name[$i] = trim($name[$i]);
+                $value[$i] = trim($value[$i]);
+
+                if (preg_match("/^[\-a-zA-Z]+$/", $name[$i])) {
+                    $value[$i] = str_replace(';', '', $value[$i]);
+                    $value[$i] = str_replace(':', '', $value[$i]);
+                    if ($name[$i] && $value[$i]) {
+                        $fields = array(
+                            'id' => 0,
+                            'name' => $name[$i],
+                            'value'  => $value[$i]
+                        );
+
+                        core::database()->insert($fields, core::database()->getTableName('сustomheaders'));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function clearHeaders()
+    {
+        $delete = core::database()->delete(core::database()->getTableName('сustomheaders'));
+
+        if ($delete)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeaders()
+    {
+        $query = "SELECT * FROM " . core::database()->getTableName('сustomheaders');
+        $result = core::database()->querySQL($query);
+        return core::database()->getColumnArray($result);
+    }
 }

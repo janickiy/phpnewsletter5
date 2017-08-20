@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -31,7 +31,7 @@ curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVE
 curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
 $data = curl_exec($ch);
 
@@ -51,7 +51,7 @@ if ($out[0]) {
 		$content = array('result' => 'yes');
 	else
 		$content = array('result' => 'no', 'error' => $arr['error']);
-} else $content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+} else $content = array('result' => 'no', 'error' => $INSTALL["lang"]["error"]["error_checking_license"]);
 
 
 header('Cache-Control: no-store, no-cache, must-revalidate');

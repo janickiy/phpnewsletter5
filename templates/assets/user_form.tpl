@@ -1,18 +1,7 @@
 <p>« <a href="./?t=subscribers">${RETURN_BACK}</a></p>
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-  <ul>
-    <!-- BEGIN row -->
-    <li> ${ERROR}</li>
-    <!-- END row -->
-  </ul>
-</div>
-<!-- END show_errors -->
+<!-- INCLUDE success.tpl -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE info.tpl -->
 <form action="${ACTION}" method="post">
   <!-- IF '${ID_USER}' != '' -->
   <input type="hidden" name="id_user" value="${ID_USER}">
