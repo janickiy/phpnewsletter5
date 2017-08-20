@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -30,10 +30,11 @@ if (Core_Array::getRequest('action')){
 	if (!empty($name) && $data->checkExistCatName($name)) $errors[] = core::getLanguage('error', 'cat_name_exist');
 	
 	if (empty($errors)){
-		$fields = array();
-		$fields['id_cat'] = 0;
-		$fields['name'] = $name;
-	
+		$fields = array(
+            'id_cat' => 0,
+            'name'   => $name,
+        );
+
 		if ($data->addNewCategory($fields)){
 			header("Location: ./?t=category");
 			exit();

@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -19,8 +19,7 @@ class Model_expired extends Model
     public function addLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
-        $data = array();
-        $data['licensekey'] = $licensekey;
+        $data = array('licensekey' => $licensekey);
 
         return core::database()->insert($data, core::database()->getTableName('licensekey'));
     }
@@ -32,8 +31,7 @@ class Model_expired extends Model
     public function updateLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
-        $fields = array();
-        $fields['licensekey'] = $licensekey;
+        $fields = array('licensekey' => $licensekey);
 
         return core::database()->update($fields, core::database()->getTableName('licensekey'), '');
     }

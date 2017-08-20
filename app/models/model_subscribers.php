@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -106,8 +106,6 @@ class Model_subscribers extends Model
     public function getTotal()
     {
         if (Core_Array::getRequest('category')) {
-            $cat = core::database()->escape(Core_Array::getRequest('category'));
-            $_where = (isset($cat) && $cat > 0) ? "WHERE sub.id_cat=" . $cat . " " : "1";
             core::database()->tablename = core::database()->getTableName('users') . " usr LEFT JOIN " . core::database()->getTableName('subscription') . " sub ON usr.id_user=sub.id_user";
         } else
             core::database()->tablename = core::database()->getTableName('users');

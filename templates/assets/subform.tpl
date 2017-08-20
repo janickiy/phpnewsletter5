@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="subform">  
-  <form action="${ACTION}" method="post" accept-charset="utf-8">
+  <form action="${ACTION}" method="post" accept-charset="utf-8" autocomplete="off">
   <input type="hidden" name="action" value="post">
     <!-- BEGIN row -->
     <p>
@@ -16,11 +16,11 @@
     <table cellpadding="0" cellspacing="6">
       <tr>
         <td>${STR_NAME}</td>
-        <td><input size="30" type="text" name="name"></td>
+        <td><input size="30" type="text" name="name" autocomplete="off"></td>
       </tr>
       <tr>
         <td>${STR_EMAIL}</td>
-        <td><input size="30" type="text" name="email"></td>
+        <td><input size="30" type="text" name="email" autocomplete="off"></td>
       </tr>
       <tr>
         <td></td>

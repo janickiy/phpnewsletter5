@@ -26,10 +26,10 @@
                     <h3 class="panel-title">${STR_ADMIN_AREA}  ${SCRIPT_NAME}</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form"  method="post">
+                    <form role="form" method="post" autocomplete="off">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" type="text" name="login" value="${LOGIN}" placeholder="${STR_LOGIN}" autofocus>
+                                <input class="form-control" type="text" name="login" autocomplete="off" value="${LOGIN}" placeholder="${STR_LOGIN}" autofocus>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" name="password" placeholder="${STR_PASSWORD}">

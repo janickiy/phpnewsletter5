@@ -1,46 +1,32 @@
 <!-- INCLUDE header.tpl -->
-<script type="text/javascript" src="./templates/js/jquery.paulund_modal_box.js"></script>
+<script type="text/javascript" src="./js/jquery.paulund_modal_box.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
+        var checkbox = $(".checkbox"),
+                boxCnt = checkbox.length,
+                allcheckbox = $("#check_all");
+        allcheckbox.on('change',function () {
+            checkbox.prop("checked", $(this).is(":checked"));
+            countChecked(this.form)
+        });
+        checkbox.on('change', function(){
+            allcheckbox.prop("checked", $('.checkbox:checked').length == boxCnt);
+            countChecked(this.form)
+        });
+    });
 
-	var DOM = (typeof(document.getElementById) != 'undefined');
+    function countChecked(form)
+    {
+        var m = 0;
+        for(var i=0; i < form.elements.length; ++i){
+            if (form.elements[i].checked) { m++; }
+        }
 
-	function Check_action()
-	{
-		if(document.forms[0].action.value == 0) { window.alert('${ALERT_SELECT_ACTION}'); }
-	}
-
-	function CheckAll_Activate(Element,Name)
-	{
-		if (DOM){
-			thisCheckBoxes = Element.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('input');
-
-			var m = 0;
-
-			for(var i = 1; i < thisCheckBoxes.length; i++){
-				if (thisCheckBoxes[i].name == Name){
-					thisCheckBoxes[i].checked = Element.checked;
-					if (thisCheckBoxes[i].checked == true) { m++; }
-					if (thisCheckBoxes[i].checked == false) { m--; }
-				}
-			}
-
-			if (m > 0) { document.getElementById("apply").disabled = false; }
-			else { document.getElementById("apply").disabled = true;  }
-		}
-	}
-
-	function Count_checked()
-	{
-		var All = document.forms[0];
-		var m = 0;
-
-		for(var i = 0; i < All.elements.length; ++i){
-			if(All.elements[i].checked) { m++; }
-		}
-
-		if(m > 0) { document.getElementById("apply").disabled = false; }
-		else { document.getElementById("apply").disabled = true; }
-	}
+        if (m > 0)
+            $('#apply').attr('disabled',false);
+        else
+            $('#apply').attr('disabled',true);
+    }
 
 	function sendout()
 	{
@@ -271,26 +257,13 @@
 	}
 
 </script>
-<!-- IF '${INFO_ALERT}' != '' -->
-
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-	<button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-	<h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-	<ul>
-		<!-- BEGIN row -->
-		<li> ${ERROR}</li>
-		<!-- END row -->
-	</ul>
-</div>
-<!-- END show_errors -->
+<!-- INCLUDE info.tpl -->
+<!-- INCLUDE errors.tpl -->
 <form action="${ACTION}" onSubmit="if(this.action.value == 0){window.alert('${ALERT_SELECT_ACTION}');return false;}if(this.action.value == 4){return confirm('${ALERT_CONFIRM_REMOVE}');} if(this.action.value == 1) return false" method="post">
 	<table class="table table-bordered table-hover">
 		<thead>
 		<tr>
-			<th width="10px"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" onclick="CheckAll_Activate(this,'activate[]');"></th>
+			<th width="10px"><input type="checkbox" title="TABLECOLMN_CHECK_ALLBOX" id="check_all"></th>
 			<th width="50px">ID</th>
 			<th width="50%">${TH_TABLE_MAILER}</th>
 			<th>${TH_TABLE_CATEGORY}</th>
@@ -303,7 +276,7 @@
 		<tbody>
 		<!-- BEGIN column -->
 		<tr <!-- IF '${CLASS_NOACTIVE}' == 'no' -->class="danger"<!-- END IF -->>
-			<td style="vertical-align: middle;"><input type="checkbox" onclick="Count_checked();" title="${TABLECOLMN_CHECKBOX}" value="${ROW_ID_TEMPLATE}" name=activate[]></td>
+			<td style="vertical-align: middle;"><input type="checkbox" class="checkbox" title="${TABLECOLMN_CHECKBOX}" value="${ROW_ID_TEMPLATE}" name=activate[]></td>
 			<td style="vertical-align: middle;">${ROW_ID_TEMPLATE}</td>
 			<td style="vertical-align: middle;" class="text-left"><a title="${STR_EDIT_MAILINGTEXT}" href="./?t=edit_template&id_template=${ROW_ID_TEMPLATE}">${ROW_TMPLNAME}</a><br>
 				<br>

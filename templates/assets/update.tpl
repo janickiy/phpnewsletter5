@@ -1,24 +1,7 @@
 <!-- INCLUDE header.tpl -->
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-	<button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-	<h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-	<ul>
-		<!-- BEGIN row -->
-		<li> ${ERROR}</li>
-		<!-- END row -->
-	</ul>
-</div>
-<!-- END show_errors -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-	<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-	${MSG_ALERT}
-</div>
-<!-- END IF -->
+<!-- INCLUDE info.tpl -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE success.tpl -->
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#start_update").on("click", function(){
@@ -31,7 +14,7 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function(data){
   				if (data.result == 'yes') {
-					$('.bar').css('width', '20%');
+					$('.progress-bar').css('width', '20%');
 					$("#status_process").text(data.status);
 					updateFiles();
 				} else {
@@ -51,7 +34,7 @@ function updateFiles()
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {
-				$('.bar').css('width', '70%');
+				$('.progress-bar').css('width', '70%');
 				updateBD();
 			} else {
 				$("#btn_refresh").html('<a id="start_update" class="btn" href="#"><i class="icon-refresh"></i>${BUTTON_UPDATE}</a><span style="padding: 10px">' + data.status + '</span>');
@@ -69,7 +52,7 @@ function updateBD()
 		dataType: "json",
 		success: function(data){
 			if (data.result == 'yes') {
-				$('.bar').css('width', '100%');
+				$('.progress-bar').css('width', '100%');
 				$('#progress_bar').delay(3000).fadeOut();
 				$('#status_process').delay(3000).text('${MSG_UPDATE_COMPLETED}');
 			} else {

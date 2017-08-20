@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -82,9 +82,15 @@ if (Core_Array::getRequest('action')){
 	$fields["dkim_identity"] = trim(Core_Array::getRequest('dkim_identity'));
 	$fields["sleep"] = trim((int)Core_Array::getRequest('sleep'));
 
-	if ($data->updateSettings($fields))
+	if ($data->updateSettings($fields)) {
+		if (Core_Array::getRequest('header_name')) {
+			if ($data->clearHeaders()) $data->addHeaders();
+		} else {
+			$data->clearHeaders();
+		}
+
 		$success = core::getLanguage('msg', 'changes_added');
-	else
+	} else
 		$errors[] = core::getLanguage('error', 'web_apps_error');
 	
 	header('Location: ./?t=settings');
@@ -116,6 +122,13 @@ if (!empty($errors)) {
 	
 if (isset($success)) {
 	$tpl->assign('MSG_ALERT', $success);
+}
+
+foreach($data->getHeaders() as $row) {
+	$rowBlock = $tpl->fetch('headers_row');
+	$rowBlock->assign('NAME', $row['name']);
+	$rowBlock->assign('VALUE', $row['value']);
+	$tpl->assign('headers_row', $rowBlock);
 }
 
 //value
@@ -178,6 +191,11 @@ if (empty($email_name))
 else
     $tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
+$tpl->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
+$tpl->assign('STR_NAME', core::getLanguage('str', 'name'));
+$tpl->assign('STR_VALUE', core::getLanguage('str', 'value'));
+$tpl->assign('SET_NAME', core::getLanguage('str', 'name'));
+$tpl->assign('SET_VALUE', core::getLanguage('str', 'value'));
 $tpl->assign('SET_REMOVE_SUBSCRIBER', core::getLanguage('str', 'set_remove_subscriber'));
 $tpl->assign('SET_ORGANIZATION', core::getLanguage('str', 'set_organization'));
 $tpl->assign('ORGANIZATION', htmlspecialchars(core::getSetting('organization')));
@@ -229,6 +247,7 @@ $tpl->assign('SET_DKIM_PRIVATE', core::getLanguage('str', 'set_dkim_private'));
 $tpl->assign('SET_DKIM_SELECTOR', core::getLanguage('str', 'set_dkim_selector'));
 $tpl->assign('SET_DKIM_PASSPHRASE', core::getLanguage('str', 'set_dkim_passphrase'));
 $tpl->assign('SET_DKIM_IDENTITY', core::getLanguage('str', 'set_dkim_identity'));
+$tpl->assign('BUTTON_ADD_FIELD', core::getLanguage('button', 'add_field'));
 $tpl->assign('BUTTON_APPLY', core::getLanguage('button', 'apply'));
 $tpl->assign('BUTTON_BY_DEFAULT', core::getLanguage('button', 'by_default'));
 

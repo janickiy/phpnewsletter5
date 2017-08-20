@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -19,7 +19,7 @@ class Model_add_category extends Model
     public function checkExistCatName($name)
     {
         $name = core::database()->escape($name);
-        $query = "SELECT * FROM " . core::database()->getTableName('category') . " WHERE name LIKE '" . $name . "'";
+        $query = "SELECT * FROM " . core::database()->getTableName('category') . " WHERE name='" . $name . "'";
         $result = core::database()->querySQL($query);
         
         return (core::database()->getRecordCount($result) == 0) ? false : true;

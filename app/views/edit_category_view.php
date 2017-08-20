@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -28,9 +28,8 @@ if (Core_Array::getRequest('action')){
 
 	if (empty($name)) $alert_error = core::getLanguage('error', 'empty_category_name');
 	if (!isset($alert_error)){
-		$fields = array();
-		$fields['name'] = $name;
-	
+		$fields = array('name' => $name);
+
 		if ($data->editCategoryRow($fields, Core_Array::getPost('id_cat'))){
 			header("Location: ./?t=category");
 			exit;

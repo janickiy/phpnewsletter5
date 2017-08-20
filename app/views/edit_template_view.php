@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -32,11 +32,12 @@ if (Core_Array::getRequest('action')){
     if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 
     if (empty($error)) {
-        $fields = array();
-        $fields['name'] = $name;
-        $fields['body'] = $body;
-        $fields['prior'] = Core_Array::getPost('prior');
-        $fields['id_cat'] = Core_Array::getPost('id_cat');
+        $fields = array(
+            'name' => $name,
+            'body' => $body,
+            'prior' => Core_Array::getPost('prior'),
+            'id_cat' => Core_Array::getPost('id_cat'),
+        );
 
         if ($data->editTemplate($fields, $id_template)){
             header("Location: ./");

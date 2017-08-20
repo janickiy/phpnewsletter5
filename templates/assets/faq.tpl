@@ -1,6 +1,4 @@
 <!-- INCLUDE header.tpl -->
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
+<!-- INCLUDE info.tpl -->
 ${FAQ}
 <!-- INCLUDE footer.tpl -->
