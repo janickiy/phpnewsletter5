@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -123,8 +123,8 @@ class Model_template extends Model
                 return true;
             else
                 return false;
-        }
-        else return true;
+        } else
+            return true;
     }
 
     /**
@@ -153,7 +153,7 @@ class Model_template extends Model
                 return true;
             else
                 return false;
-        }
-        else return true;
+        } else
+            return true;
     }
 }

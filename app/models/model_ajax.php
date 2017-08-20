@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -19,17 +19,17 @@ class Model_ajax extends Model
 	 */
 	public function updateProcess($status, $id_user)
 	{
-		if ($status && is_numeric($id_user)){
-
+		if ($status && is_numeric($id_user)) {
 			$status = core::database()->escape($status);
 			$query = "SELECT * FROM " . core::database()->getTableName('process') . "  WHERE id_user=" . $id_user;
 			$result = core::database()->querySQL($query);
 
 			if (core::database()->getRecordCount($result) == 0) {
-				$fields = array();
-				$fields['id'] = 0;
-				$fields['process'] = $status;
-				$fields['id_user'] = $id_user;
+				$fields = array(
+                    'id' => 0,
+                    'process' => $status,
+                    'id_user' => $id_user,
+                );
 
 				$insert = core::database()->insert($fields, core::database()->getTableName("process"));
 
@@ -52,7 +52,6 @@ class Model_ajax extends Model
 	public function getTotalMails()
 	{
 		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
-
 		$result = core::database()->querySQL($query);
 		$count = core::database()->getRow($result, 'assoc');
 		$total = core::getSetting('make_limit_send') == "yes" ? core::getSetting('limit_number') : $count['COUNT(*)'];
@@ -154,7 +153,8 @@ class Model_ajax extends Model
 
 		$result = true;
 
-		$queries = @file($path);
+		$sql = file_get_contents($path);
+		$queries = explode(';', $sql);
 
 		foreach ($queries as $query){
 			$query = str_replace('%prefix%', $ConfigDB["prefix"], $query);
@@ -185,6 +185,7 @@ class Model_ajax extends Model
 			'aut',
 			'category',
 			'charset',
+			'сustomheaders',
 			'licensekey',
 			'log',
 			'process',
@@ -224,7 +225,9 @@ class Model_ajax extends Model
 
 			if (in_array('remove_subscriber', $tables['settings'])) {
 				$version_code_detect = 50100;
-			}
+			} elseif (isset($tables['сustomheaders'])) {
+                $version_code_detect = 50200;
+            }
 		}
 
 		return $version_code_detect;
@@ -242,7 +245,6 @@ class Model_ajax extends Model
 	public function sendTestEmail($email, $subject, $body, $prior)
 	{
 		$user = 'USERNAME';
-
 		$subject = str_replace('%NAME%', $user, $subject);
 
 		core::requireEx('libs', "PHPMailer/class.phpmailer.php");
@@ -330,6 +332,10 @@ class Model_ajax extends Model
 			$m->ConfirmReadingTo = core::getSetting('email_reply');
 		}
 
+		foreach($this->getCustomHeaders() as $row) {
+			if (!empty($row['name']) && !empty($row['value'])) $m->addCustomHeader($row['name'] . ":" . $row['value']);
+		}
+
 		if (core::getSetting('precedence') == 'bulk')
 			$m->addCustomHeader("Precedence: bulk");
 		elseif (core::getSetting('precedence') == 'junk')
@@ -398,10 +404,7 @@ class Model_ajax extends Model
 				}
 			}
 
-			$fields = array();
-			$fields['id_log'] = 0;
-			$fields['time'] = date("Y-m-d H:i:s");
-
+			$fields = array('id_log' => 0, 'time' => date("Y-m-d H:i:s"));
 			core::session()->start();
 
 			if (core::session()->issetName('id_log') == true) {
@@ -563,6 +566,10 @@ class Model_ajax extends Model
 							$m->ConfirmReadingTo = core::getSetting('email');
 						}
 
+						foreach($this->getCustomHeaders() as $row) {
+							if (!empty($row['name']) && !empty($row['value'])) $m->addCustomHeader($row['name'] . ":" . $row['value']);
+						}
+
 						if (core::getSetting('precedence') == 'bulk')
 							$m->addCustomHeader("Precedence: bulk");
 						elseif (core::getSetting('precedence') == 'junk')
@@ -594,7 +601,7 @@ class Model_ajax extends Model
 
 						while ($row = core::database()->getRow($result_attach)) {
 							if ($fp = @fopen($row['path'], "rb")) {
-								$file = fread($fp, filesize($row['path']));
+								fread($fp, filesize($row['path']));
 
 								fclose($fp);
 
@@ -620,34 +627,35 @@ class Model_ajax extends Model
 						$m->Body = $msg;
 
 						if (!$m->Send()) {
-							$fields = array();
-							$fields['id_ready_send'] = 0;
-							$fields['id_user'] = $user['id'];
-							$fields['email'] = $user['email'];
-							$fields['id_template'] = $send['id_template'];
-							$fields['success'] = 'no';
-							$fields['errormsg'] = $m->ErrorInfo;
-							$fields['readmail'] = 'no';
-							$fields['time'] = date("Y-m-d H:i:s");
-							$fields['id_log'] = $insert_id;
-
-							$insert = core::database()->insert($fields, core::database()->getTableName("ready_send"));
+							$fields = array(
+                                'id_ready_send' => 0,
+                                'id_user'       => $user['id'],
+                                'email'       => $user['email'],
+                                'id_template' => $send['id_template'],
+                                'success'     => 'no',
+                                'errormsg'    => $m->ErrorInfo,
+                                'readmail' => 'no',
+                                'time'     => date("Y-m-d H:i:s"),
+                                'id_log'   => $insert_id,
+                            );
+							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 							$mailcountno = $mailcountno + 1;
 						} else {
-							$fields = array();
-							$fields['id_ready_send'] = 0;
-							$fields['id_user'] = $user['id'];
-							$fields['email'] = $user['email'];
-							$fields['id_template'] = $send['id_template'];
-							$fields['success'] = 'yes';
-							$fields['readmail'] = 'no';
-							$fields['time'] = date("Y-m-d H:i:s");
-							$fields['id_log'] = $insert_id;
+							$fields = array(
+                                'id_ready_send' => 0,
+                                'id_user'       => $user['id'],
+                                'email'       => $user['email'],
+                                'id_template' => $send['id_template'],
+                                'success'     => 'yes',
+                                'readmail'    => 'no',
+                                'time'   => date("Y-m-d H:i:s"),
+                                'id_log' => $insert_id,
+                            );
 
-							$insert = core::database()->insert($fields, core::database()->getTableName("ready_send"));
+							core::database()->insert($fields, core::database()->getTableName("ready_send"));
 
 							$query = "UPDATE " . core::database()->getTableName("users") . " SET time_send = NOW() WHERE id_user=" . $user['id'];
-							$update = core::database()->querySQL($query);
+							core::database()->querySQL($query);
 
 							$mailcount = $mailcount + 1;
 						}
@@ -781,5 +789,15 @@ class Model_ajax extends Model
 
 			return core::database()->delete(core::database()->getTableName('attach'), "id_attachment=" . $id_attachment, '');
 		}
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCustomHeaders()
+	{
+		$query = "SELECT * FROM " . core::database()->getTableName('сustomheaders');
+		$result = core::database()->querySQL($query);
+		return core::database()->getColumnArray($result);
 	}
 }

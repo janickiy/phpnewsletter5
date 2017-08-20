@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -27,10 +27,10 @@ $pExcel->setActiveSheetIndex(0);
 $aSheet = $pExcel->getActiveSheet();
 $aSheet->setTitle(core::getLanguage('str', 'mailing_report'));
 
-$timelog = $data->getTimelog($_GET['id_log']);
+$timelog    = $data->getTimelog($_GET['id_log']);
 $totalfaild = $data->getTotalfaild($_GET['id_log']);
-$totaltime = $data->getTotaltime($_GET['id_log']);
-$readmail = $data->getTotalread($_GET['id_log']);
+$totaltime  = $data->getTotaltime($_GET['id_log']);
+$readmail   = $data->getTotalread($_GET['id_log']);
 
 $arr = $data->getLogList($_GET['id_log']);
 

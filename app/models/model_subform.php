@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -39,7 +39,7 @@ class Model_subform extends Model
     public function checkExistEmail($email)
     {
         $email = core::database()->escape($email);
-        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+        $query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
         $result = core::database()->querySQL($query);
         return core::database()->getRecordCount($result);
     }
@@ -53,11 +53,13 @@ class Model_subform extends Model
         if (is_numeric($id_user)) {
             foreach ($id_cat as $id) {
                 if (is_numeric($id)) {
-                    $fields = array();
-                    $fields['id_sub'] = 0;
-                    $fields['id_user'] = $id_user;
-                    $fields['id_cat'] = $id;
-                    $result = core::database()->insert($fields, core::database()->getTableName('subscription'));
+                    $fields = array(
+                        'id_sub' => 0,
+                        'id_user' => $id_user,
+                        'id_cat' => $id,
+                    );
+
+                    core::database()->insert($fields, core::database()->getTableName('subscription'));
                 }
             }
         }

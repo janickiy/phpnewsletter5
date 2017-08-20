@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -39,15 +39,16 @@ if (Core_Array::getRequest('action')) {
 	}
 	
 	if (empty($errors)) {
-		$fields = array();
-		$fields['id_user']   = 0;
-		$fields['name']      = $name;
-		$fields['email']     = $email;
-		$fields['token']     = Pnl::getRandomCode();
-		$fields['time']      = date("Y-m-d H:i:s");	
-		$fields['status']    = 'active';
-		$fields['time_send'] = '0000-00-00 00:00:00';
-		
+		$fields = array(
+            'id_user' => 0,
+            'name'    => $name,
+            'email'   => $email,
+            'token'   => Pnl::getRandomCode(),
+            'time'    => date("Y-m-d H:i:s"),
+            'status'  => 'active',
+            'time_send' => '0000-00-00 00:00:00',
+        );
+
 		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");
 			exit;

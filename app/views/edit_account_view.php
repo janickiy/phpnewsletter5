@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -29,17 +29,17 @@ if (Core_Array::getRequest('action')){
 	$role = Core_Array::getPost('user_role');
 	$id = (int)Core_Array::getPost('id');
 
-	if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
-	if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
+	//if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
+	//if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
 
 	if (!empty($password) && !empty($password_again)){
 		if ($password != $password_again) $errors[] = core::getLanguage('error', 'passwords_dont_match');
 	}
 	
 	if (empty($errors)){
-		$fields = array();
-		$fields['password'] = md5($password);
-		$fields['role'] = $role;
+		if (!empty($password)) $fields['password'] = md5($password);
+
+        $fields = array('role' => $role);
 
 		if ($result = $data->editAccount($fields, $id)){
 			header("Location: ./?t=accounts");

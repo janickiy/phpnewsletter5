@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -54,13 +54,14 @@ switch (Core_Array::getGet('action'))
 		$datetime = new DateTime();
 		$datetime->setTime(0, 0, $timesec);
 
-		$content = array();
-		$content['status'] = 1;
-		$content['total'] = $totalmails;
-		$content['success'] = $successmails;
-		$content['unsuccessful'] = $unsuccessfulmails;
-		$content['time'] = $datetime->format('H:i:s');
-		$content['leftsend'] = round(($successmails + $unsuccessfulmails) / $totalmails * 100, 2);
+		$content = array(
+            'status'  => 1,
+            'total'   => $totalmails,
+            'success' => $successmails,
+            'unsuccessful' => $unsuccessfulmails,
+            'time'     => $datetime->format('H:i:s'),
+            'leftsend' => round(($successmails + $unsuccessfulmails) / $totalmails * 100, 2),
+        );
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -81,7 +82,7 @@ switch (Core_Array::getGet('action'))
 				"id_user" => $row['id_user'],
 				"email"   => $row['email'],
 				"status"  => $row['success'],
-				"id_log" => $row['id_log'],
+				"id_log"  => $row['id_log'],
 			);
 		}
 
@@ -118,22 +119,24 @@ switch (Core_Array::getGet('action'))
 				if (is_writeable($destination)) {
 					$zip->extractTo($destination);
 					$zip->close();
-					$status = core::getLanguage('msg', 'files_unzipped_successfully');
-					$result = 'yes';
+					$content['status'] = core::getLanguage('msg', 'files_unzipped_successfully');
+					$content['result'] = 'yes';
 				} else {
-					$status = core::getLanguage('msg', 'directory_not_writeable');
-					$result = 'no';
+					$content['status'] = core::getLanguage('msg', 'directory_not_writeable');
+					$content['result'] = 'no';
 				}
 			} else {
-				$status = core::getLanguage('msg', 'cannot_read_zip_archive');
-				$result = 'no';
+				$content['status'] = core::getLanguage('msg', 'cannot_read_zip_archive');
+				$content['result'] = 'no';
 			}
 		}
 
 		if (Core_Array::getRequest('p') == 'update_bd') {
 
-			$current_version_code = Pnl::get_current_version_code($currentversion);
+			$current_version_code = Pnl::get_current_version_code(VERSION);
 			$version_code_detect = $data->version_code_detect();
+
+			$result = false;
 
 			if ($version_code_detect < $current_version_code) {
 				if ($version_code_detect == 50000) {
@@ -142,16 +145,19 @@ switch (Core_Array::getGet('action'))
 
 				if (is_file($path_update)) {
 					if ($data->updateDB($path_update)) {
-						$content['status'] = core::getLanguage('msg', 'update_completed');
-						$content['result'] = 'yes';
-					} else {
-						$content['status'] = core::getLanguage('error', 'failed_to_update');
-						$content['result'] = 'no';
+						$result = true;
 					}
 				}
 			} else {
+				$result = true;
+			}
+
+			if ($result === true) {
 				$content['status'] = core::getLanguage('msg', 'update_completed');
 				$content['result'] = 'yes';
+			} else {
+				$content['status'] = core::getLanguage('error', 'failed_to_update');
+				$content['result'] = 'no';
 			}
 		}
 
@@ -186,9 +192,7 @@ switch (Core_Array::getGet('action'))
 			$msg = implode(",", $errors);
 		}
 
-		$content = array();
-		$content['result'] = $result_send;
-		$content['msg'] = $msg;
+		$content = array('result' => $result_send, 'msg' => $msg);
 
 		Pnl::showJSONContent(json_encode($content));
 
@@ -223,13 +227,13 @@ switch (Core_Array::getGet('action'))
 				$read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
 
 				$rows[] = array(
-					"id" => $row['id_cat'],
+					"id"   => $row['id_cat'],
 					"name" => $row['name'],
-					"email" => $row['email'],
+					"email"   => $row['email'],
 					"catname" => $catname,
-					"time" => $row['time'],
-					"status" => $status,
-					"read" => $read,
+					"time"    => $row['time'],
+					"status"  => $status,
+					"read"    => $read,
 					"errormsg" => $row['errormsg'],
 				);
 			}
@@ -245,7 +249,6 @@ switch (Core_Array::getGet('action'))
 	case 'process':
 
 		if ($data->updateProcess($_REQUEST['status'], Auth::getAutId())){
-
 			if ($_REQUEST['status'] == 'stop') {
 				core::session()->start();
 				core::session()->delete('id_log');

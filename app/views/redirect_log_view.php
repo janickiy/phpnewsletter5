@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -30,10 +30,7 @@ if (isset($_REQUEST['clear_log'])){
 		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
-$order = array();
-$order['email'] = "email";
-$order['time'] = "time";
-
+$order = array('email' => "email", 'time' => "time");
 $strtmp = "id";
 
 foreach($order as $parametr => $field){

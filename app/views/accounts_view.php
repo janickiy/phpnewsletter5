@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -89,6 +89,7 @@ foreach ($data->getAccountList() as $row){
 }
 
 //form
+$tpl->assign('STR_CHANGE_PASSWORD', $language["str"]["change_password"]);
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('BUTTON_ADD', core::getLanguage('button', 'add_account'));
 

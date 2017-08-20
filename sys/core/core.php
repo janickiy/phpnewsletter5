@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -15,23 +15,23 @@ class core
     protected static $_init = NULL;
     protected static $paths = array();
     protected static $mainConfig = NULL;
-    protected static $language = NULL;
-    protected static $key = 'Rii73dg=4&8#!@9';
+    protected static $language   = NULL;
     protected static $licensekey_url = 'http://license.janicky.com/';
     protected static $license_path = 'sys/license_key';
-    public static $db = NULL;
+    public static $db  = NULL;
     public static $tpl = NULL;
     public static $path = NULL;
     public static $session = NULL;
     protected static $licensekey = NULL;
     public static $system_error = NULL;
+    const KEY = 'Y945$r7=0))!y';
+    const IV = '1234567890abcdef';
 
     /**
      * Check if self::init() has been called
      *
      * @return boolean
      */
-
     static public function isInit()
     {
         return self::$_init;
@@ -42,7 +42,6 @@ class core
      *
      * @return boolean
      */
-
     static public function init($paths)
     {
         if (self::isInit())
@@ -60,7 +59,6 @@ class core
      *            class name
      * @return mixed
      */
-
     static public function factory($className)
     {
         return new $className();
@@ -79,7 +77,6 @@ class core
     /**
      * AUTOLOAD modules
      */
-
     static protected function _loadEngines()
     {
         require_once 'folders.php';
@@ -237,60 +234,18 @@ class core
      * @param null $text
      * @return string
      */
-    static public function encodeStr($text = null)
+    static public function encodeStr($str = null)
     {
-        $td = mcrypt_module_open("tripledes", '', 'cfb', '');
-        $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
-        if (mcrypt_generic_init($td, self::$key, $iv) != -1) {
-            $enc_text = base64_encode(mcrypt_generic($td, $iv . $text));
-            mcrypt_generic_deinit($td);
-            mcrypt_module_close($td);
-            return $enc_text;
-        }
-    }
-
-    /**
-     * @param $string
-     * @return string
-     */
-    static public function strToHex($string)
-    {
-        $hex = '';
-        for ($i = 0; $i < strlen($string); $i++) {
-            $hex .= dechex(ord($string[$i]));
-        }
-
-        return $hex;
+        return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(self::KEY), $str, 'ctr', self::IV));
     }
 
     /**
      * @param $text
      * @return string
      */
-    static public function decodeStr($text)
+    static public function decodeStr($str = null)
     {
-        $td = mcrypt_module_open("tripledes", '', 'cfb', '');
-        $iv_size = mcrypt_enc_get_iv_size($td);
-        $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
-        if (mcrypt_generic_init($td, self::$key, $iv) != -1) {
-            $decode_text = substr(mdecrypt_generic($td, base64_decode($text)), $iv_size);
-            mcrypt_generic_deinit($td);
-            mcrypt_module_close($td);
-            return $decode_text;
-        }
-    }
-
-    /**
-     * @param $hex
-     * @return string
-     */
-    static public function hexToStr($hex)
-    {
-        $string = '';
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
-        }
-        return $string;
+        return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(self::KEY), base64_decode($str), 'ctr', self::IV);
     }
 
     /**
@@ -343,13 +298,14 @@ class core
         $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?t=licensekey&licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
 
         if (!isset($lisense_info['error'])) {
-            $arr = array();
-            $arr['domain'] = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
-            $arr['license_type'] = $lisense_info['license_type'];
-            $arr['licensekey'] = self::$licensekey;
-            $arr['created'] = $lisense_info['date_created'];
-            $arr['date_from'] = $lisense_info['date_active_from'];
-            $arr['date_to'] = $lisense_info['date_active_to'];
+            $arr = array(
+                'domain' => (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"],
+                'license_type' => $lisense_info['license_type'],
+                'licensekey'   => self::$licensekey,
+                'created'   => $lisense_info['date_created'],
+                'date_from' => $lisense_info['date_active_from'],
+                'date_to'   => $lisense_info['date_active_to']
+            );
 
             $encodeStr = self::encodeStr(json_encode($arr));
 

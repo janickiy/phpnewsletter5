@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
+ * PHP Newsletter 5.2.0
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -46,7 +46,7 @@ if (Core_Array::getRequest('action')) {
 		$aSheet->setCellValue('A1',core::getLanguage('str', 'user_email'));
 		$aSheet->setCellValue('B1',core::getLanguage('str', 'name'));
 			
-		$i=1;
+		$i = 1;
 
 		foreach ($arr as $row) {
 			$i++;
