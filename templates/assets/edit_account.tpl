@@ -1,28 +1,8 @@
 <!-- INCLUDE header.tpl -->
 <p>« <a href="${RETURN_BACK_LINK}">${RETURN_BACK}</a></p>
-
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-  <ul>
-    <!-- BEGIN row -->
-    <li> ${ERROR}</li>
-    <!-- END row -->
-  </ul>
-</div>
-<!-- END show_errors -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
-<!-- END IF -->
-
-
+<!-- INCLUDE info.tpl -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE success.tpl -->
 <form method="POST" action="${ACTION}">
 <input type="hidden" name="id" value="${ID}">
 <p>* - ${STR_REQUIRED_FIELDS}</p>

@@ -18,10 +18,10 @@
 	<link href="./templates/assets/styles/styles.css" rel="stylesheet">
 	<link href="./templates/assets/styles/css/uploadfile.css" rel="stylesheet">
 	<link href="./templates/assets/styles/jquery-ui-1.8.16.custom.css" rel="stylesheet">
-	<script src="./templates/js/jquery.min.js"></script>
+	<script src="./js/jquery.min.js"></script>
 	<script src="./templates/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="./templates/js/jquery.hide_alertblock.js"></script>
-	<script src="./templates/js/jquery.cookie.js"></script>
+	<script src="./js/jquery.hide_alertblock.js"></script>
+	<script src="./js/jquery.cookie.js"></script>
 	<script src="./templates/assets/vendor/metisMenu/metisMenu.js"></script>
 </head>
 <body>
