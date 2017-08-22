@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.0
+ * PHP Newsletter 5.2.1
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -61,6 +61,9 @@ class Model_import extends Model
 				$name = trim($d['B']);
 
 				if (!Pnl::check_email($email)){
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
+					$result = core::database()->querySQL($query);
+
 					if ($this->checkExistEmail($email)){
 						$row = core::database()->getRow($result);
 
@@ -153,7 +156,7 @@ class Model_import extends Model
 				}
 
 				if ($email) {
-					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
 					$result = core::database()->querySQL($query);
 
 					if (core::database()->getRecordCount($result) > 0) {

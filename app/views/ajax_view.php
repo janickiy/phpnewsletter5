@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.0
+ * PHP Newsletter 5.2.1
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -141,6 +141,10 @@ switch (Core_Array::getGet('action'))
 			if ($version_code_detect < $current_version_code) {
 				if ($version_code_detect == 50000) {
 					$path_update = 'tmp/update_5_0_' . core::getSetting('language') . '.sql';
+				}
+				
+				if ($version_code_detect == 50100) {
+					$path_update = 'tmp/update_5_1_' . core::getSetting('language') . '.sql';
 				}
 
 				if (is_file($path_update)) {
