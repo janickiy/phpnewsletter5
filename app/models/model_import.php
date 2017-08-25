@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.0
- * Copyright (c) 2006-2016 Alexander Yanitsky
+ * PHP Newsletter 5.2.1
+ * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -27,22 +27,6 @@ class Model_import extends Model
 	}
 
 	/**
-	 * @param $email
-	 * @return bool
-	 */
-	public function checkExistEmail($email)
-	{		
-		$email = core::database()->escape($email);
-		$query =  "SELECT * FROM ".core::database()->getTableName('users')." WHERE email='" . $email . "'";
-		$result = core::database()->querySQL($query);		
-				
-		if(core::database()->getRecordCount($result) == 0)
-			return true;
-		else
-			return false;	
-	}
-
-	/**
 	 * @param $id_cat
 	 * @return int
 	 */
@@ -60,8 +44,12 @@ class Model_import extends Model
 				$email = trim($d['A']);
 				$name = trim($d['B']);
 
-				if (!Pnl::check_email($email)){
-					if ($this->checkExistEmail($email)){
+				if (!Pnl::check_email($email)){					
+
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
+					$result = core::database()->querySQL($query);
+					
+					if (core::database()->getRecordCount($result) > 0) {
 						$row = core::database()->getRow($result);
 
 						core::database()->delete(core::database()->getTableName('subscription'),"id_user=" . $row['id_user'],'');
@@ -153,7 +141,7 @@ class Model_import extends Model
 				}
 
 				if ($email) {
-					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
 					$result = core::database()->querySQL($query);
 
 					if (core::database()->getRecordCount($result) > 0) {

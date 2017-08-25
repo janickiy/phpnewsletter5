@@ -52,7 +52,7 @@
       <li><a href="#interface" data-toggle="tab">${SET_INTERFACE_SETTINGS}</a></li>
       <li><a href="#smtp" data-toggle="tab">${SET_SMTP_HOST}</a></li>
       <li><a href="#options" data-toggle="tab">${SET_SEND_PARAMETERS}</a></li>
-      <li><a href="#headerslist" data-toggle="tab">Дополнительные загаловки</a></li>
+      <li><a href="#headerslist" data-toggle="tab">${STR_ADDITIONAL_HEADERS}</a></li>
     </ul>
     <br>
     <div id="interface">

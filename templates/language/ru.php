@@ -341,6 +341,7 @@ $language["str"]["number_redirect"] = "Количество переходов";
 $language["str"]["accounts"] = "Учетные записи";
 $language["str"]["value"] = "Значение";
 $language["str"]["change_password"] = "Сменить пароль";
+$language["str"]["additional_headers"] = 'Дополнительные заголовки';
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";

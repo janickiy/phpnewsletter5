@@ -338,6 +338,7 @@ $language["str"]["number_redirect"] = "Number of redirects";
 $language["str"]["accounts"] = "Accounts";
 $language["str"]["value"] = "Value";
 $language["str"]["change_password"] = "Сhange password";
+$language["str"]["additional_headers"] = 'Additional headers';
 
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";

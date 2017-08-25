@@ -12,7 +12,7 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 Error_Reporting(1); // set error reporting level
 define("DEBUG", true);
-define('VERSION', '5.2.1');
+define('VERSION', '5.2.0');
 
 $cmspaths = array(
     'core'   => 'sys/core',
