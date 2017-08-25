@@ -191,6 +191,8 @@ if (empty($email_name))
 else
     $tpl->assign('EMAIL_NAME', htmlspecialchars(core::getSetting('email_name')));
 
+
+$tpl->assign('STR_ADDITIONAL_HEADERS', core::getLanguage('str', 'additional_headers'));
 $tpl->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
 $tpl->assign('STR_NAME', core::getLanguage('str', 'name'));
 $tpl->assign('STR_VALUE', core::getLanguage('str', 'value'));
