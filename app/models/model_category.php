@@ -12,7 +12,6 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 class Model_category extends Model
 {
-
     /**
      * @return mixed
      */
