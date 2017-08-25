@@ -229,7 +229,6 @@ if ($result_send->num_rows > 0){
 
 					$ext = strrchr($row['path'], ".");
 					$mime_type = Pnl::get_mime_type($ext);
-
 					$m->AddAttachment($row['path'], $row['name'], 'base64', $mime_type);
 				}					
 			}
