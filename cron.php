@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.1
+ * PHP Newsletter 5.2.2
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -229,6 +229,7 @@ if ($result_send->num_rows > 0){
 
 					$ext = strrchr($row['path'], ".");
 					$mime_type = Pnl::get_mime_type($ext);
+
 					$m->AddAttachment($row['path'], $row['name'], 'base64', $mime_type);
 				}					
 			}

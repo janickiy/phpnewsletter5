@@ -1,4 +1,4 @@
-<script type="text/javascript" src="./templates/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="./js/ckeditor/ckeditor.js"></script>
 <script>
   $(document).on( "click", ".remove_attach", function() {
 
@@ -22,7 +22,7 @@
 <!-- INCLUDE errors.tpl -->
 <!-- INCLUDE success.tpl -->
 <script type="text/javascript">//<![CDATA[
-  window.CKEDITOR_BASEPATH='./templates/js/ckeditor/';
+  window.CKEDITOR_BASEPATH='./js/ckeditor/';
   CKEDITOR.lang.languages={"${LANGUAGE}":1};
   //]]></script>
 <form id="tmplForm" enctype="multipart/form-data" action="${ACTION}" method="post">
