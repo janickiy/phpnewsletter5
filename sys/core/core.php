@@ -251,8 +251,8 @@ class core
     {
         $str =  base64_decode($str);
         $ivsize = openssl_cipher_iv_length(self::METHOD);
-        $iv = mb_substr($str, 0, $ivsize, '8bit');
-        $ciphertext = mb_substr($str, $ivsize, null, '8bit');
+        $iv = substr($str, 0, $ivsize);
+        $ciphertext = substr($str, $ivsize);
 
         return openssl_decrypt(
             $ciphertext,
