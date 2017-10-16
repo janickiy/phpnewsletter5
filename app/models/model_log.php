@@ -19,9 +19,11 @@ class Model_log extends Model
      */
     public function getLogArr($pnumber = 10, $page)
     {
-        core::database()->parameters = "*,DATE_FORMAT(time,'%d.%m.%Y %H:%i') as send_time";
-        core::database()->tablename = core::database()->getTableName('log');
-        core::database()->order = 'ORDER BY id_log desc';
+        core::database()->parameters = "*,DATE_FORMAT(l.time,'%d.%m.%Y %H:%i') AS send_time, count(r.id_log) AS lettercount, SUM(r.success='yes') AS countsent, SUM(r.readmail='yes') AS countread ";
+        core::database()->tablename = core::database()->getTableName('log') . " AS l ";
+        core::database()->tablename .= "LEFT JOIN " . core::database()->getTableName('ready_send') . " AS r ON l.id_log=r.id_log ";
+        core::database()->order = 'ORDER BY l.id_log desc';
+        core::database()->group = 'GROUP BY l.id_log';
         core::database()->pnumber = $pnumber;
         core::database()->page = $page;
         return core::database()->get_page();
@@ -64,44 +66,6 @@ class Model_log extends Model
             $result = core::database()->querySQL($query);
             return core::database()->getColumnArray($result);
         }
-    }
-
-    /**
-     * @param $id_log
-     * @return mixed
-     */
-    public function countLetters($id_log)
-    {
-        if (is_numeric($id_log)) {
-            $query = "SELECT * FROM " . core::database()->getTableName('ready_send') . " WHERE id_log=" . $id_log;
-            $result = core::database()->querySQL($query);
-            return core::database()->getRecordCount($result);
-        }
-    }
-
-    /**
-     * @param $id_log
-     * @return mixed
-     */
-    public function countSent($id_log)
-    {
-        if (is_numeric($id_log)) {
-            $query = "SELECT * FROM " . core::database()->getTableName('ready_send') . " WHERE success='yes' and id_log=" . $id_log;
-            $result = core::database()->querySQL($query);
-            return core::database()->getRecordCount($result);
-        }
-    }
-
-    /**
-     * @param $id_log
-     * @return mixed
-     */
-    public function countRead($id_log)
-    {
-        $id_log = core::database()->escape($id_log);
-        $query = "SELECT * FROM " . core::database()->getTableName('ready_send') . " WHERE readmail='yes' and id_log=" . $id_log;
-        $result = core::database()->querySQL($query);
-        return core::database()->getRecordCount($result);
     }
 
     /**

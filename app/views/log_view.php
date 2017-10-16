@@ -156,14 +156,13 @@ if (Core_Array::getRequest('id_log')){
 			$rowBlock = $blockLogList->fetch('row');
 			$rowBlock->assign('TIME', $row['time']);
 			$rowBlock->assign('ID_LOG', $row['id_log']);
-			$total = $data->countLetters($row['id_log']);
-			$total_sent = $data->countSent($row['id_log']);
+            $total = $row['lettercount'];
+            $total_sent = $row['countsent'];
 			$total_nosent = $total - $total_sent;
 			$rowBlock->assign('TOTAL', $total);
 			$rowBlock->assign('TOTAL_SENT', $total_sent);
 			$rowBlock->assign('TOTAL_NOSENT', $total_nosent);
-			$total_read = $data->countRead($row['id_log']);
-			$rowBlock->assign('TOTAL_READ', $total_read);
+			$rowBlock->assign('TOTAL_READ', $row['countread']);
 
 			if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator') === false) $rowBlock->assign('ALLOW_DOWNLOAD', 'yes');
 

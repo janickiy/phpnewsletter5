@@ -86,6 +86,7 @@ class DB {
         return ".`" . $config["prefix"] . $tbl . "`";
     }
 
+
 	/**
 	 * @return array|int
 	 * @throws ExceptionSQL
@@ -133,7 +134,7 @@ class DB {
 	{
 		$query = "SELECT COUNT($parameters) FROM " . $this->tablename . "
 									   " . $this->where . "
-									   " . $this->order . "";
+									   ";
 
 		$tot = $this->dbh->query($query);
 

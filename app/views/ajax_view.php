@@ -43,7 +43,7 @@ switch (Core_Array::getGet('action'))
 
 		if (Core_Array::getGet('id_log')) {
 			$id_log = (int)Core_Array::getGet('id_log');
-			$totalmails = $data->getTotalMails();
+			$totalmails = $data->getTotalMails(Core_Array::getRequest('activate'));
 			$successmails = $data->getSuccessMails($id_log);
 			$unsuccessfulmails = $data->getUnsuccessfulMails($id_log);
 		}
@@ -205,8 +205,8 @@ switch (Core_Array::getGet('action'))
 	case 'send':
 		$mailcount = 0;
 
-		if ($_REQUEST['activate']){
-			if ($data->updateProcess('start', Auth::getAutId())) $mailcount = $data->SendEmails($_REQUEST['activate']);
+		if (Core_Array::getRequest('activate')){
+			if ($data->updateProcess('start', Auth::getAutId())) $mailcount = $data->SendEmails(Core_Array::getRequest('activate'));
 		}
 
 		$content = array("completed" => "yes", "mailcount" => $mailcount);
@@ -216,13 +216,12 @@ switch (Core_Array::getGet('action'))
 		break;
 
 	case 'showlogs':
+		$number = is_numeric(Core_Array::getRequest('number')) ? Core_Array::getRequest('number') : exit();
+		$offset = is_numeric(Core_Array::getRequest('offset')) ? Core_Array::getRequest('offset') : exit();
+		$id_log = is_numeric(Core_Array::getRequest('id_log')) ? Core_Array::getRequest('id_log') : exit();
+		$strtmp = !empty(Core_Array::getRequest('strtmp')) ? Core_Array::getRequest('strtmp') : exit();
 
-		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
-		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
-		$id_log = isset($_REQUEST['id_log']) && is_numeric($_REQUEST['id_log']) ? $_REQUEST['id_log'] : exit();
-		$strtmp = !empty($_REQUEST['strtmp']) ? $id_log : exit();
-
-		$arrs = $data->getDetaillog($offset, $number, $_REQUEST['id_log'], $strtmp);
+		$arrs = $data->getDetaillog($offset, $number, $id_log, $strtmp);
 
 		if (is_array($arrs)) {
 			foreach($arrs as $row) {
@@ -252,14 +251,16 @@ switch (Core_Array::getGet('action'))
 
 	case 'process':
 
-		if ($data->updateProcess($_REQUEST['status'], Auth::getAutId())){
-			if ($_REQUEST['status'] == 'stop') {
+        $status = Core_Array::getRequest('status');
+
+		if ($data->updateProcess($status, Auth::getAutId())){
+			if ($status == 'stop') {
 				core::session()->start();
 				core::session()->delete('id_log');
 				core::session()->commit();
 			}
 
-			$content = array("status" => $_REQUEST['status']);
+			$content = array("status" => $status);
 		} else {
 			$content = array("status" => "no");
 		}
@@ -284,10 +285,10 @@ switch (Core_Array::getGet('action'))
 
 	case 'showredirectlogs':
 
-		$number = isset($_REQUEST['number']) && is_numeric($_REQUEST['number']) ? $_REQUEST['number'] : exit();
-		$offset = isset($_REQUEST['offset']) && is_numeric($_REQUEST['offset']) ? $_REQUEST['offset'] : exit();
-		$strtmp = !empty($_REQUEST['strtmp']) ? $_REQUEST['strtmp'] : exit();
-		$url = !empty($_REQUEST['url']) ? $_REQUEST['url'] : exit();
+		$number = is_numeric(Core_Array::getRequest('number')) ? Core_Array::getRequest('number') : exit();
+		$offset = is_numeric(Core_Array::getRequest('offset')) ? Core_Array::getRequest('offset') : exit();
+		$strtmp = !empty(Core_Array::getRequest('strtmp')) ? Core_Array::getRequest('strtmp') : exit();
+		$url = !empty(Core_Array::getRequest('url')) ? Core_Array::getRequest('url') : exit();
 
 		$arrs = $data->getDetailRedirectLog($offset, $number, $url, $strtmp);
 

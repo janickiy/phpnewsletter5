@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.2
+ * PHP Newsletter 5.2.3
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -91,7 +91,7 @@ class core
 
         self::$licensekey = self::getLicensekey();
 
-        if (self::checkLicense() == false && $_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+        if (self::checkLicense() == false && in_array($_SERVER['REMOTE_ADDR'], array( '::1', '127.0.0.1')) == false){
             header('Location: ./?t=expired');
             exit();
         }
@@ -270,8 +270,8 @@ class core
     {
         $result = true;
         $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
-
-        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+		
+        if (in_array($_SERVER['REMOTE_ADDR'], array( '::1', '127.0.0.1' )) == false) {
             if (file_exists(SYS_ROOT . self::$license_path)) {
                 $lisense_info = self::getLicenseInfo();
 

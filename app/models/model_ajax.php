@@ -49,15 +49,55 @@ class Model_ajax extends Model
 	/**
 	 * @return null
 	 */
-	public function getTotalMails()
+	public function getTotalMails($activate)
 	{
-		$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
-		$result = core::database()->querySQL($query);
-		$count = core::database()->getRow($result, 'assoc');
-		$total = core::getSetting('make_limit_send') == "yes" ? core::getSetting('limit_number') : $count['COUNT(*)'];
+        $temp =  array();
+        $common_cat = false;
 
-		return $total;
+        foreach ($activate as $id_template) {
+            if (is_numeric($id_template)) {
+                $temp[] = $id_template;
+                if ($this->getCatIdByTemplateId($id_template) == 0) $common_cat =  true;
+            }
+        }
+
+        $query = "SELECT COUNT(*) FROM " . core::database()->getTableName('subscription') . " s
+                    LEFT JOIN " . core::database()->getTableName('category') . " c ON c.id_cat=s.id_cat
+                    LEFT JOIN " . core::database()->getTableName('template') . " t ON c.id_cat=t.id_cat
+                    LEFT JOIN " . core::database()->getTableName('users') . " u ON u.id_user=s.id_user
+                    WHERE t.id_template IN  (" . implode(",", $temp) . ") AND u.status='active'";
+
+        $total = 0;
+
+        $result = core::database()->querySQL($query);
+        $count = core::database()->getRow($result, 'row');
+
+        $total = $count[0];
+
+        if ($common_cat) {
+            $query = "SELECT COUNT(*) FROM " . core::database()->getTableName('users') . " WHERE status = 'active'";
+            $result = core::database()->querySQL($query);
+            $count = core::database()->getRow($result, 'row');
+            $total = $total + $count[0];
+        }
+
+		return core::getSetting('make_limit_send') == "yes" && core::getSetting('limit_number') > $total ? core::getSetting('limit_number') : $total;
 	}
+
+    /**
+     * @param $id_template
+     * @return mixed
+     */
+	public function getCatIdByTemplateId($id_template)
+    {
+        if (is_numeric($id_template)) {
+            $query = "SELECT id_cat FROM " . core::database()->getTableName('template') . " WHERE id_template=" . $id_template;
+            $result = core::database()->querySQL($query);
+            $row = core::database()->getRow($result);
+
+            return $row['id_cat'];
+        }
+    }
 
 	/**
 	 * @param $id_log
@@ -68,9 +108,9 @@ class Model_ajax extends Model
 		if (is_numeric($id_log)){
 			$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('ready_send') . " WHERE id_log=" . $id_log . " AND success='yes'";
 			$result = core::database()->querySQL($query);
-			$count = core::database()->getRow($result, 'assoc');
+			$count = core::database()->getRow($result, 'row');
 
-			return $count['COUNT(*)'];
+			return $count[0];
 		} else
 			return 0;
 	}
@@ -84,9 +124,9 @@ class Model_ajax extends Model
 		if (is_numeric($id_log)){
 			$query = "SELECT COUNT(*) FROM " . core::database()->getTableName('ready_send') . " WHERE id_log=" . $id_log . " AND success='no'";
 			$result = core::database()->querySQL($query);
-			$count = core::database()->getRow($result, 'assoc');
+			$count = core::database()->getRow($result, 'row');
 
-			return $count['COUNT(*)'];
+			return $count[0];
 		}  else
 			return 0;
 	}
@@ -795,9 +835,9 @@ class Model_ajax extends Model
 	 * @return mixed
 	 */
 	public function getCustomHeaders()
-	{
-		$query = "SELECT * FROM " . core::database()->getTableName('сustomheaders');
-		$result = core::database()->querySQL($query);
-		return core::database()->getColumnArray($result);
-	}
-}
+    {
+        $query = "SELECT * FROM " . core::database()->getTableName('сustomheaders');
+        $result = core::database()->querySQL($query);
+        return core::database()->getColumnArray($result);
+    }
+}                                                      
