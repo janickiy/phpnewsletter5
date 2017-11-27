@@ -6,22 +6,17 @@ $(document).ready(function() {
             allcheckbox = $("#check_all");
     allcheckbox.on('change',function () {
             checkbox.prop("checked", $(this).is(":checked"));
-            countChecked(this.form)
+            countChecked()
     });
     checkbox.on('change', function(){
         allcheckbox.prop("checked", $('.checkbox:checked').length == boxCnt);
-        countChecked(this.form)
+        countChecked()
     });
 });
 
 function countChecked(form)
 {
-    var m = 0;
-    for(var i=0; i < form.elements.length; ++i){
-        if (form.elements[i].checked) { m++; }
-    }
-
-    if (m > 0)
+    if ($('.checkbox').is(':checked'))
         $('#apply').attr('disabled',false);
     else
         $('#apply').attr('disabled',true);

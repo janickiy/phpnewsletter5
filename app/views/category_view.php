@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.2
+ * PHP Newsletter 5.2.3
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -24,7 +24,6 @@ $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . co
 $errors = array();
 
 if (Core_Array::getRequest('remove')){
-
 	if ($data->removeCategory(Core_Array::getRequest('remove')))
 		$success = core::getLanguage('msg', 'category_removed');
 	else
@@ -64,15 +63,14 @@ $tpl->assign('TH_TABLE_NUMBER_SUBSCRIBERS', core::getLanguage('str', 'number_sub
 $tpl->assign('TH_TABLE_ACTION', core::getLanguage('str', 'action'));
 
 foreach ($data->getCategoryArr() as $row) {
-	$count = $data->getCountSubscription($row['id_cat']);
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('NAME', $row['name']);
-	$rowBlock->assign('COUNT', $count);
+	$rowBlock->assign('COUNT', $row['subcount']);
 	$rowBlock->assign('STR_EDIT', core::getLanguage('str', 'edit'));
 	$rowBlock->assign('ID_CAT', $row['id_cat']);
 	
 	$rowBlock->assign('STR_REMOVE', core::getLanguage('str', 'remove'));
-	if ($count > 0) $rowBlock->assign('ALERT_REMOVE_SUNBERS', core::getLanguage('alert', 'remove_subers'));
+	if ($row['subcount'] > 0) $rowBlock->assign('ALERT_REMOVE_SUNBERS', core::getLanguage('alert', 'remove_subers'));
 	
 	$tpl->assign('row', $rowBlock);
 }

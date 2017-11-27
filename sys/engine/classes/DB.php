@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.2
+ * PHP Newsletter 5.2.3
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -86,6 +86,7 @@ class DB {
         return ".`" . $config["prefix"] . $tbl . "`";
     }
 
+
 	/**
 	 * @return array|int
 	 * @throws ExceptionSQL
@@ -133,7 +134,7 @@ class DB {
 	{
 		$query = "SELECT COUNT($parameters) FROM " . $this->tablename . "
 									   " . $this->where . "
-									   " . $this->order . "";
+									   ";
 
 		$tot = $this->dbh->query($query);
 

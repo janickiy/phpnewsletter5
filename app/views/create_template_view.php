@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.2
+ * PHP Newsletter 5.2.3
  * Copyright (c) 2006-2017 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -33,10 +33,10 @@ if (Core_Array::getRequest('action')) {
 	if (empty($errors)) {
 		$fields = array(
             'id_template' => 0,
-            'name' =>  $name,
-            'body' => $body,
+            'name'  => $name,
+            'body'  => $body,
             'prior' => (int)Core_Array::getPost('prior'),
-            'id_cat' => 'yes'
+            'id_cat' => Core_Array::getPost('id_cat')
         );
 
 		if ($data->addNewTemplate($fields)){
