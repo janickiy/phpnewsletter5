@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,13 +21,15 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
-if (Core_Array::getRequest('action')){
+if (Core_Array::getRequest('action')) {
 	$password = trim(Core_Array::getPost('password'));
 	$password_again = trim(Core_Array::getPost('password_again'));
 	$role = Core_Array::getPost('user_role');
 	$id = (int)Core_Array::getPost('id');
+    $name = trim(htmlspecialchars(Core_Array::getPost('user_name')));
+    $description = trim(htmlspecialchars(Core_Array::getPost('user_description')));
 
 	//if (empty($password)) $errors[] = core::getLanguage('error', 'password_isnt_entered');
 	//if (empty($password_again)) $errors[] = core::getLanguage('error', 're_enter_password');
@@ -39,7 +41,11 @@ if (Core_Array::getRequest('action')){
 	if (empty($errors)){
 		if (!empty($password)) $fields['password'] = md5($password);
 
-        $fields = array('role' => $role);
+        $fields = [
+            'name' => $name,
+            'description' => $description,
+            'role' => $role
+        ];
 
 		if ($result = $data->editAccount($fields, $id)){
 			header("Location: ./?t=accounts");
@@ -75,6 +81,8 @@ include_once core::pathTo('extra', 'menu.php');
 //form
 $tpl->assign('STR_REQUIRED_FIELDS', core::getLanguage('str', 'required_fields'));
 $tpl->assign('STR_LOGIN', core::getLanguage('str', 'login'));
+$tpl->assign('STR_NAME',core::getLanguage('str', 'name'));
+$tpl->assign('STR_DESCRIPTION',core::getLanguage('str', 'description'));
 $tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 $tpl->assign('STR_PASSWORD_AGAIN', core::getLanguage('str', 'again_password'));
 $tpl->assign('STR_ROLE', core::getLanguage('str', 'role'));
@@ -88,7 +96,9 @@ $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 
 $row = $data->getAccountInfo((int)Core_Array::getGet('id'));
 
-$tpl->assign('USER_ROLE', $row['role']);
+$tpl->assign('USER_ROLE', Core_Array::getPost('role') ?  $_POST['role'] : $row['role']);
+$tpl->assign('USER_NAME', Core_Array::getPost('user_name') ?  $_POST['user_name'] : $row['name']);
+$tpl->assign('USER_DESCRIPTION', Core_Array::getPost('user_description') ?  $_POST['user_description'] : $row['description']);
 $tpl->assign('ID', Core_Array::getRequest('id'));
 $tpl->assign('BUTTON', core::getLanguage('button', 'edit'));
 

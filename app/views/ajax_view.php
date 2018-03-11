@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -11,11 +11,6 @@
 defined('LETTER') || exit('NewsLetter: access denied.');
 
 set_time_limit(0);
-
-// authorization
-Auth::authorization();
-
-$autInfo = Auth::getAutInfo(Auth::getAutId());
 
 switch (Core_Array::getGet('action'))
 {
@@ -54,14 +49,14 @@ switch (Core_Array::getGet('action'))
         $datetime = new DateTime();
         $datetime->setTime(0, 0, $timesec);
 
-        $content = array(
+        $content = [
             'status'  => 1,
             'total'   => $totalmails,
             'success' => $successmails,
             'unsuccessful' => $unsuccessfulmails,
             'time'     => $datetime->format('H:i:s'),
             'leftsend' => round(($successmails + $unsuccessfulmails) / $totalmails * 100, 2),
-        );
+        ];
 
         Pnl::showJSONContent(json_encode($content));
 
@@ -69,7 +64,7 @@ switch (Core_Array::getGet('action'))
 
     case 'daemonstat':
 
-        $content = array("status" =>  $data->getMailingStatus(Auth::getAutId()));
+        $content = ["status" =>  $data->getMailingStatus(Auth::getAutId())];
 
         Pnl::showJSONContent(json_encode($content));
 
@@ -78,12 +73,12 @@ switch (Core_Array::getGet('action'))
     case 'logonline':
 
         foreach($data->getCurrentUserLog(10) as $row) {
-            $rows[] = array(
+            $rows[] = [
                 "id_user" => $row['id_user'],
                 "email"   => $row['email'],
                 "status"  => $row['success'],
                 "id_log"  => $row['id_log'],
-            );
+            ];
         }
 
         if (isset($rows)) {
@@ -147,6 +142,10 @@ switch (Core_Array::getGet('action'))
                     $path_update = 'tmp/update_5_1_' . core::getSetting('language') . '.sql';
                 }
 
+                if ($version_code_detect == 50200) {
+                    $path_update = 'tmp/update_5_2_' . core::getSetting('language') . '.sql';
+                }
+
                 if (is_file($path_update)) {
                     if ($data->updateDB($path_update)) {
                         $result = true;
@@ -176,7 +175,7 @@ switch (Core_Array::getGet('action'))
         $prior = Core_Array::getRequest('prior');
         $email = trim(Core_Array::getRequest('email'));
 
-        $errors = array();
+        $errors = [];
 
         if (empty($subject)) $errors[] = core::getLanguage('error', 'empty_subject');
         if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
@@ -196,7 +195,7 @@ switch (Core_Array::getGet('action'))
             $msg = implode(",", $errors);
         }
 
-        $content = array('result' => $result_send, 'msg' => $msg);
+        $content = ['result' => $result_send, 'msg' => $msg];
 
         Pnl::showJSONContent(json_encode($content));
 
@@ -209,7 +208,7 @@ switch (Core_Array::getGet('action'))
             if ($data->updateProcess('start', Auth::getAutId())) $mailcount = $data->SendEmails(Core_Array::getRequest('activate'));
         }
 
-        $content = array("completed" => "yes", "mailcount" => $mailcount);
+        $content = ["completed" => "yes", "mailcount" => $mailcount];
 
         Pnl::showJSONContent(json_encode($content));
 
@@ -230,7 +229,7 @@ switch (Core_Array::getGet('action'))
                 $status = $row['success'] == 'yes' ? core::getLanguage('str', 'send_status_yes') : core::getLanguage('str', 'send_status_no');
                 $read = $row['readmail'] == 'yes' ? core::getLanguage('str', 'yes') : core::getLanguage('str', 'no');
 
-                $rows[] = array(
+                $rows[] = [
                     "id"   => $row['id_cat'],
                     "name" => $row['name'],
                     "email"   => $row['email'],
@@ -239,7 +238,7 @@ switch (Core_Array::getGet('action'))
                     "status"  => $status,
                     "read"    => $read,
                     "errormsg" => $row['errormsg'],
-                );
+                ];
             }
 
             if (isset($rows)) {
@@ -259,9 +258,9 @@ switch (Core_Array::getGet('action'))
                 core::session()->commit();
             }
 
-            $content = array("status" => Core_Array::getRequest('status'));
+            $content = ["status" => Core_Array::getRequest('status')];
         } else {
-            $content = array("status" => "no");
+            $content = ["status" => "no"];
         }
 
         Pnl::showJSONContent(json_encode($content));
@@ -272,9 +271,9 @@ switch (Core_Array::getGet('action'))
 
         if (is_numeric(Core_Array::getRequest('id'))) {
             if ($data->removeAttach(Core_Array::getGet('id'))){
-                $content = array("result" => "yes");
+                $content = ["result" => "yes"];
             } else {
-                $content = array("result" => "no");
+                $content = ["result" => "no"];
             }
 
             Pnl::showJSONContent(json_encode($content));
@@ -293,11 +292,11 @@ switch (Core_Array::getGet('action'))
 
         if (is_array($arrs)) {
             foreach($arrs as $row) {
-                $rows[] = array(
+                $rows[] = [
                     "id" => $row['id'],
                     "email" => $row['email'],
                     "time" => $row['time'],
-                );
+                ];
             }
 
             if (isset($rows)) {

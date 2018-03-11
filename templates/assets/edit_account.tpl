@@ -17,6 +17,16 @@
 </div>
 
 <div class="form-group">
+   <label for="name">${STR_NAME}</label>
+   <input class="form-control" type="text" name="user_name" value="${USER_NAME}">
+</div>
+
+<div class="form-group">
+   <label for="description">${STR_DESCRIPTION}</label>
+  <input class="form-control" type="text" name="user_description" value="${USER_DESCRIPTION}">
+</div>
+
+<div class="form-group">
   <label for="status">${STR_ROLE}</label>
   <select for="user_role" name="user_role" class="form-control form-primary">
 	 <option value="admin" <!-- IF '${USER_ROLE}' == 'admin' -->selected="selected"<!-- END IF -->>${STR_ADMIN}</option>

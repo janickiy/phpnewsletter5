@@ -1,14 +1,16 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
  ********************************************/
 
 defined('LETTER') || exit('NewsLetter: access denied.');
+
+set_time_limit(0);
 
 // authorization
 Auth::authorization();
@@ -21,7 +23,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')) {
 	if ($_FILES['file']['tmp_name']) {
@@ -74,7 +76,7 @@ $temp[] = 'windows-1257';
 $temp[] = 'windows-1258';
 $temp[] = 'utf-8';
 
-$charset = array();
+$charset = [];
 
 foreach ($temp as $row) {
 	$charset[$row] = Pnl::charsetlist($row);

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -12,9 +12,9 @@ defined('LETTER') || exit('NewsLetter: access denied.');
 
 Error_Reporting(1); // set error reporting level
 define("DEBUG", true);
-define('VERSION', '5.2.3');
+define('VERSION', '5.3.0');
 
-$cmspaths = array(
+$cmspaths = [
     'core'   => 'sys/core',
     'engine' => 'sys/engine', // Engines AUTOLOAD folder
     'attach' => 'attach', // attachment
@@ -26,7 +26,7 @@ $cmspaths = array(
     'views'  => 'app/views',
 	'extra'  => 'app/snippets',
 	'tmp'    => 'tmp'
-);
+];
 
 require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
 require_once SYS_ROOT . $cmspaths['core'] . '/core.php';

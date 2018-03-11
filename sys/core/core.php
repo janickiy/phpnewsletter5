@@ -1,2 +1,340 @@
-<?php ${"\x47\x4cO\x42\x41\x4c\x53"}["h\x67\x6dw\x76\x65y\x70\x70\x6e\x65"]="\x6f\x75\x74";${"G\x4c\x4f\x42A\x4c\x53"}["w\x67\x72\x65e\x68v"]="\x63\x68";${"G\x4cO\x42A\x4cS"}["\x78\x70\x78\x76\x6a\x67\x72\x6bg"]="\x75\x72\x6c";${"\x47\x4c\x4fB\x41\x4c\x53"}["\x69\x62\x63wi\x74u\x78z\x78\x78\x68"]="\x63\x6f\x6et\x65\x6e\x74\x73";${"GL\x4f\x42AL\x53"}["\x70\x75\x68\x74\x79g"]="\x73y\x73\x74\x65m\x5f\x65\x72\x72\x6f\x72";${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x72i\x62j\x65dd\x6b"]="f";${"\x47L\x4f\x42\x41L\x53"}["\x66\x78\x6d\x76y\x63n\x61\x67\x76\x66\x66"]="\x65\x6ec\x6f\x64\x65\x53t\x72";${"GLO\x42\x41\x4c\x53"}["\x6b\x66\x71\x74\x63\x79"]="a\x72\x72";${"G\x4c\x4f\x42\x41L\x53"}["o\x6eu\x62\x62\x6fqw\x6fe"]="\x6c\x69c\x65\x6es\x65\x6b\x65\x79\x5f\x75\x72\x6c";${"\x47L\x4fB\x41\x4cS"}["p\x63u\x68\x76y\x72\x61\x69\x61"]="d\x6fmai\x6e";${"\x47\x4c\x4f\x42\x41\x4c\x53"}["a\x74aedm\x76\x65v\x6d"]="l\x69\x63\x65\x6e\x73e\x6b\x65\x79";${"\x47\x4c\x4fBA\x4c\x53"}["\x72b\x72x\x75\x76\x74g\x74"]="\x6ci\x73\x65\x6e\x73\x65_\x69\x6e\x66o";${"GL\x4f\x42\x41\x4c\x53"}["\x74\x72\x65\x68\x61g\x62u\x6a\x68\x6a"]="\x6c\x69c\x65\x6e\x73\x65_\x70\x61\x74\x68";${"\x47L\x4fBA\x4cS"}["\x79dll\x62\x76\x6b\x73\x6b\x7a"]="s\x74r";${"GL\x4f\x42\x41\x4c\x53"}["t\x6d\x64he\x75\x69"]="c\x69\x70hert\x65\x78\x74";${"GLO\x42A\x4cS"}["\x71q\x6fd\x70\x6b\x68\x63k\x77\x67"]="i\x76";${"GLO\x42\x41\x4c\x53"}["\x79\x7ao\x77\x71\x70\x72o\x71\x70"]="\x69\x76\x73\x69\x7a\x65";${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x66\x72j\x67ubj\x73"]="fil\x65";${"\x47LO\x42\x41\x4c\x53"}["\x69\x61u\x63u\x78\x78\x62"]="\x64\x61\x74a";${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x6dq\x6d\x79\x68\x61e\x74\x6f"]="en\x67\x69ne";${"\x47\x4c\x4fB\x41\x4c\x53"}["\x62\x79\x77t\x75\x69\x78\x61f\x6f"]="\x76\x61\x6cu\x65";${"GL\x4f\x42AL\x53"}["\x78x\x6e\x67\x6eb"]="\x73\x65\x63ti\x6f\x6e";${"\x47\x4c\x4fB\x41\x4c\x53"}["m\x65\x6di\x6bvp\x75\x72my"]="\x69\x74e\x6d";${"\x47L\x4fB\x41\x4c\x53"}["\x6c\x76\x6a\x6e\x6e\x6ce\x77\x6a"]="l\x61\x6e\x67ua\x67\x65";${"\x47\x4c\x4f\x42\x41L\x53"}["\x72\x73\x6a\x6b\x61\x6dp\x6b\x6c\x74"]="\x6c\x6e\x67";${"\x47\x4c\x4fBA\x4c\x53"}["\x74\x72\x70\x64m\x75\x66i\x77"]="\x6eam\x65";${"\x47\x4cO\x42\x41\x4c\x53"}["\x69ym\x6c\x62\x64e\x6fl"]="s\x65\x74";${"G\x4c\x4f\x42\x41LS"}["\x67c\x6c\x73\x6cq\x74m\x70\x71g"]="\x6dai\x6e\x43\x6f\x6e\x66i\x67";${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x75f\x73\x79\x64e\x6e\x6d"]="\x74\x70\x6c";${"\x47LO\x42\x41LS"}["y\x77ky\x76\x68\x64\x67"]="q\x75\x65\x72\x79";${"\x47\x4cOB\x41\x4c\x53"}["\x68\x6b\x70\x64\x72\x78ww\x72"]="\x72e\x73\x75\x6c\x74";${"GL\x4f\x42\x41\x4c\x53"}["t\x6b\x66\x79\x74\x66"]="\x43on\x66\x69\x67\x44\x42";${"\x47LOBA\x4c\x53"}["\x72\x74gnp\x64\x6e"]="\x64b";${"GL\x4f\x42A\x4cS"}["n\x73\x79\x70h\x6d\x78\x72"]="\x66\x6f\x6c\x64\x65\x72\x73";${"\x47LO\x42\x41LS"}["\x77l\x79\x6d\x6ccn\x63\x6fc"]="\x73e\x73\x73i\x6f\x6e";${"\x47L\x4f\x42\x41\x4c\x53"}["\x70\x77\x70\x78\x6f\x68\x76z"]="p\x61th";${"\x47LO\x42A\x4c\x53"}["wqp\x72ec\x76\x75\x67"]="p\x61t\x68s";defined("LET\x54\x45R")||exit("N\x65\x77\x73L\x65\x74\x74er: \x61c\x63\x65\x73\x73 d\x65n\x69\x65\x64\x2e");class core{protected static$_init=NULL;protected static$paths=array();protected static$mainConfig=NULL;protected static$language=NULL;protected static$licensekey_url='http://license.janicky.com/';protected static$license_path='sys/license_key';public static$db=NULL;public static$tpl=NULL;public static$path=NULL;public static$session=NULL;protected static$licensekey=NULL;public static$system_error=NULL;const KEY="Y9\x34\x35\$\x727=\x30))!\x79";const METHOD="aes-2\x35\x36-\x63\x62\x63";static public function isInit(){${"\x47\x4cO\x42\x41\x4c\x53"}["\x6d\x78\x6fz\x77\x72\x6c"]="_\x69ni\x74";return self::${${"\x47\x4cOB\x41\x4cS"}["m\x78\x6fzw\x72l"]};}static public function init($paths){if(self::isInit())return TRUE;${"\x47\x4c\x4fB\x41\x4cS"}["o\x65\x72\x61b\x68\x72\x6b\x63\x79"]="pa\x74\x68\x73";self::${${"\x47L\x4f\x42A\x4cS"}["\x77q\x70\x72\x65c\x76\x75g"]}=${${"\x47\x4cO\x42AL\x53"}["oe\x72a\x62h\x72kcy"]};self::${${"GL\x4fB\x41\x4c\x53"}["pw\x70\x78\x6fhv\x7a"]}=str_replace("//","/","/".trim(str_replace(chr(92),"/",substr(SYS_ROOT,strlen($_SERVER["\x44\x4f\x43U\x4d\x45\x4eT_\x52O\x4fT"]))),"/")."/");${"\x47\x4cO\x42A\x4c\x53"}["\x66q\x70\x68\x76\x74\x6em"]="\x5fin\x69\x74";self::_loadEngines();self::${${"G\x4cO\x42\x41L\x53"}["\x66\x71\x70\x68v\x74\x6e\x6d"]}=TRUE;}static public function factory($className){${"\x47\x4cO\x42ALS"}["\x6c\x78i\x6b\x68\x62\x6f\x78\x69"]="\x63l\x61\x73s\x4eam\x65";return new${${"GL\x4f\x42\x41\x4c\x53"}["\x6c\x78\x69k\x68b\x6fxi"]}();}static public function database(){$ebhnvtkr="\x64\x62";return self::${$ebhnvtkr};}static public function session(){return self::${${"GLOB\x41\x4c\x53"}["\x77\x6cy\x6d\x6cc\x6e\x63\x6fc"]};}static protected function _loadEngines(){$ivpuody="\x70\x61\x74\x68\x73";$uenecwihr="\x6c\x69\x62";$cbcslpbple="\x66o\x6cder\x73";require_once"fo\x6c\x64e\x72\x73\x2e\x70hp";${"\x47\x4c\x4f\x42A\x4c\x53"}["\x63\x6f\x62pe\x64\x7a\x62"]="\x61u\x74\x6fl\x6fa\x64";${${"G\x4c\x4fBA\x4c\x53"}["\x6e\x73y\x70\x68\x6dxr"]}=array(self::${$ivpuody}["\x65ngi\x6ee"]);$bcdebsduu="\x6ci\x63e\x6es\x65\x6b\x65y";${"\x47\x4c\x4fB\x41\x4c\x53"}["c\x6f\x74\x71\x65ic"]="\x61\x75\x74\x6fl\x6fa\x64";${${"\x47LO\x42AL\x53"}["\x63\x6f\x62\x70\x65d\x7a\x62"]}=array_reverse(folders::scan(${$cbcslpbple},"\x70h\x70",TRUE));foreach(${${"GL\x4fB\x41\x4cS"}["\x63\x6ftq\x65\x69c"]} as${$uenecwihr}){${"\x47\x4cO\x42\x41LS"}["\x72\x68\x65\x6b\x67h\x62s\x79\x67\x63"]="\x6ci\x62";${"G\x4c\x4f\x42\x41\x4c\x53"}["\x71l\x66s\x6dwn\x69\x63"]="\x6ci\x62";if(is_file(${${"\x47\x4cOB\x41\x4c\x53"}["\x72he\x6b\x67h\x62\x73\x79\x67\x63"]}))require_once${${"\x47\x4c\x4f\x42\x41LS"}["ql\x66\x73mw\x6ei\x63"]};}self::${$bcdebsduu}=self::getLicensekey();if(self::checkLicense()==false&&in_array($_SERVER["\x52E\x4d\x4fT\x45_\x41\x44\x44\x52"],array("::1","\x3127.\x30.0.1"))==false){header("\x4coc\x61t\x69o\x6e:\x20./?t\x3d\x65\x78\x70\x69re\x64");exit();}}static public function getLicensekey(){$bgdfii="r\x65\x73ul\x74";$gqjwww="q\x75\x65\x72\x79";${"GLO\x42\x41LS"}["\x6fb\x70\x71\x65\x70\x72r\x6b"]="\x72o\x77";global$ConfigDB;$bibkjf="ro\x77";${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x72tg\x6e\x70\x64\x6e"]}=new DB(${${"GL\x4f\x42\x41\x4c\x53"}["tk\x66y\x74\x66"]});${$gqjwww}="S\x45L\x45C\x54 * F\x52\x4fM\x20".$db->getTableName("li\x63e\x6e\x73\x65\x6b\x65\x79")."";${${"\x47\x4cOB\x41L\x53"}["\x68kpd\x72\x78w\x77r"]}=$db->querySQL(${${"G\x4c\x4fB\x41\x4c\x53"}["\x79\x77ky\x76\x68\x64g"]});${${"\x47\x4cO\x42\x41L\x53"}["o\x62p\x71\x65\x70\x72rk"]}=$db->getRow(${$bgdfii});return${$bibkjf}["\x6cicens\x65ke\x79"];}static public function getTemplate(){$vidxffarqre="t\x70\x6c";return self::${$vidxffarqre};}static public function setTemplate($tpl){$xcjgduupboqx="\x74\x70\x6c";self::${${"G\x4cO\x42AL\x53"}["u\x66s\x79\x64e\x6e\x6d"]}=SYS_ROOT.self::${${"G\x4cO\x42\x41L\x53"}["wq\x70\x72\x65c\x76\x75\x67"]}["\x74\x65\x6dp\x6c\x61tes"].DIRECTORY_SEPARATOR.${$xcjgduupboqx};}static public function addSetting($set=array()){${"GL\x4f\x42\x41L\x53"}["k\x71\x68\x74\x77n\x76\x68\x6f"]="\x6da\x69\x6eC\x6fnfi\x67";${"\x47\x4cO\x42A\x4cS"}["\x68\x77\x77\x62f\x72"]="\x6da\x69\x6e\x43\x6f\x6e\x66i\x67";${"\x47\x4cO\x42ALS"}["\x6e\x74\x72\x76syq\x67\x6f"]="\x73\x65\x74";self::${${"\x47\x4c\x4fB\x41\x4c\x53"}["kq\x68t\x77n\x76ho"]}=(is_array(self::${${"\x47L\x4fB\x41\x4cS"}["\x67\x63\x6c\x73\x6cq\x74\x6d\x70\x71g"]}))?array_merge(self::${${"\x47\x4cO\x42\x41L\x53"}["h\x77wb\x66r"]},${${"\x47LO\x42\x41L\x53"}["i\x79\x6d\x6c\x62d\x65ol"]}):${${"\x47\x4cO\x42AL\x53"}["\x6et\x72v\x73\x79q\x67\x6f"]};}static public function setSetting($index,$value){${"\x47L\x4f\x42A\x4c\x53"}["\x76\x62\x69\x69e\x68u"]="\x76\x61\x6c\x75\x65";$fyvwekb="i\x6e\x64e\x78";self::${${"\x47\x4c\x4fBA\x4c\x53"}["\x67c\x6c\x73\x6cqt\x6dp\x71\x67"]}[${$fyvwekb}]=${${"\x47L\x4f\x42\x41LS"}["\x76biie\x68u"]};}static public function getSetting($name=''){$mlvjuzw="\x6e\x61\x6de";return(${${"G\x4cO\x42\x41L\x53"}["t\x72p\x64\x6d\x75\x66i\x77"]}=="")?self::${${"\x47L\x4fB\x41\x4c\x53"}["\x67c\x6cs\x6c\x71\x74\x6d\x70q\x67"]}:self::${${"\x47\x4cOB\x41\x4c\x53"}["\x67\x63\x6c\x73\x6c\x71t\x6dp\x71\x67"]}[${$mlvjuzw}];}static public function addLanguage($lng=array()){$matpdiv="la\x6eg\x75a\x67\x65";self::${$matpdiv}=${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x72s\x6aka\x6d\x70\x6b\x6c\x74"]};}static public function getLanguage($section,$item){$dghrfqctmk="\x73\x65\x63t\x69\x6fn";$jnlfrgcodde="\x73e\x63\x74\x69\x6f\x6e";return(isset(self::${${"G\x4cOB\x41\x4cS"}["\x6c\x76\x6a\x6e\x6e\x6c\x65\x77\x6a"]}[${$jnlfrgcodde}][${${"G\x4c\x4f\x42\x41\x4c\x53"}["m\x65\x6d\x69k\x76p\x75r\x6d\x79"]}]))?self::${${"\x47L\x4f\x42A\x4c\x53"}["l\x76jnn\x6c\x65w\x6a"]}[${$dghrfqctmk}][${${"\x47\x4c\x4f\x42A\x4cS"}["\x6d\x65m\x69\x6b\x76\x70ur\x6d\x79"]}]:"";}static public function setLanguage($section,$item,$value){$altflwd="\x6c\x61\x6e\x67u\x61\x67\x65";self::${$altflwd}[${${"\x47\x4c\x4fBA\x4cS"}["\x78\x78\x6egn\x62"]}][${${"\x47\x4cO\x42\x41\x4c\x53"}["\x6d\x65\x6di\x6bv\x70\x75\x72my"]}]=${${"G\x4cO\x42\x41\x4c\x53"}["by\x77\x74u\x69x\x61\x66\x6f"]};}static public function pathTo($engine,$data){return SYS_ROOT.self::${${"G\x4cO\x42ALS"}["\x77\x71p\x72\x65\x63v\x75g"]}[${${"\x47\x4c\x4f\x42A\x4c\x53"}["\x6dqmy\x68\x61et\x6f"]}].DIRECTORY_SEPARATOR.${${"\x47L\x4f\x42\x41L\x53"}["\x69\x61\x75\x63u\x78\x78b"]};}static public function requireEx($engine,$name){${"\x47L\x4f\x42\x41\x4c\x53"}["\x6e\x67\x68\x6c\x61\x79kg"]="\x66i\x6c\x65";${"GL\x4fB\x41\x4c\x53"}["\x61yb\x61\x71\x73\x6dcn"]="p\x61\x74h\x73";${"G\x4c\x4fB\x41\x4cS"}["l\x72n\x63p\x68\x6f\x6e\x78\x62i\x74"]="n\x61\x6de";${${"\x47LO\x42\x41L\x53"}["\x6e\x67\x68\x6ca\x79\x6b\x67"]}=SYS_ROOT.self::${${"\x47\x4cO\x42A\x4cS"}["ay\x62\x61\x71\x73mc\x6e"]}[${${"GL\x4f\x42\x41\x4c\x53"}["\x6d\x71\x6d\x79\x68a\x65\x74\x6f"]}].DIRECTORY_SEPARATOR.${${"G\x4c\x4fB\x41\x4cS"}["l\x72\x6e\x63\x70\x68on\x78\x62\x69\x74"]};if(file_exists(${${"\x47\x4c\x4fB\x41\x4c\x53"}["\x66\x72\x6a\x67ub\x6a\x73"]})){require_once${${"\x47\x4c\x4fB\x41\x4c\x53"}["\x66\x72jg\x75\x62j\x73"]};return true;}else return false;}static public function includeEx($engine,$name){$ntifuhomlq="\x66i\x6c\x65";${"G\x4c\x4f\x42\x41L\x53"}["\x74\x63kvv\x6ds\x78\x6b"]="\x70at\x68\x73";${${"\x47L\x4fBA\x4c\x53"}["\x66\x72\x6agub\x6as"]}=SYS_ROOT.self::${${"\x47\x4c\x4fB\x41L\x53"}["\x74c\x6b\x76v\x6ds\x78k"]}[${${"\x47\x4c\x4f\x42A\x4cS"}["\x6dq\x6d\x79haeto"]}].DIRECTORY_SEPARATOR.${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x74rp\x64m\x75f\x69\x77"]};if(file_exists(${$ntifuhomlq})){$hkbqflzfsui="\x66\x69\x6c\x65";include_once${$hkbqflzfsui};return true;}else return false;}static public function getPath($path){return self::${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x77\x71pr\x65c\x76\x75\x67"]}[${${"\x47L\x4fB\x41\x4cS"}["\x70\x77\x70\x78o\x68\x76\x7a"]}];}static public function encodeStr($str){${"\x47L\x4f\x42\x41\x4c\x53"}["bt\x6b\x79\x72\x75\x79"]="\x69v";${${"G\x4cOBA\x4cS"}["\x79\x7a\x6f\x77\x71pr\x6f\x71\x70"]}=openssl_cipher_iv_length(self::METHOD);${"\x47L\x4f\x42\x41\x4c\x53"}["h\x78\x6a\x74\x66\x61\x79c"]="\x73\x74r";${"G\x4c\x4f\x42ALS"}["\x71\x75\x6a\x6b\x6d\x62\x6f\x79"]="i\x76";$gjtuwzyhi="\x63\x69\x70\x68e\x72t\x65\x78t";${${"GL\x4f\x42AL\x53"}["\x62t\x6b\x79\x72\x75\x79"]}=openssl_random_pseudo_bytes(${${"G\x4cOB\x41\x4cS"}["yz\x6fwqp\x72\x6f\x71\x70"]});${$gjtuwzyhi}=openssl_encrypt(${${"GLO\x42\x41\x4c\x53"}["\x68\x78\x6at\x66\x61\x79\x63"]},self::METHOD,self::KEY,OPENSSL_RAW_DATA,${${"G\x4c\x4f\x42\x41\x4cS"}["\x71u\x6a\x6b\x6d\x62\x6f\x79"]});return base64_encode(${${"\x47\x4c\x4f\x42A\x4cS"}["\x71q\x6fd\x70\x6b\x68\x63\x6b\x77\x67"]}.${${"\x47LOB\x41LS"}["t\x6d\x64\x68\x65ui"]});}static public function decodeStr($str){$scgueuegjor="\x73\x74\x72";${"G\x4c\x4f\x42\x41\x4c\x53"}["\x70\x63\x69rr\x71\x75\x6cgn\x69l"]="c\x69p\x68\x65\x72\x74\x65\x78t";$nufzbg="\x69\x76\x73i\x7a\x65";${"\x47\x4c\x4f\x42A\x4c\x53"}["\x6a\x69\x69e\x64\x77\x72\x76\x6d\x79\x67"]="s\x74\x72";$bgunrfuemqk="i\x76";${"\x47\x4cO\x42\x41\x4c\x53"}["aq\x6e\x63\x72\x6a\x75"]="\x73\x74\x72";$lfsslooyao="\x69v\x73iz\x65";${${"\x47\x4c\x4f\x42\x41\x4cS"}["\x61\x71\x6ec\x72j\x75"]}=base64_decode(${${"\x47\x4cO\x42\x41\x4cS"}["\x6ai\x69\x65\x64\x77\x72v\x6dy\x67"]});${$lfsslooyao}=openssl_cipher_iv_length(self::METHOD);${$bgunrfuemqk}=substr(${$scgueuegjor},0,${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x79z\x6fwq\x70\x72\x6f\x71p"]});${${"\x47\x4cOB\x41\x4cS"}["\x74\x6ddh\x65\x75i"]}=substr(${${"GL\x4f\x42AL\x53"}["\x79d\x6cl\x62v\x6b\x73kz"]},${$nufzbg});return openssl_decrypt(${${"\x47\x4cO\x42\x41\x4c\x53"}["p\x63\x69\x72rqu\x6cg\x6ei\x6c"]},self::METHOD,self::KEY,OPENSSL_RAW_DATA,${${"\x47L\x4f\x42\x41LS"}["\x71\x71o\x64\x70\x6bhc\x6b\x77\x67"]});}static public function checkLicense(){$qhzgnb="r\x65\x73\x75\x6c\x74";${"G\x4cOB\x41\x4c\x53"}["\x62f\x6cs\x78\x65\x68\x67\x78\x64\x69\x6d"]="\x64\x6f\x6d\x61in";${$qhzgnb}=true;${${"GL\x4fBAL\x53"}["\x62\x66l\x73\x78\x65\x68\x67\x78\x64\x69\x6d"]}=(substr($_SERVER["S\x45\x52\x56\x45\x52\x5fN\x41M\x45"],0,4))=="\x77\x77\x77."?str_replace("\x77ww\x2e","",$_SERVER["S\x45\x52\x56\x45R\x5fNA\x4dE"]):$_SERVER["S\x45R\x56\x45\x52\x5f\x4e\x41\x4dE"];if(in_array($_SERVER["\x52\x45\x4dO\x54E\x5f\x41\x44DR"],array("::1","127\x2e\x30\x2e0\x2e1"))==false){if(file_exists(SYS_ROOT.self::${${"\x47L\x4f\x42A\x4c\x53"}["\x74\x72\x65\x68\x61\x67\x62\x75jh\x6a"]})){$sirbfxmvxw="d\x6f\x6d\x61\x69\x6e";$bcprnw="l\x69\x73e\x6ese\x5fi\x6e\x66o";${$bcprnw}=self::getLicenseInfo();$iituigx="d\x6f\x6d\x61\x69n";${"G\x4cOBA\x4c\x53"}["\x6dro\x67\x77\x77u\x67\x70bq"]="l\x69\x73\x65n\x73\x65\x5f\x69\x6ef\x6f";if(${${"G\x4c\x4f\x42\x41\x4cS"}["\x72b\x72\x78\x75\x76\x74gt"]}["\x64om\x61in"]!=${$sirbfxmvxw}){self::makeLicensekey();}${"GL\x4fBA\x4c\x53"}["kg\x76a\x6as\x6a"]="\x6c\x69\x73e\x6ese\x5f\x69n\x66o";if(${${"G\x4c\x4fBA\x4c\x53"}["\x6dr\x6f\x67\x77\x77\x75\x67\x70\x62\x71"]}["\x6cice\x6ese_\x74ype"]=="\x64\x65m\x6f"&&${$iituigx}==${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x6b\x67\x76\x61\x6a\x73\x6a"]}["dom\x61i\x6e"]&&$_REQUEST["\x74"]!="\x65\x78p\x69r\x65\x64"){${"\x47\x4c\x4f\x42A\x4cS"}["\x68wx\x7a\x6d\x70\x64\x69\x70"]="\x6ci\x73\x65n\x73\x65\x5f\x69\x6e\x66o";if(round((strtotime(${${"\x47LO\x42A\x4cS"}["\x68wxzm\x70\x64i\x70"]}["d\x61t\x65_t\x6f"])-strtotime(date("Y-m-\x64 \x48:\x69:\x73")))/3600/24)<0){return false;}}}else{self::makeLicensekey();}}return${${"G\x4c\x4f\x42\x41\x4cS"}["\x68kp\x64\x72\x78\x77w\x72"]};}static public function updateLicensekey($licensekey){${"GL\x4fB\x41L\x53"}["\x67\x6f\x73m\x77\x63nw"]="\x6c\x69c\x65ns\x65\x5fpa\x74h";$swvrdmbory="\x6ci\x63\x65\x6e\x73\x65\x5fp\x61t\x68";${"G\x4c\x4f\x42\x41\x4cS"}["\x6e\x74\x76g\x72\x79r\x78"]="\x6c\x69\x73e\x6e\x73\x65_\x69n\x66\x6f";${${"\x47\x4cOBAL\x53"}["\x6et\x76g\x72yr\x78"]}=self::getLicenseInfo(SYS_ROOT.self::${$swvrdmbory});if(file_exists(SYS_ROOT.self::${${"\x47\x4c\x4f\x42A\x4c\x53"}["g\x6fsm\x77\x63\x6e\x77"]})||${${"\x47\x4cOB\x41L\x53"}["r\x62\x72\x78\x75\x76t\x67t"]}["\x6c\x69\x63e\x6e\x73e\x6bey"]!=${${"\x47LOB\x41\x4cS"}["\x61\x74a\x65\x64\x6d\x76\x65vm"]}){self::makeLicensekey();}}static public function makeLicensekey(){$txeghbxbd="li\x63e\x6e\x73\x65ke\x79";${${"\x47\x4c\x4fB\x41\x4c\x53"}["\x70\x63\x75\x68\x76y\x72\x61\x69a"]}=(substr($_SERVER["\x53E\x52\x56E\x52_\x4e\x41ME"],0,4))=="\x77w\x77."?str_replace("\x77\x77\x77\x2e","",$_SERVER["SER\x56ER\x5fNAME"]):$_SERVER["\x53\x45\x52VER\x5fNAM\x45"];${"\x47\x4c\x4fB\x41\x4cS"}["\x68p\x6a\x65\x75vo\x69"]="\x6c\x69s\x65\x6e\x73\x65\x5f\x69\x6e\x66\x6f";${${"\x47L\x4f\x42\x41\x4cS"}["\x68\x70\x6aeu\x76o\x69"]}=json_decode(self::file_get_contents_curl(self::${${"\x47\x4c\x4f\x42\x41LS"}["o\x6eu\x62\x62\x6fqw\x6fe"]}."?\x74\x3d\x6cic\x65nsek\x65y\x26l\x69\x63ens\x65\x6bey\x3d".self::${$txeghbxbd}."&\x64o\x6d\x61i\x6e=".${${"GL\x4fB\x41\x4c\x53"}["p\x63\x75hv\x79\x72a\x69\x61"]}.""),true);if(!isset(${${"\x47LO\x42AL\x53"}["\x72\x62\x72\x78\x75\x76\x74\x67\x74"]}["\x65rr\x6fr"])){$qaehgbjqu="\x6c\x69\x73en\x73\x65_in\x66\x6f";$nnflxpmooby="\x66";$lvyecpdryee="\x6c\x69c\x65\x6e\x73\x65k\x65\x79";$khzypfesflw="l\x69se\x6es\x65_\x69\x6e\x66\x6f";${"\x47\x4c\x4f\x42AL\x53"}["js\x65\x79\x79\x71\x73"]="\x61\x72\x72";${"G\x4c\x4f\x42A\x4c\x53"}["\x63cvk\x64sb"]="\x6ci\x73\x65n\x73\x65_\x69n\x66\x6f";$tpfxxcvgw="f";${${"\x47\x4c\x4f\x42A\x4c\x53"}["\x6b\x66q\x74cy"]}=array("\x64omai\x6e"=>(substr($_SERVER["SER\x56\x45\x52_NA\x4d\x45"],0,4))=="ww\x77\x2e"?str_replace("ww\x77.","",$_SERVER["S\x45RVER\x5fN\x41\x4d\x45"]):$_SERVER["SE\x52V\x45R_NA\x4d\x45"],"lic\x65\x6ese_type"=>${${"G\x4c\x4f\x42A\x4c\x53"}["\x63cv\x6b\x64s\x62"]}["li\x63en\x73\x65\x5ft\x79\x70e"],"\x6c\x69\x63ens\x65key"=>self::${$lvyecpdryee},"\x63reated"=>${${"\x47L\x4f\x42\x41\x4cS"}["\x72\x62\x72xuv\x74\x67t"]}["\x64\x61\x74\x65\x5fcrea\x74\x65\x64"],"d\x61\x74e\x5ffro\x6d"=>${$qaehgbjqu}["\x64a\x74e_\x61\x63t\x69ve\x5ff\x72\x6f\x6d"],"date_t\x6f"=>${$khzypfesflw}["d\x61\x74\x65\x5f\x61ct\x69\x76\x65\x5ft\x6f"]);${${"\x47\x4c\x4f\x42\x41\x4cS"}["\x66\x78\x6dvyc\x6e\x61\x67v\x66\x66"]}=self::encodeStr(json_encode(${${"G\x4c\x4f\x42\x41\x4c\x53"}["\x6a\x73\x65\x79y\x71s"]}));${$tpfxxcvgw}=fopen(SYS_ROOT.self::${${"\x47L\x4fB\x41\x4cS"}["\x74\x72\x65\x68ag\x62\x75j\x68j"]},"\x77");if(fwrite(${${"G\x4c\x4fBA\x4cS"}["\x72ibj\x65\x64\x64k"]},${${"\x47LO\x42\x41\x4c\x53"}["\x66\x78\x6d\x76y\x63n\x61g\x76\x66\x66"]})===false){self::${${"\x47\x4c\x4f\x42\x41\x4c\x53"}["\x70uhty\x67"]}="CANN\x54_\x43\x52\x45\x41TE_L\x49\x43\x45\x4eSE\x4bEY_\x46ILE";}fclose(${$nnflxpmooby});}else{self::${${"\x47L\x4fB\x41\x4cS"}["puh\x74yg"]}="\x45\x52\x52\x4f\x52_C\x48\x45\x43\x4b_LI\x43E\x4e\x53EK\x45Y";}}static public function getLicenseInfo(){if(file_exists(SYS_ROOT.self::${${"\x47LO\x42\x41\x4c\x53"}["\x74r\x65h\x61\x67\x62uj\x68\x6a"]})){${"G\x4cO\x42\x41\x4c\x53"}["\x65sw\x61\x72thich"]="\x68an\x64\x6ce";$kjshlrg="\x68\x61\x6e\x64le";$wipywu="l\x69ce\x6e\x73e_\x70a\x74h";${${"G\x4c\x4f\x42\x41\x4c\x53"}["\x65\x73\x77\x61\x72\x74\x68ic\x68"]}=fopen(SYS_ROOT.self::${$wipywu},"r");$caxdvyllhz="\x68\x61\x6e\x64\x6c\x65";${${"G\x4cO\x42A\x4c\x53"}["\x69\x62\x63\x77\x69\x74\x75\x78\x7axx\x68"]}=fread(${$caxdvyllhz},filesize(SYS_ROOT.self::${${"\x47\x4cOBAL\x53"}["t\x72e\x68\x61gbu\x6a\x68\x6a"]}));fclose(${$kjshlrg});return json_decode(self::decodeStr(${${"\x47L\x4fB\x41\x4c\x53"}["i\x62\x63\x77it\x75\x78z\x78\x78\x68"]}),true);}else{self::makeLicensekey();}}static public function file_get_contents_curl($url){$hkcbjlebmwr="ch";$kckvvkm="\x6f\x75\x74";${"G\x4cO\x42\x41\x4c\x53"}["t\x68\x61\x73\x77nc\x69\x79"]="\x63\x68";$apelxd="\x63\x68";${"\x47\x4cOBAL\x53"}["\x69\x69\x71s\x77\x76\x62d\x70d"]="\x63h";${$apelxd}=curl_init(${${"\x47\x4c\x4fBA\x4c\x53"}["\x78\x70\x78\x76jg\x72\x6bg"]});${"G\x4c\x4f\x42AL\x53"}["\x61x\x6d\x6dy\x6b\x71"]="\x63\x68";$tfeetwcbyus="\x63\x68";curl_setopt(${${"GLOBALS"}["\x77\x67\x72e\x65\x68\x76"]},CURLOPT_SSL_VERIFYPEER,0);curl_setopt(${${"\x47\x4cOB\x41LS"}["\x77\x67r\x65e\x68\x76"]},CURLOPT_SSL_VERIFYHOST,0);curl_setopt(${$hkcbjlebmwr},CURLOPT_HEADER,0);$ehqnrdy="\x63\x68";${"\x47L\x4fBAL\x53"}["\x65\x62ztk\x76\x78\x72\x6e\x64\x68"]="\x64a\x74a";curl_setopt(${$tfeetwcbyus},CURLOPT_USERAGENT,isset($_SERVER["HTT\x50\x5f\x55\x53E\x52_\x41G\x45\x4e\x54"])?$_SERVER["\x48TTP_USER_AG\x45\x4eT"]:0);curl_setopt(${${"\x47\x4c\x4f\x42A\x4c\x53"}["ii\x71s\x77\x76bd\x70\x64"]},CURLOPT_REFERER,isset($_SERVER["H\x54\x54P\x5fR\x45F\x45\x52E\x52"])?$_SERVER["HTTP_\x52\x45FER\x45\x52"]:0);curl_setopt(${${"\x47\x4c\x4f\x42A\x4cS"}["wgre\x65\x68v"]},CURLOPT_RETURNTRANSFER,1);curl_setopt(${${"\x47\x4cO\x42A\x4cS"}["\x74\x68asw\x6ec\x69\x79"]},CURLOPT_FOLLOWLOCATION,1);curl_setopt(${${"\x47L\x4f\x42\x41\x4c\x53"}["ax\x6d\x6d\x79\x6b\x71"]},CURLOPT_TIMEOUT,20);${${"G\x4c\x4f\x42\x41LS"}["eb\x7a\x74\x6b\x76\x78\x72n\x64\x68"]}=curl_exec(${$ehqnrdy});curl_close(${${"\x47\x4cO\x42\x41\x4c\x53"}["\x77\x67ree\x68v"]});preg_match("/\x5c{([^\\}])+\\}/U",${${"G\x4cO\x42\x41\x4cS"}["\x69\x61u\x63\x75\x78\x78\x62"]},${$kckvvkm});return${${"\x47\x4c\x4f\x42A\x4c\x53"}["hgm\x77\x76\x65y\x70\x70\x6e\x65"]}[0];}static public function expired_day_count(){${"GL\x4fBA\x4cS"}["h\x75\x6e\x69\x61\x70\x6f\x73\x73\x6a\x71"]="\x6ci\x73\x65n\x73\x65\x5fi\x6efo";$muwcldejrh="\x6c\x69c\x65\x6es\x65\x5f\x70at\x68";$sbjgiorlwp="\x6c\x69sen\x73\x65_\x69\x6efo";${$sbjgiorlwp}=self::getLicenseInfo(SYS_ROOT.self::${$muwcldejrh});if(${${"\x47\x4c\x4f\x42A\x4c\x53"}["\x68\x75n\x69\x61\x70\x6f\x73\x73\x6aq"]}["l\x69\x63ense_ty\x70\x65"]=="\x64emo"){$ydmgsen="lis\x65\x6e\x73\x65\x5fin\x66o";return round((strtotime(${$ydmgsen}["\x64\x61\x74\x65_\x74o"])-strtotime(date("Y-\x6d-d \x48:\x69:\x73")))/3600/24);}}}
-?>
+<?php
+/********************************************
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
+ * Website: http://janicky.com
+ * E-mail: janickiy@mail.ru
+ * Skype: janickiy
+ ********************************************/
+defined('LETTER') || exit('NewsLetter: access denied.');
+
+class core
+{
+    protected static $_init = NULL;
+    protected static $paths = array();
+    protected static $mainConfig = NULL;
+    protected static $language   = NULL;
+    protected static $licensekey_url = 'http://license.janicky.com/';
+    protected static $license_path   = 'sys/license_key';
+    public static $db  = NULL;
+    public static $tpl = NULL;
+    public static $path = NULL;
+    public static $session = NULL;
+    protected static $licensekey = NULL;
+    public static $system_error  = NULL;
+    const KEY    = 'Y945$r7=0))!y';
+    const METHOD = 'aes-256-cbc';
+    /**
+     * Check if self::init() has been called
+     *
+     * @return boolean
+     */
+    static public function isInit()
+    {
+        return self::$_init;
+    }
+    /**
+     * Initialization
+     *
+     * @return boolean
+     */
+    static public function init($paths)
+    {
+        if (self::isInit())
+            return TRUE;
+        self::$paths = $paths;
+        self::$path = str_replace("//", "/", "/" . trim(str_replace(chr(92), "/", substr(SYS_ROOT, strlen($_SERVER["DOCUMENT_ROOT"]))), "/") . "/");
+        self::_loadEngines();
+        self::$_init = TRUE;
+    }
+    /**
+     * Create class $className
+     *
+     * @param string $className
+     *            class name
+     * @return mixed
+     */
+    static public function factory($className)
+    {
+        return new $className();
+    }
+    static public function database()
+    {
+        return self::$db;
+    }
+    static public function session()
+    {
+        return self::$session;
+    }
+    /**
+     * AUTOLOAD modules
+     */
+    static protected function _loadEngines()
+    {
+        require_once 'folders.php';
+        $folders = array(
+            self::$paths['engine']
+        );
+        $autoload = array_reverse(folders::scan($folders, 'php', TRUE));
+        foreach ($autoload as $lib) {
+            if (is_file($lib))
+                require_once $lib;
+        }
+        self::$licensekey = self::getLicensekey();
+        if (self::checkLicense() == false && in_array($_SERVER['REMOTE_ADDR'], array( '::1', '127.0.0.1')) == false){
+            header('Location: ./?t=expired');
+            exit();
+        }
+    }
+    /**
+     * @return mixed
+     * @throws ExceptionSQL
+     */
+    static public function getLicensekey()
+    {
+        global $ConfigDB;
+        $db = new DB($ConfigDB);
+        $query = "SELECT * FROM " . $db->getTableName('licensekey') . "";
+        $result = $db->querySQL($query);
+        $row = $db->getRow($result);
+        return $row['licensekey'];
+    }
+    /**
+     * @return null
+     */
+    static public function getTemplate()
+    {
+        return self::$tpl;
+    }
+    /**
+     * @param $tpl
+     */
+    static public function setTemplate($tpl)
+    {
+        self::$tpl = SYS_ROOT . self::$paths['templates'] . DIRECTORY_SEPARATOR . $tpl;
+    }
+    // --------- SETTINGS -------------------------------
+    static public function addSetting($set = array())
+    {
+        self::$mainConfig = (is_array(self::$mainConfig)) ? array_merge(self::$mainConfig, $set) : $set;
+    }
+    /**
+     * @param $index
+     * @param $value
+     */
+    static public function setSetting($index, $value)
+    {
+        self::$mainConfig[$index] = $value;
+    }
+    /**
+     * @param string $name
+     * @return null
+     */
+    static public function getSetting($name = '')
+    {
+        // Main config
+        return ($name == '') ? self::$mainConfig : self::$mainConfig[$name];
+    }
+    // --------- SETTINGS -------------------------------
+    // --------- language -------------------------------
+    static public function addLanguage($lng = array())
+    {
+        self::$language = $lng;
+    }
+    /**
+     * @param $section
+     * @param $item
+     * @return string
+     */
+    static public function getLanguage($section, $item)
+    {
+        return (isset(self::$language[$section][$item])) ? self::$language[$section][$item] : '';
+    }
+    /**
+     * @param $section
+     * @param $item
+     * @param $value
+     */
+    static public function setLanguage($section, $item, $value)
+    {
+        self::$language[$section][$item] = $value;
+    }
+    /**
+     * @param $engine
+     * @param $data
+     * @return string
+     */
+    static public function pathTo($engine, $data)
+    {
+        return SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $data;
+    }
+    /**
+     * @param $engine
+     * @param $name
+     * @return bool
+     */
+    static public function requireEx($engine, $name)
+    {
+        $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
+        if (file_exists($file)) {
+            require_once $file;
+            return true;
+        } else
+            return false;
+    }
+    /**
+     * @param $engine
+     * @param $name
+     * @return bool
+     */
+    static public function includeEx($engine, $name)
+    {
+        $file = SYS_ROOT . self::$paths[$engine] . DIRECTORY_SEPARATOR . $name;
+        if (file_exists($file)) {
+            include_once $file;
+            return true;
+        } else
+            return false;
+    }
+    /**
+     * @param $path
+     * @return mixed
+     */
+    static public function getPath($path)
+    {
+        return self::$paths[$path];
+    }
+    /**
+     * @param $str
+     * @return string
+     */
+    static public function encodeStr($str)
+    {
+        $ivsize = openssl_cipher_iv_length(self::METHOD);
+        $iv = openssl_random_pseudo_bytes($ivsize);
+        $ciphertext = openssl_encrypt($str, self::METHOD, self::KEY, OPENSSL_RAW_DATA, $iv);
+        return base64_encode($iv . $ciphertext);
+    }
+    /**
+     * @param $str
+     * @return string
+     */
+    static public function decodeStr($str)
+    {
+        $str =  base64_decode($str);
+        $ivsize = openssl_cipher_iv_length(self::METHOD);
+        $iv = substr($str, 0, $ivsize);
+        $ciphertext = substr($str, $ivsize);
+        return openssl_decrypt(
+            $ciphertext,
+            self::METHOD,
+            self::KEY,
+            OPENSSL_RAW_DATA,
+            $iv
+        );
+    }
+    /**
+     * @return bool
+     */
+    static public function checkLicense()
+    {
+        $result = true;
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+        if (in_array($_SERVER['REMOTE_ADDR'], array( '::1', '127.0.0.1' )) == false) {
+            if (file_exists(SYS_ROOT . self::$license_path)) {
+                $lisense_info = self::getLicenseInfo();
+                if ($lisense_info['domain'] != $domain) {
+                    self::makeLicensekey();
+                }
+                if ($lisense_info['license_type'] == 'demo' && $domain == $lisense_info['domain'] &&  $_REQUEST['t'] != 'expired') {
+                    if (round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24) < 0) {
+                        return false;
+                    }
+                }
+            } else {
+                self::makeLicensekey();
+            }
+        }
+        return $result;
+    }
+    /**
+     * @param $licensekey
+     */
+    static public function updateLicensekey($licensekey)
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+        if (file_exists(SYS_ROOT . self::$license_path) || $lisense_info['licensekey'] != $licensekey) {
+            self::makeLicensekey();
+        }
+    }
+    /**
+     *
+     */
+    static public function makeLicensekey()
+    {
+        $domain = (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"];
+        $lisense_info = json_decode(self::file_get_contents_curl(self::$licensekey_url . '?t=licensekey&licensekey=' . self::$licensekey . '&domain=' . $domain . ''), true);
+        if (!isset($lisense_info['error'])) {
+            $arr = array(
+                'domain' => (substr($_SERVER["SERVER_NAME"], 0, 4)) == "www." ? str_replace('www.','', $_SERVER["SERVER_NAME"]) : $_SERVER["SERVER_NAME"],
+                'license_type' => $lisense_info['license_type'],
+                'licensekey'   => self::$licensekey,
+                'created'   => $lisense_info['date_created'],
+                'date_from' => $lisense_info['date_active_from'],
+                'date_to'   => $lisense_info['date_active_to']
+            );
+            $encodeStr = self::encodeStr(json_encode($arr));
+            $f = fopen(SYS_ROOT . self::$license_path, "w");
+            if (fwrite($f, $encodeStr) === false) {
+                self::$system_error = 'CANNT_CREATE_LICENSEKEY_FILE';
+            }
+            fclose($f);
+        } else {
+            self::$system_error = 'ERROR_CHECK_LICENSEKEY';
+        }
+    }
+    /**
+     * @return mixed
+     */
+    static public function getLicenseInfo()
+    {
+        if (file_exists(SYS_ROOT . self::$license_path)) {
+            $handle = fopen(SYS_ROOT . self::$license_path, "r");
+            $contents = fread($handle, filesize(SYS_ROOT . self::$license_path));
+            fclose($handle);
+            return json_decode(self::decodeStr($contents), true);
+        } else {
+            self::makeLicensekey();
+        }
+    }
+    /**
+     * @param $url
+     * @return mixed
+     */
+    static public function file_get_contents_curl($url)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 0);
+        curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        preg_match('/\{([^\}])+\}/U',$data, $out);
+        return $out[0];
+    }
+    /**
+     * @return float
+     */
+    static public function expired_day_count()
+    {
+        $lisense_info = self::getLicenseInfo(SYS_ROOT . self::$license_path);
+        if ($lisense_info['license_type'] == 'demo') {
+            return round((strtotime($lisense_info['date_to']) - strtotime(date("Y-m-d H:i:s"))) / 3600 / 24);
+        }
+    }
+}

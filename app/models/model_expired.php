@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -19,7 +19,7 @@ class Model_expired extends Model
     public function addLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
-        $data = array('licensekey' => $licensekey);
+        $data = ['licensekey' => $licensekey];
 
         return core::database()->insert($data, core::database()->getTableName('licensekey'));
     }
@@ -31,7 +31,7 @@ class Model_expired extends Model
     public function updateLicenseKey($licensekey)
     {
         $licensekey = core::database()->escape($licensekey);
-        $fields = array('licensekey' => $licensekey);
+        $fields = ['licensekey' => $licensekey];
 
         return core::database()->update($fields, core::database()->getTableName('licensekey'), '');
     }
@@ -41,7 +41,7 @@ class Model_expired extends Model
      */
     public function getLicenseKey()
     {
-        $query = "SELECT * FROM ".core::database()->getTableName('licensekey')."";
+        $query = "SELECT * FROM ".core::database()->getTableName('licensekey');
         $result = core::database()->querySQL($query);
         $row = core::database()->getRow($result);
 

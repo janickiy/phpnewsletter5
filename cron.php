@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -75,66 +75,8 @@ $result_send = $dbh->query($query);
 if (!$result_send) exit('Error executing SQL query!');
 
 if ($result_send->num_rows > 0){
-	$m = new PHPMailer();	
-
-	if ($settings['add_dkim'] == 'yes' && file_exists($settings['dkim_private'])){
-		$m->DKIM_domain = $settings['dkim_domain'];
-		$m->DKIM_private = $settings['dkim_private'];
-		$m->DKIM_selector = $settings['dkim_selector'];
-		$m->DKIM_passphrase = $settings['dkim_passphrase'];
-		$m->DKIM_identity = $settings['dkim_identity'];		
-	}
-		
-	if ($settings['how_to_send'] == 2){
-		$m->IsSMTP();			
-		$m->SMTPAuth = true;
-		$m->SMTPKeepAlive = true;
-		$m->Host = $settings['smtp_host'];
-		$m->Port = $settings['smtp_port'];
-		$m->Username = $settings['smtp_username'];
-		$m->Password = $settings['smtp_password'];
-			
-		if ($settings['smtp_secure'] == 'ssl')
-			$m->SMTPSecure  = 'ssl';
-		elseif ($settings['smtp_secure'] == 'tls')
-			$m->SMTPSecure  = 'tls';
-				
-		if ($settings['smtp_aut'] == 'plain')
-			$m->AuthType = 'PLAIN';
-		elseif ($settings['smtp_aut'] == 'cram-md5')
-			$m->AuthType = 'CRAM-MD5';
-		
-		$m->Timeout = $settings['smtp_timeout'];
-	} elseif ($settings['how_to_send'] == 3 and !empty($settings['sendmail'])){
-		$m->IsSendmail();
-		$m->Sendmail = $settings['sendmail'];
-	} else {
-		$m->IsMail();
-	}
-
 	while($send = $result_send->fetch_array()) {
-		$m->CharSet = $charset;
-		
-		if ($send['prior'] == "1")
-			$m->Priority = 1;
-		elseif ($send['prior'] == "2")
-			$m->Priority = 5;
-		else $m->Priority = 3;
 
-		if ($settings['show_email'] == "no")
-			$m->From = "noreply@".$_SERVER['SERVER_NAME']."";
-		else 
-			$m->From = $settings['email'];	
-					
-		$m->FromName = $from;
-
-		if (!empty($settings['list_owner'])) $m->addCustomHeader("List-Owner: <" . $settings['list_owner'] . ">");
-		if (!empty($settings['return_path'])) $m->addCustomHeader("Return-Path: <" . $settings['return_path'] . ">");
-		if ($settings['content_type'] == 2)
-			$m->isHTML(true);
-		else	
-			$m->isHTML(false);			
-			
 		if ($settings['interval_type'] == 'm')
 			$interval = "AND (time_send < NOW() - INTERVAL '" . $settings['interval_number'] . "' MINUTE)";
 		elseif ($settings['interval_type'] == 'h')
@@ -145,26 +87,26 @@ if ($result_send->num_rows > 0){
 			$interval = '';
 
 		$order = $settings['random'] == "yes" ? 'ORDER BY RAND()' : '';	
-		$limit = $settings['make_limit_send'] == "yes" ? "LIMIT " . $settings['limit_number'] . "" : "";
+		$limit = $settings['make_limit_send'] == "yes" ? "LIMIT " . $settings['limit_number'] : "";
 	
 		if ($settings['re_send'] == "no") {
 			if ($send['id_cat'] == 0)
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
-								WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $order . " " . $limit . "";
+								WHERE (r.id_user IS NULL) AND (status='active') " . $interval . " " . $order . " " . $limit;
 			else 
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN " . $ConfigDB["prefix"] . "subscription s ON u.id_user=s.id_user
 								LEFT JOIN " . $ConfigDB["prefix"] . "ready_send r ON u.id_user=r.id_user AND (r.id_template=" . $send['id_template'] . ") AND (r.success='yes')
-								WHERE (r.id_user IS NULL) AND (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
+								WHERE (r.id_user IS NULL) AND (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit;
 		}
 		else{
 			if ($send['id_cat'] == 0)
-				$query_users = "SELECT *,id_user AS id FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit . "";
+				$query_users = "SELECT *,id_user AS id FROM ". $ConfigDB["prefix"] . "users WHERE status='active' " . $interval . " ".$order." " . $limit;
 			else 
 				$query_users = "SELECT *,u.id_user AS id, u.email AS email FROM " . $ConfigDB["prefix"] . "users u
 								LEFT JOIN ". $ConfigDB["prefix"] ."subscription s ON u.id_user=s.id_user
-								WHERE (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit . "";
+								WHERE (id_cat=".$send['id_cat'].") AND (status='active') " . $interval . " " . $order . " " . $limit;
 		}						
 		
 		$result_users = $dbh->query($query_users);
@@ -172,7 +114,66 @@ if ($result_send->num_rows > 0){
 		if (!$result_users) exit('Error executing SQL query!');
 		
 		while($user = $result_users->fetch_array()){
-			$subject = $send['name'];
+            $m = new PHPMailer();
+
+            if ($settings['add_dkim'] == 'yes' && file_exists($settings['dkim_private'])){
+                $m->DKIM_domain = $settings['dkim_domain'];
+                $m->DKIM_private = $settings['dkim_private'];
+                $m->DKIM_selector = $settings['dkim_selector'];
+                $m->DKIM_passphrase = $settings['dkim_passphrase'];
+                $m->DKIM_identity = $settings['dkim_identity'];
+            }
+
+            if ($settings['how_to_send'] == 2){
+                $m->IsSMTP();
+                $m->SMTPAuth = true;
+                $m->SMTPKeepAlive = true;
+                $m->Host = $settings['smtp_host'];
+                $m->Port = $settings['smtp_port'];
+                $m->Username = $settings['smtp_username'];
+                $m->Password = $settings['smtp_password'];
+
+                if ($settings['smtp_secure'] == 'ssl')
+                    $m->SMTPSecure  = 'ssl';
+                elseif ($settings['smtp_secure'] == 'tls')
+                    $m->SMTPSecure  = 'tls';
+
+                if ($settings['smtp_aut'] == 'plain')
+                    $m->AuthType = 'PLAIN';
+                elseif ($settings['smtp_aut'] == 'cram-md5')
+                    $m->AuthType = 'CRAM-MD5';
+
+                $m->Timeout = $settings['smtp_timeout'];
+            } elseif ($settings['how_to_send'] == 3 and !empty($settings['sendmail'])){
+                $m->IsSendmail();
+                $m->Sendmail = $settings['sendmail'];
+            } else {
+                $m->IsMail();
+            }
+
+            $m->CharSet = $charset;
+
+            if ($send['prior'] == "1")
+                $m->Priority = 1;
+            elseif ($send['prior'] == "2")
+                $m->Priority = 5;
+            else $m->Priority = 3;
+
+            if ($settings['show_email'] == "no")
+                $m->From = "noreply@" . $_SERVER['SERVER_NAME'];
+            else
+                $m->From = $settings['email'];
+
+            $m->FromName = $from;
+
+            if (!empty($settings['list_owner'])) $m->addCustomHeader("List-Owner: <" . $settings['list_owner'] . ">");
+            if (!empty($settings['return_path'])) $m->addCustomHeader("Return-Path: <" . $settings['return_path'] . ">");
+            if ($settings['content_type'] == 2)
+                $m->isHTML(true);
+            else
+                $m->isHTML(false);
+
+            $subject = $send['name'];
 			$subject = str_replace('%NAME%', $user['name'], $subject);
 			
 			if ($charset != 'utf-8'){
@@ -199,11 +200,11 @@ if ($result_send->num_rows > 0){
 			elseif ($settings['precedence'] == 'list')
 				$m->addCustomHeader("Precedence: list");
 
-			if (!empty($settings['path'])) $UNSUB = $settings['path'] . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+			if (!empty($settings['path'])) $UNSUB = $settings['path'] . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'];
 			$unsublink = str_replace('%UNSUB%', $UNSUB, $settings['unsublink']);
 
 			if ($settings['show_unsubscribe_link'] == "yes" && !empty($settings['unsublink'])) {
-				$msg = "".$send['body']."<br><br>" . $unsublink . "";
+				$msg = "".$send['body']."<br><br>" . $unsublink;
 				$m->addCustomHeader("List-Unsubscribe: " . $UNSUB . "");
 			} else
 				$msg = $send['body'];

@@ -263,11 +263,28 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="random">${SET_RANDOM}</label>
         <div class="col-lg-7">
           <div class="checkbox">
             <label><input type="checkbox" name="random"  <!-- IF '${RANDOM}' == 'yes' -->checked="checked"<!-- END IF -->></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="replacement_chars_subject">${SET_REPLACEMENT_CHARS_SUBJECT}</label>
+        <div class="col-lg-7">
+          <div class="checkbox">
+            <label><input type="checkbox" name="replacement_chars_subject"  <!-- IF '${REPLACEMENT_CHARS_SUBJECT}' == 'yes' -->checked="checked"<!-- END IF -->></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="random">${SET_REPLACEMENT_CHARS_BODY}</label>
+        <div class="col-lg-7">
+          <div class="checkbox">
+            <label><input type="checkbox" name="replacement_chars_body"  <!-- IF '${REPLACEMENT_CHARS_BODY}' == 'yes' -->checked="checked"<!-- END IF -->></label>
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception40
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')) {
 	switch($_REQUEST['action']) {
@@ -116,12 +116,12 @@ $tpl->assign('ALERT_CONFIRM_REMOVE', core::getLanguage('alert', 'confirm_remove'
 $tpl->assign('STR_REMOVE_ALL_SUBSCRIBERS', core::getLanguage('str', 'remove_all_subscribers'));
 $tpl->assign('STR_CHECK_ALLBOX', core::getLanguage('str', 'check_allbox'));
 
-$order = array(
+$order = [
     'name'  => "name",
     'email' => "email",
     'time'  => "time",
     'status' => "status",
-);
+];
 
 $strtmp = "name";
 $sort = '';
@@ -135,7 +135,7 @@ foreach($order as $parametr => $field) {
 			$thclass[$parametr] = 'headerSortUp';
 		} else {
 			$_GET[$parametr] = "up";
-			$strtmp = "" . $field . " DESC";
+			$strtmp = $field . " DESC";
 			$sort = "&" . $field . "=down";
 			$thclass[$parametr] = 'headerSortDown';
 		}

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -11,8 +11,8 @@
 error_reporting(0);
 session_start();
 
-$INSTALL = array();
-$INSTALL["version"] = '5.2.3';
+$INSTALL = [];
+$INSTALL["version"] = '5.3.0';
 
 $INSTALL["system"]["dir_config"] = 'config/';
 $SCRIPT_URL = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],"install/"));
@@ -34,10 +34,10 @@ if ($INSTALL['step'] < 1 or $INSTALL['step'] > $INSTALL['step_count']){
 }
 
 // language
-$INSTALL['available_langs'] = array(
+$INSTALL['available_langs'] = [
 	'en' => 'English',
 	'ru' => 'Russian'
-);
+];
 
 if ($INSTALL['step'] == 1 && isset($_POST['forward'])){
 	$_SESSION['language'] = $_POST['language'];
@@ -84,7 +84,7 @@ if (file_exists($lang_file))
 else
 	exit('ERROR: Language file can not load!');
 
-$INSTALL['step_title'] = array(
+$INSTALL['step_title'] = [
 	1 => $INSTALL["lang"]["str"]["install_lang_select"],
 	2 => $INSTALL["lang"]["str"]["license_key"],
 	3 => $INSTALL["lang"]["str"]["license"],	
@@ -92,9 +92,9 @@ $INSTALL['step_title'] = array(
 	5 => $INSTALL["lang"]["str"]["db_and_product_settings"],
 	6 => $INSTALL["lang"]["str"]["db_and_product_settings"],
 	7 => $INSTALL["lang"]["str"]["install_completion"],
-);
+];
 
-$INSTALL['tables'] = array(
+$INSTALL['tables'] = [
 	'attach',
 	'aut',
 	'category',
@@ -109,26 +109,26 @@ $INSTALL['tables'] = array(
 	'subscription',
 	'template',
 	'users',
-);
+];
 
 // Handlers
 if ($INSTALL['step'] == 1 && isset($_POST['forward'])){
-	$_POST = array();
+	$_POST = [];
 	$INSTALL['step'] = 2;
 }
 
 if ($INSTALL['step'] == 2 && isset($_POST['forward'])){
-	$_POST = array();
+	$_POST = [];
 	$INSTALL['step'] = 3;
 }
 
 if ($INSTALL['step'] == 3 && isset($_POST['forward'])){
-	$_POST = array();
+	$_POST = [];
 	$INSTALL['step'] = 4;
 }
 
 if ($INSTALL['step'] == 4 && isset($_POST['forward'])){
-	$_POST = array();
+	$_POST = [];
 	$INSTALL['step'] = 5;
 }
 
@@ -182,7 +182,7 @@ if ($INSTALL['step'] == 5){
 		}
         
 		if (empty($INSTALL['errors'])) {
-			$tables = array();
+			$tables = [];
 
 			if ($res1 = $dbh->query("SHOW TABLES FROM `".$dbh->real_escape_string($_POST['name'])."` LIKE '".$dbh->real_escape_string($_POST['prefix'])."%'")) {
 				while ($row1 = $res1->fetch_row()){
@@ -195,7 +195,7 @@ if ($INSTALL['step'] == 5){
 				}
 			}
 			
-			$exists_tables = array();
+			$exists_tables = [];
 
 			foreach($INSTALL['tables'] as $table){
 				if (isset($tables[$table])) {
@@ -217,6 +217,11 @@ if ($INSTALL['step'] == 5){
                 if (isset($tables['сustomheaders'])) {
                     $INSTALL['version_detect'] = '5.2.0';
                     $INSTALL['version_code'] = 50200;
+                }
+
+                if (in_array('name', $tables['aut'])) {
+                    $INSTALL['version_detect'] = '5.3.0';
+                    $INSTALL['version_code'] = 50300;
                 }
             }
 			
@@ -242,6 +247,8 @@ if ($INSTALL['step'] == 5){
                         import_data('update/update_5_0_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
                     } elseif ($INSTALL['version_code'] == 50100) {
                         import_data('update/update_5_1_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
+                    } elseif ($INSTALL['version_code'] == 50200) {
+                        import_data('update/update_5_2_' . $INSTALL['language'] . '.sql', $_POST['prefix']);
                     }
 					
 					if (empty($INSTALL['errors'])) {
@@ -252,11 +259,11 @@ if ($INSTALL['step'] == 5){
 						$_SESSION['prefix']   = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
 					
-						$_POST = array();
+						$_POST = [];
 						$INSTALL['step'] = 6;
 					}	
 				} elseif ($_POST['action'] == 'clear') {
-					$tables_drop = array();
+					$tables_drop = [];
         
 					foreach($INSTALL['tables'] as $table) {
 						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
@@ -277,13 +284,13 @@ if ($INSTALL['step'] == 5){
 						$_SESSION['prefix'] = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
         
-						$_POST = array();
+						$_POST = [];
 						$INSTALL['step'] = 6;
 					}
 				}
 			} elseif($_POST['action'] == 'clear'){
 				if ($INSTALL['version_detect'] && $_POST['action'] == 'clear'){
-					$tables_drop = array();
+					$tables_drop = [];
 					 
 					foreach ($INSTALL['tables'] as $table){
 						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
@@ -304,11 +311,11 @@ if ($INSTALL['step'] == 5){
 						$_SESSION['prefix'] = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
 					
-                        $_POST = array();
+                        $_POST = [];
                         $INSTALL['step'] = 6;
                     }
 				} elseif($_POST['action'] == 'clear') {
-					$tables_drop = array();
+					$tables_drop = [];
         
 					foreach($INSTALL['tables'] as $table) {
 						$tables_drop[] = '`'.$_POST['prefix'].$table.'`';
@@ -328,7 +335,7 @@ if ($INSTALL['step'] == 5){
 						$_SESSION['prefix'] = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
 						
-						$_POST = array();
+						$_POST = [];
 						$INSTALL['step'] = 6;
 					}
                 }
@@ -345,7 +352,7 @@ if ($INSTALL['step'] == 5){
 						$_SESSION['prefix'] = $_POST['prefix'];
 						$_SESSION['port'] = $_POST['port'];
 						
-						$_POST = array();
+						$_POST = [];
 						$INSTALL['step'] = 6;
                     }
                 }
@@ -395,17 +402,17 @@ if ($INSTALL['step'] == 6 && isset($_POST['forward'])){
 			$f = @fopen("../" . $INSTALL["system"]["dir_config"] . "config_db.php","w");
 
 			if (fwrite($f, $string) === FALSE){
-				$_POST = array();
+				$_POST = [];
 				$INSTALL['step'] = 6;
 				$INSTALL['errors'][] = $INSTALL["lang"]["error"]["unwritabl_config"];						
 			} else {
-				$_POST = array();
+				$_POST = [];
 				$INSTALL['step'] = 7;
 			}
 	
 			fclose($f);
 		} else {
-			$_POST = array();
+			$_POST = [];
 			$INSTALL['step'] = 6;
 			$INSTALL['errors'][] = $INSTALL["lang"]["error"]["setting_product"];
 		}
@@ -505,7 +512,7 @@ if ($INSTALL['step'] == 1) {
         </fieldset>
         <div class="form-actions">
           <input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
-          <input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+          <input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
         </div>
       </form>
 <?php
@@ -518,26 +525,31 @@ if ($INSTALL['step'] == 1) {
 
 ?>
 <script type="text/javascript">
-$(document).on('change','#license_key',function(){
+$(document).on('change keyup input click','#license_key',function(){
 	var licensekey = $("#license_key").val();
 
-	$.ajax({
-		type: "POST",
-		url: "./check_license.php",
-		data: "licensekey=" + licensekey + '&version=<?php echo $INSTALL["version"]; ?>&lang=<?php echo $_SESSION['language']; ?>',
-		dataType: "json",
-		success: function(data) {
-			if (data.result == 'no') {
-				$("#error_msg").css('display', 'block');
-				$("#error_msg").text(data.error);
-				$(".btn-primary").attr("disabled", "disabled");
-			} else {
-				$("#error_msg").text('');
-				$("#error_msg").css('display', 'none');
-				$('.btn-primary').removeAttr("disabled");
-			}
-		}
-	});
+    if (licensekey.length >= 8) {
+        $("#process").removeClass().addClass('showprocess');
+        $.ajax({
+            type: "POST",
+            url: "./check_license.php",
+            data: "licensekey=" + licensekey + '&version=<?php echo $INSTALL["version"]; ?>&lang=<?php echo $_SESSION['language']; ?>',
+            dataType: "json",
+            success: function (data) {
+                if (data.result == 'no') {
+                    $("#process").removeClass();
+                    $("#error_msg").css('display', 'block');
+                    $("#error_msg").text(data.error);
+                    $(".btn-primary").attr("disabled", "disabled");
+                } else {
+                    $("#process").removeClass();
+                    $("#error_msg").text('');
+                    $("#error_msg").css('display', 'none');
+                    $('.btn-primary').removeAttr("disabled");
+                }
+            }
+        });
+    }
 });
 	
 </script>
@@ -561,7 +573,7 @@ $(document).on('change','#license_key',function(){
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
-		<input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+        <input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" /> <span id="progress"></span>
 	</div>	
 </form> 
 <?php
@@ -597,7 +609,7 @@ $(document).on('change','#license_key',function(){
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" name="forward" class="btn btn-primary"  value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" disabled="disabled"/>
-		<input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+		<input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
 	</div>
 </form>
 <?php
@@ -608,10 +620,10 @@ $(document).on('change','#license_key',function(){
 	  Step 4
 	*********/
 
-	$check = array();
-    $info = array();
+	$check = [];
+    $info = [];
     
-    $check["php_version"]  = version_compare(PHP_VERSION, "5.3", ">=");
+    $check["php_version"]  = version_compare(PHP_VERSION, "5.4", ">=");
     $info["php_version"]   = PHP_VERSION;
     $check["php_mysql"]    = extension_loaded("mysqli");
     $check["php_mbstring"] = extension_loaded("mbstring");
@@ -649,7 +661,7 @@ if (ini_get('register_globals') == 1) {
 			<table class="table table-striped table-bordered table-hover dataTable" width="100%" cellspacing="0" cellpadding="0" border="0">
             <tbody>
               <tr>
-                <td width="250">PHP 5.3 + </td>
+                <td width="250">PHP 5.4 + </td>
                 <td><strong><?php echo $check["php_version"] ? '<span class="label label-success">'.$INSTALL["lang"]["str"]["yes"].'</span>' : '<span class="text-danger">'.$INSTALL["lang"]["str"]["no"].'</span>'; ?></strong></td>
               </tr>
               <tr>
@@ -677,7 +689,7 @@ if (ini_get('register_globals') == 1) {
         </fieldset>
         <div class="form-actions">
           <input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
-          <input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+          <input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
         </div>
       </form>
 <?php
@@ -792,7 +804,7 @@ if (ini_get('register_globals') == 1) {
         </fieldset>
         <div class="form-actions">
           <input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
-          <input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+          <input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
         </div>
       </form>
       <?php
@@ -845,7 +857,7 @@ if (ini_get('register_globals') == 1) {
         </fieldset>
         <div class="form-actions">
           <input type="submit" name="forward" class="btn btn-primary" value="<?php echo $INSTALL["lang"]["str"]["next"]; ?>" />
-          <input type="button" class="btn" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
+          <input type="button" class="btn btn-default" value="<?php echo $INSTALL["lang"]["str"]["cancel"]; ?>" onclick="location.href='../'" />
         </div>
       </form>
 <?php

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -18,7 +18,7 @@ if (Core_Array::getRequest('action')){
 	if (Pnl::check_email($email)) Pnl::error(core::getLanguage('error', 'wrong_email'));
 	if ($data->checkExistEmail($email)) Pnl::error(core::getLanguage('error', 'subscribe_is_already_done'));
 
-	$fields = array(
+	$fields = [
         'id_user' => 0,
         'name'  => $name,
         'email' => $email,
@@ -27,7 +27,7 @@ if (Core_Array::getRequest('action')){
         'time'  => date("Y-m-d H:i:s"),
         'status' => core::getSetting("require_confirmation") == 'yes' ? 'noactive' : 'active',
         'time_send' => '0000-00-00 00:00:00'
-    );
+    ];
 
 	$insert_id = $data->makeSubscribe($fields);
 

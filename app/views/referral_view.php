@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -16,12 +16,12 @@ $id_user = Core_Array::getRequest('id');
 if (!empty($url) && is_numeric($id_user)) {
 	$row = $data->getUserInfo($id_user);
 
-	$fields = array(
+	$fields = [
         'id'  => 0,
         'url' => $url,
         'time'  => date("Y-m-d H:i:s"),
         'email' => $row['email'],
-    );
+    ];
 
 	$data->redirect_log($fields);
 

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -19,7 +19,7 @@ class Model_log extends Model
      */
     public function getLogArr($pnumber = 10, $page)
     {
-        core::database()->parameters = "*,DATE_FORMAT(l.time,'%d.%m.%Y %H:%i') AS send_time, count(r.id_log) AS lettercount, SUM(r.success='yes') AS countsent, SUM(r.readmail='yes') AS countread ";
+        core::database()->parameters = "*,DATE_FORMAT(l.time,'%d.%m.%Y %H:%i') AS send_time, count(r.id_log) AS lettercount, SUM(r.success='yes') AS countsent, SUM(r.readmail='yes') AS countread, l.id_log AS id_log ";
         core::database()->tablename = core::database()->getTableName('log') . " AS l ";
         core::database()->tablename .= "LEFT JOIN " . core::database()->getTableName('ready_send') . " AS r ON l.id_log=r.id_log ";
         core::database()->order = 'ORDER BY l.id_log desc';

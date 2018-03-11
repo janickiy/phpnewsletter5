@@ -104,6 +104,7 @@ $language["info"]["redirect_log"] = "Here you can see the statistics of clicks o
 
 $language["str"]["action"] = "Action";
 $language["str"]["activity"] = "Activity";
+$language["str"]["description"] = "Decriotion";
 $language["str"]["category"] = "Category";
 $language["str"]["edit"]     = "Edit";
 $language["str"]["remove"]   = "Remove";
@@ -188,7 +189,7 @@ $language["str"]["user_email"] = "E-mail of recipient";
 $language["str"]["name"]      = "Name";
 $language["str"]["charset"]   = "Charset";
 $language["str"]["clear_log"] = "Clear log";
-$language["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
+$language["str"]["logo"]   = '© 2006-2018 <a href="http://janicky.com/">PHP Newsletter</a>';
 $language["str"]["author"] = "Alexander Yanitsky";
 $language["str"]["current_password"] = 'Current Password';
 $language["str"]["password"] = "Password";
@@ -201,7 +202,7 @@ $language["str"]["remove_user"] = "Remove";
 $language["str"]["import_user"] = "Import";
 $language["str"]["export_user"] = "Export";
 $language["str"]["update_warning"] = 'A new version of %SCRIPTNAME% is already available and you can use it. The newest version is %VERSION%, created %CREATED% <a href="%DOWNLOADLINK%">Download</a> %MESSAGE%';
-$language["str"]["supported_tags_list"] = "%NAME% is username, %UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name, %REFERRAL:http://my_website.com/% - url link for referrers statistics";
+$language["str"]["supported_tags_list"] = "%NAME% is username, %Email% - user email,%UNSUB% is an unsub link to mailing, %SERVER_NAME% is server name, %REFERRAL:http://my_website.com/% - url link for referrers statistics";
 $language["str"]["warning"] = 'Warning';
 $language["str"]["install_msg"] = 'If PHP Newsletter has been already installed, then you should delete <strong>install</strong> folder; otherwise launch the <a href="%URL%">installation wizard</a>.';
 $language["str"]["url_info"] = 'http://janicky.com/en/php-scripts/php-newsletter';
@@ -339,7 +340,8 @@ $language["str"]["accounts"] = "Accounts";
 $language["str"]["value"] = "Value";
 $language["str"]["change_password"] = "Сhange password";
 $language["str"]["additional_headers"] = 'Additional headers';
-
+$language["str"]["set_replacement_chars_subject"] = "Replacing the cyrillic chars with a similar latin chars in subject";
+$language["str"]["set_replacement_chars_body"] = "Replacing the cyrillic chars with a similar latin chars in content";
 $language["button"]["apply"]        = "apply";
 $language["button"]["add_category"] = "Add category";
 $language["button"]["by_default"]   = "by default";

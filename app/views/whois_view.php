@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -32,7 +32,7 @@ include_once core::pathTo('extra', 'menu.php');
 
 $tpl->assign('RETURN_BACK', core::getLanguage('str', 'return_back'));
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getGet('ip')){
     $sock = @fsockopen("whois.ripe.net", 43, $errno, $errstr);

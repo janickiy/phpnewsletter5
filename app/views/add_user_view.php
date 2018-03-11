@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
+ * PHP Newsletter 5.3.1
  * Copyright (c) 2006-2016 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception40
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')) {
 
@@ -39,7 +39,7 @@ if (Core_Array::getRequest('action')) {
 	}
 	
 	if (empty($errors)) {
-		$fields = array(
+		$fields = [
             'id_user' => 0,
             'name'    => $name,
             'email'   => $email,
@@ -47,7 +47,7 @@ if (Core_Array::getRequest('action')) {
             'time'    => date("Y-m-d H:i:s"),
             'status'  => 'active',
             'time_send' => '0000-00-00 00:00:00',
-        );
+        ];
 
 		if ($data->addUser($fields, Core_Array::getRequest('id_cat'))) {
 			header("Location: ./?t=subscribers");

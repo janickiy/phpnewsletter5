@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%attach` (
 
 CREATE TABLE IF NOT EXISTS `%prefix%aut` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
-  `login` varchar(255) NOT NULL,
+  `login` varchar(255) NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','moderator','editor') NOT NULL,
   PRIMARY KEY (`id`)
@@ -103,7 +105,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%settings` (
   `precedence` enum('no','bulk','junk','list') DEFAULT 'bulk',
   `return_path` varchar(255) DEFAULT NULL,
   `sleep` int(6) DEFAULT NULL,
-  `random` enum('no','yes') DEFAULT 'no',
+  `random` enum('no','yes') DEFAULT 'no',   
+  `replacement_chars_body` enum('no','yes') DEFAULT 'no',  
+  `replacement_chars_subject` enum('no','yes') DEFAULT 'no',  
   `add_dkim` enum('no','yes') DEFAULT 'no',
   `dkim_domain` varchar(255) DEFAULT NULL,
   `dkim_private` varchar(255) DEFAULT NULL,

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -25,11 +25,11 @@ class Model_ajax extends Model
             $result = core::database()->querySQL($query);
 
             if (core::database()->getRecordCount($result) == 0) {
-                $fields = array(
+                $fields = [
                     'id' => 0,
                     'process' => $status,
                     'id_user' => $id_user,
-                );
+                ];
 
                 $insert = core::database()->insert($fields, core::database()->getTableName("process"));
 
@@ -218,7 +218,7 @@ class Model_ajax extends Model
     {
         global $ConfigDB;
 
-        $tables_list = array(
+        $tables_list = [
             'attach',
             'aut',
             'category',
@@ -233,9 +233,9 @@ class Model_ajax extends Model
             'subscription',
             'template',
             'users',
-        );
+        ];
 
-        $tables = array();
+        $tables = [];
 
         if ($res1 = core::database()->querySQL("SHOW TABLES FROM `" . $ConfigDB["name"] . "` LIKE '" . $ConfigDB["prefix"] . "%'")) {
             while ($row1 = core::database()->getRow($res1)){
@@ -265,6 +265,8 @@ class Model_ajax extends Model
                 $version_code_detect = 50100;
             } elseif (isset($tables['сustomheaders'])) {
                 $version_code_detect = 50200;
+            } elseif (in_array('name', $tables['aut'])) {
+                $version_code_detect = 50300;
             }
         }
 
@@ -313,7 +315,7 @@ class Model_ajax extends Model
             elseif (core::getSetting('smtp_aut') == 'cram-md5')
                 $m->AuthType = 'CRAM-MD5';
 
-            $m->Timeout = $settings['smtp_timeout'];
+            $m->Timeout =  core::getSetting('smtp_timeout');
         } elseif (core::getSetting('how_to_send') == 3 && core::getSetting('sendmail') != ''){
             $m->IsSendmail();
             $m->Sendmail = core::getSetting('sendmail');
@@ -328,7 +330,7 @@ class Model_ajax extends Model
 
         $m->CharSet = $charset;
 
-        if ($settings['email_name'] == '')
+        if (core::getSetting('email_name') == '')
             $from = $_SERVER["SERVER_NAME"];
         else
             $from = core::getSetting('email_name');
@@ -352,7 +354,7 @@ class Model_ajax extends Model
             $m->Priority = 3;
 
         if (core::getSetting('show_email') == "no")
-            $m->From = "noreply@" . $_SERVER['SERVER_NAME']."";
+            $m->From = "noreply@" . $_SERVER['SERVER_NAME'];
         else
             $m->From = core::getSetting('email');
 
@@ -394,10 +396,12 @@ class Model_ajax extends Model
 
         $msg = preg_replace_callback("/%REFERRAL\:(.+)%/isU", function($matches) { return "http://%URL_PATH%?t=referral&ref=" . base64_encode($matches[1]) . "&id=%USERID%"; }, $msg);
         $msg = str_replace('%NAME%', $user, $msg);
+        $msg = str_replace('%EMAIL%', $email, $msg);
         $msg = str_replace('%UNSUB%', $UNSUB, $msg);
         $msg = str_replace('%SERVER_NAME%', $_SERVER['SERVER_NAME'], $msg);
         $msg = str_replace('%USERID%', 0, $msg);
         $msg = str_replace('%URL_PATH%', $_SERVER["SERVER_NAME"] . Pnl::root(), $msg);
+        $msg = core::getSetting('replacement_chars_body') == 'yes' ? Pnl::encodeString($msg) : $msg;
 
         if ($charset != 'utf-8') $msg = iconv('utf-8', $charset, $msg);
         if (core::getSetting('content_type') == 1) {
@@ -470,74 +474,8 @@ class Model_ajax extends Model
             $result = core::database()->querySQL($query);
 
             if (core::database()->getRecordCount($result) > 0) {
-                $m = new PHPMailer();
-
-                if (core::getSetting('add_dkim') == 'yes' && file_exists(SYS_ROOT . core::getSetting('dkim_private'))) {
-                    $m->DKIM_domain = core::getSetting('dkim_domain');
-                    $m->DKIM_private = core::getSetting('dkim_private');
-                    $m->DKIM_selector = core::getSetting('dkim_selector');
-                    $m->DKIM_passphrase = core::getSetting('dkim_passphrase');
-                    $m->DKIM_identity = core::getSetting('dkim_identity');
-                }
-
-                if (core::getSetting('how_to_send') == 2) {
-                    $m->IsSMTP();
-
-                    $m->SMTPAuth = true;
-                    $m->SMTPKeepAlive = true;
-                    $m->Host = core::getSetting('smtp_host');
-                    $m->Port = core::getSetting('smtp_port');
-                    $m->Username = core::getSetting('smtp_username');
-                    $m->Password = core::getSetting('smtp_password');
-
-                    if (core::getSetting('smtp_secure') == 'ssl')
-                        $m->SMTPSecure = 'ssl';
-                    elseif (core::getSetting('smtp_secure') == 'tls')
-                        $m->SMTPSecure = 'tls';
-
-                    if (core::getSetting('smtp_aut') == 'plain')
-                        $m->AuthType = 'PLAIN';
-                    elseif (core::getSetting('smtp_aut') == 'cram-md5')
-                        $m->AuthType = 'CRAM-MD5';
-
-                    $m->Timeout = core::getSetting('smtp_timeout');
-                } else
-                    if (core::getSetting('how_to_send') == 3 && (core::getSetting('sendmail') != '')) {
-                        $m->IsSendmail();
-                        $m->Sendmail = core::getSetting('sendmail');
-                    } else {
-                        $m->IsMail();
-                    }
-
                 while ($send = core::database()->getRow($result)) {
-                    $subject = $send['name'];
-                    $m->CharSet = $charset;
-
-                    if ($charset != 'utf-8') {
-                        $subject = iconv('utf-8', $charset, $subject);
-                    }
-
-                    $m->Subject = $subject;
-
-                    if ($send['prior'] == 1)
-                        $m->Priority = 1;
-                    else
-                        if ($send['prior'] == 2)
-                            $m->Priority = 5;
-                        else
-                            $m->Priority = 3;
-
-                    if (core::getSetting('show_email') == "no")
-                        $m->From = "noreply@" . $_SERVER['SERVER_NAME'] . "";
-                    else
-                        $m->From = core::getSetting('email');
-
-                    $m->FromName = $from;
-
-                    if (core::getSetting('content_type') == 2)
-                        $m->isHTML(true);
-                    else
-                        $m->isHTML(false);
+                    $subject = core::getSetting('replacement_chars_subjec') == 'yes' ? Pnl::encodeString($send['name']) : $send['name'];
 
                     if (core::getSetting('interval_type') == 'm')
                         $interval = "AND (time_send < NOW() - INTERVAL '" . core::getSetting('interval_number') . "' MINUTE)";
@@ -548,7 +486,7 @@ class Model_ajax extends Model
                     else
                         $interval = '';
 
-                    $limit = core::getSetting('make_limit_send') == "yes" ? "LIMIT " . core::getSetting('limit_number') . "" : "";
+                    $limit = core::getSetting('make_limit_send') == "yes" ? "LIMIT " . core::getSetting('limit_number') : "";
                     $order = core::getSetting('random') == "yes" ? 'ORDER BY RAND()' : '';
 
                     if (Core_Array::getRequest('typesend') == 2) {
@@ -585,6 +523,74 @@ class Model_ajax extends Model
                     $result_users = core::database()->querySQL($query_users);
 
                     while ($user = core::database()->getRow($result_users)) {
+                        $m = new PHPMailer();
+
+                        if (core::getSetting('add_dkim') == 'yes' && file_exists(SYS_ROOT . core::getSetting('dkim_private'))) {
+                            $m->DKIM_domain = core::getSetting('dkim_domain');
+                            $m->DKIM_private = core::getSetting('dkim_private');
+                            $m->DKIM_selector = core::getSetting('dkim_selector');
+                            $m->DKIM_passphrase = core::getSetting('dkim_passphrase');
+                            $m->DKIM_identity = core::getSetting('dkim_identity');
+                        }
+
+                        if (core::getSetting('how_to_send') == 2) {
+                            $m->IsSMTP();
+                            $m->SMTPAuth = true;
+                            $m->SMTPKeepAlive = true;
+                            $m->Host = core::getSetting('smtp_host');
+                            $m->Port = core::getSetting('smtp_port');
+                            $m->Username = core::getSetting('smtp_username');
+                            $m->Password = core::getSetting('smtp_password');
+
+                            if (core::getSetting('smtp_secure') == 'ssl')
+                                $m->SMTPSecure = 'ssl';
+                            elseif (core::getSetting('smtp_secure') == 'tls')
+                                $m->SMTPSecure = 'tls';
+
+                            if (core::getSetting('smtp_aut') == 'plain')
+                                $m->AuthType = 'PLAIN';
+                            elseif (core::getSetting('smtp_aut') == 'cram-md5')
+                                $m->AuthType = 'CRAM-MD5';
+
+                            $m->Timeout = core::getSetting('smtp_timeout');
+                        } else {
+                            if (core::getSetting('how_to_send') == 3 && (core::getSetting('sendmail') != '')) {
+                                $m->IsSendmail();
+                                $m->Sendmail = core::getSetting('sendmail');
+                            } else {
+                                $m->IsMail();
+                            }
+                        }
+
+                        $m->CharSet = $charset;
+
+                        if ($charset != 'utf-8') {
+                            $subject = iconv('utf-8', $charset, $subject);
+                        }
+
+                        $m->Subject = $subject;
+
+                        if ($send['prior'] == 1)
+                            $m->Priority = 1;
+                        else
+                            if ($send['prior'] == 2)
+                                $m->Priority = 5;
+                            else
+                                $m->Priority = 3;
+
+                        if (core::getSetting('show_email') == "no")
+                            $m->From = "noreply@" . $_SERVER['SERVER_NAME'];
+                        else
+                            $m->From = core::getSetting('email');
+
+                        $m->FromName = $from;
+
+                        if (core::getSetting('content_type') == 2)
+                            $m->isHTML(true);
+                        else
+                            $m->isHTML(false);
+
+
                         if ( $this->getStatusProcess(Auth::getAutId()) == 'stop' || $this->getStatusProcess(Auth::getAutId()) == 'pause') {
                             break;
                         }
@@ -618,17 +624,19 @@ class Model_ajax extends Model
                         if (core::getSetting('list_owner') != '') $m->addCustomHeader("List-Owner: <" . core::getSetting('list_owner') . ">");
                         if (core::getSetting('return_path') != '') $m->addCustomHeader("Return-Path: <" . core::getSetting('return_path') . ">");
 
-                        $UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'] . "";
+                        $UNSUB = "http://" . $_SERVER["SERVER_NAME"] . Pnl::root() . "?t=unsubscribe&id=" . $user['id'] . "&token=" . $user['token'];
                         $unsublink = str_replace('%UNSUB%', $UNSUB, core::getSetting('unsublink'));
+                        $send['body'] = core::getSetting('replacement_chars_body') == 'yes' ? Pnl::encodeString($send['body']) : $send['body'];
 
                         if (core::getSetting('show_unsubscribe_link') == "yes" && (core::getSetting('unsublink') != '')) {
-                            $msg = "" . $send['body'] . "<br><br>" . $unsublink . "";
+                            $msg = $send['body'] . "<br><br>" . $unsublink;
                             $m->addCustomHeader("List-Unsubscribe: " . $UNSUB . "");
                         } else
                             $msg = $send['body'];
 
                         $msg = preg_replace_callback("/%REFERRAL\:(.+)%/isU", function($matches) { return "http://%URL_PATH%?t=referral&ref=" . base64_encode($matches[1]) . "&id=%USERID%"; }, $msg);
                         $msg = str_replace('%NAME%', $user['name'], $msg);
+                        $msg = str_replace('%EMAIL%', $user['email'], $msg);
                         $msg = str_replace('%UNSUB%', $UNSUB, $msg);
                         $msg = str_replace('%SERVER_NAME%', $_SERVER['SERVER_NAME'], $msg);
                         $msg = str_replace('%USERID%', $user['id'], $msg);
@@ -665,7 +673,7 @@ class Model_ajax extends Model
                         $m->Body = $msg;
 
                         if (!$m->Send()) {
-                            $fields = array(
+                            $fields = [
                                 'id_ready_send' => 0,
                                 'id_user'       => $user['id'],
                                 'email'       => $user['email'],
@@ -675,11 +683,12 @@ class Model_ajax extends Model
                                 'readmail' => 'no',
                                 'time'     => date("Y-m-d H:i:s"),
                                 'id_log'   => $insert_id,
-                            );
+                                 ];
+
                             core::database()->insert($fields, core::database()->getTableName("ready_send"));
                             $mailcountno = $mailcountno + 1;
                         } else {
-                            $fields = array(
+                            $fields = [
                                 'id_ready_send' => 0,
                                 'id_user'       => $user['id'],
                                 'email'       => $user['email'],
@@ -688,7 +697,7 @@ class Model_ajax extends Model
                                 'readmail'    => 'no',
                                 'time'   => date("Y-m-d H:i:s"),
                                 'id_log' => $insert_id,
-                            );
+                            ];
 
                             core::database()->insert($fields, core::database()->getTableName("ready_send"));
 

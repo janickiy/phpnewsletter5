@@ -11,7 +11,7 @@ $INSTALL["lang"]["str"]["no"] = "Нет";
 $INSTALL["lang"]["str"]["check_result"] = "Результаты проверки";
 $INSTALL["lang"]["str"]["can_continue_install"] = "Вы можете продолжить установку.";
 $INSTALL["lang"]["str"]["error_after_process"] = "При обработке введёных данных возникли следующие ошибки";
-$INSTALL["lang"]["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
+$INSTALL["lang"]["str"]["logo"]   = '© 2006-2018 <a href="http://janicky.com/">PHP Newsletter</a>';
 $INSTALL["lang"]["str"]["author"] = "Яницкий Александр";
 $INSTALL["lang"]["str"]["system_req"] = "Проверка на соответствие системным требованиям";
 $INSTALL["lang"]["str"]["db_and_product_settings"] = "Параметры базы данных и продукта";

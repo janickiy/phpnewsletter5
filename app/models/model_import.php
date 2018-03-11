@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.2.3
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -56,17 +56,17 @@ class Model_import extends Model
 
 						foreach($id_cat as $id) {
 							if (is_numeric($id)) {
-								$fields = array(
+								$fields = [
                                     'id_sub'  => 0,
                                     'id_user' => $row['id_user'],
                                     'id_cat'  => $id,
-                                );
+                                ];
 
 								core::database()->insert($fields, core::database()->getTableName('subscription'));
 							}
 						}
 					} else {
-						$fields = array(
+						$fields = [
                             'id_user' => 0,
                             'name'    => $name,
                             'email'   => $email,
@@ -74,7 +74,7 @@ class Model_import extends Model
                             'time'    => date("Y-m-d H:i:s"),
                             'status'  => 'active',
                             'time_send' => '0000-00-00 00:00:00',
-                        );
+                        ];
 						
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 						
@@ -82,11 +82,11 @@ class Model_import extends Model
 						
 						foreach($id_cat as $id){
 							if (is_numeric($id)){
-								$subfields = array(
+								$subfields = [
                                     'id_sub'  => 0,
                                     'id_user' => $insert_id,
                                     'id_cat'  => $id,
-                                );
+                                ];
 									
 								core::database()->insert($subfields, core::database()->getTableName('subscription'));
 							}
@@ -152,18 +152,18 @@ class Model_import extends Model
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array(
+									$fields = [
                                         'id_sub'  => 0,
                                         'id_user' => $row['id_user'],
                                         'id_cat'  => $id
-                                    );
+                                    ];
 
 									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}
 							}
 						}
 					} else {
-						$fields = array(
+						$fields = [
                             'id_user' => 0,
                             'name'    => $name,
                             'email'   => $email,
@@ -171,7 +171,7 @@ class Model_import extends Model
                             'time'    => date("Y-m-d H:i:s"),
                             'status'  =>  'active',
                             'time_send' => '0000-00-00 00:00:00'
-                        );
+                        ];
 
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 
@@ -180,11 +180,11 @@ class Model_import extends Model
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array(
+									$fields = [
                                         'id_sub'  => 0,
                                         'id_user' => $insert_id,
                                         'id_cat'  => $id,
-                                    );
+                                    ];
 
 									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}
