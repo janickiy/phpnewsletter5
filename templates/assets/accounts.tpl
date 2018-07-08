@@ -1,29 +1,15 @@
 <!-- INCLUDE header.tpl -->
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info"> ${INFO_ALERT} </div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-  <ul>
-    <!-- BEGIN row -->
-    <li> ${ERROR}</li>
-    <!-- END row -->
-  </ul>
-</div>
-<!-- END show_errors -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT} </div>
-<!-- END IF -->
-<a href="./?t=change_password">Сменить пароль</a><br>
+<!-- INCLUDE info.tpl -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE success.tpl -->
+<p><a href="./?t=change_password">${STR_CHANGE_PASSWORD}</a><p>
 <form method="POST" action="./?t=add_account">
   <table class="table table-striped table-bordered table-hover">
     <thead>
     <tr>
       <th>${TH_TABLE_LOGIN}</th>
+      <th>${TH_TABLE_NAME}</th>
+      <th>${TH_TABLE_DESCRIPTION}</th>
       <th>${TH_TABLE_ROLE}</th>
       <th>${TH_TABLE_ACTION}</th>
     </tr>
@@ -32,6 +18,8 @@
     <!-- BEGIN row -->
     <tr>
       <td>${LOGIN}</td>
+      <td>${NAME}</td>
+      <td>${DESCRIPTION}</td>
       <td>${ROLE}</td>
       <td>
         <!-- IF '${ALLOW_EDIT}' == 'yes' -->

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator')) throw new Exception40
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')){
 	$name = trim(htmlspecialchars(Core_Array::getRequest('name')));
@@ -30,10 +30,11 @@ if (Core_Array::getRequest('action')){
 	if (!empty($name) && $data->checkExistCatName($name)) $errors[] = core::getLanguage('error', 'cat_name_exist');
 	
 	if (empty($errors)){
-		$fields = array();
-		$fields['id_cat'] = 0;
-		$fields['name'] = $name;
-	
+		$fields = [
+            'id_cat' => 0,
+            'name'   => $name,
+        ];
+
 		if ($data->addNewCategory($fields)){
 			header("Location: ./?t=category");
 			exit();

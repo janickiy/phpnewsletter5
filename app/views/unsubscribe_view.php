@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -16,7 +16,6 @@ if (empty($_GET['token'])) Pnl::error(core::getLanguage('error', 'unsubscribe'))
 $token = $data->getToken(Core_Array::getGet('id'));
 
 if ($token == $_GET['token']){
-
 	if ($data->makeUnsubscribe(Core_Array::getGet('id')) == false) Pnl::error(core::getLanguage('error', 'unsubscribe'));
 	
 	echo '<!DOCTYPE html>';

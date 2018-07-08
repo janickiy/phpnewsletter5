@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -38,8 +38,7 @@ class Model_create_template extends Model
 		$id_insert = core::database()->insert($fields, core::database()->getTableName('template'));
 		
 		if ($id_insert){
-			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++){
-		
+			for ($i = 0; $i < count($_FILES["attachfile"]["name"]); $i++) {
 				if (!empty($_FILES["attachfile"]["name"][$i])){
 					$ext = strrchr($_FILES['attachfile']['name'][$i], ".");
 					$attachfile = core::pathTo(core::getPath('attach'), date("YmdHis", time()) . $i . $ext);
@@ -48,11 +47,12 @@ class Model_create_template extends Model
 						@unlink($_FILES['attachfile']['tmp_name'][$i]); 
 					}
 
-					$attachfields = array();
-					$attachfields['id_attachment'] = 0;
-					$attachfields['name'] = $_FILES['attachfile']['name'][$i];
-					$attachfields['path'] = $attachfile;
-					$attachfields['id_template'] = $id_insert;				
+					$attachfields = [
+                        'id_attachment' => 0,
+                        'name' => $_FILES['attachfile']['name'][$i],
+                        'path' => $attachfile,
+                        'id_template' => $id_insert
+                    ];
 				
 					core::database()->insert($attachfields, core::database()->getTableName('attach'));
 				}		

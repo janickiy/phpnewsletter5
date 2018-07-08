@@ -142,20 +142,13 @@
 <!-- END IF -->
 <!-- BEGIN LogList -->
 <!-- IF 'ACCOUNT_ROLE' == 'admin' || 'ACCOUNT_ROLE' == 'moderator' --><p><a class="btn" href="./?t=redirect_log&clear_log"> <i class="icon-trash"></i> ${STR_CLEAR_LOG} </a></p><!-- END IF -->
-<!-- IF '${INFO_ALERT}' != '' -->
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
+<!-- INCLUDE info.tpl -->
 <!-- IF '${ERROR_ALERT}' != '' -->
 <div class="alert alert-error">
   <button class="close" data-dismiss="alert">×</button>
   <strong>${STR_ERROR}!</strong> ${ERROR_ALERT} </div>
 <!-- END IF -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
-<!-- END IF -->
+<!-- INCLUDE success.tpl -->
 <p><a class="btn btn-outline btn-danger" href="./?t=redirect_log&clear_log"> <i class="fa fa-trash-o"></i> ${STR_CLEAR_LOG} </a></p>
 <table class="table-hover table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>

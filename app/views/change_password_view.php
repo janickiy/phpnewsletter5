@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getPost('action')) {
 	$current_password = trim(Core_Array::getPost('current_password'));
@@ -90,6 +90,7 @@ if (isset($success_msg)) {
 
 //form
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
+$tpl->assign('STR_ACCOUNTS', core::getLanguage('str', 'accounts'));
 $tpl->assign('STR_CURRENT_PASSWORD', core::getLanguage('str', 'current_password'));
 $tpl->assign('STR_PASSWORD', core::getLanguage('str', 'password'));
 $tpl->assign('STR_AGAIN_PASSWORD', core::getLanguage('str', 'again_password'));

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2016 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -19,27 +19,11 @@ class Model_import extends Model
 	{
 		$query =  "SELECT *,cat.id_cat as id FROM ".core::database()->getTableName('category')." cat
 					LEFT JOIN ".core::database()->getTableName('subscription')." subs ON cat.id_cat=subs.id_cat
-					GROUP by id
+					GROUP by cat.id_cat
 					ORDER BY name";
 					
 		$result = core::database()->querySQL($query);
 		return core::database()->getColumnArray($result);
-	}
-
-	/**
-	 * @param $email
-	 * @return bool
-	 */
-	public function checkExistEmail($email)
-	{		
-		$email = core::database()->escape($email);
-		$query =  "SELECT * FROM ".core::database()->getTableName('users')." WHERE email LIKE '".$email."'";
-		$result = core::database()->querySQL($query);		
-				
-		if(core::database()->getRecordCount($result) == 0)
-			return true;
-		else
-			return false;	
 	}
 
 	/**
@@ -55,54 +39,56 @@ class Model_import extends Model
 		if ($_FILES['file']['tmp_name']){
 			$objPHPExcel = PHPExcel_IOFactory::load($_FILES['file']['tmp_name']);
 			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-			$num = count($sheetData);					
-			
+
 			foreach($sheetData as $d){
 				$email = trim($d['A']);
 				$name = trim($d['B']);
 
-				if (!Pnl::check_email($email)){
-					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+				if (!Pnl::check_email($email)){					
+
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
 					$result = core::database()->querySQL($query);
 					
-					if (core::database()->getRecordCount($result) > 0){
+					if (core::database()->getRecordCount($result) > 0) {
 						$row = core::database()->getRow($result);
-						$delete = "DELETE FROM " . core::database()->getTableName('subscription') . " WHERE id_user=" . $row['id_user'];
-						
+
 						core::database()->delete(core::database()->getTableName('subscription'),"id_user=" . $row['id_user'],'');
 
-						foreach($id_cat as $id){
-							if(is_numeric($id))	{
-								$fields = array();
-								$fields['id_sub'] = 0;
-								$fields['id_user'] = $row['id_user'];
-								$fields['id_cat'] = $id;
-									
-								$insert_id = core::database()->insert($fields, core::database()->getTableName('subscription'));
+						foreach($id_cat as $id) {
+							if (is_numeric($id)) {
+								$fields = [
+                                    'id_sub'  => 0,
+                                    'id_user' => $row['id_user'],
+                                    'id_cat'  => $id,
+                                ];
+
+								core::database()->insert($fields, core::database()->getTableName('subscription'));
 							}
 						}
 					} else {
-						$fields = array();
-						$fields['id_user'] = 0;
-						$fields['name'] = $name;
-						$fields['email'] = $email;
-						$fields['token'] = Pnl::getRandomCode();
-						$fields['time'] = date("Y-m-d H:i:s");
-						$fields['status'] = 'active';
-						$fields['time_send'] = '0000-00-00 00:00:00';
+						$fields = [
+                            'id_user' => 0,
+                            'name'    => $name,
+                            'email'   => $email,
+                            'token'   => Pnl::getRandomCode(),
+                            'time'    => date("Y-m-d H:i:s"),
+                            'status'  => 'active',
+                            'time_send' => '0000-00-00 00:00:00',
+                        ];
 						
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 						
-						if($insert_id) $count++;
+						if ($insert_id) $count++;
 						
 						foreach($id_cat as $id){
-							if(is_numeric($id)){
-								$subfields = array();
-								$subfields['id_sub'] = 0;
-								$subfields['id_user'] = $insert_id;
-								$subfields['id_cat'] = $id;
+							if (is_numeric($id)){
+								$subfields = [
+                                    'id_sub'  => 0,
+                                    'id_user' => $insert_id,
+                                    'id_cat'  => $id,
+                                ];
 									
-								$insert_id2 = core::database()->insert($subfields, core::database()->getTableName('subscription'));
+								core::database()->insert($subfields, core::database()->getTableName('subscription'));
 							}
 						}
 					}
@@ -127,7 +113,6 @@ class Model_import extends Model
 			$buffer = fread($fp, filesize($_FILES['file']['tmp_name']));
 			fclose($fp);
 			$tok = strtok($buffer, "\n");
-			$strtmp[] = $tok;
 
 			while ($tok) {
 				$tok = strtok("\n");
@@ -136,19 +121,18 @@ class Model_import extends Model
 
 			$count = 0;
 
-			for ($i = 0; $i < count($strtmp); $i++) {
-				$email = "";
-				$name = "";
+			foreach ($strtmp as $val) {
+				$str = $val;
 
-				if (!mb_check_encoding($strtmp[$i], 'utf-8') && core::getSetting('id_charset')) {
+				if (!mb_check_encoding($str, 'utf-8') && core::getSetting('id_charset')) {
 					$sh = new ConvertCharset(core::getSetting('id_charset'), "utf-8");
-					$strtmp[$i] = $sh->Convert($strtmp[$i]);
+					$str = $sh->Convert($str);
 				}
 
-				preg_match('/([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)/uis', $strtmp[$i], $out);
+				preg_match('/([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)/uis', $str, $out);
 
 				$email = isset($out[0]) ? $out[0] : '';
-				$name = str_replace($email, '', $strtmp[$i]);
+				$name = str_replace($email, '', $str);
 				$email = strtolower($email);
 				$name = trim($name);
 
@@ -157,40 +141,37 @@ class Model_import extends Model
 				}
 
 				if ($email) {
-					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email LIKE '" . $email . "'";
+					$query = "SELECT * FROM " . core::database()->getTableName('users') . " WHERE email='" . $email . "'";
 					$result = core::database()->querySQL($query);
 
 					if (core::database()->getRecordCount($result) > 0) {
 						$row = core::database()->getRow($result);
 
-						$delete = "DELETE FROM " . core::database()->getTableName('subscription') . " WHERE id_user=" . $row['id_user'];
 						core::database()->delete(core::database()->getTableName('subscription'), "id_user=" . $row['id_user'], '');
 
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array();
-									$fields['id_sub'] = 0;
-									$fields['id_user'] = $row['id_user'];
-									$fields['id_cat'] = $id;
+									$fields = [
+                                        'id_sub'  => 0,
+                                        'id_user' => $row['id_user'],
+                                        'id_cat'  => $id
+                                    ];
 
-									$insert_id = core::database()->insert($fields, core::database()->getTableName('subscription'));
+									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}
 							}
 						}
-
 					} else {
-						$email = core::database()->escape($email);
-						$name = core::database()->escape($name);
-
-						$fields = array();
-						$fields['id_user'] = 0;
-						$fields['name'] = $name;
-						$fields['email'] = $email;
-						$fields['token'] = Pnl::getRandomCode();
-						$fields['time'] = date("Y-m-d H:i:s");
-						$fields['status'] = 'active';
-						$fields['time_send'] = '0000-00-00 00:00:00';
+						$fields = [
+                            'id_user' => 0,
+                            'name'    => $name,
+                            'email'   => $email,
+                            'token'   => Pnl::getRandomCode(),
+                            'time'    => date("Y-m-d H:i:s"),
+                            'status'  =>  'active',
+                            'time_send' => '0000-00-00 00:00:00'
+                        ];
 
 						$insert_id = core::database()->insert($fields, core::database()->getTableName('users'));
 
@@ -199,12 +180,13 @@ class Model_import extends Model
 						if ($id_cat) {
 							foreach ($id_cat as $id) {
 								if (is_numeric($id)) {
-									$fields = array();
-									$fields['id_sub'] = 0;
-									$fields['id_user'] = $insert_id;
-									$fields['id_cat'] = $id;
+									$fields = [
+                                        'id_sub'  => 0,
+                                        'id_user' => $insert_id,
+                                        'id_cat'  => $id,
+                                    ];
 
-									$insert_id2 = core::database()->insert($fields, core::database()->getTableName('subscription'));
+									core::database()->insert($fields, core::database()->getTableName('subscription'));
 								}
 							}
 						}

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -34,7 +34,7 @@ class Model_unsubscribe extends Model
     public function makeUnsubscribe($id_user)
     {
         if (is_numeric($id_user)){
-            $query = "UPDATE " . core::database()->getTableName('users') . " set status='noactive' WHERE id_user=" . $id_user;
+            $query = "UPDATE " . core::database()->getTableName('users') . " SET status='noactive' WHERE id_user=" . $id_user;
             return core::database()->querySQL($query);
         }
     }

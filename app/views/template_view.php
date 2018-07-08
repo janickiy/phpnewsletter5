@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,21 +21,21 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')){
 	switch($_REQUEST['action']){
 		case 2:
 		
-			$fields['active'] = 'yes';
+			$fields = ['active' => 'yes'];
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 			
 			break;
 		
 		case 3:
-		
-			$fields['active'] = 'no';
+
+            $fields = ['active' => 'no'];
 			
 			if(!$data->changeStatusNewsLetter($fields, Core_Array::getRequest('activate'))) $alert_error = core::getLanguage('error', 'web_apps_error');
 

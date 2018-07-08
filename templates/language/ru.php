@@ -105,6 +105,7 @@ $language["info"]["redirect_log"] = "Здесь Вы можете просмат
 $language["str"]["action"] = "Действия";
 $language["str"]["activity"] = "Активность";
 $language["str"]["category"] = "Категория";
+$language["str"]["description"] = "Описание";
 $language["str"]["edit"]     = "Редактировать";
 $language["str"]["remove"]   = "Удалить";
 $language["str"]["mailer"]   = "Рассылка";
@@ -160,8 +161,8 @@ $language["str"]["fields"]      = "Поля";
 $language["str"]["compression"] = "Упаковать";
 $language["str"]["time"]  = "Время";
 $language["str"]["total"] = "Всего";
-$language["str"]["good"]  = "Хор.";
-$language["str"]["bad"]   = "Плох.";
+$language["str"]["good"]  = "Хороших";
+$language["str"]["bad"]   = "Плохих";
 $language["str"]["time_left"]   = "Осталось";
 $language["str"]["time_passed"] = "Прошло";
 $language["str"]["send_test_email"]        = "Отправить себе тестовое письмо";
@@ -188,7 +189,7 @@ $language["str"]["user_email"] = "E-mail получателя";
 $language["str"]["name"]      = "Имя";
 $language["str"]["charset"]   = "Кодировка";
 $language["str"]["clear_log"] = "Очистить журнал";
-$language["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
+$language["str"]["logo"]   = '© 2006-2018 <a href="http://janicky.com/">PHP Newsletter</a>';
 $language["str"]["author"] = "Яницкий Александр";
 $language["str"]["current_password"] = 'Текущий пароль';
 $language["str"]["password"] = "Пароль";
@@ -201,7 +202,7 @@ $language["str"]["remove_user"] = "Удалить";
 $language["str"]["import_user"] = "Импорт";
 $language["str"]["export_user"] = "Экспорт";
 $language["str"]["send_test_email"] = "Отправить себе тестовое письмо";
-$language["str"]["supported_tags_list"] = "%NAME% - имя подписчика, %UNSUB% - ссылка для удаления рассылки, %SERVER_NAME% - адрес сайта";
+$language["str"]["supported_tags_list"] = "%NAME% - имя подписчика, %EMAIL% - E-mail адрес, %UNSUB% - ссылка для удаления рассылки, %SERVER_NAME% - адрес сайта, %REFERRAL:http://my_website.com/% - ссылка для статистика переходов по ссылкам";
 $language["str"]["update_warning"] = 'Доступна более новая версия %SCRIPTNAME% и вам предлагается её использовать. Новейшая версия %VERSION%, выпущена %CREATED%. <a href="%DOWNLOADLINK%">Скачать</a> %MESSAGE%';
 $language["str"]["warning"] = 'Внимание';
 $language["str"]["install_msg"] = 'Если PHP Newsletter уже установлен, то удалите папку <strong>install</strong>, иначе запустите <a href="%URL%">мастер установки</a>.';
@@ -223,7 +224,7 @@ $language["str"]["logout"] = "Выйти";
 $language["str"]["form_choose_action"] = "Выберите действие";
 $language["str"]["form_subject"] = "Тема";
 $language["str"]["form_content"] = "Шаблон";
-$language["str"]["form_supported_tags"]    = "Поддерживаемые теги";
+$language["str"]["form_supported_tags"]    = "Персонализация";
 $language["str"]["form_attach_file"] = "Присоединить файл";
 $language["str"]["form_button_add"]  = "Добавить";
 $language["str"]["form_category_subscribers"] = "Категория подписчиков";
@@ -293,6 +294,8 @@ $language["str"]["set_return_path"] = "Обратный адрес (Return-path)
 $language["str"]["list_owner"] = "Email адрес организатора рассылки (List-Owner)";
 $language["str"]["set_path"] = "URL путь";
 $language["str"]["set_remove_subscriber"] = "Удалять подписчиков которые не подтвердили подписку в течении дней";
+$language["str"]["set_replacement_chars_subject"] = "Рандомная замена кириллицы в загаловке письма на латиницу (обход спам фильтра)";
+$language["str"]["set_replacement_chars_body"] = "Рандомная замена кириллицы в теле письма на латиницу (обход спам фильтра)";
 $language["str"]["charutf8"] = "Юникод (UTF-8)";
 $language["str"]["iso88591"] = "Западноевропейская (ISO)";
 $language["str"]["iso88592"] = "Центральноевропейская (ISO)";
@@ -338,6 +341,10 @@ $language["str"]["dont_have_permission_to_access"] = "У вас нет разр�
 $language["str"]["demo_version_has_expired"] = '<p>Срок действия демо-версии истек. Чтобы пользоваться приложением приобретите лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
 $language["str"]["licensekey_has_expired"] = '<p>Срок действия лицензионного ключа истек. Чтобы пользоваться приложением приобретите новый лицензионный ключ. <a href="http://janicky.com/php-scripts/pochtovaya-rassylka">Купить лицензию</a></p>';
 $language["str"]["number_redirect"] = "Количество переходов";
+$language["str"]["accounts"] = "Учетные записи";
+$language["str"]["value"] = "Значение";
+$language["str"]["change_password"] = "Сменить пароль";
+$language["str"]["additional_headers"] = 'Дополнительные заголовки';
 
 $language["button"]["apply"]        = "Применить";
 $language["button"]["add_category"] = "Добавить категорию";
@@ -351,6 +358,7 @@ $language["button"]["subscribe"]   = "Подписаться";
 $language["button"]["send"] = "Отправить";
 $language["button"]["update"] = "Обновить до %SCRIPT_NAME% %NEW_VERSION%";
 $language["button"]["add_account"] = "Добавить учетную запись";
+$language["button"]["add_field"] = "Добавить поле";
 
 $language["alert"]["clear_all"]      = "Вы действительно хотите удалить все адреса?";
 $language["alert"]["select_action"]  = "Выберите действие!";
@@ -463,7 +471,6 @@ $language["menu"]["mailing_options_title"]    = "Параметры рассыл
 $language["menu"]["mailing_options"]          = "Параметры рассылки";
 $language["menu"]["menu_redirect_log"] = "Статистика переходов по ссылкам";
 $language["menu"]["menu_redirect_log_title"] = "Статистика переходов по ссылкам";
-
 
 $language["prompt"]["add_user"] = "Добавить нового подписчика";
 $language["prompt"]["remove_subscribers"] = "Удалить выбранных подписчиков";

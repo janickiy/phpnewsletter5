@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')) {
 	$name = trim(Core_Array::getPost('name'));
@@ -31,13 +31,13 @@ if (Core_Array::getRequest('action')) {
 	if (empty($body)) $errors[] = core::getLanguage('error', 'empty_content');
 	
 	if (empty($errors)) {
-		$fields = array();
-		$fields['id_template'] = 0;
-		$fields['name'] = $name;
-		$fields['body'] = $body;
-		$fields['prior'] = (int)Core_Array::getPost('prior');
-		$fields['id_cat'] = (int)Core_Array::getPost('id_cat');
-		$fields['active'] = 'yes';
+		$fields = [
+            'id_template' => 0,
+            'name'  => $name,
+            'body'  => $body,
+            'prior' => (int)Core_Array::getPost('prior'),
+            'id_cat' => Core_Array::getPost('id_cat')
+        ];
 
 		if ($data->addNewTemplate($fields)){
 			header("Location: ./");

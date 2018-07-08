@@ -8,7 +8,7 @@ Version 5.2.4 (February 19, 2013)
   * un-deprecate isSMTP(), isMail(), IsSendmail() and
     isQmail().
 
-Version 5.2.3 (February 8, 2013)
+Version 5.3.0 (February 8, 2013)
   * Fix issue with older PCREs and ValidateAddress() (Bugz: 124)
 
 Version 5.2.2 (December 3, 2012)

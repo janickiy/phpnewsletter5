@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -24,7 +24,7 @@ if (Core_Array::getRequest('action')) {
 	
 	if (intval(Core_Array::getRequest('export_type')) == 1) {
 		$ext = 'txt';
-		$filename = 'emailexport.txt';			
+		$filename = 'emailexport' . date("d_m_Y") . '.txt';
 			
 		if (is_array($arr)) {
 			$contents = '';	
@@ -34,7 +34,7 @@ if (Core_Array::getRequest('action')) {
 		}
 	} elseif (intval(Core_Array::getRequest('export_type')) == 2) {
 		$ext = 'xls';
-		$filename = 'emailexport.xls';
+		$filename = 'emailexport' . date("d_m_Y") . '.xls';
 			
 		core::requireEx('libs', "PHPExcel/PHPExcel.php");
 			
@@ -46,7 +46,7 @@ if (Core_Array::getRequest('action')) {
 		$aSheet->setCellValue('A1',core::getLanguage('str', 'user_email'));
 		$aSheet->setCellValue('B1',core::getLanguage('str', 'name'));
 			
-		$i=1;
+		$i = 1;
 
 		foreach ($arr as $row) {
 			$i++;
@@ -68,8 +68,10 @@ if (Core_Array::getRequest('action')) {
 	}
 		
 	if (intval(Core_Array::getRequest('zip')) == 2){
+
+
 		header('Content-type: application/zip');
-		header('Content-Disposition: attachment; filename=emailexport.zip');
+		header('Content-Disposition: attachment; filename=emailexport_' . date("d_m_Y") . '.zip');
 		
 		$fout = fopen("php://output", "wb");
 	

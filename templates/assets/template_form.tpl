@@ -1,4 +1,4 @@
-<script type="text/javascript" src="./templates/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="./js/ckeditor/ckeditor.js"></script>
 <script>
   $(document).on( "click", ".remove_attach", function() {
 
@@ -19,25 +19,10 @@
 <!-- IF '${INFO_ALERT}' != '' -->
 <div class="alert alert-info">${INFO_ALERT}</div>
 <!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-  <ul>
-    <!-- BEGIN row -->
-    <li> ${ERROR}</li>
-    <!-- END row -->
-  </ul>
-</div>
-<!-- END show_errors -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT}
-</div>
-<!-- END IF -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE success.tpl -->
 <script type="text/javascript">//<![CDATA[
-  window.CKEDITOR_BASEPATH='./templates/js/ckeditor/';
+  window.CKEDITOR_BASEPATH='./js/ckeditor/';
   CKEDITOR.lang.languages={"${LANGUAGE}":1};
   //]]></script>
 <form id="tmplForm" enctype="multipart/form-data" action="${ACTION}" method="post">

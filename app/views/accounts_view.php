@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action') == 'remove'){
 
@@ -64,6 +64,8 @@ if (isset($success_msg)) {
 }
 
 $tpl->assign('TH_TABLE_LOGIN', core::getLanguage('str', 'login'));
+$tpl->assign('TH_TABLE_NAME', core::getLanguage('str', 'name'));
+$tpl->assign('TH_TABLE_DESCRIPTION', core::getLanguage('str', 'description'));
 $tpl->assign('TH_TABLE_ROLE', core::getLanguage('str', 'role'));
 $tpl->assign('TH_TABLE_ACTION', core::getLanguage('str', 'action'));
 
@@ -71,6 +73,8 @@ foreach ($data->getAccountList() as $row){
 	$rowBlock = $tpl->fetch('row');
 	$rowBlock->assign('ID', $row['id']);
 	$rowBlock->assign('LOGIN', $row['login']);
+    $rowBlock->assign('NAME', $row['name']);
+    $rowBlock->assign('DESCRIPTION', $row['description']);
 
 	if ($row["role"] == 'admin')
 		$role = core::getLanguage('str', 'admin');
@@ -89,6 +93,7 @@ foreach ($data->getAccountList() as $row){
 }
 
 //form
+$tpl->assign('STR_CHANGE_PASSWORD', core::getLanguage('str', 'change_password'));
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('BUTTON_ADD', core::getLanguage('button', 'add_account'));
 

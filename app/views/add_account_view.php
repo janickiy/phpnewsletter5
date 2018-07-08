@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,10 +21,12 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin')) throw new Exception403(core::ge
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (Core_Array::getRequest('action')){
 	$login = trim(htmlspecialchars(Core_Array::getPost('login')));
+    $name = trim(htmlspecialchars(Core_Array::getPost('user_name')));
+    $description = trim(htmlspecialchars(Core_Array::getPost('user_description')));
 	$password = trim(Core_Array::getPost('password'));
 	$password_again = trim(Core_Array::getPost('password_again'));
 	$role = Core_Array::getPost('user_role');
@@ -42,10 +44,13 @@ if (Core_Array::getRequest('action')){
 	}
 
 	if (empty($errors)) {
-		$fields = array();
-		$fields['login'] = $login;
-		$fields['password'] = md5($password);
-		$fields['role'] = $role;
+		$fields = [
+            'login' => $login,
+            'name'  => $name,
+            'description' => $description,
+            'password' =>  md5($password),
+            'role'     => $role
+        ];
 
 		if ($data->createAccount($fields)){
 			header("Location: ./?t=accounts");
@@ -82,7 +87,8 @@ $tpl->assign('STR_REQUIRED_FIELDS', core::getLanguage('str', 'required_fields'))
 $tpl->assign('STR_LOGIN',core::getLanguage('str', 'login'));
 $tpl->assign('STR_PASSWORD',core::getLanguage('str', 'password'));
 $tpl->assign('STR_PASSWORD_AGAIN',core::getLanguage('str', 'again_password'));
-
+$tpl->assign('STR_NAME',core::getLanguage('str', 'name'));
+$tpl->assign('STR_DESCRIPTION',core::getLanguage('str', 'description'));
 $tpl->assign('STR_ROLE',core::getLanguage('str', 'role'));
 $tpl->assign('STR_ADMIN',core::getLanguage('str', 'admin'));
 $tpl->assign('STR_MODERATOR',core::getLanguage('str', 'moderator'));
@@ -93,6 +99,8 @@ $tpl->assign('RETURN_BACK_LINK', './?t=accounts');
 $tpl->assign('ACTION', $_SERVER['REQUEST_URI']);
 $tpl->assign('USER_LOGIN', Core_Array::getPost('login'));
 $tpl->assign('USER_ROLE', Core_Array::getPost('user_role'));
+$tpl->assign('USER_NAME', Core_Array::getPost('user_name'));
+$tpl->assign('USER_DESCRIPTION', Core_Array::getPost('user_description'));
 $tpl->assign('BUTTON', core::getLanguage('button', 'add'));
 
 //footer

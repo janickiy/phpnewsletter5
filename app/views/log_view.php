@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (isset($_REQUEST['clear_log'])){
 	if ($data->clearLog())
@@ -30,13 +30,14 @@ if (isset($_REQUEST['clear_log'])){
 		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
-$order = array();
-$order['name'] = "s.name";
-$order['email'] = "email";
-$order['time'] = "a.time";
-$order['success'] = "success";
-$order['readmail'] = "readmail";
-$order['catname'] = "c.name";
+$order = [
+    'name' => "s.name",
+    'email'=> "email",
+    'time' => "a.time",
+    'success' => "success",
+    'readmail' => "readmail",
+    'catname' => "c.name",
+];
 	
 $strtmp = "id_log";
 
@@ -48,7 +49,7 @@ foreach($order as $parametr => $field){
 			$thclass[$parametr] = 'headerSortDown';
 		} else{
 			$_GET[$parametr] = "up";
-			$strtmp = "" . $field . " DESC";
+			$strtmp = $field . " DESC";
 			$thclass[$parametr] = 'headerSortUp';
 		}
 	} else {
@@ -153,16 +154,15 @@ if (Core_Array::getRequest('id_log')){
 	if (is_array($arrs)) {
 		foreach ($arrs as $row) {
 			$rowBlock = $blockLogList->fetch('row');
-			$rowBlock->assign('TIME', $row['time']);
+			$rowBlock->assign('TIME', $row['send_time']);
 			$rowBlock->assign('ID_LOG', $row['id_log']);
-			$total = $data->countLetters($row['id_log']);
-			$total_sent = $data->countSent($row['id_log']);
+            $total = $row['lettercount'] ? $row['lettercount'] : 0;
+            $total_sent = $row['countsent'] ? $row['countsent'] : 0;
 			$total_nosent = $total - $total_sent;
 			$rowBlock->assign('TOTAL', $total);
 			$rowBlock->assign('TOTAL_SENT', $total_sent);
 			$rowBlock->assign('TOTAL_NOSENT', $total_nosent);
-			$total_read = $data->countRead($row['id_log']);
-			$rowBlock->assign('TOTAL_READ', $total_read);
+			$rowBlock->assign('TOTAL_READ', $row['countread'] ? $row['countread'] : 0);
 
 			if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator') === false) $rowBlock->assign('ALLOW_DOWNLOAD', 'yes');
 

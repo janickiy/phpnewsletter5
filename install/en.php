@@ -11,7 +11,7 @@ $INSTALL["lang"]["str"]["no"] = "No";
 $INSTALL["lang"]["str"]["check_result"] = "Check Results";
 $INSTALL["lang"]["str"]["can_continue_install"] = "You can continue installation.";
 $INSTALL["lang"]["str"]["error_after_process"] = "The following errors have occurred while processing the data";
-$INSTALL["lang"]["str"]["logo"]   = '© 2006-2017 <a href="http://janicky.com/">PHP Newsletter</a>';
+$INSTALL["lang"]["str"]["logo"]   = '© 2006-2018 <a href="http://janicky.com/">PHP Newsletter</a>';
 $INSTALL["lang"]["str"]["author"] = "Alexander Yanitsky";
 $INSTALL["lang"]["str"]["system_req"] = "Check for conformity with the system requirements";
 $INSTALL["lang"]["str"]["db_and_product_settings"] = "Database and Product Parameters";
@@ -31,6 +31,7 @@ $INSTALL["lang"]["str"]["mysql_server"] = "MySQL server (typically \"localhost\"
 $INSTALL["lang"]["str"]["mysql_login"] = "MySQL login";
 $INSTALL["lang"]["str"]["mysql_pass"] = "MySQL password";
 $INSTALL["lang"]["str"]["db_name"] = "Database name";
+$INSTALL["lang"]["str"]["mysql_port"] = "Port";
 $INSTALL["lang"]["str"]["table_prefix"] = "Prefix";
 $INSTALL["lang"]["str"]["administration"] = "Administering";
 $INSTALL["lang"]["str"]["password"] = "Password";
@@ -62,8 +63,8 @@ $INSTALL["lang"]["warning"]["detect_last_version"] = "The latest version of PHP 
 $INSTALL["lang"]["warning"]["detect_old_version"] = "The old version PHP Newsletter %VERSION% was found.";
 $INSTALL["lang"]["warning"]["register_globals_on"] = "Included potentially dangerous option PHP register_globals! We recommend disabling it for security purposes.";
 $INSTALL["lang"]["warning"]["system_req_warning"] = "<strong>Warning:</strong> the server configuration does not suit the system requirements entirely - a part of the products functions can be unavailable.";
-$INSTALL["lang"]["warning"]["update_warning"] = "Important! Before upgrading, save the backup copy of all data (Administering - Settings - Export). It will allow you to restore data in case of incorrect upgrade.";
-$INSTALL["lang"]["warning"]["reinstall_warning"] = "Important! All data will be lost. Save the backup copy (Administering - Settings - Export) if you want to restore data later.";
+$INSTALL["lang"]["warning"]["update_warning"] = "<strong>Important!</strong> Before upgrading, save the backup copy of all data (Administering - Settings - Export). It will allow you to restore data in case of incorrect upgrade.";
+$INSTALL["lang"]["warning"]["reinstall_warning"] = "<strong>Important!</strong> All data will be lost. Save the backup copy (Administering - Settings - Export) if you want to restore data later.";
 $INSTALL["lang"]["script"]["name"] = "PHP Newsletter";
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -31,7 +31,7 @@ curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVE
 curl_setopt($ch, CURLOPT_REFERER, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
 $data = curl_exec($ch);
 
@@ -39,7 +39,7 @@ curl_close($ch);
 
 preg_match('/\{([^\}])+\}/U',$data, $out);
 
-$content = array();
+$content = [];
 
 if ($out[0]) {
 	$arr = json_decode($out[0], true);
@@ -48,10 +48,11 @@ if ($out[0]) {
 	if (isset($arr['error']))  $arr['error'] = str_replace('LICENSE_NOT_FOUND', $INSTALL["lang"]["error"]["license_not_found"], $arr['error']);
 
 	if ($arr['result'] == 'yes')
-		$content = array('result' => 'yes');
+		$content = ['result' => 'yes'];
 	else
-		$content = array('result' => 'no', 'error' => $arr['error']);
-} else $content = array('result' => 'no', 'error' => $INSTALL["lang"]["warning"]["detect_last_version"]);
+		$content = ['result' => 'no', 'error' => $arr['error']];
+} else
+    $content = ['result' => 'no', 'error' => $INSTALL["lang"]["error"]["error_checking_license"]];
 
 
 header('Cache-Control: no-store, no-cache, must-revalidate');

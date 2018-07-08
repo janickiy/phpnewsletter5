@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -21,7 +21,7 @@ if (Pnl::CheckAccess($autInfo['role'], 'admin,moderator,editor')) throw new Exce
 core::requireEx('libs', "html_template/SeparateTemplate.php");
 $tpl = SeparateTemplate::instance()->loadSourceFromFile(core::getTemplate() . core::getSetting('controller') . ".tpl");
 
-$errors = array();
+$errors = [];
 
 if (isset($_REQUEST['clear_log'])){
 	if ($data->clearLog())
@@ -30,21 +30,18 @@ if (isset($_REQUEST['clear_log'])){
 		$errors[] = core::getLanguage('error', 'clear_log');
 }
 
-$order = array();
-$order['email'] = "email";
-$order['time'] = "time";
-
+$order = ['email' => "email", 'time' => "time"];
 $strtmp = "id";
 
-foreach($order as $parametr => $field){
-	if (isset($_GET[$parametr])){
-		if ($_GET[$parametr] == "up"){
+foreach($order as $parametr => $field) {
+	if (isset($_GET[$parametr])) {
+		if ($_GET[$parametr] == "up") {
 			$_GET[$parametr] = "down";
 			$strtmp = $field;
 			$thclass[$parametr] = 'headerSortDown';
 		} else{
 			$_GET[$parametr] = "up";
-			$strtmp = "" . $field . " DESC";
+			$strtmp = $field . " DESC";
 			$thclass[$parametr] = 'headerSortUp';
 		}
 	} else {

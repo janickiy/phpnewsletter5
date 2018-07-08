@@ -1,5 +1,5 @@
 <!-- INCLUDE header.tpl -->
-<script type="text/javascript" src="./templates/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript">
   $(function () {
     // Tabs
@@ -14,33 +14,45 @@
          $(this).removeClass('ui-state-hover');
     });
   });
-</script>
-<!-- IF '${INFO_ALERT}' != '' -->
+ 
+  $(document).on( "click", '#add_field', function() {
+ 	var html = '<div class="row">';
+	html += '<div class="col-lg-4">';
+	html += '<div class="form-group">';
+	html += '<label class="col-lg-4 control-label">${STR_NAME}</label>';
+	html += '<div class="col-lg-8"><input class="form-control" type="text" value="" name="header_name[]"></div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="col-lg-8">';
+	html += '<div class="form-group">';
+	html += '<label class="col-lg-4 control-label">${STR_VALUE}</label>';
+	html += '<div class="col-lg-6"><input class="form-control" type="text" value="" name="header_value[]"></div>';
+	html += '<div class="col-lg-2"><a class="btn btn-outline btn-danger removeBlock" title="${STR_REMOVE}"> - </a></div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+ 
+	$('#headerslist').prepend(html);	  
+	  
+  });
 
-<div class="alert alert-info">${INFO_ALERT}</div>
-<!-- END IF -->
-<!-- BEGIN show_errors -->
-<div class="alert alert-danger alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert">×</button>
-  <h4 class="alert-heading">${STR_IDENTIFIED_FOLLOWING_ERRORS}:</h4>
-  <ul>
-    <!-- BEGIN row -->
-    <li> ${ERROR}</li>
-    <!-- END row -->
-  </ul>
-</div>
-<!-- END show_errors -->
-<!-- IF '${MSG_ALERT}' != '' -->
-<div class="alert alert-success alert-dismissable">
-  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-  ${MSG_ALERT} </div>
-<!-- END IF -->
-<form class="form-horizontal" action="${ACTION}" method="post">
+  $(document).on( "click", '.removeBlock', function() {
+    var parent = $(this).closest('div[class^="row"]');
+    parent.remove();
+  });
+
+</script>
+
+<!-- INCLUDE info.tpl -->
+<!-- INCLUDE errors.tpl -->
+<!-- INCLUDE success.tpl -->
+<form id="form" class="form-horizontal" action="${ACTION}" method="post">
   <div id="tabs">
     <ul>
       <li><a href="#interface" data-toggle="tab">${SET_INTERFACE_SETTINGS}</a></li>
       <li><a href="#smtp" data-toggle="tab">${SET_SMTP_HOST}</a></li>
       <li><a href="#options" data-toggle="tab">${SET_SEND_PARAMETERS}</a></li>
+      <li><a href="#headerslist" data-toggle="tab">${STR_ADDITIONAL_HEADERS}</a></li>
     </ul>
     <br>
     <div id="interface">
@@ -251,11 +263,28 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-lg-3 control-label" for="random">${SET_RANDOM}</label>
         <div class="col-lg-7">
           <div class="checkbox">
             <label><input type="checkbox" name="random"  <!-- IF '${RANDOM}' == 'yes' -->checked="checked"<!-- END IF -->></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="replacement_chars_subject">${SET_REPLACEMENT_CHARS_SUBJECT}</label>
+        <div class="col-lg-7">
+          <div class="checkbox">
+            <label><input type="checkbox" name="replacement_chars_subject"  <!-- IF '${REPLACEMENT_CHARS_SUBJECT}' == 'yes' -->checked="checked"<!-- END IF -->></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="random">${SET_REPLACEMENT_CHARS_BODY}</label>
+        <div class="col-lg-7">
+          <div class="checkbox">
+            <label><input type="checkbox" name="replacement_chars_body"  <!-- IF '${REPLACEMENT_CHARS_BODY}' == 'yes' -->checked="checked"<!-- END IF -->></label>
           </div>
         </div>
       </div>
@@ -352,10 +381,44 @@
         </div>
       </div>
     </div>
-  </div>
-  </div>
-  <div class="form-group">
+	
+	 <div id="headerslist">
+
+       <!-- BEGIN headers_row -->
+       <div class="row">
+         <div class="col-lg-4">
+           <div class="form-group">
+             <label class="col-lg-4 control-label">${STR_NAME}</label>
+             <div class="col-lg-8"><input class="form-control" type="text" value="${NAME}" name="header_name[]"></div>
+           </div>
+           </div>
+           <div class="col-lg-8">
+           <div class="form-group">
+             <label class="col-lg-4 control-label">${STR_VALUE}</label>
+             <div class="col-lg-6"><input class="form-control" type="text" value="${VALUE}" name="header_value[]"></div>
+             <div class="col-lg-2"><a class="btn btn-outline btn-danger removeBlock" title="${STR_REMOVE}"> - </a></div>
+           </div>
+           </div>
+         </div>
+       <!-- END headers_row -->
+
+       <div class="row">
+         <div class="form-group">
+           <div class="col-lg-12">
+             <input class="btn btn-default" id="add_field" type="button" value="+ ${BUTTON_ADD_FIELD}">
+           </div>
+	      </div>
+       </div>
+	 </div>
+        
+    </div>
+ <div class="form-group">
+ <div class="col-lg-12">
+ 
     <input class="btn btn-success" name="action" type="submit" value="${BUTTON_APPLY}">
   </div>
+</div>
+  </div>
+ 
 </form>
 <!-- INCLUDE footer.tpl -->

@@ -1,8 +1,8 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.1.0
- * Copyright (c) 2006-2017 Alexander Yanitsky
+ * PHP Newsletter 5.3.1
+ * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
  * Skype: janickiy
@@ -19,7 +19,7 @@ class Model_add_account extends Model
 	public function checkExistLogin($login)
 	{
 		$login = core::database()->escape($login);
-		$query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE login LIKE '" . $login . "'";
+		$query = "SELECT * FROM " . core::database()->getTableName('aut') . " WHERE login='" . $login . "'";
 		$result = core::database()->querySQL($query);
 				
 		if (core::database()->getRecordCount($result) == 0)
@@ -27,7 +27,11 @@ class Model_add_account extends Model
 		else
 			return true;
 	}
-	
+
+	/**
+	 * @param $fields
+	 * @return mixed
+	 */
 	public function createAccount($fields)
 	{
 		return core::database()->insert($fields, core::database()->getTableName('aut'));
