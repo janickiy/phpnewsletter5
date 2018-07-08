@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsl
+ * PHP Newsletter 5.3.2
  * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -24,7 +24,7 @@ if (Core_Array::getRequest('action')) {
 	
 	if (intval(Core_Array::getRequest('export_type')) == 1) {
 		$ext = 'txt';
-		$filename = 'emailexport' . ("d_m_Y") . '.txt';
+		$filename = 'emailexport' . date("d_m_Y") . '.txt';
 			
 		if (is_array($arr)) {
 			$contents = '';	
@@ -34,7 +34,7 @@ if (Core_Array::getRequest('action')) {
 		}
 	} elseif (intval(Core_Array::getRequest('export_type')) == 2) {
 		$ext = 'xls';
-		$filename = 'emailexport' . ("d_m_Y") . '.xls';
+		$filename = 'emailexport' . date("d_m_Y") . '.xls';
 			
 		core::requireEx('libs', "PHPExcel/PHPExcel.php");
 			
@@ -71,7 +71,7 @@ if (Core_Array::getRequest('action')) {
 
 
 		header('Content-type: application/zip');
-		header('Content-Disposition: attachment; filename=emailexport_' . ("d_m_Y") . '.zip');
+		header('Content-Disposition: attachment; filename=emailexport_' . date("d_m_Y") . '.zip');
 		
 		$fout = fopen("php://output", "wb");
 	
