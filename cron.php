@@ -175,6 +175,7 @@ if ($result_send->num_rows > 0){
 
             $subject = $send['name'];
 			$subject = str_replace('%NAME%', $user['name'], $subject);
+            $subject = $settings['replacement_chars_subject'] == 'yes' ? Pnl::encodeString($subject) : $subject;
 			
 			if ($charset != 'utf-8'){
 				$subject = iconv('utf-8', $charset, $subject);
@@ -214,7 +215,8 @@ if ($result_send->num_rows > 0){
 			$msg = str_replace('%NAME%', $user['name'], $msg);
 			$msg = str_replace('%UNSUB%', $UNSUB, $msg);
 			$msg = str_replace('%SERVER_NAME%', $url_info['host'], $msg);
-			$msg = str_replace('%USERID%', $user['id'], $msg);				
+			$msg = str_replace('%USERID%', $user['id'], $msg);
+            $msg = $settings['replacement_chars_body'] == 'yes' ? Pnl::encodeString($msg) : $msg;
 				
 			$query = "SELECT * FROM " . $ConfigDB["prefix"] . "attach WHERE id_template=" . $send['id_template'];
 		
