@@ -286,6 +286,7 @@ class Model_ajax extends Model
     {
         $user = 'USERNAME';
         $subject = str_replace('%NAME%', $user, $subject);
+        $subject = core::getSetting('replacement_chars_subject') == 'yes' ? Pnl::encodeString($subject) : $subject;
 
         core::requireEx('libs', "PHPMailer/class.phpmailer.php");
 
