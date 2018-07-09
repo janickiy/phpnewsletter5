@@ -37,7 +37,7 @@
     <label>${STR_FORM_CONTENT}:</label>
     <textarea class="form-control form-dark" rows="5" id="tmplBody" name="body">${CONTENT}</textarea>
     <script type="text/javascript">//<![CDATA[
-      CKEDITOR.replace('tmplBody');
+        CKEDITOR.replace('tmplBody', {fullPage: true,allowedContent: true,autoGrow_onStartup: true});
       //]]></script>
     <p class="help-block">${STR_FORM_NOTE}: ${STR_SUPPORTED_TAGS_LIST}</p>
   </div>

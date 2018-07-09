@@ -1,7 +1,7 @@
 <?php
 
 /********************************************
- * PHP Newsletter 5.3.1
+ * PHP Newsletter 5.3.2
  * Copyright (c) 2006-2018 Alexander Yanitsky
  * Website: http://janicky.com
  * E-mail: janickiy@mail.ru
@@ -288,10 +288,6 @@ class Model_ajax extends Model
         $subject = str_replace('%NAME%', $user, $subject);
 
         core::requireEx('libs', "PHPMailer/class.phpmailer.php");
-
-        $query = "SELECT * FROM " . core::database()->getTableName('settings');
-        $result = core::database()->querySQL($query);
-        $settings = core::database()->getRow($result);
 
         $m = new PHPMailer();
 

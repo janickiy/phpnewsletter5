@@ -46,7 +46,8 @@ CKEDITOR.editorConfig = function( config ) {
     // Make dialogs simpler.
     config.removeDialogTabs = '';
     config.extraPlugins = 'wysiwygarea';
-	
+    config.allowedContent = true;
+    config.FullPage = true;
 };
 
 
