@@ -471,7 +471,7 @@ class Model_ajax extends Model
 
             if (core::database()->getRecordCount($result) > 0) {
                 while ($send = core::database()->getRow($result)) {
-                    $subject = core::getSetting('replacement_chars_subjec') == 'yes' ? Pnl::encodeString($send['name']) : $send['name'];
+                    $subject = core::getSetting('replacement_chars_subject') == 'yes' ? Pnl::encodeString($send['name']) : $send['name'];
 
                     if (core::getSetting('interval_type') == 'm')
                         $interval = "AND (time_send < NOW() - INTERVAL '" . core::getSetting('interval_number') . "' MINUTE)";
